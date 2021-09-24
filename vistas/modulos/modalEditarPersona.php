@@ -1,68 +1,4 @@
-<div class="content-wrapper">
-
-  <section class="content-header">
-    
-    <h1>
-      
-      Administrar Personas
-    
-    </h1>
-
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-
-       <li><a href="#">Requisiciones</a></li>
-      
-      <li class="active">Personas</li>
-    
-    </ol>
-
-  </section>
-
-  <section class="content">
-
-    <div class="box">
-
-      <div class="box-header with-border">
-
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPersona">
-          
-          Agregar Persona
-
-        </button>
-
-      </div>
-
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablaPersonas" width="100%">
-         
-        <thead>
-         
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Nombre</th>
-           <th>Area</th>
-           <th>Acciones</th>
-
-         </tr> 
-
-        </thead>
-
-       </table>
-
-      </div>
-
-    </div>
-  </section>
-
-</div>
-
-
-
-<div id="modalAgregarPersona" class="modal fade" role="dialog">
+<div id="modalEditarPersona" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -78,7 +14,7 @@
 
             <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-            <h4 class="modal-title">Agregar Persona</h4>
+            <h4 class="modal-title">Editar Persona</h4>
 
           </div>
 
@@ -99,10 +35,12 @@
                 
                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                  <select class="form-control input-lg" id="nuevaAreaP" name="nuevaAreaP" required>
-                    
-                    <option value="">Selecionar Área</option>
+                  <input type="hidden" class="form-control input-lg" id="editarId" name="editarId" autocomplete="off" required>
 
+                  <select class="form-control input-lg" name="editarAreaP" required>
+
+                    <option id="editarAreaP" value=""></option>
+                    
                     <?php
 
                     $item = null;
@@ -133,7 +71,7 @@
                 
                   <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                  <input type="text" class="form-control input-lg" id="nuevaPersona" name="nuevaPersona" placeholder="Nombre" autocomplete="off" required>
+                  <input type="text" class="form-control input-lg" id="editarPersona" name="editarPersona" placeholder="Nombre" autocomplete="off" required>
 
                 </div>
 
@@ -151,7 +89,7 @@
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-success">Agregar Persona</button>
+          <button type="submit" class="btn btn-success">Editar Persona</button>
 
         </div>
 
@@ -159,8 +97,8 @@
 
         <?php
 
-          $crearPersona = new ControladorPersonas();
-          $crearPersona -> ctrCrearPersona();
+          $editarPersona = new ControladorPersonas();
+          $editarPersona -> ctrEditarPersona();
 
         ?>  
 
@@ -168,11 +106,3 @@
   </div><!--modal-dialog-->
 
 </div><!--modalAgregarPersona-->
-
-<?php 
-
-include "modalEditarPersona.php";
-
-$borrarPersona = new ControladorPersonas();
-$borrarPersona -> ctrBorrarPersona($_SESSION["id"]);
-?>

@@ -266,6 +266,15 @@ function paginaCargada(pagina){
 			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 			}
 		}
+		else if(pagina == 18)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idArea = urlParams.get('idArea');
+			tablaElegida =  $('.tablaPersonas');
+			tablaAjax = 'personas';
+			variable = "?idArea="+idArea;
+		}
 
 
 		 $.ajax({

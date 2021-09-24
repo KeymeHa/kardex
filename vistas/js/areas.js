@@ -1,3 +1,10 @@
+$(".tablaAreas").on("click", ".btnVerArea", function(){
+
+	var idArea = $(this).attr("idArea");
+	window.location = "index.php?ruta=verArea&idArea="+idArea;			
+
+})
+
 
 $(".tablaAreas").on("click", ".btnEditarArea", function(){
 
@@ -75,54 +82,7 @@ $(".tablaAreas").on("click", ".btnEliminarArea", function(){
 					}
 				}//respuesta:ajax
 
-			}).fail( function( jqXHR, textStatus, errorThrown ) {
-
-				var msgError = "";
-
-			  if (jqXHR.status === 0) {
-
-			    msgError ='Sin conexión a Internet.';
-
-			  } else if (jqXHR.status == 404) {
-
-			     msgError ='Requerimiento en pagina no encontrada [404]';
-
-			  } else if (jqXHR.status == 500) {
-
-			     msgError ='Error de Servidor Interno [500].';
-
-			  } else if (textStatus === 'parsererror') {
-
-			     msgError ='Fallo la respuesta en JSON';
-
-			  } else if (textStatus === 'timeout') {
-
-			     msgError ='Tiempo Agotado para la respuesta.';
-
-			  } else if (textStatus === 'abort') {
-
-			     msgError ='Requerimiento de ajax Cancelado';
-
-			  } else {
-
-			     msgError ='Uncaught Error: ' + jqXHR.responseText;
-
-			  }
-
-			  swal({
-					type: "error",
-					title:  msgError,
-					text: "Contacte al Usuario root.",
-					showCancelButton: false,
-					showConfirmButton: true,
-					confirmButtonText: "Listo",
-					confirmButtonColor: '#149243',
-				})
-
 			});
-
-
-
 
 
 			

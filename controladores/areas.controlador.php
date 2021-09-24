@@ -75,6 +75,13 @@ class ControladorAreas
 		return $respuesta;
 	}
 
+	static public function ctrMostrarAreasConFiltro($item, $valor)
+	{
+		$tabla = "areas";
+		$respuesta = ModeloAreas::mdlMostrarAreasConFiltro($tabla, $item, $valor);
+		return $respuesta;
+	}
+
 	static public function ctrEditarArea()
 	{
 		if(isset($_POST["editarArea"]))

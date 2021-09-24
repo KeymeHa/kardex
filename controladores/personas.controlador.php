@@ -15,6 +15,17 @@ class ControladorPersonas
 		return $respuesta;
 	}#ctrMostrarPersonas
 
+	static public function ctrMostrarPersonasArea($item, $valor)
+	{
+		$tabla = "personas";
+
+		$respuesta = ModeloPersonas::mdlMostrarPersonasArea($tabla, $item, $valor);
+
+		return $respuesta;
+	}#ctrMostrarPersonas
+
+
+	
 
 	static public function ctrCrearPersona()
 	{
@@ -99,9 +110,31 @@ class ControladorPersonas
 			$respuesta = ModeloPersonas::mdlEditarPersona($tabla, $datos);
 
 			if($respuesta == "ok")
-			{	echo'<script>
+			{	
+					if( isset($_GET["idArea"]) )
+					{
+						echo'<script>
 
-					swal({
+							swal({
+								  type: "success",
+								  title: "Persona editada correctamente",
+								  showConfirmButton: true,
+								  confirmButtonText: "Cerrar"
+								  }).then(function(result){
+										if (result.value) {
+
+										window.location = "index.php?ruta=verArea&idArea='.$_GET["idArea"].'";
+
+										}
+									})
+
+						</script>';
+					}
+					else
+					{
+						echo'<script>
+
+						swal({
 						  type: "success",
 						  title: "Persona editada correctamente",
 						  showConfirmButton: true,
@@ -114,7 +147,9 @@ class ControladorPersonas
 									}
 								})
 
-					</script>';
+
+						</script>';
+					}
 			}#if
 			else
 			{	echo'<script>

@@ -78,6 +78,22 @@ class ModeloAreas
 
 	}
 
+	static public function mdlMostrarAreasConFiltro($tabla, $item, $valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE $item = :$item AND elim = 0");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlBorrarArea($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET elim = 1 WHERE id = :id");

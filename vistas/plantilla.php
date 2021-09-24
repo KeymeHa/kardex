@@ -56,8 +56,9 @@
         if($_GET["ruta"] == "inicio" ||
            $_GET["ruta"] == "usuarios" ||
            $_GET["ruta"] == "actas" ||
-           $_GET["ruta"] == "verActa" ||
            $_GET["ruta"] == "editarActa" ||
+           $_GET["ruta"] == "verActa" ||
+           $_GET["ruta"] == "verArea" ||
            $_GET["ruta"] == "nuevaActa" ||
            $_GET["ruta"] == "insumos" ||
            $_GET["ruta"] == "categorias" ||
@@ -126,6 +127,8 @@
             {$paginaCargada.="16";}
             elseif ($_GET["ruta"] == "inicio" || $_GET["ruta"] == "reportesRq")
             {$paginaCargada.="17";}
+            elseif ($_GET["ruta"] == "verArea")
+            {$paginaCargada.="18";}
             else
             {$paginaCargada.="0";}
 
