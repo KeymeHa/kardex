@@ -18,17 +18,6 @@ class ControladorProveedores
 			if (preg_match('/^[0-9]+$/', $_POST["nuevoNit"]) &&
 				preg_match('/^[0-9]+$/', $_POST["nuevoDigito"])) 
 			{
-				/*
-				nuevoProveedor razonSocial
-				nuevoNomComercial nombreComercial
-				nuevoNit nit
-				nuevoDigito digitoNit
-				nuevaDescripcion descripcion
-				nuevaDireccion direccion
-				nuevoContacto contacto
-				nuevoTelefono telefono
-				nuevoCorreo correo
-				*/
 
 				$tabla = "proveedores";
 

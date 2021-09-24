@@ -20,49 +20,49 @@
                <div class="form-group">
                   <p class="help-block">Razón Social</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-industry"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarRazonSFAC" name="editarRazonSFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Nit.</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-asterisk"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarNitFAC" name="editarNitFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Dirección</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarDicFAC" name="editarDicFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Telefono</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarTelFAC" name="editarTelFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Correo Electronicó     
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-at"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarCorreoFAC" name="editarCorreoFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Dirección de Entrega de Insumos</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarDicEFAC" name="editarDicEFAC" autocomplete="off">
                   </div>
                </div>
                <div class="form-group">
                   <p class="help-block">Rep. Legal</p>           
                   <div class="input-group">          
-                    <span class="input-group-addon"><i class="fa fa-chevron-up"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                     <input type="text" class="form-control input-lg" id="editarRepLFAC" name="editarRepLFAC" autocomplete="off">
                   </div>
                </div>
