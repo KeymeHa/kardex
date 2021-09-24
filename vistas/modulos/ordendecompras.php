@@ -53,6 +53,9 @@
        </table>
       </div>
     </div>
+
+    <?php
+    include "reportes/ordenGrafica.php";?>
   </section>
 </div>
 

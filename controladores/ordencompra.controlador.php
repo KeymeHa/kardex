@@ -22,6 +22,14 @@ class ControladorOrdenCompra
 	
 	}//ctrMostrarOrdenesdeCompras
 
+	static public function ctrContarOrdenProv()
+	{
+		$tabla = "ordenCompra";
+		$respuesta = ModeloOrdenCompra::mdlAgruparOdenes($tabla);
+		return $respuesta;
+	}
+
+
 	static public function ctrMostrarOrdenesdeComprasFAC($item, $valor)
 	{
 		$tabla = "ordenCompra";
