@@ -32,7 +32,7 @@
  var data = [
      <?php
 
-     $countFacProv = ControladorFacturas::ctrContarFacturasProv();
+     $countFacProv = ControladorFacturas::ctrContarFacturasProv($fechaInicial, $fechaFinal);
 
    if($countFacProv != null)
     {
