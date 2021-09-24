@@ -1,0 +1,371 @@
+
+$('.sidebar-menu').tree();
+
+$( document ).ready(function() {
+
+    $(".cantidadEfectivo").number(true, 0);
+
+    if(typeof validarRuta === 'function') 
+	{
+    	validarRuta();
+	}
+});
+
+$(".tablas").DataTable({
+
+	"language": {
+
+		"sProcessing":     "Procesando...",
+		"sLengthMenu":     "Mostrar _MENU_ registros",
+		"sZeroRecords":    "No se encontraron resultados",
+		"sEmptyTable":     "Ningún dato disponible en esta tabla",
+		"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix":    "",
+		"sSearch":         "Buscar:",
+		"sUrl":            "",
+		"sInfoThousands":  ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+
+	}
+
+});
+
+
+$(".btnNotificaciones").click(function(){
+	
+	var valor = $(this).attr("valor");
+	var bodyNoti = $('#bodyNotificaciones');
+	var titleNoti = $('#tituloNotificaciones');
+	if(valor == 1)
+	{
+
+		titleNoti.text("Listado Insumos Agotados");
+
+		if(bodyNoti.has('table'))
+		{
+			bodyNoti.children().remove();
+		}
+
+		bodyNoti.append(
+			'<table class="table table-bordered table-striped dt-responsive tablaInsumos" width="100%" data-page-length="25">'+       
+			'<thead>'+      
+			 '<tr>'+           
+			  '<th style="width:10px">#</th>'+
+			   '<th>Imagen</th>'+
+			   '<th>Código</th>'+
+			   '<th>Descripción</th>'+
+			   '<th>Categoría</th>'+
+			   '<th title="Estante">Est</th>'+
+			   '<th title="Nivel">Nvl</th>'+
+			   '<th title="Sección">Secc</th>'+
+			 '</tr> '+
+			'</thead>'+
+			'</table>'
+		)
+
+		paginaCargada(12);
+	}
+	else if(valor == 2)
+	{
+		if(bodyNoti.has('table'))
+		{
+			bodyNoti.children().remove();
+			titleNoti.text("Listado Insumos Escasos");
+		}
+
+		bodyNoti.append(
+			'<table class="table table-bordered table-striped dt-responsive tablaInsumos" width="100%" data-page-length="25">'+       
+			'<thead>'+      
+			 '<tr>'+           
+			  '<th style="width:10px">#</th>'+
+			   '<th>Imagen</th>'+
+			   '<th>Código</th>'+
+			   '<th>Descripción</th>'+
+			   '<th>Categoría</th>'+
+			   '<th>Stock</th>'+
+			   '<th title="Estante">Est</th>'+
+			   '<th title="Nivel">Nvl</th>'+
+			   '<th title="Sección">Secc</th>'+
+			 '</tr> '+
+			'</thead>'+
+			'</table>'
+		)
+
+		paginaCargada(13);
+		
+	}
+
+})
+
+
+$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+  checkboxClass: 'icheckbox_flat-green',
+  radioClass   : 'iradio_flat-green'
+});
+
+
+function paginaCargada(pagina){
+
+	if(pagina != 0)
+	{
+		var tablaElegida = "";
+		var tablaAjax = "";
+		var variable = "";
+		if(pagina == 1)
+		{
+			tablaElegida =  $('.tablaCategorias');
+			tablaAjax = 'categorias';
+		}//Pagina Insumos
+		else if(pagina == 2)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idCategoria = urlParams.get('idCategoria');
+			tablaElegida =  $('.tablaInsumos');
+			tablaAjax = 'insumos';
+			variable = "?idCategoria="+idCategoria;
+			
+		}//Pagina Insumos
+		else if(pagina == 3)
+		{
+			tablaElegida =  $('.tablaInsumos');
+			tablaAjax = 'insumos';
+		}//Pagina Insumos
+		else if(pagina == 4)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaOrdenes');
+			tablaAjax = 'ordenes';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+
+
+		}//Pagina Insumos
+		else if(pagina == 5)
+		{
+
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaFacturas');
+			tablaAjax = 'facturas';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+
+			
+		}
+		else if(pagina == 8)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaRqs');
+			tablaAjax = 'requisiciones';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+		}
+		else if(pagina == 10)
+		{
+			tablaElegida =  $('.tablaInsumosNFactura');
+			tablaAjax = 'nuevaFactura';
+
+		}
+		else if(pagina == 11)
+		{
+			tablaElegida =  $('.tablaInsumosNRq');
+			tablaAjax = 'nuevaRq';
+		}
+		else if(pagina == 12)
+		{
+			tablaElegida =  $('.tablaInsumos');
+			tablaAjax = 'insumos';
+			variable = "?agotados=12";
+		}
+		else if(pagina == 13)
+		{
+			tablaElegida =  $('.tablaInsumos');
+			tablaAjax = 'insumos';
+			variable = "?escasos=13";
+		}
+		else if(pagina == 14)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaActas');
+			tablaAjax = 'actas';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+		}
+		else if(pagina == 15)
+		{
+			tablaElegida =  $('.tablaAreas');
+			tablaAjax = 'areas';
+		}
+		else if(pagina == 16)
+		{
+			tablaElegida =  $('.tablaPersonas');
+			tablaAjax = 'personas';
+		}
+		else if(pagina == 17)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaInsuRQReporte');
+			tablaAjax = 'reporteRqInsu';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+		}
+
+
+		 $.ajax({
+			 
+			 	url: "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
+				success:function(respuesta){
+						
+				console.log("respuesta", respuesta);
+
+				}
+
+			}).fail( function( jqXHR, textStatus, errorThrown ) {
+
+				var msgError = "";
+
+			  if (jqXHR.status === 0) {
+
+			    msgError ='Sin conexión a Internet.';
+
+			  } else if (jqXHR.status == 404) {
+
+			     msgError ='Requerimiento en pagina no encontrada [404]';
+
+			  } else if (jqXHR.status == 500) {
+
+			     msgError ='Error de Servidor Interno [500].';
+
+			  } else if (textStatus === 'parsererror') {
+
+			     msgError ='Fallo la respuesta en JSON';
+
+			  } else if (textStatus === 'timeout') {
+
+			     msgError ='Tiempo Agotado para la respuesta.';
+
+			  } else if (textStatus === 'abort') {
+
+			     msgError ='Requerimiento de ajax Cancelado';
+
+			  } else {
+
+			     msgError ='Uncaught Error: ' + jqXHR.responseText;
+
+			  }
+
+			  swal({
+					type: "error",
+					title:  msgError,
+					text: "Contacte al Usuario root.",
+					showCancelButton: false,
+					showConfirmButton: true,
+					confirmButtonText: "Listo",
+					confirmButtonColor: '#149243',
+				}).then((result)=>{
+					if (result.value) 
+					{
+						window.location = "index.php";
+					}
+				})
+
+			});
+
+		$(tablaElegida).DataTable( {
+		    "ajax": "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
+		    "deferRender": true,
+			"retrieve": true,
+			"processing": true,
+			 "language": {
+
+					"sProcessing":     "Procesando...",
+					"sLengthMenu":     "Mostrar _MENU_ items",
+					"sZeroRecords":    "No se encontraron resultados",
+					"sEmptyTable":     "Ningún dato disponible en esta tabla",
+					"sInfo":           "Mostrando items del _START_ al _END_ de un total de _TOTAL_",
+					"sInfoEmpty":      "Mostrando items del 0 al 0 de un total de 0",
+					"sInfoFiltered":   "(filtrado de un total de _MAX_ items)",
+					"sInfoPostFix":    "",
+					"sSearch":         "Buscar:",
+					"sUrl":            "",
+					"sInfoThousands":  ",",
+					"sLoadingRecords": "Cargando...",
+					"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+					},
+					"oAria": {
+						"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+						"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+					}
+			}
+		} );
+
+		$(tablaElegida).on("draw.dt", function(){
+
+			$(".cantidadEfectivo").number(true, 0);
+
+		})
+		
+	}
+
+}
