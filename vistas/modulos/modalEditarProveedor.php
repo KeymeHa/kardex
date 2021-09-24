@@ -74,14 +74,14 @@
               <p class="help-block">Telefono</p>
               <div class="input-group">             
                 <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
-                <input type="number" autocomplete="off" class="form-control input-lg" name="editarTelefono" id="editarTelefono">
+                <input type="number" autocomplete="off" class="form-control input-lg" placeholder="305236598" name="editarTelefono" id="editarTelefono">
               </div>
             </div>
             <div class="form-group">
               <p class="help-block">Correo Electronico</p>
               <div class="input-group">             
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
-                <input type="email" autocomplete="off" class="form-control input-lg" name="editarCorreoP" id="editarCorreoP">
+                <input type="email" autocomplete="off" class="form-control input-lg" placeholder="correo@empresa.com" name="editarCorreoP" id="editarCorreoP">
               </div>
             </div>
 
