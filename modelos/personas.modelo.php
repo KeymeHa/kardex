@@ -60,6 +60,17 @@ class ModeloPersonas
 
 	}
 
+
+	static public function mdlAgruparPersonas($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre)");
+
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlContarPerArea($tabla, $item, $valor)
 	{
 		if (!$item == null) 

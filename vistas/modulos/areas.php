@@ -22,41 +22,57 @@
 
   <section class="content">
 
-    <div class="box">
-
-      <div class="box-header with-border">
-
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarArea">
+    <div class="row">
+      <div class="col-lg-12">
           
-          Nueva Área
+        <div class="box">
 
-        </button>
+          <div class="box-header with-border">
+
+            <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarArea">
+              
+              Nueva Área
+
+            </button>
 
 
+          </div>
+
+          <div class="box-body">
+            
+           <table class="table table-bordered table-striped dt-responsive tablaAreas" width="100%">
+             
+            <thead>
+             
+             <tr>
+               
+              <th style="width:10px">#</th>
+               <th>Nombre</th>
+               <th>Descripción</th>
+               <th>Personas Asociadas</th>
+               <th>Acciones</th>
+
+             </tr> 
+
+            </thead>
+
+           </table>
+
+          </div>
+
+        </div>
+      
       </div>
-
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablaAreas" width="100%">
-         
-        <thead>
-         
-         <tr>
-           
-          <th style="width:10px">#</th>
-           <th>Nombre</th>
-           <th>Descripción</th>
-           <th>Acciones</th>
-
-         </tr> 
-
-        </thead>
-
-       </table>
-
-      </div>
-
     </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+      <?php
+        include "reportes/areaGrafica.php";
+      ?>
+      </div>
+    </div>
+
 
   </section>
 

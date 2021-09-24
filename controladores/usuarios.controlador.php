@@ -28,6 +28,7 @@ class ControladorUsuarios
 
 					$fechaActual = date("Y-m-d H:i:s");
 
+
 					$_SESSION['sid'] = session_id();
 					$_SESSION["iniciarSesion"] = "ok";
 					$_SESSION["id"] = $respuesta["id"];
@@ -37,8 +38,8 @@ class ControladorUsuarios
 					$_SESSION["perfil"] = $respuesta["perfil"];
 					$_SESSION["estado"] = $respuesta["estado"];
 					$_SESSION["ultimoLogin"] = $respuesta["ultimo_login"];
-					$_SESSION["idCategoria"] = 0;
-
+					//$_SESSION["idCategoria"] = 0;
+					$_SESSION["anioActual"] = date("Y");
 					
 
 					$datos = array(	"ultimo_login" => $fechaActual,

@@ -53,6 +53,17 @@ class ModeloFacturas
 		}
 
 	}
+
+	static public function mdlAgruparFacturas($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	
 	static public function mdlMostrarFacturas($tabla, $item, $valor)
 	{

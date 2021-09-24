@@ -38,6 +38,13 @@
        </table>
       </div>
     </div>
+
+    <?php
+
+    include "reportes/categoriaGrafica.php";
+
+    ?>
+
   </section>
 </div>
 

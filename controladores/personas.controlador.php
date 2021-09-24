@@ -77,6 +77,14 @@ class ControladorPersonas
 		return $respuesta;
 	}
 
+
+	static public function ctrContarPersonasArea()
+	{
+		$tabla = "personas";
+		$respuesta = ModeloPersonas::mdlAgruparPersonas($tabla);
+		return $respuesta;
+	}
+
 	static public function ctrEditarPersona()
 	{
 		if(isset($_POST["editarPersona"]))

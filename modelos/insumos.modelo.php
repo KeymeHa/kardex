@@ -72,6 +72,15 @@ class ModeloInsumos
 		$stmt = null;
 	}#mdlMostrarInsumos
 
+	static public function mdlAgruparInsumos($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT categorias.categoria, COUNT(categorias.categoria) FROM $tabla INNER JOIN categorias ON $tabla.id_categoria = categorias.id GROUP BY(categorias.categoria) ORDER BY COUNT(categorias.categoria)");
+
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
 
 	static public function mdlVerImagen($tabla, $id)
 	{

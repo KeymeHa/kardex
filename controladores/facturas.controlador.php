@@ -22,7 +22,12 @@ class ControladorFacturas
 	
 	}//ctrMostrarFacturas
 
-
+	static public function ctrContarFacturasProv()
+	{
+		$tabla = "facturas";
+		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla);
+		return $respuesta;
+	}
 
 	static public function ctrCrearFactura()
 	{

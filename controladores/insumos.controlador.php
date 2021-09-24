@@ -297,6 +297,14 @@ class ControladorInsumos
 		return $respuesta;
 	}
 
+	static public function ctrContarInsumosCat()
+	{
+		$tabla = "insumos";
+		$respuesta = ModeloInsumos::mdlAgruparInsumos($tabla);
+		return $respuesta;
+	}
+
+
 	/*=============================================
 	BORRAR INSUMO
 	=============================================*/
