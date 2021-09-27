@@ -61,6 +61,7 @@
       fillOpacity: 0.6,
       hideHover: 'auto',
       behaveLikeLine: true,
+      preUnits: '$',
       resize: true
   };
 
