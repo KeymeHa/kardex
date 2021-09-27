@@ -52,10 +52,14 @@
 
     if (isset($_GET["fechaInicial"])) 
     {
-      $fechaInicial = $_GET["fechaInicial"]; 
+      $fechaInicial = $_GET["fechaInicial"];
       $fechaFinal = $_GET["fechaFinal"];
     }
-
+    else
+    {
+      $fechaInicial = null;
+      $fechaFinal = null;
+    }
 
     include "reportes/facturaGrafica.php";
 

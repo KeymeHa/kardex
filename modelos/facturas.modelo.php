@@ -56,11 +56,10 @@ class ModeloFacturas
 
 	static public function mdlAgruparFacturas($tabla, $fechaInicial, $fechaFinal)
 	{
-
 		if($fechaInicial == null)
 		{
 
-		$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+			$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, SUM(inversion), SUM(iva) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor = proveedores.id GROUP BY(proveedores.nombreComercial) ORDER BY inversion DESC");
 
 			$stmt -> execute();
 
@@ -69,7 +68,7 @@ class ModeloFacturas
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id  WHERE fecha like '%$fechaFinal%' GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+			$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, SUM(inversion), SUM(iva) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor = proveedores.id WHERE $tabla.fecha like '%$fechaFinal%' GROUP BY(proveedores.nombreComercial) ORDER BY inversion DESC");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -89,21 +88,20 @@ class ModeloFacturas
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, SUM(inversion), SUM(iva) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor = proveedores.id WHERE $tabla.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(proveedores.nombreComercial) ORDER BY inversion DESC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, SUM(inversion), SUM(iva) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor = proveedores.id WHERE $tabla.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(proveedores.nombreComercial) ORDER BY inversion DESC");
 
 			}
 		
 			$stmt -> execute();
 
-		return $stmt -> fetchAll();
+			return $stmt -> fetchAll();
+
 		}
-		$stmt -> close();
-		$stmt = null;
 	}
 
 	

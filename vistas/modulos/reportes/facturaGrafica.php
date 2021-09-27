@@ -20,9 +20,6 @@
           <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
         </div>
       </div>
-
-      
-
   </div>
 
 </div>
@@ -40,7 +37,7 @@
 
         foreach ($countFacProv as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."', Facturas: ".$value[1]." },";
+         $ykeys.= "{ y: '".$value[0]."', Facturas: ".($value[1]+$value[2])." },";
 
         }
 

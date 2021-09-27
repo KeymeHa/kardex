@@ -22,10 +22,10 @@ class ControladorFacturas
 	
 	}//ctrMostrarFacturas
 
-	static public function ctrContarFacturasProv()
+	static public function ctrContarFacturasProv($fechaInicial, $fechaFinal)
 	{
 		$tabla = "facturas";
-		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla);
+		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla, $fechaInicial, $fechaFinal);
 		return $respuesta;
 	}
 
