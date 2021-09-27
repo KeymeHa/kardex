@@ -4,7 +4,7 @@
       
       <i class="fa fa-bar-chart"></i>
 
-      <h3 class="box-title">Grafica</h3>
+      <h3 class="box-title">Grafica Inversiones</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -16,8 +16,40 @@
    <div class="box-body border-radius-none">
 
       <div class="row">
-        <div class="col-lg-12">
-          <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
+        <div class="col-lg-8">
+          <div class="chart" id="bar-chart-facGrafica" style="height: 250px;"></div>
+        </div>
+        <div class="col-lg-4">
+          <?php  $countFacProv = ControladorFacturas::ctrContarFacturasProv($fechaInicial, $fechaFinal);
+
+          if ($countFacProv != null) 
+          {
+             echo '<table class="table table-condensed">
+            <tbody><tr>
+              <th style="width: 10px">#</th>
+              <th>Proveedor</th>
+              <th>Inversión</th>
+              <th>IVA</th>
+              <th>TOTAL</th>
+            </tr>';
+
+              foreach ($countFacProv as $key => $value) 
+              {
+                echo'<tr>
+                      <td>'.($key+1).'</td>
+                      <td>'.$value[0].'</td>
+                      <td>$ <span class="cantidadEfectivo">'.$value[1].'</span></td>
+                      <td>$ <span class="cantidadEfectivo">'.$value[2].'</span></td>
+                      <td>$ <span class="cantidadEfectivo">'.($value[1]+$value[2]).'</span></td>
+                    </tr>';
+              }
+
+
+              echo ' </tbody>
+          </table>';
+          }
+
+          ?>
         </div>
       </div>
   </div>
@@ -29,7 +61,7 @@
  var data = [
      <?php
 
-     $countFacProv = ControladorFacturas::ctrContarFacturasProv($fechaInicial, $fechaFinal);
+    
 
    if($countFacProv != null)
     {
@@ -65,7 +97,7 @@
       resize: true
   };
 
-  config.element = 'bar-chart-rqCanMesAnio';
+  config.element = 'bar-chart-facGrafica';
   Morris.Bar(config);
 
 
