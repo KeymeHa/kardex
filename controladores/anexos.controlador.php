@@ -1,13 +1,11 @@
 <?php
 
-
-
 class ControladorAnexos
 {
 
 	static public function ctrMostrarCarpetas($item, $valor)
 	{
-		$tabla = "carpetasProv";
+		$tabla = "carpetasprov";
 
 		$respuesta = ModeloCarpetas::mdlMostrarCarpetas($tabla, $item, $valor);
 
@@ -15,11 +13,21 @@ class ControladorAnexos
 
 	}
 
-	static public function ctrMostrarCantidadArchivos($itemUno, $valorUno, $itemDos, $valorDos)
+	static public function ctrContarCarpetas($item, $valor)
+	{
+		$tabla = "carpetasprov";
+
+		$respuesta = ModeloCarpetas::mdlContarCarpetas($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrContarAnexos($item, $valor)
 	{
 		$tabla = "anexosprov";
 
-		$respuesta = ModeloCarpetas::mdlMostrarCantidadArchivos($tabla, $itemUno, $valorUno, $itemDos, $valorDos);
+		$respuesta = ModeloCarpetas::mdlContarAnexos($tabla, $item, $valor);
 
 		return $respuesta;
 	}
@@ -36,28 +44,30 @@ class ControladorAnexos
 	static public function ctrCrearCarpeta()
 	{
 
-		if( isset($_POST["nuevaCarpeta"]) && isset($_POST["idProveedor"]) && isset($_POST["contadorC"]) )
+		if( isset($_POST["nuevaCarpeta"]) )
 		{
 			if(preg_match('/^[a-zA-Z0-9 -]+$/', $_POST["nuevaCarpeta"]) )
 			{
 
-				if($_POST["contadorC"] == 0)
+				$contadorC = $contarCar->ctrMostrarCarpetas("id_prov", $GET["idProv"]);
+
+				if($contadorC[0] == 0)
 				{
 					$cantidad = 1;
 				}
 				else
 				{
-					$cantidad = $_POST["contadorC"];
+					$cantidad = $contadorC[0];
 				}
 
 				$directorio = "vistas/documentos/".$cantidad;
 
 				mkdir($directorio, 0755);
 
-				$tabla = "carpetasProv";
+				$tabla = "carpetasprov";
 
 				$datos = array("nombre" => $_POST["nuevaCarpeta"],
-					           "id_prov" => $_POST["idProveedor"]);
+					           "id_prov" => $GET["idProv"]);
 
 				$respuesta = ModeloCarpetas::mdlCrearCarpeta($tabla, $datos);
 				
@@ -76,7 +86,7 @@ class ControladorAnexos
 
 						if(result.value){
 						
-							window.location = "index.php?ruta=proveedor&idProv='.$_POST["idProveedor"].'";
+							window.location = "index.php?ruta=proveedor&idProv='.$GET["idProv"].'";
 
 						}
 

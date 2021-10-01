@@ -275,6 +275,15 @@ function paginaCargada(pagina){
 			tablaAjax = 'personas';
 			variable = "?idArea="+idArea;
 		}
+		else if(pagina == 19)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idProv = urlParams.get('idProv');
+			tablaElegida =  $('.tablaCarpeta');
+			tablaAjax = 'carpetas';
+			variable = "?idProv="+idProv;
+		}
 
 
 		 $.ajax({

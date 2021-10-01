@@ -129,6 +129,8 @@
             {$paginaCargada.="17";}
             elseif ($_GET["ruta"] == "verArea")
             {$paginaCargada.="18";}
+            elseif ($_GET["ruta"] == "proveedor")
+            {$paginaCargada.="19";}
             else
             {$paginaCargada.="0";}
 

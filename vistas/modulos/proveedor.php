@@ -106,62 +106,19 @@
           </div>
 
           <div class="box-body">
-
-             <table class="table table-bordered table-striped dt-responsive tablas" width="100%" >
-                 
+             <table class="table table-bordered table-striped dt-responsive tablaCarpeta" width="100%" >
                 <thead>
-                 
                  <tr>
-                   
                    <th style="width:10px">#</th>
                    <th>Carpeta</th>
                    <th>Archivos</th>
                    <th>Fecha</th>
                    <th style="width: 130px">Acciones</th>
-
-                 </tr> 
-
+                 </tr>
                 </thead>
-
-                <tbody> 
-
-                    <?php
-                    $item2 = "id_prov";
-                    $carpetas = ControladorAnexos::ctrMostrarCarpetas($item2, $valor);
-
-                    $itemC = "id_carpeta";
-                    $itemCP = "id_proveedor";
-
-                    $cCarpeta = 0;
-
-                   foreach ($carpetas as $key => $value){
-
-                      $cantidadArchivos = (ControladorAnexos::ctrMostrarCantidadArchivos($itemC, $value["id"],$itemCP,$valor));
-                     
-                      echo ' <tr>
-                                <td>'.($key+1).'</td>
-                                <td>'.$value["nombre"].'</td>
-                                <td>'.$cantidadArchivos[0].'</td>
-                                <td>'.$value["fecha"].'</td>
-                                <td>
-                                  <div class="btn-group">
-                                    <button class="btn btn-success btnVerArchivos" title="Ver Archivos" id_carpeta="'.$value["id"].'" nombre_carpeta="'.$value["nombre"].'"><i class="fa fa-folder"></i></button>
-                                    <button class="btn btn-warning" title="Editar"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger" title="Eliminar"><i class="fa fa-trash"></i></button>
-                                  </div>
-                                </td>
-                              </tr>';
-                              $cCarpeta++;
-                        }
-                      ?> 
-                </tbody>
-
-               </table>                 
-                          
-          </div><!---->
-
+               </table>  
+          </div>
         </div>
-        
       </div>
 
        <div class="col-md-6">
@@ -257,8 +214,6 @@ include "modalEditarProveedor.php";
                 <span class="input-group-addon"><i class="fa fa-folder"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevaCarpeta" placeholder="Nombre Carpeta" autocomplete="off" required>
-
-                <input type="hidden" class="form-control input-lg" name="contadorC" value='<?php echo $cCarpeta;?>'>
 
               </div>
 

@@ -32,12 +32,21 @@ class ModeloCarpetas
 		$stmt = null;
 	}
 
-	static public function mdlMostrarCantidadArchivos($tabla, $itemUno, $valorUno, $itemDos, $valorDos)
+	static public function mdlContarCarpetas($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE elim = 0 AND :$itemUno = $itemUno AND :$itemDos = $itemDos");
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND elim = 0");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt -> execute();
+		return $stmt -> fetch();	
+		$stmt -> close();
+		$stmt = null;
+	}
 
-		$stmt -> bindParam(":".$itemUno, $valorUno, PDO::PARAM_STR);
-		$stmt -> bindParam(":".$itemDos, $valorDos, PDO::PARAM_STR);
+	static public function mdlContarAnexos($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE :$item = $item AND elim = 0");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 		
 		$stmt -> execute();
 
