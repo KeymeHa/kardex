@@ -112,7 +112,7 @@
                    <th style="width:10px">#</th>
                    <th>Carpeta</th>
                    <th>Archivos</th>
-                   <th>Fecha</th>
+                   <th>Fecha de Creación</th>
                    <th style="width: 130px">Acciones</th>
                  </tr>
                 </thead>
