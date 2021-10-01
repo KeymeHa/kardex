@@ -20,6 +20,8 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 			$("#editarNomComercial").val(respuesta["nombreComercial"]);
 			$("#editarNit").val(respuesta["nit"]);
 			$("#editarDigito").val(respuesta["digitoNit"]);
+			$("#editarTelefono").val(respuesta["telefono"]);
+			$("#editarCorreoP").val(respuesta["correo"]);
 
 			if(respuesta["descripcion"] != null)
 			{
@@ -41,8 +43,34 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 				$("#editarCorreoP").val(respuesta["correo"].replace(/"/gi,'&quot'));
 			}
 
+
+
 		}
 
 	});
 
+})
+
+
+$(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
+	var idCar = $(this).attr("id_carpeta");
+	var nomCar = $(this).attr("nombre_carpeta");
+	//var datos = new FormData();
+	//datos.append("idCar", idCar);
+
+	$("#carpetaElegida").html(nomCar);
+
+	/*
+	$.ajax({
+		url:"ajax/insumos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{		
+		}
+	});*/
 })

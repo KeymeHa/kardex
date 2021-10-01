@@ -82,6 +82,8 @@
                 <dd><?php echo $proveedores["telefono"];?></dd>
                 <dt>Dirección:</dt>
                 <dd><?php echo $proveedores["direccion"];?></dd>
+                <dt>Correo Electrónico:</dt>
+                <dd><?php echo $proveedores["correo"];?></dd>
               </dl>
             </div>
 
