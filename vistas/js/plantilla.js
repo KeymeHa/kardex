@@ -284,6 +284,22 @@ function paginaCargada(pagina){
 			tablaAjax = 'carpetas';
 			variable = "?idProv="+idProv;
 		}
+		else if(pagina == 20)
+		{
+			tablaElegida =  $('.tablaAnexos');
+			tablaAjax = 'anexos';
+
+			if(localStorage.getItem("idCarpeta") != null)
+			{
+				variable  = "?idCar="+localStorage.getItem("idCarpeta");
+			}
+			else
+			{
+				variable = "?idCar=0";
+			}
+
+			
+		}
 
 
 		 $.ajax({

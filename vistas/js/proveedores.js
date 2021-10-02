@@ -30,6 +30,8 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 			$("#editarNomComercial").val(respuesta["nombreComercial"]);
 			$("#editarNit").val(respuesta["nit"]);
 			$("#editarDigito").val(respuesta["digitoNit"]);
+			$("#editarTelefono").val(respuesta["telefono"]);
+			$("#editarCorreoP").val(respuesta["correo"]);
 
 			if(respuesta["descripcion"] != null)
 			{

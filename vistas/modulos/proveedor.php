@@ -132,37 +132,15 @@
                   <div class="row">
                     <div class="col-md-9">
                       <h3 class="box-title">Carpeta: <b id="carpetaElegida"></b></h3>
+                      <input type="hidden" value="0" id="idCarpetaSelec">
                     </div>
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-success btn-xs" title="Agregar Archivo" data-toggle="modal" data-target="#modalAgregarArchivo"><i class="fa fa-plus"></i> Añadir Archivo</button>
+                        <button type="button" class="btn btn-success btn-xs btn-NewAnexo" title="Agregar Archivo" data-toggle="modal" data-target="#modalAgregarArchivo" disabled><i class="fa fa-plus"></i> Añadir Archivo</button>
                     </div>
                   </div>
               </div>
 
-              <div class="box-body">
-
-                <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-                     
-                    <thead>
-                     
-                     <tr>
-                       
-                       <th style="width:10px">#</th>
-                       <th>Nombre</th>
-                       <th>Fecha</th>
-                       <th style="width:100px">Acciones</th>
-
-                     </tr> 
-
-                    </thead>
-
-                    <tbody id="TablaArchivos">
-
-                    </tbody>
-
-                   </table>
-
-                
+              <div class="box-body tablaDivPersona">
               </div><!---->
 
         </div>

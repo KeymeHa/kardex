@@ -59,7 +59,34 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 	//datos.append("idCar", idCar);
 
 	$("#carpetaElegida").html(nomCar);
+	$("#idCarpetaSelec").val(idCar);
+	$('button.btn-NewAnexo').attr("disabled", false);	
 
+	paginaCargada(20);
+
+
+	if(localStorage.getItem("idCarpeta") != null)
+	{
+		localStorage.setItem("idCarpeta", idCar);
+	}
+	else
+	{
+		localStorage.setItem("idCarpeta", idCar);
+	}
+
+	if(!$('.tablaDivPersona').find(".table").length)
+		{
+	 	$(".tablaDivPersona").append(
+	  '<table class="table table-bordered table-striped dt-responsive tablaAnexos" width="100%">'+
+		  '<thead>'+
+		   '<tr>'+
+		     '<th style="width:10px">#</th>'+
+		     '<th>Nombre</th>'+
+		     '<th>Fecha</th>'+
+		     '<th style="width:100px">Acciones</th>'+
+		   '</tr> '+
+		  '</thead>'+
+		 '</table>')}
 	/*
 	$.ajax({
 		url:"ajax/insumos.ajax.php",

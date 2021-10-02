@@ -123,12 +123,13 @@ class ControladorProveedores
 
 			$datos = array('razonSocial' => $_POST["editarProveedor"],
 							'nombreComercial' => $_POST["editarNomComercial"],
-							'nit' => $_POST["editarNit"],
-							'digitoNit' => $_POST["editarDigito"],
-							'descripcion' => $_POST["editarDescripcion"],
 							'direccion' => $_POST["editarDireccion"],
+							'descripcion' => $_POST["editarDescripcion"],
 							'contacto' => $_POST["editarContacto"],
-							'telefono' => $_POST["editarTelefono"]);
+							'telefono' => $_POST["editarTelefono"],
+							'correo' => $_POST["editarCorreoP"],
+							'nit' => $_POST["editarNit"],
+							'digitoNit' => $_POST["editarDigito"],);
 
 			
 

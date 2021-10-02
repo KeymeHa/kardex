@@ -22,7 +22,7 @@ class ModeloCarpetas
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 AND :$item = $item");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 
 		$stmt -> execute();
 
