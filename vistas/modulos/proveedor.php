@@ -140,8 +140,19 @@
                   </div>
               </div>
 
+              
               <div class="box-body tablaDivPersona">
-              </div><!---->
+                <table class="table table-bordered table-striped dt-responsive tablaAnexos" width="100%">
+                <thead>
+                 <tr>
+                   <th style="width:10px">#</th>
+                   <th>Nombre</th>
+                   <th>Fecha</th>
+                   <th style="width:100px">Acciones</th>
+                 </tr> 
+                </thead>
+               </table>
+              </div>
 
         </div>
         
@@ -159,7 +170,7 @@ include "modalEditarProveedor.php";
 
 ?>
 
-  <div id="modalCrearCarpeta" class="modal fade" role="dialog">
+<div id="modalCrearCarpeta" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -195,6 +206,7 @@ include "modalEditarProveedor.php";
 
                 <input type="text" class="form-control input-lg" name="nuevaCarpetaProv" placeholder="Nombre Carpeta" autocomplete="off" required>
 
+
               </div>
 
             </div>
@@ -228,9 +240,75 @@ include "modalEditarProveedor.php";
 
 </div>
 
+               
+<div id="modalEditarCarpeta" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
 
+    <div class="modal-content">
 
-  <div id="modalAgregarArchivo" class="modal fade" role="dialog">
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#00A65A; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Carpeta</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-folder"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="editarCarpetaProv" id="editarCarpetaProv" placeholder="Nombre Carpeta" autocomplete="off" required>
+
+                 <input type="hidden" value="" name="idCarEditada" id="idCarEditada" readonly required>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Editar</button>
+
+        </div>
+
+        <?php
+
+          $editarCarpeta = new ControladorAnexos();
+          $editarCarpeta -> ctrEditarCarpeta();
+
+        ?>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="modalAgregarArchivo" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -323,3 +401,10 @@ include "modalEditarProveedor.php";
   </div>
 
 </div>
+
+<?php
+
+  $borrarCarpeta = new ControladorAnexos();
+  $borrarCarpeta -> ctrBorrarCarpeta($_SESSION["id"]);
+
+?>

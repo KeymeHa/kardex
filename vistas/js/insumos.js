@@ -222,8 +222,8 @@ $(".tablaInsumos").on("click", "button.btnEliminarInsumo", function(){
 		showConfirmButton: true,
 		confirmButtonText: "Eliminar",
 		cancelButtonText: "Cancelar",
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
+		confirmButtonColor: '#d33',
+		cancelButtonColor: '#149243',
 	}).then((result)=>{
 		if (result.value) 
 		{

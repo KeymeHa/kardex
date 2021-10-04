@@ -32,7 +32,7 @@ class tablaAnexos
 		for( $i = 0; $i < count($anexos); $i++)
 		{	
 
-		   $acciones = "<button class='btn btn-success btnVerArchivos' title='Ver Archivos' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."'><i class='fa fa-folder'></i></button><button class='btn btn-warning' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Editar'><i class='fa fa-pencil'></i></button><button class='btn btn-danger' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Eliminar'><i class='fa fa-trash'></i></button>";
+		   $acciones = "<button class='btn btn-success btnVerArchivos' title='Ver Archivos' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."'><i class='fa fa-folder'></i></button><button class='btn btn-warning' id_anexo='".$anexos[$i]["id"]."' title='Editar'><i class='fa fa-pencil'></i></button><button class='btn btn-danger' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Eliminar'><i class='fa fa-trash'></i></button>";
 
 		 
 	   		$dJson .='[
