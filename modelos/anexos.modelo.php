@@ -8,14 +8,14 @@ class ModeloCarpetas
 	{
 		if ($item == "id") 
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 AND :$item = $item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 			$stmt -> execute();
 			return $stmt -> fetch();
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 AND :$item = $item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 			$stmt -> execute();
 			return $stmt -> fetchAll();
@@ -26,27 +26,21 @@ class ModeloCarpetas
 
 	static public function mdlMostrarArchivos($tabla, $item, $valor)
 	{
-		if ($item == "id") 
-		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 AND :$item = $item");
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
-			$stmt -> execute();
-			return $stmt -> fetch();
-		}
-		else
-		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 AND :$item = $item");
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
-			$stmt -> execute();
-			return $stmt -> fetchAll();
-		}
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
 		$stmt -> close();
 		$stmt = null;
 	}
 
 	static public function mdlContarCarpetas($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND elim = 0");
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item");
 		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 		$stmt -> execute();
 		return $stmt -> fetch();	
@@ -56,16 +50,12 @@ class ModeloCarpetas
 
 	static public function mdlContarAnexos($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE :$item = $item AND elim = 0");
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE :$item = $item");
 
 		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
-		
 		$stmt -> execute();
-
 		return $stmt -> fetch();
-
 		$stmt -> close();
-
 		$stmt = null;
 	}
 
@@ -106,7 +96,7 @@ class ModeloCarpetas
 
 		}else{
 
-			return "error";
+			return $stmt->errorInfo();
 		
 		}
 
@@ -116,7 +106,7 @@ class ModeloCarpetas
 
 	static public function mdlBorrarCarpeta($idCar)
 	{
-		$stmt = Conexion::conectar()->prepare("DELETE anexosprov WHERE id_carpeta = id_carpeta");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM anexosprov WHERE id_carpeta = id_carpeta");
 
 		$stmt->bindParam(":id_carpeta", $idCar, PDO::PARAM_INT);
 
@@ -136,7 +126,7 @@ class ModeloCarpetas
 
 	static public function mdlBorrarAnexosCar($idCar)
 	{
-		$stmt = Conexion::conectar()->prepare("DELETE carpetasprov WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM carpetasprov WHERE id = :id");
 		$stmt->bindParam(":id", $idCar, PDO::PARAM_INT);
 
 		if($stmt->execute()){

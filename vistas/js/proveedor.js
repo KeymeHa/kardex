@@ -53,39 +53,23 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 
 
 $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
-	
 	var idCar = $(this).attr("id_carpeta");
 	var nomCar = $(this).attr("nombre_carpeta");
 
 	$("#carpetaElegida").html(nomCar);
 	$("#idCarpetaSelec").val(idCar);
-
-	if(localStorage.getItem("idCarpeta") != null)
-	{	
-		validarTablaAnexo();
-		aparecerTablaAnexo();
-
-		if($('.tablaDivPersona').find(".tablaAnexos").length)
-		{
-		 	alert('existe');
-		}
-		else
-		{
-			if (idCar != localStorage.getItem("idCarpeta")) 
-			{
-				validarTablaAnexo();
-				aparecerTablaAnexo();
-			}
-			alert('no existe');
-		}
-	}
+	$('button.btn-NewAnexo').attr("disabled", false);	
 
 	if(localStorage.getItem("idCarpeta") != null)
 	{
+		validarTablaAnexo();
+		aparecerTablaAnexo();
 		localStorage.setItem("idCarpeta", idCar);
 	}
 	else	
 	{
+		validarTablaAnexo();
+		aparecerTablaAnexo();
 		localStorage.setItem("idCarpeta", idCar);
 	}
 
@@ -95,19 +79,18 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 
 function validarTablaAnexo()
 {
+	$('button.btn-NewAnexo').attr("disabled", true);
+
 	if($('.tablaDivAnexo').find("table").length)
 	{
 	 	$('.tablaDivAnexo').children().remove();
 	 	
 	}
-	$('button.btn-NewAnexo').attr("disabled", true);
 }
 
 function aparecerTablaAnexo()
 {
-
-	$('button.btn-NewAnexo').attr("disabled", false);	
-
+	$('button.btn-NewAnexo').attr("disabled", false);
 	$('.tablaDivAnexo').append(
  	'<table class="table table-bordered table-striped dt-responsive tablaAnexos" width="100%">'+
     '<thead>'+
@@ -188,6 +171,7 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 					if(respuesta[0] == 0)
 					{
 						validarTablaAnexo();
+						$("#idCarpetaSelec").val("");
 						window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;		
 					}//if
 					else
@@ -206,6 +190,7 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 							if (result.value) 
 							{
 								validarTablaAnexo();
+								$("#idCarpetaSelec").val("");
 								window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
 							}
 						})

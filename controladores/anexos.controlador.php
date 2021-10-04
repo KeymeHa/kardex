@@ -133,7 +133,7 @@ class ControladorAnexos
 
 	}
 
-	/*static public function ctrCrearArchivo()
+	static public function ctrCrearArchivo()
 	{
 		if (isset($_POST["nuevoNombreArchivo"])) 
 		{
@@ -149,12 +149,10 @@ class ControladorAnexos
 				$nombre = intval($cantidad[0])+1;
 				$nombreArchivo = $nombre.'.pdf';
 
-				$directorio = 'vistas/documentos/'.$carpeta['carpeta'].'/'.$nombreArchivo;
-				$ruta = $carpeta['carpeta'].'/'.$nombreArchivo;
+				$directorio = 'vistas/documentos/'.strval($carpeta['carpeta']).'/'.$nombreArchivo;
+				$ruta = strval($carpeta['carpeta']).'/'.$nombreArchivo;
 
-				if(!file_exists($directorio))
-				{
-					copy($tmp_name,$directorio);
+					copy($tmp_name, $directorio);
 
 					$nombre = ControladorParametros::ctrValidarCaracteres($_POST["nuevoNombreArchivo"]);
 
@@ -169,6 +167,35 @@ class ControladorAnexos
 					
 					if ($respuesta == "ok") 
 					{
+						if(!file_exists($directorio))
+						{
+							copy($tmp_name, $directorio);
+						}
+						else
+						{
+							echo '<script>
+
+								swal({
+
+									type: "warning",
+									title: "¡Ya Existe un archivo Similar!",
+									showConfirmButton: true,
+									confirmButtonColor: "#149243",
+									confirmButtonText: "Cerrar"
+
+								}).then(function(result){
+
+									if(result.value){
+									
+										window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+									}
+
+								});
+							
+
+								</script>';
+						}
 						echo '<script>
 
 						swal({
@@ -176,6 +203,7 @@ class ControladorAnexos
 							type: "success",
 							title: "¡Anexo Subido exitosamente!",
 							showConfirmButton: true,
+							confirmButtonColor: "#149243",
 							confirmButtonText: "Cerrar"
 
 						}).then(function(result){
@@ -202,6 +230,7 @@ class ControladorAnexos
 							type: "error",
 							title: "¡Se ha presentado un error!",
 							showConfirmButton: true,
+							confirmButtonColor: "#149243",
 							confirmButtonText: "Cerrar"
 
 						}).then(function(result){
@@ -217,31 +246,8 @@ class ControladorAnexos
 
 						</script>';
 					}
-				}
-				else
-				{
-					echo '<script>
 
-						swal({
-
-							type: "warning",
-							title: "¡Ya Existe un archivo Similar!",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-
-						}).then(function(result){
-
-							if(result.value){
-							
-								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
-
-							}
-
-						});
-					
-
-						</script>';
-				}
+				
 			}
 			else
 			{
@@ -252,6 +258,7 @@ class ControladorAnexos
 							type: "error",
 							title: "¡Debe ser un archivo en formato PDF!",
 							showConfirmButton: true,
+							confirmButtonColor: "#149243",
 							confirmButtonText: "Cerrar"
 
 						}).then(function(result){
@@ -268,7 +275,7 @@ class ControladorAnexos
 						</script>';
 			}
 		}
-	}*/
+	}
 
 	static public function ctrEditarCarpeta()
 	{
@@ -294,6 +301,7 @@ class ControladorAnexos
 						type: "success",
 						title: "¡Carpeta Editada!",
 						showConfirmButton: true,
+						confirmButtonColor: "#149243",
 						confirmButtonText: "Cerrar"
 
 					}).then(function(result){
@@ -320,6 +328,7 @@ class ControladorAnexos
 						type: "error",
 						title: "¡Se ha presentado un error!",
 						showConfirmButton: true,
+						confirmButtonColor: "#149243",
 						confirmButtonText: "Cerrar"
 
 					}).then(function(result){
@@ -347,6 +356,7 @@ class ControladorAnexos
 						type: "error",
 						title: "¡Caracteres invalidos o vacios!",
 						showConfirmButton: true,
+						confirmButtonColor: "#149243",
 						confirmButtonText: "Cerrar"
 
 					}).then(function(result){
@@ -379,12 +389,24 @@ class ControladorAnexos
 				if($carpeta != null )
 				{
 
-					$directorio = "vistas/documentos/".$carpeta['carpeta'];
+					$contarArchivos = new ControladorAnexos();
+					$cantidad = $contarArchivos->ctrContarAnexos("id_carpeta", $idCar);
 
-					if (!file_exists($directorio)) 
+					$verArchivos = new ControladorAnexos();
+					$archivos = $verArchivos->ctrMostrarArchivos("id_carpeta", $idCar);
+					$directorio = "vistas/documentos/".strval($carpeta['carpeta']) ;
+
+					foreach ($archivos as $key => $value) 
 					{
-					   rmdir($directorio);
+						$ruta = "vistas/documentos/".$value["ruta"];
+						
+						if(file_exists($ruta))
+						{
+							unlink($ruta);
+						}
 					}
+
+				    rmdir($directorio);
 
 					$datos = array( "accion" => 4,
 									"numTabla" => 11,
@@ -393,13 +415,15 @@ class ControladorAnexos
 									"id_usr" => $id_usr
 									 );
 					
-					$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($idCar);
+					if ($cantidad > 0) 
+					{
+						$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($idCar);
+					}
 
-					$respuestaDos = ModeloCarpetas::mdlBorrarCarpeta($idCar);
+					$respuesta = ModeloCarpetas::mdlBorrarCarpeta($idCar);
 
-					
 
-					if($respuesta == "ok" && $respuestaDos == "ok")
+					if($respuesta == "ok")
 					{
 						$respuesta = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
 						echo'<script>
@@ -408,6 +432,7 @@ class ControladorAnexos
 								  type: "success",
 								  title: "Carpeta '.$carpeta["nombre"].' Eliminada",
 								  showConfirmButton: true,
+								  confirmButtonColor: "#149243",
 								  confirmButtonText: "Cerrar"
 								  }).then(function(result) {
 											if (result.value) {
@@ -427,6 +452,7 @@ class ControladorAnexos
 								  type: "error",
 								  title: "No se pudo eliminar la Carpeta",
 								  showConfirmButton: true,
+								  confirmButtonColor: "#149243",
 								  confirmButtonText: "Cerrar"
 								  }).then(function(result) {
 											if (result.value) {
@@ -447,6 +473,7 @@ class ControladorAnexos
 							  type: "error",
 							  title: "Error al identificar carpeta a Eliminar",
 							  showConfirmButton: true,
+							  confirmButtonColor: "#149243",
 							  confirmButtonText: "Cerrar"
 							  }).then(function(result) {
 										if (result.value) {
