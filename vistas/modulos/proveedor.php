@@ -385,6 +385,83 @@ include "modalEditarProveedor.php";
 
 </div>
 
+<div id="modalEditarAnexo" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#00A65A; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Adjuntar Archivo</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-folder"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="editarAnexoCar" name="editarAnexoCar" placeholder="Nombre archivo" autocomplete="off" required>
+
+                <input type="hidden" value="0" name="idAnexoEditada" id="idAnexoEditada">
+
+              </div>
+
+              <div class="form-group">
+                
+                  <div class="panel">*archivo en formato PDF</div>
+
+                  <input type="file" name="nuevoArchivo">
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+
+          <button type="submit" class="btn btn-success">Editar</button>
+
+        </div>
+
+        <?php
+         /* $crearArchivo = new ControladorAnexos();
+          $crearArchivo -> ctrCrearArchivo();*/
+        ?>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
 <?php
 
   $borrarCarpeta = new ControladorAnexos();

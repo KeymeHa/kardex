@@ -26,13 +26,29 @@ class ModeloCarpetas
 
 	static public function mdlMostrarArchivos($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
 
-		$stmt -> execute();
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 
-		return $stmt -> fetchAll();
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE :$item = $item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+		}
+	
 
 		$stmt -> close();
 		$stmt = null;

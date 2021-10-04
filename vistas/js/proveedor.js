@@ -203,3 +203,106 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 	})//swal eliminar
 	
 })
+
+
+
+
+//------------				ANEXOS
+$(".tablaAnexos").on("click", "button.btnEditarAnexo", function(){
+
+	var idAnexo = $(this).attr("id_anexo");
+	
+	var datos = new FormData();
+	datos.append("idAnexo", idAnexo);
+
+	$.ajax({
+
+		url:"ajax/anexos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{
+			if(respuesta)
+			{
+	    		$("#editarAnexoCar").val(respuesta['nombre']);
+	    		$("#idAnexoEditada").val(idAnexo);
+    		}	
+		}
+	});
+
+})
+
+$(".tablaAnexos").on("click", "button.btnEliminarAnexo", function(){
+
+	var idAnexo = $(this).attr("id_anexo");
+	var nomAnexo = $(this).attr("nombre_anexo");
+	var queryString = window.location.search;
+	var urlParam = new URLSearchParams(queryString);
+	var idProv = urlParam.get('idProv');
+
+	swal({
+		type: "warning",
+		title: "¡Estas Seguro de Eliminar la carpeta: "+nomAnexo+"!",
+		showCancelButton: true,
+		showConfirmButton: true,
+		confirmButtonText: "Eliminar",
+		cancelButtonText: "Cancelar",
+		confirmButtonColor: '#d33',
+		cancelButtonColor: '#149243',
+	}).then((result)=>{
+
+		if (result.value) 
+		{
+			var datos = new FormData();
+			datos.append("idAnexoElim", idAnexo);
+
+			$.ajax({
+
+				url:"ajax/anexos.ajax.php",
+				method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function(respuesta){
+
+					if(respuesta[0] == 0)
+					{
+						validarTablaAnexo();
+						$("#idCarpetaSelec").val("");
+						window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;		
+					}//if
+					else
+					{
+						swal({
+							type: "warning",
+							title: "¡Esta Carpeta tiene "+respuesta[0]+" archivos, si la elimina, estos se perderán!",
+							text: "Esta acción no podra revertirse.",
+							showCancelButton: true,
+							showConfirmButton: true,
+							confirmButtonText: "Eliminar",
+							cancelButtonText: "Cancelar",
+							confirmButtonColor: '#d33',
+							cancelButtonColor: '#149243',
+						}).then((result)=>{
+							if (result.value) 
+							{
+								validarTablaAnexo();
+								$("#idCarpetaSelec").val("");
+								window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
+							}
+						})
+					}
+				}//respuesta:ajax
+
+			});//ajax
+		
+		}//if
+	})//swal eliminar
+	
+})

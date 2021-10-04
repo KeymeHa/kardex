@@ -16,6 +16,13 @@ class ajaxAnexos
 		$respuesta = ControladorAnexos::ctrContarAnexos($item, $valor);
 		echo json_encode($respuesta);
 	}#ajaxElimCarpeta
+	public $idAnexo;
+	public function ajaxMostrarAnexo()
+	{	$item = "id";
+		$valor = $this->idAnexo;
+		$respuesta = ControladorAnexos::ctrMostrarArchivos($item, $valor);
+		echo json_encode($respuesta);
+	}#ajaxElimCarpeta
 }
 if(isset($_POST["idCar"]))
 {	$nombreCar = new ajaxAnexos();
@@ -25,3 +32,9 @@ if(isset($_POST["idCarElim"]))
 {	$nombreCar = new ajaxAnexos();
 	$nombreCar -> idCarElim = $_POST["idCarElim"];
 	$nombreCar -> ajaxElimCarpeta();}
+if(isset($_POST["idAnexo"]))
+{	$nombreCar = new ajaxAnexos();
+	$nombreCar -> idAnexo = $_POST["idAnexo"];
+	$nombreCar -> ajaxMostrarAnexo();}
+
+
