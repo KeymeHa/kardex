@@ -59,9 +59,10 @@ class ModeloCarpetas
 
 	static public function mdlCrearCarpeta($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, id_prov) VALUES (:nombre, :id_prov)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, carpeta, id_prov) VALUES (:nombre, :carpeta, :id_prov)");
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":carpeta", $datos["carpeta"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_prov", $datos["id_prov"], PDO::PARAM_INT);
 
 		if($stmt->execute()){

@@ -44,12 +44,13 @@ class ControladorAnexos
 	static public function ctrCrearCarpeta()
 	{
 
-		if( isset($_POST["nuevaCarpeta"]) )
+		if( isset($_POST["nuevaCarpetaProv"]) )
 		{
-			if(preg_match('/^[a-zA-Z0-9 -]+$/', $_POST["nuevaCarpeta"]) )
+			if(preg_match('/^[a-zA-Z0-9 -]+$/', $_POST["nuevaCarpetaProv"]) )
 			{
 
-				$contadorC = $contarCar->ctrMostrarCarpetas("id_prov", $GET["idProv"]);
+				$contarCar = new ControladorAnexos();
+				$contadorC = $contarCar->ctrContarCarpetas("id_prov", $_GET["idProv"]);
 
 				if($contadorC[0] == 0)
 				{
@@ -57,19 +58,24 @@ class ControladorAnexos
 				}
 				else
 				{
-					$cantidad = $contadorC[0];
+					$cantidad = $contadorC[0] + 1;
 				}
 
 				$directorio = "vistas/documentos/".$cantidad;
 
-				mkdir($directorio, 0755);
+				if (!file_exists($directorio)) 
+				{
+				    mkdir($directorio, 0755, true);
+				}
 
 				$tabla = "carpetasprov";
 
-				$datos = array("nombre" => $_POST["nuevaCarpeta"],
-					           "id_prov" => $GET["idProv"]);
+				$datos = array("nombre" => $_POST["nuevaCarpetaProv"],
+							   "carpeta" => $cantidad,
+					           "id_prov" => $_GET["idProv"]);
 
 				$respuesta = ModeloCarpetas::mdlCrearCarpeta($tabla, $datos);
+				
 				
 				if ($respuesta == "ok") 
 				{
@@ -86,7 +92,7 @@ class ControladorAnexos
 
 						if(result.value){
 						
-							window.location = "index.php?ruta=proveedor&idProv='.$GET["idProv"].'";
+							window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
 
 						}
 
@@ -112,7 +118,7 @@ class ControladorAnexos
 
 						if(result.value){
 						
-							window.location = "proveedor?idProv='.$_POST["idProveedor"].'";
+							window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
 
 						}
 
@@ -139,7 +145,7 @@ class ControladorAnexos
 
 						if(result.value){
 						
-							window.location = "proveedor?idProv='.$_POST["idProveedor"].'";
+							window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
 
 						}
 

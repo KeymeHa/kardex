@@ -165,7 +165,7 @@ include "modalEditarProveedor.php";
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -193,7 +193,7 @@ include "modalEditarProveedor.php";
               
                 <span class="input-group-addon"><i class="fa fa-folder"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaCarpeta" placeholder="Nombre Carpeta" autocomplete="off" required>
+                <input type="text" class="form-control input-lg" name="nuevaCarpetaProv" placeholder="Nombre Carpeta" autocomplete="off" required>
 
               </div>
 
