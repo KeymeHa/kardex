@@ -133,7 +133,7 @@ class ControladorAnexos
 
 	}
 
-	static public function ctrCrearArchivo()
+	/*static public function ctrCrearArchivo()
 	{
 		if (isset($_POST["nuevoNombreArchivo"])) 
 		{
@@ -268,7 +268,7 @@ class ControladorAnexos
 						</script>';
 			}
 		}
-	}
+	}*/
 
 	static public function ctrEditarCarpeta()
 	{

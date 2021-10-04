@@ -1,10 +1,6 @@
 <?php
 require_once "../controladores/anexos.controlador.php";
 require_once "../modelos/anexos.modelo.php";
-
-require_once "../controladores/parametros.controlador.php";
-require_once "../modelos/parametros.modelo.php";
-
 		
 class tablaAnexos
 {	

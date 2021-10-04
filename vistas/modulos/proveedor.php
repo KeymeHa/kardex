@@ -132,7 +132,7 @@
                   <div class="row">
                     <div class="col-md-9">
                       <h3 class="box-title">Carpeta: <b id="carpetaElegida"></b></h3>
-                     
+                    
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-success btn-xs btn-NewAnexo" title="Agregar Archivo" data-toggle="modal" data-target="#modalAgregarArchivo" disabled><i class="fa fa-plus"></i> Añadir Archivo</button>
@@ -142,7 +142,6 @@
 
               
               <div class="box-body tablaDivAnexo">
-                
               </div>
 
         </div>
@@ -335,7 +334,7 @@ include "modalEditarProveedor.php";
 
                 <input type="text" class="form-control input-lg" name="nuevoNombreArchivo" placeholder="Nombre archivo" autocomplete="off" required>
 
-                <input type="hidden" value="0" id="idCarpetaSelec">
+                <input type="hidden" value="0" id="idCarpetaSelec" required readonly>
 
               </div>
 
@@ -377,8 +376,8 @@ include "modalEditarProveedor.php";
         </div>
 
         <?php
-          $crearArchivo = new ControladorAnexos();
-          $crearArchivo -> ctrCrearArchivo();
+         /* $crearArchivo = new ControladorAnexos();
+          $crearArchivo -> ctrCrearArchivo();*/
         ?>
 
       </form>
