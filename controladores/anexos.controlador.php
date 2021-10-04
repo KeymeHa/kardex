@@ -133,6 +133,142 @@ class ControladorAnexos
 
 	}
 
+	static public function ctrCrearArchivo()
+	{
+		if (isset($_POST["nuevoNombreArchivo"])) 
+		{
+			if($_FILES["nuevoArchivo"]["type"] == "application/pdf")
+			{
+				$contarArchivos = new ControladorAnexos();
+				$cantidad = $contarArchivos->ctrContarAnexos("id_carpeta", $_POST["idCarpetaSelec"]);
+
+				$verCarpeta = new ControladorAnexos();
+				$carpeta = $verCarpeta->ctrMostrarCarpetas("id", $_POST["idCarpetaSelec"]);
+
+				$tmp_name = $_FILES['nuevoArchivo']['tmp_name'];
+				$nombre = intval($cantidad[0])+1;
+				$nombreArchivo = $nombre.'.pdf';
+
+				$directorio = 'vistas/documentos/'.$carpeta['carpeta'].'/'.$nombreArchivo;
+				$ruta = $carpeta['carpeta'].'/'.$nombreArchivo;
+
+				if(!file_exists($directorio))
+				{
+					copy($tmp_name,$directorio);
+
+					$nombre = ControladorParametros::ctrValidarCaracteres($_POST["nuevoNombreArchivo"]);
+
+					$tabla = "anexosprov";
+
+					$datos = array("nombre" => $nombre,
+								   "ruta" => $ruta,
+						           "id_carpeta" => $_POST["idCarpetaSelec"]);
+
+					$respuesta = ModeloCarpetas::mdlNuevoAnexo($tabla, $datos);
+					
+					
+					if ($respuesta == "ok") 
+					{
+						echo '<script>
+
+						swal({
+
+							type: "success",
+							title: "¡Anexo Subido exitosamente!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+
+						
+					}
+					else
+					{
+						echo '<script>
+
+						swal({
+
+							type: "error",
+							title: "¡Se ha presentado un error!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+					}
+				}
+				else
+				{
+					echo '<script>
+
+						swal({
+
+							type: "warning",
+							title: "¡Ya Existe un archivo Similar!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+				}
+			}
+			else
+			{
+				echo '<script>
+
+						swal({
+
+							type: "error",
+							title: "¡Debe ser un archivo en formato PDF!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+			}
+		}
+	}
 
 	static public function ctrEditarCarpeta()
 	{

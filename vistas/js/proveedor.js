@@ -62,12 +62,8 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 
 	if(localStorage.getItem("idCarpeta") != null)
 	{	
-		if($('.tablaDivAnexo').find("table").length)
-		{
-		 	$('.tablaDivAnexo').children().remove();
-		 	
-		}
-		 	aparecerTablaAnexo();
+		validarTablaAnexo();
+		aparecerTablaAnexo();
 
 		localStorage.setItem("idCarpeta", idCar);
 	}
@@ -75,12 +71,8 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 	{
 		if (idCar != localStorage.getItem("idCarpeta")) 
 		{
-			if($('.tablaDivAnexo').find("table").length)
-			{
-			 	$('.tablaDivAnexo').children().remove();
-			 	
-			}
-			 	aparecerTablaAnexo();
+			validarTablaAnexo();
+			aparecerTablaAnexo();
 		}
 
 		localStorage.setItem("idCarpeta", idCar);
@@ -90,6 +82,14 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 
 })
 
+function validarTablaAnexo()
+{
+	if($('.tablaDivAnexo').find("table").length)
+	{
+	 	$('.tablaDivAnexo').children().remove();
+	 	
+	}
+}
 
 function aparecerTablaAnexo()
 {
@@ -172,6 +172,8 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 
 					if(respuesta[0] == 0)
 					{
+						validarTablaAnexo();
+						$("#idCarpetaSelec").val("");
 						window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;		
 					}//if
 					else
@@ -189,6 +191,8 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 						}).then((result)=>{
 							if (result.value) 
 							{
+								validarTablaAnexo();
+								$("#idCarpetaSelec").val("");
 								window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
 							}
 						})

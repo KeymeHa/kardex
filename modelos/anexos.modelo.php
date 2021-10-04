@@ -86,6 +86,28 @@ class ModeloCarpetas
 
 	}
 
+	static public function mdlNuevoAnexo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, ruta, id_carpeta) VALUES (:nombre, :ruta, :id_carpeta)");
+
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":ruta", $datos["ruta"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_carpeta", $datos["id_carpeta"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlBorrarCarpeta($idCar)
 	{
 		$stmt = Conexion::conectar()->prepare("DELETE anexosprov WHERE id_carpeta = id_carpeta");

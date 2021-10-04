@@ -132,7 +132,7 @@
                   <div class="row">
                     <div class="col-md-9">
                       <h3 class="box-title">Carpeta: <b id="carpetaElegida"></b></h3>
-                      <input type="hidden" value="0" id="idCarpetaSelec">
+                     
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-success btn-xs btn-NewAnexo" title="Agregar Archivo" data-toggle="modal" data-target="#modalAgregarArchivo" disabled><i class="fa fa-plus"></i> Añadir Archivo</button>
@@ -335,11 +335,7 @@ include "modalEditarProveedor.php";
 
                 <input type="text" class="form-control input-lg" name="nuevoNombreArchivo" placeholder="Nombre archivo" autocomplete="off" required>
 
-                <input type="hidden" class="form-control input-lg" name="idProveedor" value='<?php echo $proveedores["id"];?>'>
-                <!--
-                      <input type="text" class="form-control input-lg id_carpetaElegida" id_carpetaElegida="" name="contadorC" value='<?php echo $cCarpeta;?>' readonly>
-                -->
-                <input type="hidden" class="form-control input-lg id_carpetaElegida" value="" name="nuevoIdCarArchi">
+                <input type="hidden" value="0" id="idCarpetaSelec">
 
               </div>
 
@@ -358,7 +354,7 @@ include "modalEditarProveedor.php";
 
                 <div class="form-group">
                 
-                  <div class="panel">*archivo</div>
+                  <div class="panel">*archivo en formato PDF</div>
 
                   <input type="file" name="nuevoArchivo" required>
 
@@ -381,8 +377,8 @@ include "modalEditarProveedor.php";
         </div>
 
         <?php
-          //$crearArchivo = new ControladorAnexos();
-          //$crearArchivo -> ctrCrearArchivo();
+          $crearArchivo = new ControladorAnexos();
+          $crearArchivo -> ctrCrearArchivo();
         ?>
 
       </form>
