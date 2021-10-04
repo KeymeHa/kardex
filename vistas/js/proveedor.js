@@ -60,26 +60,52 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 	$("#idCarpetaSelec").val(idCar);
 	$('button.btn-NewAnexo').attr("disabled", false);	
 
-
-	if($('.tablaDivPersona').find(".tablaAnexos").length)
-	{
-	 	alert('existe');
-	}
-	else
-	{
-		alert('no existe');
-	}
-
 	if(localStorage.getItem("idCarpeta") != null)
-	{localStorage.setItem("idCarpeta", idCar);}
+	{	
+		if($('.tablaDivAnexo').find("table").length)
+		{
+		 	$('.tablaDivAnexo').children().remove();
+		 	
+		}
+		 	aparecerTablaAnexo();
+
+		localStorage.setItem("idCarpeta", idCar);
+	}
 	else	
-	{localStorage.setItem("idCarpeta", idCar);
+	{
+		if (idCar != localStorage.getItem("idCarpeta")) 
+		{
+			if($('.tablaDivAnexo').find("table").length)
+			{
+			 	$('.tablaDivAnexo').children().remove();
+			 	
+			}
+			 	aparecerTablaAnexo();
+		}
+
+		localStorage.setItem("idCarpeta", idCar);
 	}
 
 	paginaCargada(20);
 
 })
 
+
+function aparecerTablaAnexo()
+{
+	$('.tablaDivAnexo').append(
+ 	'<table class="table table-bordered table-striped dt-responsive tablaAnexos" width="100%">'+
+    '<thead>'+
+     '<tr>'+
+       '<th style="width:10px">#</th>'+
+       '<th>Nombre</th>'+
+       '<th>Fecha</th>'+
+       '<th style="width:100px">Acciones</th>'+
+     '</tr>'+
+    '</thead>'+
+   '</table>'
+   )
+}
 
 $(".tablaCarpeta").on("click", "button.btnEditarCarpeta", function(){
 
