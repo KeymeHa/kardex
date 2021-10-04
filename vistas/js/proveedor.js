@@ -65,16 +65,27 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 		validarTablaAnexo();
 		aparecerTablaAnexo();
 
+		if($('.tablaDivPersona').find(".tablaAnexos").length)
+		{
+		 	alert('existe');
+		}
+		else
+		{
+			if (idCar != localStorage.getItem("idCarpeta")) 
+			{
+				validarTablaAnexo();
+				aparecerTablaAnexo();
+			}
+			alert('no existe');
+		}
+	}
+
+	if(localStorage.getItem("idCarpeta") != null)
+	{
 		localStorage.setItem("idCarpeta", idCar);
 	}
 	else	
 	{
-		if (idCar != localStorage.getItem("idCarpeta")) 
-		{
-			validarTablaAnexo();
-			aparecerTablaAnexo();
-		}
-
 		localStorage.setItem("idCarpeta", idCar);
 	}
 
