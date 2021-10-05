@@ -13,11 +13,11 @@ class ControladorAnexos
 
 	}
 
-	static public function ctrContarCarpetas($item, $valor)
+	static public function ctrContarCarpetas()
 	{
 		$tabla = "carpetasprov";
 
-		$respuesta = ModeloCarpetas::mdlContarCarpetas($tabla, $item, $valor);
+		$respuesta = ModeloCarpetas::mdlContarCarpetas($tabla);
 
 		return $respuesta;
 
@@ -47,7 +47,7 @@ class ControladorAnexos
 		if( isset($_POST["nuevaCarpetaProv"]) )
 		{
 			$contarCar = new ControladorAnexos();
-			$contadorC = $contarCar->ctrContarCarpetas("id_prov", $_GET["idProv"]);
+			$contadorC = $contarCar->ctrContarCarpetas();
 
 			if($contadorC[0] == 0)
 			{
@@ -277,6 +277,36 @@ class ControladorAnexos
 		}
 	}
 
+	static public function ctrEliminarAnexo($item, $valor)
+	{
+		$verAnexo = new ControladorAnexos();
+		$anexo = $verAnexo->ctrMostrarArchivos($item, $valor);
+
+		$tabla = "anexosprov";
+
+		$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($tabla, "id", $valor);
+
+		$ruta = "vistas/documentos/".$anexo["ruta"];
+
+		if ($respuesta == "ok") 
+		{	
+			if(file_exists($ruta))
+			{
+				unlink($ruta);
+			}
+
+			$datos = array( "accion" => 4,
+							"numTabla" => 12,
+							"valorAnt" => $anexo["nombre"],
+							"valorNew" => "",
+							"id_usr" => $_SESSION["id"]
+							 );
+
+			$r = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
+		}
+		return $respuesta;
+	}
+
 	static public function ctrEditarCarpeta()
 	{
 		if (isset($_POST["editarCarpetaProv"])) 
@@ -388,12 +418,12 @@ class ControladorAnexos
 
 				if($carpeta != null )
 				{
-
+					$item = "id_carpeta";
 					$contarArchivos = new ControladorAnexos();
-					$cantidad = $contarArchivos->ctrContarAnexos("id_carpeta", $idCar);
+					$cantidad = $contarArchivos->ctrContarAnexos($item, $idCar);
 
 					$verArchivos = new ControladorAnexos();
-					$archivos = $verArchivos->ctrMostrarArchivos("id_carpeta", $idCar);
+					$archivos = $verArchivos->ctrMostrarArchivos($item, $idCar);
 					$directorio = "vistas/documentos/".strval($carpeta['carpeta']) ;
 
 					foreach ($archivos as $key => $value) 
@@ -417,7 +447,7 @@ class ControladorAnexos
 					
 					if ($cantidad > 0) 
 					{
-						$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($idCar);
+						$respuesta = ModeloCarpetas::mdlBorrarAnexosCar("anexosprov",$item ,$idCar);
 					}
 
 					$respuesta = ModeloCarpetas::mdlBorrarCarpeta($idCar);

@@ -105,7 +105,7 @@ function aparecerTablaAnexo()
    )
 }
 
-$(".tablaCarpeta").on("click", "button.btnEditarCarpeta", function(){
+$(".tablaDivAnexo").on("click", "button.btnEditarCarpeta", function(){
 
 	var idCar = $(this).attr("id_carpeta");
 	
@@ -208,7 +208,8 @@ $(".tablaCarpeta").on("click", "button.btnEliminarCarpeta", function(){
 
 
 //------------				ANEXOS
-$(".tablaAnexos").on("click", "button.btnEditarAnexo", function(){
+$(".tablaDivAnexo").on("click", "button.btnEditarAnexo", function(){
+
 
 	var idAnexo = $(this).attr("id_anexo");
 	
@@ -226,17 +227,14 @@ $(".tablaAnexos").on("click", "button.btnEditarAnexo", function(){
 		dataType: "json",
 		success: function(respuesta)
 		{
-			if(respuesta)
-			{
 	    		$("#editarAnexoCar").val(respuesta['nombre']);
 	    		$("#idAnexoEditada").val(idAnexo);
-    		}	
 		}
 	});
 
 })
 
-$(".tablaAnexos").on("click", "button.btnEliminarAnexo", function(){
+$(".tablaDivAnexo").on("click", "button.btnEliminarAnexo", function(){
 
 	var idAnexo = $(this).attr("id_anexo");
 	var nomAnexo = $(this).attr("nombre_anexo");
@@ -246,7 +244,8 @@ $(".tablaAnexos").on("click", "button.btnEliminarAnexo", function(){
 
 	swal({
 		type: "warning",
-		title: "¡Estas Seguro de Eliminar la carpeta: "+nomAnexo+"!",
+		title: "¡Estas Seguro de Eliminar "+nomAnexo+"!",
+		text: "Esta acción no podra revertirse una vez realizada.",
 		showCancelButton: true,
 		showConfirmButton: true,
 		confirmButtonText: "Eliminar",
@@ -269,38 +268,91 @@ $(".tablaAnexos").on("click", "button.btnEliminarAnexo", function(){
 				contentType: false,
 				processData: false,
 				dataType: "json",
-				success: function(respuesta){
+				success: function(respuesta)
+				{
 
-					if(respuesta[0] == 0)
-					{
-						validarTablaAnexo();
-						$("#idCarpetaSelec").val("");
-						window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;		
-					}//if
-					else
+					if (respuesta[0] == "ok") 
 					{
 						swal({
-							type: "warning",
-							title: "¡Esta Carpeta tiene "+respuesta[0]+" archivos, si la elimina, estos se perderán!",
-							text: "Esta acción no podra revertirse.",
-							showCancelButton: true,
+
+							type: "success",
+							title: "¡Archivo eliminado!",
 							showConfirmButton: true,
-							confirmButtonText: "Eliminar",
-							cancelButtonText: "Cancelar",
-							confirmButtonColor: '#d33',
-							cancelButtonColor: '#149243',
+							confirmButtonColor: "#149243",
+							confirmButtonText: "Cerrar"
+
 						}).then((result)=>{
 							if (result.value) 
 							{
-								validarTablaAnexo();
-								$("#idCarpetaSelec").val("");
 								window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
 							}
 						})
 					}
+					else
+					{
+						swal({
+
+							type: "error",
+							title: "¡Ha ocurrido un error!",
+							showConfirmButton: true,
+							confirmButtonColor: "#149243",
+							confirmButtonText: "Cerrar"
+
+						})
+					}
+					
 				}//respuesta:ajax
 
-			});//ajax
+			}).fail( function( jqXHR, textStatus, errorThrown ) {
+
+				var msgError = "";
+
+			  if (jqXHR.status === 0) {
+
+			    msgError ='Sin conexión a Internet.';
+
+			  } else if (jqXHR.status == 404) {
+
+			     msgError ='Requerimiento en pagina no encontrada [404]';
+
+			  } else if (jqXHR.status == 500) {
+
+			     msgError ='Error de Servidor Interno [500].';
+
+			  } else if (textStatus === 'parsererror') {
+
+			     msgError ='Fallo la respuesta en JSON';
+
+			  } else if (textStatus === 'timeout') {
+
+			     msgError ='Tiempo Agotado para la respuesta.';
+
+			  } else if (textStatus === 'abort') {
+
+			     msgError ='Requerimiento de ajax Cancelado';
+
+			  } else {
+
+			     msgError ='Uncaught Error: ' + jqXHR.responseText;
+
+			  }
+
+			  swal({
+					type: "error",
+					title:  msgError,
+					text: "Contacte al Usuario root.",
+					showCancelButton: false,
+					showConfirmButton: true,
+					confirmButtonText: "Listo",
+					confirmButtonColor: '#149243',
+				}).then((result)=>{
+					if (result.value) 
+					{
+						window.location = "index.php";
+					}
+				})
+
+			});
 		
 		}//if
 	})//swal eliminar

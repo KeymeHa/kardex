@@ -54,10 +54,9 @@ class ModeloCarpetas
 		$stmt = null;
 	}
 
-	static public function mdlContarCarpetas($tabla, $item, $valor)
+	static public function mdlContarCarpetas($tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item");
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla");
 		$stmt -> execute();
 		return $stmt -> fetch();	
 		$stmt -> close();
@@ -121,10 +120,9 @@ class ModeloCarpetas
 	}
 
 	static public function mdlBorrarCarpeta($idCar)
-	{
-		$stmt = Conexion::conectar()->prepare("DELETE FROM anexosprov WHERE id_carpeta = id_carpeta");
-
-		$stmt->bindParam(":id_carpeta", $idCar, PDO::PARAM_INT);
+	{	
+		$stmt = Conexion::conectar()->prepare("DELETE FROM carpetasprov WHERE id = :id");
+		$stmt->bindParam(":id", $idCar, PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -140,10 +138,12 @@ class ModeloCarpetas
 		$stmt = null;
 	}
 
-	static public function mdlBorrarAnexosCar($idCar)
+	static public function mdlBorrarAnexosCar($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("DELETE FROM carpetasprov WHERE id = :id");
-		$stmt->bindParam(":id", $idCar, PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE :$item = $item");
+
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+
 
 		if($stmt->execute()){
 

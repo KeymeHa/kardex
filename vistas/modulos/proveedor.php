@@ -139,20 +139,11 @@
                     </div>
                   </div>
               </div>
+
               <div class="box-body tablaDivAnexo">
-              <div class="box-body tablaDivPersona">
-                <table class="table table-bordered table-striped dt-responsive tablaAnexos" width="100%">
-                <thead>
-                 <tr>
-                   <th style="width:10px">#</th>
-                   <th>Nombre</th>
-                   <th>Fecha</th>
-                   <th style="width:100px">Acciones</th>
-                 </tr> 
-                </thead>
-               </table>
 
               </div>
+
 
         </div>
         

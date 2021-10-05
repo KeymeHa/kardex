@@ -22,7 +22,14 @@ class ajaxAnexos
 		$valor = $this->idAnexo;
 		$respuesta = ControladorAnexos::ctrMostrarArchivos($item, $valor);
 		echo json_encode($respuesta);
-	}#ajaxElimCarpeta
+	}#ajaxMostrarAnexo
+	public $idAnexoElim;
+	public function ajaxEliminarAnexo()
+	{	$item = "id";
+		$valor = $this->idAnexoElim;
+		$respuesta = ControladorAnexos::ctrEliminarAnexo($item, $valor);
+		echo json_encode($respuesta);
+	}#ajaxEliminarAnexo
 }
 if(isset($_POST["idCar"]))
 {	$nombreCar = new ajaxAnexos();
@@ -36,5 +43,9 @@ if(isset($_POST["idAnexo"]))
 {	$nombreCar = new ajaxAnexos();
 	$nombreCar -> idAnexo = $_POST["idAnexo"];
 	$nombreCar -> ajaxMostrarAnexo();}
+if(isset($_POST["idAnexoElim"]))
+{	$nombreCar = new ajaxAnexos();
+	$nombreCar -> idAnexoElim = $_POST["idAnexoElim"];
+	$nombreCar -> ajaxEliminarAnexo();}
 
 
