@@ -105,7 +105,7 @@ function aparecerTablaAnexo()
    )
 }
 
-$(".tablaDivAnexo").on("click", "button.btnEditarCarpeta", function(){
+$(".tablaCarpeta").on("click", "button.btnEditarCarpeta", function(){
 
 	var idCar = $(this).attr("id_carpeta");
 	
