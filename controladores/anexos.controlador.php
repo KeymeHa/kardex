@@ -405,6 +405,133 @@ class ControladorAnexos
 			}
 		}
 	}
+
+	static public function ctrEditarArchivo()
+	{
+		if (isset($_POST["editarAnexoCar"])) 
+		{
+			$tabla = "anexosprov";
+
+			$sw = 0;
+			$tmp_name = $_FILES['editarArchivo']['tmp_name'];
+
+			if ($tmp_name != null || $tmp_name != "") 
+			{
+
+				if($_FILES["editarArchivo"]["type"] == "application/pdf")
+				{
+					$verAnexo = new ControladorAnexos();
+					$anexo = $verAnexo->ctrMostrarArchivos("id",$_POST["idAnexoEditada"]);
+
+					$directorio = 'vistas/documentos/'.$anexo['ruta'];
+
+					if(file_exists($directorio))
+					{
+						unlink($directorio);
+					}
+					
+					copy($tmp_name, $directorio);
+				}
+				else
+				{
+					$sw = 1;
+				}
+			}
+
+			$nombre = ControladorParametros::ctrValidarCaracteres($_POST["editarAnexoCar"]);
+			$datos = array("nombre" => $nombre,
+				           "id" => $_POST["idAnexoEditada"]);
+
+			$respuesta = ModeloCarpetas::mdlEditarAnexo($tabla, $datos);
+
+			if ($respuesta == "ok") 
+				{
+					if ($sw != 0) 
+					{
+						echo '<script>
+
+						swal({
+
+							type: "success",
+							title: "¡Anexo Editado!",
+							text: "pero no se remplazo el archivo adjuntado",
+							showConfirmButton: true,
+							confirmButtonColor: "#149243",
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+					}
+					else
+					{
+						echo '<script>
+
+						swal({
+
+							type: "success",
+							title: "¡Anexo Editado!",
+							showConfirmButton: true,
+							confirmButtonColor: "#149243",
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+							}
+
+						});
+					
+
+						</script>';
+					}
+					
+				}
+				else
+				{
+					echo '<script>
+
+					swal({
+
+						type: "error",
+						title: "¡Se ha presentado un error!",
+						showConfirmButton: true,
+						confirmButtonColor: "#149243",
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+						if(result.value){
+						
+							window.location = "index.php?ruta=proveedor&idProv='.$_GET["idProv"].'";
+
+						}
+
+					});
+				
+
+					</script>';
+
+
+				}
+
+			/*editarAnexoCar
+idAnexoEditada*/
+			# code...
+		}
+	}
 	
 	static public function ctrBorrarCarpeta($id_usr)
 	{

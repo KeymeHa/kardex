@@ -159,6 +159,28 @@ class ModeloCarpetas
 		$stmt = null;
 	}
 
+	static public function mdlEditarAnexo($tabla, $datos)
+	{
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre WHERE id = :id");
+
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlEditarCarpeta($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre WHERE id = :id");

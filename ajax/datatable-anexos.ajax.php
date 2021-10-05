@@ -28,7 +28,7 @@ class tablaAnexos
 		for( $i = 0; $i < count($anexos); $i++)
 		{	
 
-		   $acciones = "<a href='vistas/documentos/".$anexos[$i]["ruta"]."'><button class='btn btn-success btnVerAnexo' title='Ver Archivos' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."'><i class='fa fa-folder'></i></button></a><button class='btn btn-warning btnEditarAnexo' id_anexo='".$anexos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAnexo' title='Editar'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarAnexo' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Eliminar'><i class='fa fa-trash'></i></button>";
+		   $acciones = "<a href='vistas/documentos/".$anexos[$i]["ruta"]."' target='_blank'><button class='btn btn-success btnVerAnexo' title='Ver Archivos' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."'><i class='fa fa-folder'></i></button></a><button class='btn btn-warning btnEditarAnexo' id_anexo='".$anexos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAnexo' title='Editar'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarAnexo' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Eliminar'><i class='fa fa-trash'></i></button>";
 
 		 
 	   		$dJson .='[

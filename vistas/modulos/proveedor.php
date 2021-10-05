@@ -415,7 +415,7 @@ include "modalEditarProveedor.php";
                 
                   <div class="panel">*archivo en formato PDF</div>
 
-                  <input type="file" name="nuevoArchivo">
+                  <input type="file" name="editarArchivo">
 
               </div>
 
@@ -436,8 +436,8 @@ include "modalEditarProveedor.php";
         </div>
 
         <?php
-         /* $crearArchivo = new ControladorAnexos();
-          $crearArchivo -> ctrCrearArchivo();*/
+         $editarAnexo = new ControladorAnexos();
+          $editarAnexo -> ctrEditarArchivo();
         ?>
 
       </form>
