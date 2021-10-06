@@ -286,7 +286,7 @@ class ControladorAnexos
 
 		if ($respuesta == "ok") 
 		{	
-			$ruta = "vistas/documentos/".strval($archivo['ruta']);
+			$ruta = "../vistas/documentos/".strval($archivo['ruta']);
 
 			if (file_exists($ruta)) 
 			{
