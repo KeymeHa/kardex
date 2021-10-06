@@ -277,7 +277,7 @@ class ControladorAnexos
 		}
 	}
 
-	static public function ctrEliminarAnexo($item, $valor)
+	static public function ctrEliminarAnexo($id_usr, $item, $valor)
 	{
 		$tabla = "anexosprov";
 		$verArchivo = new ControladorAnexos();
@@ -288,24 +288,40 @@ class ControladorAnexos
 		{	
 			$ruta = "vistas/documentos/".strval($archivo['ruta']);
 
-			if(file_exists($ruta))
+			if (file_exists($ruta)) 
 			{
 				unlink($ruta);
 			}
 
-			copy($tmp_name, $ruta);
-
 			$datos = array( "accion" => 4,
 							"numTabla" => 12,
-							"valorAnt" => $anexo["nombre"],
+							"valorAnt" => $archivo["nombre"],
 							"valorNew" => "",
-							"id_usr" => $_SESSION["id"]
+							"id_usr" => $id_usr
 							 );
 
-			$r = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
+			$respuesta = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
+		}
+		else
+		{
+			echo '<script>
+
+					swal({
+
+						type: "error",
+						title: "¡Se ha presentado un error!",
+						showConfirmButton: true,
+						confirmButtonColor: "#149243",
+						confirmButtonText: "Cerrar"
+
+					})
+
+					</script>';
 		}
 		return $respuesta;
 	}
+
+	//vistas\/documentos\/1\/1.pdf
 
 	static public function ctrEditarCarpeta()
 	{

@@ -12,7 +12,7 @@ class ModeloHistorial
 		$stmt->bindParam(":numTabla", $datos["numTabla"], PDO::PARAM_INT);
 		$stmt->bindParam(":valorAnt", $datos["valorAnt"], PDO::PARAM_STR);
 		$stmt->bindParam(":valorNew", $datos["valorNew"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
 
 		if($stmt->execute())
 		{

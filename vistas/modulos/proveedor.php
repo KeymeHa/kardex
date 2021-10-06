@@ -130,6 +130,7 @@
                      
                     </div>
                     <div class="col-md-1">
+                        <input type="hidden" id="idusrAnexo" value="<?php echo $_SESSION['id'];?>" readonly>
                         <button type="button" class="btn btn-success btn-xs btn-NewAnexo" title="Agregar Archivo" data-toggle="modal" data-target="#modalAgregarArchivo" disabled><i class="fa fa-plus"></i> Añadir Archivo</button>
                     </div>
                   </div>

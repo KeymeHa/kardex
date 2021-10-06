@@ -238,6 +238,7 @@ $(".tablaDivAnexo").on("click", "button.btnEliminarAnexo", function(){
 
 	var idAnexo = $(this).attr("id_anexo");
 	var nomAnexo = $(this).attr("nombre_anexo");
+	var id_usr = $('#idusrAnexo').val();
 	var queryString = window.location.search;
 	var urlParam = new URLSearchParams(queryString);
 	var idProv = urlParam.get('idProv');
@@ -258,6 +259,7 @@ $(".tablaDivAnexo").on("click", "button.btnEliminarAnexo", function(){
 		{
 			var datos = new FormData();
 			datos.append("idAnexoElim", idAnexo);
+			datos.append("id_usr", id_usr);
 
 			$.ajax({
 
@@ -270,72 +272,20 @@ $(".tablaDivAnexo").on("click", "button.btnEliminarAnexo", function(){
 				dataType: "json",
 				success: function(respuesta)
 				{
-
 					swal({
-
 						type: "success",
 						title: "¡Archivo eliminado!",
 						showConfirmButton: true,
 						confirmButtonColor: "#149243",
 						confirmButtonText: "Cerrar"
-
 					}).then((result)=>{
 						if (result.value) 
 						{
-							window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
+							window.location = "index.php?ruta=proveedor&idProv="+idProv;
 						}
 					})
 					
 				}//respuesta:ajax
-
-			}).fail( function( jqXHR, textStatus, errorThrown ) {
-
-				var msgError = "";
-
-			  if (jqXHR.status === 0) {
-
-			    msgError ='Sin conexión a Internet.';
-
-			  } else if (jqXHR.status == 404) {
-
-			     msgError ='Requerimiento en pagina no encontrada [404]';
-
-			  } else if (jqXHR.status == 500) {
-
-			     msgError ='Error de Servidor Interno [500].';
-
-			  } else if (textStatus === 'parsererror') {
-
-			     msgError ='Fallo la respuesta en JSON';
-
-			  } else if (textStatus === 'timeout') {
-
-			     msgError ='Tiempo Agotado para la respuesta.';
-
-			  } else if (textStatus === 'abort') {
-
-			     msgError ='Requerimiento de ajax Cancelado';
-
-			  } else {
-
-			     msgError ='Uncaught Error: ' + jqXHR.responseText;
-
-			  }
-
-			  swal({
-					type: "error",
-					title:  msgError,
-					text: "Contacte al Usuario root.",
-					showCancelButton: false,
-					showConfirmButton: true,
-					confirmButtonText: "Listo",
-					confirmButtonColor: '#149243',
-				}).then((result)=>{
-					if (result.value) 
-					{
-						window.location = "index.php";
-					}
-				})
 
 			});
 		

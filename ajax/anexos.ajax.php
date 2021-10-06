@@ -1,6 +1,7 @@
 <?php
 require_once "../controladores/anexos.controlador.php";
 require_once "../modelos/anexos.modelo.php";
+require_once "../modelos/historial.modelo.php";
 class ajaxAnexos
 {	public $idCar;
 	public function ajaxMostrarCarpeta()
@@ -24,10 +25,12 @@ class ajaxAnexos
 		echo json_encode($respuesta);
 	}#ajaxMostrarAnexo
 	public $idAnexoElim;
+	public $id_usr;
 	public function ajaxEliminarAnexo()
 	{	$item = "id";
 		$valor = $this->idAnexoElim;
-		$respuesta = ControladorAnexos::ctrEliminarAnexo($item, $valor);
+		$id = $this->id_usr;
+		$respuesta = ControladorAnexos::ctrEliminarAnexo($id, $item, $valor);
 		echo json_encode($respuesta);
 	}#ajaxEliminarAnexo
 }
@@ -46,6 +49,7 @@ if(isset($_POST["idAnexo"]))
 if(isset($_POST["idAnexoElim"]))
 {	$eliminarAnex = new ajaxAnexos();
 	$eliminarAnex -> idAnexoElim = $_POST["idAnexoElim"];
+	$eliminarAnex -> id_usr = $_POST["id_usr"];
 	$eliminarAnex -> ajaxEliminarAnexo();}
 
 
