@@ -412,11 +412,8 @@ include "modalEditarProveedor.php";
               </div>
 
               <div class="form-group">
-                
                   <div class="panel">*archivo en formato PDF</div>
-
                   <input type="file" name="editarArchivo">
-
               </div>
 
             </div>

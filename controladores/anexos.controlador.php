@@ -279,21 +279,21 @@ class ControladorAnexos
 
 	static public function ctrEliminarAnexo($item, $valor)
 	{
-		$verAnexo = new ControladorAnexos();
-		$anexo = $verAnexo->ctrMostrarArchivos($item, $valor);
-
 		$tabla = "anexosprov";
-
-		$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($tabla, "id", $valor);
-
-		$ruta = "vistas/documentos/".$anexo["ruta"];
+		$verArchivo = new ControladorAnexos();
+		$archivo = $verArchivo->ctrMostrarArchivos($item, $valor);
+		$respuesta = ModeloCarpetas::mdlBorrarAnexosCar($tabla, $item, $valor);
 
 		if ($respuesta == "ok") 
 		{	
+			$ruta = "vistas/documentos/".strval($archivo['ruta']);
+
 			if(file_exists($ruta))
 			{
 				unlink($ruta);
 			}
+
+			copy($tmp_name, $ruta);
 
 			$datos = array( "accion" => 4,
 							"numTabla" => 12,
@@ -426,17 +426,17 @@ class ControladorAnexos
 					$archivos = $verArchivos->ctrMostrarArchivos($item, $_POST["idAnexoEditada"]);
 					$ruta = "vistas/documentos/".strval($archivos['ruta']);
 
-						if(file_exists($ruta))
-						{
-							unlink($ruta);
-						}
+					if(file_exists($ruta))
+					{
+						unlink($ruta);
+					}
 
-						copy($tmp_name, $ruta);
+					copy($tmp_name, $ruta);
 
-						if(!file_exists($ruta))
-						{
-							$sw = 1;
-						}
+					if(!file_exists($ruta))
+					{
+						$sw = 1;
+					}
 				}
 				else
 				{

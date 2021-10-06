@@ -271,35 +271,20 @@ $(".tablaDivAnexo").on("click", "button.btnEliminarAnexo", function(){
 				success: function(respuesta)
 				{
 
-					if (respuesta[0] == "ok") 
-					{
-						swal({
+					swal({
 
-							type: "success",
-							title: "¡Archivo eliminado!",
-							showConfirmButton: true,
-							confirmButtonColor: "#149243",
-							confirmButtonText: "Cerrar"
+						type: "success",
+						title: "¡Archivo eliminado!",
+						showConfirmButton: true,
+						confirmButtonColor: "#149243",
+						confirmButtonText: "Cerrar"
 
-						}).then((result)=>{
-							if (result.value) 
-							{
-								window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
-							}
-						})
-					}
-					else
-					{
-						swal({
-
-							type: "error",
-							title: "¡Ha ocurrido un error!",
-							showConfirmButton: true,
-							confirmButtonColor: "#149243",
-							confirmButtonText: "Cerrar"
-
-						})
-					}
+					}).then((result)=>{
+						if (result.value) 
+						{
+							window.location = "index.php?ruta=proveedor&idProv="+idProv+"&idCar="+idCar;
+						}
+					})
 					
 				}//respuesta:ajax
 

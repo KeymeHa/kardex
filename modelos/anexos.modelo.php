@@ -140,21 +140,40 @@ class ModeloCarpetas
 
 	static public function mdlBorrarAnexosCar($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE :$item = $item");
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+			$stmt->bindParam(":id", $valor, PDO::PARAM_INT);
 
 
-		if($stmt->execute()){
+			if($stmt->execute()){
 
-			return "ok";
+				return "ok";
 
-		}else{
+			}else{
 
-			return "error";
-		
+				return "error";
+			
+			}
 		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_carpeta = :id_carpeta");
 
+			$stmt->bindParam(":id_carpeta", $valor, PDO::PARAM_INT);
+
+
+			if($stmt->execute()){
+
+				return "ok";
+
+			}else{
+
+				return "error";
+			
+			}
+		}
 		$stmt->close();
 		$stmt = null;
 	}

@@ -208,6 +208,13 @@ class ControladorParametros
             $fecha .= "/".substr($fechaI,5,-3);
             $fecha .= "/".substr($fechaI,0,-6);
 		}
+		elseif ($sw == 3) 
+		{
+			$fecha = substr($fechaI,8,-9);//dd
+	        $fecha .= "/".substr($fechaI,5,-12);//mm
+	        $fecha .= "/".substr($fechaI,0,-15);//YY
+	        $fecha .= " - ".substr($fechaI,-9,-3);//YY
+		}
 		return $fecha;
 	}
 

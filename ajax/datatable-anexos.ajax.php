@@ -1,6 +1,8 @@
 <?php
 require_once "../controladores/anexos.controlador.php";
 require_once "../modelos/anexos.modelo.php";
+
+require_once "../controladores/parametros.controlador.php";
 		
 class tablaAnexos
 {	
@@ -30,11 +32,12 @@ class tablaAnexos
 
 		   $acciones = "<a href='vistas/documentos/".$anexos[$i]["ruta"]."' target='_blank'><button class='btn btn-success btnVerAnexo' title='Ver Archivos' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."'><i class='fa fa-folder'></i></button></a><button class='btn btn-warning btnEditarAnexo' id_anexo='".$anexos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAnexo' title='Editar'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarAnexo' id_anexo='".$anexos[$i]["id"]."' nombre_anexo='".$anexos[$i]["nombre"]."' title='Eliminar'><i class='fa fa-trash'></i></button>";
 
-		 
+		 	$fecha = ControladorParametros::ctrOrdenFecha($anexos[$i]["fecha"], 3);
+
 	   		$dJson .='[
     		"'.($i + 1).'",
     		"'.$anexos[$i]["nombre"].'",
-    		"'.$anexos[$i]["fecha"].'",
+    		"'.$fecha.'",
     		"'.$acciones.'"
     		],';
 		    

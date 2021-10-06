@@ -32,20 +32,20 @@ class ajaxAnexos
 	}#ajaxEliminarAnexo
 }
 if(isset($_POST["idCar"]))
-{	$nombreCar = new ajaxAnexos();
-	$nombreCar -> idCar = $_POST["idCar"];
-	$nombreCar -> ajaxMostrarCarpeta();}
+{	$editarCar = new ajaxAnexos();
+	$editarCar -> idCar = $_POST["idCar"];
+	$editarCar -> ajaxMostrarCarpeta();}
 if(isset($_POST["idCarElim"]))
-{	$nombreCar = new ajaxAnexos();
-	$nombreCar -> idCarElim = $_POST["idCarElim"];
-	$nombreCar -> ajaxElimCarpeta();}
+{	$eliminarCar = new ajaxAnexos();
+	$eliminarCar -> idCarElim = $_POST["idCarElim"];
+	$eliminarCar -> ajaxElimCarpeta();}
 if(isset($_POST["idAnexo"]))
-{	$nombreCar = new ajaxAnexos();
-	$nombreCar -> idAnexo = $_POST["idAnexo"];
-	$nombreCar -> ajaxMostrarAnexo();}
+{	$editarAnex = new ajaxAnexos();
+	$editarAnex -> idAnexo = $_POST["idAnexo"];
+	$editarAnex -> ajaxMostrarAnexo();}
 if(isset($_POST["idAnexoElim"]))
-{	$nombreCar = new ajaxAnexos();
-	$nombreCar -> idAnexoElim = $_POST["idAnexoElim"];
-	$nombreCar -> ajaxEliminarAnexo();}
+{	$eliminarAnex = new ajaxAnexos();
+	$eliminarAnex -> idAnexoElim = $_POST["idAnexoElim"];
+	$eliminarAnex -> ajaxEliminarAnexo();}
 
 
