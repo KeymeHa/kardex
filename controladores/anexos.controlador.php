@@ -420,17 +420,23 @@ class ControladorAnexos
 
 				if($_FILES["editarArchivo"]["type"] == "application/pdf")
 				{
-					$verAnexo = new ControladorAnexos();
-					$anexo = $verAnexo->ctrMostrarArchivos("id",$_POST["idAnexoEditada"]);
+					$item = "id";
 
-					$directorio = 'vistas/documentos/'.$anexo['ruta'];
+					$verArchivos = new ControladorAnexos();
+					$archivos = $verArchivos->ctrMostrarArchivos($item, $_POST["idAnexoEditada"]);
+					$ruta = "vistas/documentos/".strval($archivos['ruta']);
 
-					if(file_exists($directorio))
-					{
-						unlink($directorio);
-					}
-					
-					copy($tmp_name, $directorio);
+						if(file_exists($ruta))
+						{
+							unlink($ruta);
+						}
+
+						copy($tmp_name, $ruta);
+
+						if(!file_exists($ruta))
+						{
+							$sw = 1;
+						}
 				}
 				else
 				{
@@ -454,7 +460,7 @@ class ControladorAnexos
 
 							type: "success",
 							title: "¡Anexo Editado!",
-							text: "pero no se remplazo el archivo adjuntado",
+							text: "pero no se remplazo el archivo adjunto",
 							showConfirmButton: true,
 							confirmButtonColor: "#149243",
 							confirmButtonText: "Cerrar"
