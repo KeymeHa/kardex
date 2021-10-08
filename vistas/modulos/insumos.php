@@ -87,23 +87,9 @@
         </div>
       </div>
       <div class="box-body"> 
-        <?php include "accionId.php";?>     
-       <table class="table table-bordered table-striped dt-responsive tablaInsumos" width="100%" data-page-length='25'>       
-        <thead>      
-         <tr>           
-          <th style="width:10px">#</th>
-           <th>Imagen</th>
-           <th>Código</th>
-           <th>Descripción</th>
-           <th>Categoría</th>
-           <th>Stock</th>
-           <th title="Estante">Est</th>
-           <th title="Nivel">Nvl</th>
-           <th title="Sección">Secc</th>
-           <th>Acciones</th>
-         </tr> 
-        </thead>
-       </table>
+        <?php include "accionId.php";
+              include "tablas/tablaInsumos.php";?>     
+       
       </div>
     </div>
   </section>

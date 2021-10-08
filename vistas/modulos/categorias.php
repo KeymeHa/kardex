@@ -15,11 +15,11 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarCategoria">
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarCategoria"><i class="fa fa-plus"></i>
           Agregar Categoria
         </button>
 
-         <button class="btn btn-success" data-toggle="modal" data-target="#modalMigrarInsumos">
+         <button class="btn btn-success" data-toggle="modal" data-target="#modalMigrarInsumos"><i class="fa fa-circle-o-notch"></i>
           Migrar
         </button>
       </div>

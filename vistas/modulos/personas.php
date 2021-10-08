@@ -36,22 +36,11 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaPersonas" width="100%">
-         
-        <thead>
-         
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Nombre</th>
-           <th>Area</th>
-           <th>Acciones</th>
+      <?php
 
-         </tr> 
+      include "tablas/tablaPersonas.php";
 
-        </thead>
-
-       </table>
+      ?>
 
       </div>
 

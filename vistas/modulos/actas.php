@@ -11,7 +11,7 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success btnNuevaActa">    
+        <button class="btn btn-success btnNuevaActa"><i class="fa fa-plus"></i> 
           Nueva Acta de Salida
         </button>
 
