@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-09-2021 a las 00:09:19
+-- Tiempo de generación: 08-10-2021 a las 23:49:31
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.3.29
 
@@ -63,12 +63,9 @@ INSERT INTO `actas` (`id`, `codigoInt`, `tipo`, `id_usr`, `fecha`, `fechaSal`, `
 CREATE TABLE `anexosprov` (
   `id` int(11) NOT NULL,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `id_carpeta` int(11) NOT NULL,
-  `elim` int(11) NOT NULL DEFAULT 0,
-  `fecha` datetime NOT NULL,
-  `ruta` text COLLATE utf8_spanish_ci NOT NULL,
-  `tipo` int(11) NOT NULL DEFAULT 0
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `ruta` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -105,10 +102,17 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VAL
 CREATE TABLE `carpetasprov` (
   `id` int(11) NOT NULL,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
+  `carpeta` int(11) NOT NULL,
   `id_prov` int(11) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
-  `elim` int(11) NOT NULL DEFAULT 0
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `carpetasprov`
+--
+
+INSERT INTO `carpetasprov` (`id`, `nombre`, `carpeta`, `id_prov`, `fecha`) VALUES
+(1, 'Certificados', 1, 1, '2021-10-06 08:24:55');
 
 -- --------------------------------------------------------
 
@@ -186,7 +190,7 @@ INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, 
 CREATE TABLE `historial` (
   `id` int(11) NOT NULL,
   `accion` int(11) NOT NULL COMMENT '1 Crear, 2 Leer, 3 Actualizar, 4 Eliminar',
-  `numTabla` int(11) NOT NULL COMMENT '1 categoría, 2 insumos, 3 proveedor, 4 facturas, 5 usuarios, 6 areas, 7 personas, 8 ordenes, 9 rq, 10 actas\r\n',
+  `numTabla` int(11) NOT NULL COMMENT '1 categoría, 2 insumos, 3 proveedor, 4 facturas, 5 usuarios, 6 areas, 7 personas, 8 ordenes, 9 rq, 10 actas, 11 carpetas, 12 anexos\r\n',
   `valorAnt` text COLLATE utf8_spanish_ci NOT NULL,
   `valorNew` text COLLATE utf8_spanish_ci DEFAULT '',
   `fecha` date NOT NULL DEFAULT current_timestamp(),
@@ -201,7 +205,9 @@ INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fe
 (1, 4, 8, 'OC-001-2021 INSERCOP', '', '2021-08-23', 1),
 (2, 4, 9, 'RQ-001-2021 Sistemas', '', '2021-08-26', 1),
 (3, 4, 9, 'RQ-002-2021 Sistemas', '', '2021-08-30', 1),
-(4, 1, 2, '\"ohla', '', '2021-09-16', 1);
+(4, 1, 2, '\"ohla', '', '2021-09-16', 1),
+(26, 4, 12, 'ret', '', '2021-10-06', 1),
+(27, 4, 12, 'cas', '', '2021-10-06', 1);
 
 -- --------------------------------------------------------
 
@@ -252,8 +258,8 @@ CREATE TABLE `insumos` (
 --
 
 INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `precio_compra`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`) VALUES
-(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', NULL, 110, 0, '0000-00-00 00:00:00', 0, 5, 4, 0, 2),
-(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', NULL, 118, 89999, '0000-00-00 00:00:00', 0, 7, 7, 7, 2),
+(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', NULL, 115, 0, '0000-00-00 00:00:00', 0, 5, 4, 0, 2),
+(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', NULL, 108, 89999, '0000-00-00 00:00:00', 0, 7, 7, 7, 2),
 (4, 1, 3, 'ATOMIZADOR AMBIENTADOR LAVANDA', '', NULL, 139, 500, '0000-00-00 00:00:00', 0, 5, 4, 4, 2),
 (5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', NULL, 72, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2),
 (6, 12, 5, 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', NULL, NULL, 184, 18000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2),
@@ -474,7 +480,8 @@ INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 (23, 'personas', 'personas'),
 (24, 'reportesRq', 'reportesRq'),
 (25, 'verOrden', 'verOrden'),
-(26, 'proveedor', 'proveedor');
+(26, 'proveedor', 'proveedor'),
+(28, 'verArea', 'verArea');
 
 -- --------------------------------------------------------
 
@@ -620,7 +627,7 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`id`, `razonSocial`, `nombreComercial`, `nit`, `digitoNit`, `descripcion`, `direccion`, `telefono`, `contacto`, `fecha`, `correo`) VALUES
-(1, 'INSERCOP DISTRILAN SAS', 'INSERCOP', '802012326', '7', 'Toner e impresoras', 'No Registra', '3016115118', 'Sin Info', '2021-06-25', ''),
+(1, 'INSERCOP DISTRILAN SAS', 'INSERCOP', '802012326', '7', 'Toner e impresoras', 'No Registra', '3453', 'Sin Info', '2021-06-25', 'Correo@delaempresa.es'),
 (2, 'SOLUCIONES MAF S.A.S', 'TAURO', '802008192', '1', 'PAPELERIA', 'CL 30 # 1 -295', '3758600', 'KATHERINE SERGE', '2021-07-13', '');
 
 -- --------------------------------------------------------
@@ -647,8 +654,8 @@ CREATE TABLE `requisiciones` (
 
 INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt`, `insumos`, `fecha`, `fecha_sol`, `observacion`) VALUES
 (3, 1, 1, 1, 'RQ-003-2021', '[{\"id\":\"2\",\"des\":\"AMBIENTADOR DE BAÑO AIR WICK\",\"ped\":\"1\",\"ent\":\"5\"}]', '2021-09-22', '2021-09-23', ''),
-(4, 2, 2, 1, 'RQ-004-2021', '[{\"id\":\"2\",\"des\":\"AMBIENTADOR DE BAÑO AIR WICK\",\"ped\":\"1\",\"ent\":\"5\"},{\"id\":\"4\",\"des\":\"ATOMIZADOR AMBIENTADOR LAVANDA\",\"ped\":\"1\",\"ent\":\"1\"}]', '2021-09-20', '2021-08-10', ''),
-(5, 2, 2, 1, 'RQ-005-2021', '[{\"id\":\"2\",\"des\":\"AMBIENTADOR DE BAÑO AIR WICK\",\"ped\":\"1\",\"ent\":\"1\"}]', '2021-08-20', '2021-08-17', '');
+(4, 2, 2, 1, 'RQ-004-2021', '[{\"id\":\"2\",\"des\":\"AMBIENTADOR DE BAÑO AIR WICK\",\"ped\":\"1\",\"ent\":\"1\"},{\"id\":\"3\",\"des\":\"AROMATICA SURTIDA EN BOLSA\",\"ped\":\"1\",\"ent\":\"10\"}]', '2021-09-20', '2021-08-10', ''),
+(5, 2, 2, 1, 'RQ-005-2021', '[{\"id\":\"4\",\"des\":\"ATOMIZADOR AMBIENTADOR LAVANDA\",\"ped\":\"1\",\"ent\":\"1\"}]', '2021-08-20', '2021-08-17', '');
 
 -- --------------------------------------------------------
 
@@ -695,7 +702,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`) VALUES
-(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 'root', NULL, '1', '2021-09-28 18:12:19', '2021-02-11 15:06:49', 'nadea6uif3rt4tvfrjr6139qqp', 0),
+(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 'root', NULL, '1', '2021-10-08 08:23:47', '2021-02-11 15:06:49', 'nadea6uif3rt4tvfrjr6139qqp', 0),
 (2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 'Administrador', NULL, '1', '2021-08-18 14:18:38', '2021-08-19 16:12:33', '', 0),
 (3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 'Auxiliar', NULL, '1', '2021-06-10 09:47:31', '2021-08-19 16:12:39', '', 0);
 
@@ -831,7 +838,7 @@ ALTER TABLE `actas`
 -- AUTO_INCREMENT de la tabla `anexosprov`
 --
 ALTER TABLE `anexosprov`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
@@ -843,7 +850,7 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `carpetasprov`
 --
 ALTER TABLE `carpetasprov`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -861,7 +868,7 @@ ALTER TABLE `facturas`
 -- AUTO_INCREMENT de la tabla `historial`
 --
 ALTER TABLE `historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `impustoagregado`
@@ -885,7 +892,7 @@ ALTER TABLE `inversiones`
 -- AUTO_INCREMENT de la tabla `js_files`
 --
 ALTER TABLE `js_files`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
