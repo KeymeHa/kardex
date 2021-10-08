@@ -16,8 +16,37 @@
    <div class="box-body border-radius-none">
 
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-9">
           <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
+        </div>
+
+        <div class="col-lg-3">
+          <?php
+
+             $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv();
+
+            if( $countOrdProv != null)
+            {
+              echo '<table class="table table-condensed">
+                  <tbody><tr>
+                    <th style="width: 10px">#</th>
+                    <th>Proveedor</th>
+                    <th>Cantidad</th>
+                  </tr>';
+
+              foreach ($countOrdProv as $key => $value) 
+              {
+                echo'<tr>
+                      <td>'.($key+1).'</td>
+                      <td>'.$value[0].'</td>
+                      <td>'.$value[1].'</td>
+                    </tr>';
+              }
+                  echo ' </tbody>
+              </table>';
+            }
+
+           ?>
         </div>
       </div>
 

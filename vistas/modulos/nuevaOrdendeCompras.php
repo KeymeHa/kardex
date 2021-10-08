@@ -43,13 +43,6 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">N° de Orden</label>
                     <?php
-
-                     //$val = 7;
-                     //$parametro = ControladorParametros::ctrMostrarParametros($val);
-
-                      //$codigo = ControladorOrdenCompra::ctrContarOrdenes();
-
-                      //echo ' <input type="text" class="form-control" id="codigoInterno" name="codigoInterno" required value="'.$parametro["codigo"].'" readonly>';
                       echo ' <input type="text" class="form-control" id="codigoInterno" name="codigoInterno" required value="1" readonly>';
                        echo ' <input type="hidden" class="form-control" name="idUsuario" required value="'.$_SESSION["id"].'" readonly required>';
                         $valorIVA = ControladorParametros::ctrMostrarTodosParam();
@@ -114,14 +107,12 @@
                 <div class="col-lg-6">
                   <div class="form-group">          
                     <div class="input-group">                   
-                      <textarea type="text" class="form-control" name="observacionOC" placeholder="Observaciones" title="Observaciones" autocomplete="off" style="width: 150%; height: 69px; resize: none"></textarea>
+                      <textarea type="text" class="form-control" name="observacionOC" placeholder="Observaciones" title="Observaciones" autocomplete="off" rows="4" cols="20" style="resize: none"></textarea>
                     </div>
                    </div>
                 </div>  
               </div>
 
-
-              
               <div class="row">
                 <br>
                 <div class="col-xs-3" style="padding-right:0px">

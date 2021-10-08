@@ -43,6 +43,17 @@ class AjaxCategorias
 
 	}
 	
+	public function ajaxMostrarCat(){
+
+		$item = null;
+		$valor = null;
+
+		$respuesta = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+
+		echo json_encode($respuesta);
+
+	}
+	
 }
 
 /*
@@ -63,4 +74,10 @@ if(isset($_POST["idCategoria2"]))
 	$verificarIns = new AjaxCategorias();
 	$verificarIns -> idCategoria2 = $_POST["idCategoria2"];
 	$verificarIns -> ajaxContarInsumos();
+}
+
+if(isset($_POST["traerCat"]))
+{
+	$mostrarCat = new AjaxCategorias();
+	$mostrarCat -> ajaxMostrarCat();
 }

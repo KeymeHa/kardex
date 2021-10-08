@@ -76,12 +76,12 @@
          }
         ?>   
         <div class="btn-group pull-right">
-          <button class="btn btn-success" id="btnGenIns" data-toggle="modal" data-target="#modalGeneracionInsumos">
+          <button class="btn btn-success" id="btnGenIns" data-toggle="modal" data-target="#modalGeneracionInsumos"><i class="fa fa-file-text-o"></i>
             Generaciones
           </button>
         </div>
         <div class="btn-group pull-right" style="margin-right: 5px;">
-          <button class="btn btn-success" id="btnParamLim" paramIns="1" data-toggle="modal" data-target="#modalParametrosInsumos">
+          <button class="btn btn-success" id="btnParamLim" paramIns="1" data-toggle="modal" data-target="#modalParametrosInsumos"><i class="fa fa-gear"></i>
             Parametros
           </button>
         </div>

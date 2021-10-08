@@ -21,14 +21,14 @@
                   <input type="hidden" class="form-control input-lg" id="eIdP" name="eIdP" readonly>    
                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                   <select class="form-control input-lg" id="EsCategoria" name="EsCategoria" required>                 
-                    <option id="eCategoriaP" value=""></option>
                     <?php
+                    /*<option id="eCategoriaP" value=""></option>
                     $item = null;
                     $valor = null;
                     $categorias = ControladorCategorias::ctrMostrarCategoriasConFiltro($item, $valor);
                     foreach ($categorias as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
-                    }
+                    }*/
                     ?>
                   </select>
                 </div>
