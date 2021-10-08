@@ -16,7 +16,7 @@
         <div class="box">
           <div class="box-header with-border">
             <a href="requisicion">          
-              <button class="btn btn-success">
+              <button class="btn btn-success"><i class="fa fa-plus"></i>
                 Nueva Requisición
               </button>
             </a>

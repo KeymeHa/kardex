@@ -20,7 +20,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">         
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fa fa-user-plus"></i>        
           Crear usuario
         </button>
       </div>
@@ -80,7 +80,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
                             </button>
                           </div>
                           <div class="col-md-4">   
-                             <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" nombreUsuario="'.$value["nombre"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'" accionId="'.$_SESSION["id"].'"><i class="fa fa-times"></i></button>
+                             <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" nombreUsuario="'.$value["nombre"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'" accionId="'.$_SESSION["id"].'"><i class="fa fa-user-times"></i></button>
                           </div>
                         </div>
                     </td>';

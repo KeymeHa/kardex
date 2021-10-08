@@ -261,7 +261,8 @@ function paginaCargada(pagina){
 			if(fechaInicial == null)
 			{
 			  variable = "?fechaInicial=null";
-			} else 
+			}
+			else 
 			{
 			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 			}

@@ -25,7 +25,7 @@
   ?>
   <section class="content-header">
     <h1>
-      Nueva Requisición
+      Editar Requisición 
     </h1>
     <ol class="breadcrumb">
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -113,10 +113,10 @@
               </div><!--row-->
 
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12 col-md-12">
                   <div class="form-group">          
                     <div class="input-group">                   
-                      <textarea type="text" class="form-control input-xs" name="observacionRq" placeholder="Observaciones" autocomplete="off" style="width: 500px; height: 69px; resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
+                      <textarea type="text" class="form-control input-xs" name="observacionRq" rows="3" placeholder="Observaciones" autocomplete="off" style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
                     </div>
                    </div>
                 </div> 

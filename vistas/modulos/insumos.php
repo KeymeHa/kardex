@@ -57,7 +57,7 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" id="btn-AddInsumo" data-toggle="modal" data-target="#modalAgregarInsumo">       
+        <button class="btn btn-success" id="btn-AddInsumo" data-toggle="modal" data-target="#modalAgregarInsumo"><i class="fa fa-plus"></i>      
           Nuevo Insumo
         </button>
         <?php

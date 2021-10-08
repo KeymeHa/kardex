@@ -117,9 +117,9 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha like '%$fechaFinal%' ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha_sol like '%$fechaFinal%'");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 
 		}else{
 
@@ -133,12 +133,12 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		}
