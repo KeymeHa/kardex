@@ -3,6 +3,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 	var idCat = 0;
 	var categoria = "";
 	var datos = new FormData();
+
 	datos.append("idInsumo", idInsumo);
 	$.ajax({
 		url:"ajax/insumos.ajax.php",
@@ -79,30 +80,31 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 		}
 	});
 
-	
-			
-
-	var datosDos = new FormData();
-	datosDos.append("traerCat", 1);
-	$.ajax({
-		url:"ajax/categorias.ajax.php",
-		method: "POST",
-		data: datosDos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(respuesta)
-		{	
-			for (var i = 0; i < respuesta.length; i++) 
-			{
-				if (idCat != respuesta[i]['id']) 
+		var datosDos = new FormData();
+		datosDos.append("traerCat", 1);
+		$.ajax({
+			url:"ajax/categorias.ajax.php",
+			method: "POST",
+			data: datosDos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success: function(respuesta)
+			{	
+				for (var i = 0; i < respuesta.length; i++) 
 				{
-					$('#EsCategoria').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['categoria']+'</option>');
+					if (idCat != respuesta[i]['id']) 
+					{
+						$('#EsCategoria').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['categoria']+'</option>');
+					}
+
 				}
 			}
-		}
-	});
+		});
+	
+
+	
 })
 
 
