@@ -62,6 +62,7 @@
     }
 
     include "reportes/facturaGrafica.php";
+    include "reportes/facturaCantidad.php";
 
     ?>
 

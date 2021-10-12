@@ -29,6 +29,13 @@ class ControladorFacturas
 		return $respuesta;
 	}
 
+	static public function ctrContarFacProv($fechaInicial, $fechaFinal)
+	{
+		$tabla = "facturas";
+		$respuesta = ModeloFacturas::mdlAgruparFacturasCan($tabla, $fechaInicial, $fechaFinal);
+		return $respuesta;
+	}
+
 	static public function ctrCrearFactura()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
