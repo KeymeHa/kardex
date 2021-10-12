@@ -112,7 +112,7 @@
 
     <div class="row">
 
-      <div class="col-lg-4">
+      <div class="col-lg-8">
         <div class="box">
           <div class="box-header">
              <h4>Inversiónes</h4>
@@ -129,17 +129,6 @@
               include "reportes/dgInversion.php";
 
             ?>
-          </div>
-        </div>
-        
-      </div>
-
-      <div class="col-lg-4">
-        <div class="box">
-          <div class="box-header">
-           <h4>SESSION</h4>
-          </div>
-          <div class="box-body">
           </div>
         </div>
         

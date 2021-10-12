@@ -13,7 +13,7 @@
     <div class="box">
       <div class="box-header with-border">
         <a href="nuevaOrdendeCompras">          
-          <button class="btn btn-success" data-toggle="modal">         
+          <button class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"></i>        
             Nueva Orden de Compra 
           </button>
         </a>

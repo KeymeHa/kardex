@@ -29,6 +29,20 @@ class ControladorFacturas
 		return $respuesta;
 	}
 
+	static public function ctrContarFacProv($fechaInicial, $fechaFinal)
+	{
+		$tabla = "facturas";
+		$respuesta = ModeloFacturas::mdlAgruparFacturasCan($tabla, $fechaInicial, $fechaFinal);
+		return $respuesta;
+	}
+
+	static public function ctrContarFacturas($item, $valor)
+	{
+		$tabla = "facturas";
+		$respuesta = ModeloFacturas::mdlContarFacturas($tabla,$item, $valor);
+		return $respuesta;
+	}
+
 	static public function ctrCrearFactura()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
@@ -167,10 +181,11 @@ class ControladorFacturas
 
 			$tabla = "facturas";
 
+			$codigoFac = ControladorParametros::ctrValidarCaracteres($_POST["codigoFactura"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionNF"]);
 
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
-							'codigo' => $_POST["codigoFactura"],
+							'codigo' => $codigoFac,
 							'id_usr' => $_POST["idUsuario"],
 							'id_proveedor' => $_POST["selecProveedor"],
 							'soporte' => $directorio,

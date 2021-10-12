@@ -13,7 +13,7 @@
     <div class="box">
       <div class="box-header with-border">
         <a href="nuevaFactura">          
-          <button class="btn btn-success" data-toggle="modal">     
+          <button class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"></i>  
             Agregar Factura
           </button>
         </a>
@@ -62,6 +62,7 @@
     }
 
     include "reportes/facturaGrafica.php";
+    include "reportes/facturaCantidad.php";
 
     ?>
 
