@@ -36,6 +36,13 @@ class ControladorFacturas
 		return $respuesta;
 	}
 
+	static public function ctrContarFacturas($item, $valor)
+	{
+		$tabla = "facturas";
+		$respuesta = ModeloFacturas::mdlContarFacturas($tabla,$item, $valor);
+		return $respuesta;
+	}
+
 	static public function ctrCrearFactura()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 

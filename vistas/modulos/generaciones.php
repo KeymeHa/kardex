@@ -1,4 +1,10 @@
+<?php
 
+  $contarFac = ControladorFacturas::ctrContarFacturas(null, null);
+  $contarOrden = ControladorOrdenCompra::ctrContarOrdenes(null, null);
+
+
+?>
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -57,7 +63,7 @@
               <div class="col-sm-2  col-xs-3">
                 <div class="description-block border-right">
                   <span class="description-text">Ordenes de Compras</span>
-                  <h5 class="description-header"><?php echo "5";?></h5>
+                  <h5 class="description-header"><?php echo $contarOrden[0];?></h5>
                 </div>
                 <!-- /.description-block -->
               </div>
@@ -103,7 +109,7 @@
               <div class="col-sm-2  col-xs-3">
                 <div class="description-block border-right">
                   <span class="description-text">Facturas</span>
-                  <h5 class="description-header"><?php echo "4";?></h5>
+                  <h5 class="description-header"><?php echo $contarFac[0];?></h5>
                 </div>
                 <!-- /.description-block -->
               </div>
