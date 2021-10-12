@@ -25,7 +25,7 @@
     <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">Paneles</h3>
+        <h3 class="box-title">Ordenes de Compras</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -37,38 +37,7 @@
       <div class="box-body">
        
           <div class="row">
-              <div class="col-lg-3 col-xs-6">
-
-                <!-- small box -->
-                <div class="small-box bg-green">
-                  <div class="inner">
-                    <h3>Pedidos</h3>
-
-                    <p>Ingresa los pedidos de los solicitantes de nuevo insumo o bien.</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-person"></i>
-                  </div>
-                  <a href="pedidos" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div><!--col-lg-3 col-xs-6-->
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                  <div class="inner">
-                    <h3>Cotizaciones</h3>
-                    <p>Genera e Ingresa Cotizaciones Realizadas</p>
-                    <br>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-shopping-cart"></i>
-                  </div>
-                  <a href="cotizaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div><!--col-lg-3 col-xs-6-->
-
+              
               <div class="col-lg-3 col-xs-6">
 
                 <!-- small box -->
@@ -85,12 +54,43 @@
                 </div>
               </div><!--col-lg-3 col-xs-6-->
 
+              <div class="col-sm-2  col-xs-3">
+                <div class="description-block border-right">
+                  <span class="description-text">Ordenes de Compras</span>
+                  <h5 class="description-header"><?php echo "5";?></h5>
+                </div>
+                <!-- /.description-block -->
+              </div>
+
+              <!-- ./col -->
+            </div>
+            <!-- ./col -->
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+        <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Facturas de Proveedores</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                  title="Collapse">
+            <i class="fa fa-minus"></i></button>
+        </div>
+      </div>
+
+      <div class="box-body">
+       
+          <div class="row">
+        
               <div class="col-lg-3 col-xs-6">
 
                 <!-- small box -->
                 <div class="small-box bg-red">
                   <div class="inner">
-                    <h3>Factura</h3>
+                    <h3>Facturas</h3>
                     <p>Ingreso de facturas y relación de nuevo stock.</p>
                     
                   </div>
@@ -100,9 +100,17 @@
                   <a href="facturas" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->
+              <div class="col-sm-2  col-xs-3">
+                <div class="description-block border-right">
+                  <span class="description-text">Facturas</span>
+                  <h5 class="description-header"><?php echo "4";?></h5>
+                </div>
+                <!-- /.description-block -->
+              </div>
 
               <!-- ./col -->
             </div>
+
             <!-- ./col -->
       </div>
       <!-- /.box-body -->

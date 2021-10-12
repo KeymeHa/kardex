@@ -29,7 +29,7 @@
 
           <div class="box-header with-border">
 
-            <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarArea">
+            <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarArea"><i class="fa fa-plus"></i>
               
               Nueva Área
 

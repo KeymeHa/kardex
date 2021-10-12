@@ -174,10 +174,11 @@ class ControladorFacturas
 
 			$tabla = "facturas";
 
+			$codigoFac = ControladorParametros::ctrValidarCaracteres($_POST["codigoFactura"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionNF"]);
 
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
-							'codigo' => $_POST["codigoFactura"],
+							'codigo' => $codigoFac,
 							'id_usr' => $_POST["idUsuario"],
 							'id_proveedor' => $_POST["selecProveedor"],
 							'soporte' => $directorio,

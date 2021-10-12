@@ -31,7 +31,7 @@
                   <tbody><tr>
                     <th style="width: 10px">#</th>
                     <th>Proveedor</th>
-                    <th>Cantidad</th>
+                    <th>Facturas</th>
                   </tr>';
 
               foreach ($countFacProv as $key => $value) 
