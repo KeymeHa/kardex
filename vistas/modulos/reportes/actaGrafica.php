@@ -72,7 +72,7 @@
 
         foreach ($tipoActa as $key => $value) {
 
-         $ykeys.= "{ y: '".ControladorActas::ctrVerTipo($value[0])."', Tipo: ".$value[1]." },";
+         $ykeys.= "{ y: '".ControladorActas::ctrVerTipo($value[0])."', Cantidad: ".$value[1]." },";
 
         }
 
@@ -81,7 +81,7 @@
 
     }else{
 
-       echo "{ y: '0', Tipo: '0' }";
+       echo "{ y: '0', Cantidad: '0' }";
 
     }
 
@@ -90,8 +90,8 @@
     config = {
       data: data,
       xkey: 'y',
-      ykeys: ['Tipo'],
-      labels: ['Tipo'],
+      ykeys: ['Cantidad'],
+      labels: ['Cantidad'],
       barColors: ['#00a65a'],
       fillOpacity: 0.6,
       hideHover: 'auto',
