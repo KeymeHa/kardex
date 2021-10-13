@@ -39,17 +39,14 @@ class TablaActas
 
 		    if($actas[$i]["tipo"] == 1)
 		    {
-		    	$tipo = "Salida";
 		    	$fecha = $actas[$i]["fechaSal"];
 		    }
 		    elseif($actas[$i]["tipo"] == 2)
 		    {
-		    	$tipo = "Entrada";
 		    	$fecha = $actas[$i]["fechaEnt"];
 		    }
 		    else
 		    {
-		    	$tipo = "Asignación";
 		    	$fecha = $actas[$i]["fechaEnt"];
 		    }
 
@@ -58,7 +55,7 @@ class TablaActas
 		    $dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$actas[$i]["codigoInt"].'",
-	    		"'.$tipo.'",
+	    		"'.ControladorActas::ctrVerTipo($actas[$i]["tipo"]).'",
 	    		"'.$actas[$i]["autorizado"].'",
 	    		"'.$actas[$i]["responsable"].'",
 	    		"'.$fecha.'",

@@ -162,6 +162,15 @@ class ControladorActas
 	
 	}//ctrMostrarFacturas
 
+	static public function ctrContarTipo($fechaInicial, $fechaFinal)
+	{
+		$tabla = "actas";
+
+		$respuesta = ModeloActas::mdlContarTipo($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+	}
+
 	static public function ctrVerMotivo($id_motivo)
 	{
 		if($id_motivo == 1)
@@ -181,6 +190,23 @@ class ControladorActas
 			$motivo = "Traslado";
 		}
 		return $motivo;
+	}
+
+	static public function ctrVerTipo($id_motivo)
+	{
+		 if ($id_motivo == 1) 
+        {
+          $tipo = "Salida";
+        }
+        elseif ($id_motivo == 2) 
+        {
+          $tipo = "Entrada";
+        }
+        elseif ($id_motivo == 3) 
+        {
+          $tipo = "Asignación";
+        }
+		return $tipo;
 	}
 
 	static public function ctrEditarActa()
