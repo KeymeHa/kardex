@@ -4,7 +4,7 @@
       
       <i class="fa fa-bar-chart"></i>
 
-      <h3 class="box-title">Cantidad Requisiciones</h3>
+      <h3 class="box-title">Cantidad Requisiciones Por Mes y Año</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

@@ -60,6 +60,16 @@ class ControladorRequisiciones
 
 	}
 
+	static public function ctrContarRqdePersonas($fechaInicial, $fechaFinal)
+	{
+		$tabla = "requisiciones";
+
+		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+	}
+
 
 	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal)
 	{

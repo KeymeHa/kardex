@@ -80,6 +80,60 @@ class ModeloRequisiciones
 
 	}
 
+	static public function MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal)
+	{
+
+		if($fechaInicial == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			#SELECT personas.nombre, COUNT(personas.nombre) FROM requisiciones INNER JOIN personas ON requisiciones.id_persona = personas.id WHERE fecha_sol like '%2021-09-22%' GROUP BY(personas.nombre);
+			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol like '%$fechaFinal%' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+			#$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id GROUP BY(personas.nombre) WHERE fecha_sol like '%$fechaFinal%'");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+		$stmt = null;
+	}
 
 	static public function MdlTraerInsumosRq($tabla, $sw)
 	{

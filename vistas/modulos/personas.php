@@ -26,7 +26,7 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPersona">
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
           
           Agregar Persona
 
@@ -44,7 +44,16 @@
 
       </div>
 
+
     </div>
+      <?php
+
+      $fechaInicial = null; 
+      $fechaFinal = null;
+
+      include "reportes/personaCantidad.php";
+
+      ?>
   </section>
 
 </div>

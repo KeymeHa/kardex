@@ -7,6 +7,7 @@ function validarRuta()
 		{
 			localStorage.removeItem("capturarRango");
 			localStorage.setItem("rutaURL", 'requisiciones');
+			$("#btn-RangoRequisicion span").html('<i class="fa fa-calendar"></i> Rango de fecha');
 		}
 
 	}

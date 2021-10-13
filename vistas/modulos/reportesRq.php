@@ -1,13 +1,7 @@
 
 <div class="content-wrapper">
   <section class="content-header">
-    <a href="requisiciones">
-      <button class="btn btn-success pull-left">
-        <i class="fa  fa-chevron-left"></i>&nbsp;Regresar 
-      </button>
-    </a>
-    <h1>    
-     &nbsp;&nbsp; Reporte de Requisiciones  
+    <h1>Reporte de Requisiciones  
     </h1>
     <ol class="breadcrumb">    
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -19,6 +13,11 @@
 
     <div class="box">
       <div class="box-header">
+        <a href="requisiciones">
+          <button class="btn btn-success pull-left">
+            <i class="fa  fa-chevron-left"></i>&nbsp;Regresar 
+          </button>
+        </a>
         <button type="button" class="btn btn-success pull-right" id="btn-RangoReporteRq">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha
@@ -42,9 +41,8 @@
     }
 
     include "reportes/rqArea.php";
-
+    include "reportes/personaCantidad.php";
     include "reportes/rqCantidad.php";
-
     include "reportes/rqInsumos.php";
 
   ?>
