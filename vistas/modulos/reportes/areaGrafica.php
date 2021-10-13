@@ -4,7 +4,7 @@
       
       <i class="fa fa-bar-chart"></i>
 
-      <h3 class="box-title">Grafica</h3>
+      <h3 class="box-title">Cantidad de Personal</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -31,16 +31,14 @@
 
  var data = [
      <?php
-
-     $perAreaCount = ControladorPersonas::ctrContarPersonasArea();
-
+      $perAreaCount = ControladorPersonas::ctrContarPersonasArea();
    if($perAreaCount != null)
     {
         $ykeys = "";
 
         foreach ($perAreaCount as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."', Persona: ".$value[1]." },";
+         $ykeys.= "{ y: '".$value[0]."', Personas: ".$value[1]." },";
 
         }
 
@@ -49,7 +47,7 @@
 
     }else{
 
-       echo "{ y: '0', Persona: '0' }";
+       echo "{ y: '0', Personas: '0' }";
 
     }
 
@@ -58,8 +56,8 @@
     config = {
       data: data,
       xkey: 'y',
-      ykeys: ['Persona'],
-      labels: ['Persona'],
+      ykeys: ['Personas'],
+      labels: ['Personas'],
       barColors: ['#00a65a'],
       fillOpacity: 0.6,
       hideHover: 'auto',

@@ -79,7 +79,7 @@ class ModeloPersonas
 
 	static public function mdlAgruparPersonas($tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre)");
+		$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE elim = 0 GROUP BY(areas.nombre)");
 
 		$stmt -> execute();
 		return $stmt -> fetchAll();

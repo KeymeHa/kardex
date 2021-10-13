@@ -199,7 +199,18 @@ class ControladorCategorias
 
 			$datos = $_GET["idCategoria"];
 
-			$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
+			$can = new ControladorCategorias;
+			$count = $can ->ctrContarInsumos($item, $valor);
+
+			if ($count == 0) 
+			{
+				$respuesta = ModeloCategorias::mdlBorrarCat($tabla, $datos);
+			}
+			else
+			{
+				$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
+			}
+
 
 			if($respuesta == "ok")
 			{

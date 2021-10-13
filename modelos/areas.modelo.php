@@ -30,7 +30,7 @@ class ModeloAreas
 	{
 		if($item != null)
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -41,7 +41,7 @@ class ModeloAreas
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0");
 
 			$stmt -> execute();
 
