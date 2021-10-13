@@ -59,7 +59,7 @@
 				</ul>
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas'){ echo 'active';} }?>">
+			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea'){ echo 'active';} }?>">
 				<a href="#">
 					<i class="fa fa-file-text-o"></i>
 					<span>Requisiciones</span>

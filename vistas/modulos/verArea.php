@@ -11,10 +11,8 @@
       $item = "id";
       $valor = $_GET["idArea"];
       $area = ControladorAreas::ctrMostrarAreasConFiltro($item, $valor);
-
-
-
       $canPersonas = ControladorPersonas::ctrContarPersonas("id_area", $valor);
+      $canRq = ControladorRequisiciones::ctrContarRqdeArea("id_area", $valor);
     }
   }
   else
@@ -61,6 +59,12 @@
             <div class="description-block border-right">
               <h5 class="description-header">Personas</h5>
               <span class="description-text"><?php echo $canPersonas;?></span>
+            </div>
+          </div>
+          <div class="col-sm-3 col-xs-3">
+            <div class="description-block border-right">
+              <h5 class="description-header">Requisiciones</h5>
+              <span class="description-text"><?php echo $canRq[0];?></span>
             </div>
           </div>
         </div>

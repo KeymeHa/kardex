@@ -50,6 +50,16 @@ class ControladorRequisiciones
 
 	}
 
+	static public function ctrContarRqdeArea($item, $valor)
+	{
+		$tabla = "requisiciones";
+
+		$respuesta = ModeloRequisiciones::MdlContarRqdeArea($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
 
 	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal)
 	{

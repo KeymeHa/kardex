@@ -8,6 +8,9 @@ require_once "../modelos/areas.modelo.php";
 require_once "../controladores/parametros.controlador.php";
 require_once "../modelos/parametros.modelo.php";
 
+require_once "../controladores/requisiciones.controlador.php";
+require_once "../modelos/requisiciones.modelo.php";
+
 		
 class Tablapersonas
 {	
@@ -42,6 +45,8 @@ class Tablapersonas
 
 		   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarPer'  title='Editar persona' data-toggle='modal' data-target='#modalEditarPersona' idper='".$personas[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarPer' title='Eliminar' idper='".$personas[$i]["id"]."' nomper='".$personas[$i]["nombre"]."'><i class='fa fa-times'></i></button></div></div>";
 
+		   $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"]);
+
 
 		   if ($sw == 0) 
 		   {
@@ -49,6 +54,7 @@ class Tablapersonas
 	    		"'.($i + 1).'",
 	    		"'.$personas[$i]["nombre"].'",
 	    		"'.$areas["nombre"].'",
+	    		"'.$rq[0].'",
 	    		"'.$acciones.'"
 	    		],';
 		   }
@@ -57,6 +63,7 @@ class Tablapersonas
 		   		$dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$personas[$i]["nombre"].'",
+	    		"'.$rq[0].'",
 	    		"'.$acciones.'"
 	    		],';
 		   }

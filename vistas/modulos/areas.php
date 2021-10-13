@@ -49,6 +49,7 @@
               <th style="width:10px">#</th>
                <th>Nombre</th>
                <th>Descripción</th>
+               <th>Requisiciones</th>
                <th>Personas Asociadas</th>
                <th>Acciones</th>
 
