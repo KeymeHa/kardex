@@ -112,7 +112,7 @@
 
     <div class="row">
 
-      <div class="col-lg-8">
+      <div class="col-lg-6">
         <div class="box">
           <div class="box-header">
              <h4>Inversiónes</h4>
@@ -134,7 +134,7 @@
         
       </div>
 
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <?php
 
           include "reportes/rqInsumos.php";
