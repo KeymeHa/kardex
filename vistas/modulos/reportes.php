@@ -1,7 +1,4 @@
 <div class="content-wrapper">
-     <?php
-    include "bannerConstruccion.php";
-  ?>
   <section class="content-header">
     <h1>    
       Reportes
