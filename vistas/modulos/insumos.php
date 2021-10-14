@@ -226,7 +226,7 @@
 <?php
 
   include "modalEditarInsumos.php";
-
+  include "modal/modalStock.php";
 ?>
 
 <div id="modalParametrosInsumos" class="modal fade" role="dialog">

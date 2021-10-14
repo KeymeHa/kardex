@@ -75,12 +75,13 @@ class TablaInsumos
 	          	 $imagen = "<img src='vistas/img/productos/default/anonymous.png' width='42px'>";
 	          }
 
+	          $atributos = "idInsumo='".$insumos[$i]['id']."' desInsumo='".$insumos[$i]['descripcion']."' data-toggle='modal' data-target='#modal-insumoStock' title='Ver Movimientos'";
 
 			if($insumos[$i]["stock"] <= $limStock["stMinimo"])
-			{$stock = "<button class='btn btn-danger'>".$insumos[$i]["stock"]."</button>";}
+			{$stock = "<button class='btn btn-danger btn-stock' ".$atributos." >".$insumos[$i]["stock"]."</button>";}
   			else if($insumos[$i]["stock"] >= $limStock["stMinimo"] && $insumos[$i]["stock"] <= $limStock["stModerado"])
-  			{$stock = "<button class='btn btn-warning'>".$insumos[$i]["stock"]."</button>";}
-  			else{$stock = "<button class='btn btn-success'>".$insumos[$i]["stock"]."</button>";}
+  			{$stock = "<button class='btn btn-warning btn-stock' ".$atributos.">".$insumos[$i]["stock"]."</button>";}
+  			else{$stock = "<button class='btn btn-success btn-stock' ".$atributos.">".$insumos[$i]["stock"]."</button>";}
   		
   			$acciones = "<div class='btn-group'><button class='btn btn-warning btnEditarInsumo' title='Editar' idInsumo='".$insumos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarInsumo'><i class='fa fa-pencil' ></i></button><button class='btn btn-danger btnEliminarInsumo' title='Eliminar' idInsumo='".$insumos[$i]["id"]."' desInsumo='".$insumos[$i]["descripcion"]."'><i class='fa fa-close'></i></button></div>";
 

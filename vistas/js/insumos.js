@@ -108,6 +108,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 })
 
 
+
 $("#nombreResp").change(function(){
 
 	if( $(this).val() == "")
@@ -128,6 +129,70 @@ $("#modalGeneracionInsumos").on("click", "#genPDFInsumos", function(){
 	window.open("extensiones/tcpdf/pdf/ActaInventario.php?responsable="+nombreR, "_blank");
 
 })
+
+$(".tablaInsumos").on("click", "button.btn-stock", function(){
+
+	var idInsumo = $(this).attr("idInsumo");
+	var des = $(this).attr("desInsumo");
+	$('#tituloInsumo').html(des);
+
+	if (localStorage.getItem("idStock") != null) 
+	{
+		localStorage.setItem("idStock", idInsumo);
+	}
+	else
+	{
+		localStorage.setItem("idStock", idInsumo);
+	}
+
+	if($("#tab_stock").children().length != 0)
+	{
+		$("#tab_stock").children().remove();
+		agregarDivStock();
+		paginaCargada(21);
+		paginaCargada(22);
+
+	}
+	else
+	{
+		agregarDivStock();
+		paginaCargada(21);
+		paginaCargada(22);
+	}
+
+
+})
+
+
+function agregarDivStock()
+{
+	$("#tab_stock").append('<div class="tab-pane" id="box-entradas" style="position: relative;">'+
+    '<table class="table table-bordered table-striped dt-responsive tablaEntradas" width="100%" data-page-length="15">'+       
+	'<thead>'+      
+	 '<tr>'+
+	  '<th style="width:10px">#</th>'+
+	   '<th>Código Factura</th>'+
+	   '<th>Cantidad</th>'+
+	   '<th>Fecha</th>'+
+	   '<th>Acciones</th>'+
+	 '</tr>'+
+	'</thead>'+
+	'</table>'+
+    '</div>'+
+    '<div class="tab-pane active" id="box-Salidas" style="position: relative;">'+
+    '<table class="table table-bordered table-striped dt-responsive tablaSalidas" width="100%" data-page-length="15">'+       
+	'<thead>'+      
+	 '<tr>'+
+	  '<th style="width:10px">#</th>'+
+	  '<th>Código Requisición</th>'+
+	   '<th>Cantidad</th>'+
+	   '<th>Fecha</th>'+
+	   '<th>Acciones</th>'+
+	 '</tr>'+
+	'</thead>'+
+	'</table>'+
+    '</div>')
+}
 
 //Verifica que no se agrege o modifique el codigo de un producto ya existente
 

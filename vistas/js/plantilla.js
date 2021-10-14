@@ -301,6 +301,38 @@ function paginaCargada(pagina){
 
 			
 		}
+		else if(pagina == 21)
+		{
+			tablaElegida =  $('.tablaEntradas');
+			tablaAjax = 'stock';
+
+			if(localStorage.getItem("idStock") != null)
+			{
+				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=in";
+			}
+			else
+			{
+				variable = "?idInsumo=0&tipoStock=in";
+			}
+
+			
+		}
+		else if(pagina == 22)
+		{
+			tablaElegida =  $('.tablaSalidas');
+			tablaAjax = 'stock';
+
+			if(localStorage.getItem("idStock") != null)
+			{
+				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=out";
+			}
+			else
+			{
+				variable = "?idInsumo=0&tipoStock=out";
+			}
+
+			
+		}
 
 
 		 $.ajax({

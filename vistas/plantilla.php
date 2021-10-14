@@ -70,6 +70,7 @@
            $_GET["ruta"] == "verOrden" ||
            $_GET["ruta"] == "nuevaOrdendeCompras" ||
            $_GET["ruta"] == "cotizaciones" ||
+           $_GET["ruta"] == "pruebas" ||
            $_GET["ruta"] == "facturas" ||
            $_GET["ruta"] == "personas" ||
            $_GET["ruta"] == "requisiciones" ||
