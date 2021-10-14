@@ -338,9 +338,10 @@ function paginaCargada(pagina){
 		 $.ajax({
 			 
 			 	url: "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
-				success:function(respuesta){
+				success:function(respuesta)
+				{
 						
-				console.log("respuesta", respuesta);
+				//console.log("respuesta", respuesta);
 
 				}
 
