@@ -1,20 +1,9 @@
 <?php
-
-
 require_once "../controladores/usuarios.controlador.php";
 require_once "../modelos/usuarios.modelo.php";
-
-/**
- * 
- */
 class AjaxUsuarios
 {
-	/*
-	
-	VARIABLES PUBLICAS
 
-	 */
-	
 	public $idUsuario;
 
 	public function ajaxEditarUsuario(){
@@ -38,8 +27,6 @@ class AjaxUsuarios
 
 	public $activarUsuario;
 	public $activarId;
-
-
 	public function ajaxActivarUsuario(){
 
 		$tabla = "usuarios";
@@ -48,6 +35,7 @@ class AjaxUsuarios
 		$item2 = "id";
 		$valor2 = $this->activarId;
 		$respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
+		$respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, $item2, $valor2);
 
 	}
 	
