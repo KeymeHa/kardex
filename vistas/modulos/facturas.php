@@ -17,6 +17,23 @@
             Agregar Factura
           </button>
         </a>
+
+        <?php
+            if ( isset($_GET["fechaInicial"]) ) 
+            {
+              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'">';
+            }
+            else
+            {
+              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r">';
+            }
+          ?>
+          <button type="button" class="btn btn-success" id="excelReport">
+              <span>
+                <i class="fa fa-file-excel-o"></i>&nbsp;Reporte en Excel
+              </span>
+            </button>
+          </a>
         
         <button type="button" class="btn btn-success pull-right" id="btn-RangoFactura">    
             <span>
@@ -63,6 +80,7 @@
 
     include "reportes/facturaGrafica.php";
     include "reportes/facturaCantidad.php";
+    include "reportes/inversionAnual.php";
 
     ?>
 
