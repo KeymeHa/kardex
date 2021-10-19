@@ -144,69 +144,78 @@
                     {
                       $item = "codigo";
                       $valor = $value["codigo"];
-                      $insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
 
-                      if($insumos != null)
+                      if (is_integer($valor)) 
                       {
-                        if($insumos["descripcion"] != $value["descripcion"])
-                        {
-                           $matchError.= '<li><small class="label label-warning">Adv</small><span class="text">El insumo con codigo <b>'.$value["codigo"].'</b> aparece como <b>'.$insumos["descripcion"].'</b> pero no como <b>'.$value["descripcion"].'</b>.</span></li>';
-                        }
+                        $insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
 
-                        if($insumos["stock"] == 0)
+                        if($insumos != null)
                         {
-                          $matchError.= '<li><small class="label label-danger">Error</small><span class="text">El Insumo Con codigo <b>'.$value["codigo"].'</b> no tiene stock disponible.</span></li>';
-                        }
-                        else
-                        {
-                          if($insumos["stock"] < $value["entregar"])
+                          if($insumos["descripcion"] != $value["descripcion"])
                           {
-                            $matchError.= '<li><small class="label label-warning">Adv</small><span class="text">El Insumo Con codigo <b>'.$value["codigo"].'</b> solo cuenta con <b>'.$insumos["stock"].'</b> de stock de los <b>'.$value["entregar"].'</b> que solicita.</span></li>';
+                             $matchError.= '<li><small class="label label-warning">Adv</small><span class="text">El insumo con codigo <b>'.$valor.'</b> aparece como <b>'.$insumos["descripcion"].'</b> pero no como <b>'.$value["descripcion"].'</b>.</span></li>';
+                          }
 
-                            echo '<div class="row" style="padding:5px 15px">
-                            <div class="col-xs-5" style="padding-right:0px">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$insumos["id"].'"><i class="fa fa-times"></i></button>
-                                </span>
-                              <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$insumos["id"].'" value="'.$insumos["descripcion"].'" readonly>
-                              </div>
-                            </div>
-                            <div class="col-xs-3 pedidaRQ">
-                              <input type="number" class="form-control nuevaCantidadPedida" stock="'.$insumos["stock"].'"name="nuevaCantidadPedida" min="1" value="'.$value["solicitado"].'" required>
-                            </div>
-                            <div class="col-xs-3 entregadaRQ">
-                              <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$insumos["stock"].'" name="nuevaCantidadEntregada" min="1" value="'.$insumos["stock"].'" required>
-                            </div>
-                          </div>';
+                          if($insumos["stock"] == 0)
+                          {
+                            $matchError.= '<li><small class="label label-danger">Error</small><span class="text">El Insumo Con codigo <b>'.$valor.'</b> no tiene stock disponible.</span></li>';
                           }
                           else
                           {
-                            echo '<div class="row" style="padding:5px 15px">
-                            <div class="col-xs-5" style="padding-right:0px">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$insumos["id"].'"><i class="fa fa-times"></i></button>
-                                </span>
-                              <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$insumos["id"].'" value="'.$insumos["descripcion"].'" readonly>
+                            if($insumos["stock"] < $value["entregar"])
+                            {
+                              $matchError.= '<li><small class="label label-warning">Adv</small><span class="text">El Insumo Con codigo <b>'.$valor.'</b> solo cuenta con <b>'.$insumos["stock"].'</b> de stock de los <b>'.$value["entregar"].'</b> que solicita.</span></li>';
+
+                              echo '<div class="row" style="padding:5px 15px">
+                              <div class="col-xs-5" style="padding-right:0px">
+                                <div class="input-group">
+                                  <span class="input-group-addon">
+                                    <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$insumos["id"].'"><i class="fa fa-times"></i></button>
+                                  </span>
+                                <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$insumos["id"].'" value="'.$insumos["descripcion"].'" readonly>
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-xs-3 pedidaRQ">
-                              <input type="number" class="form-control nuevaCantidadPedida" stock="'.$insumos["stock"].'" name="nuevaCantidadPedida" min="1" value="'.$value["solicitado"].'" required>
-                            </div>
-                            <div class="col-xs-3 entregadaRQ">
-                              <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$insumos["stock"].'" name="nuevaCantidadEntregada" min="1" value="'.$value["entregar"].'" required>
-                            </div>
-                          </div>';
+                              <div class="col-xs-3 pedidaRQ">
+                                <input type="number" class="form-control nuevaCantidadPedida" stock="'.$insumos["stock"].'"name="nuevaCantidadPedida" min="1" value="'.$value["solicitado"].'" required>
+                              </div>
+                              <div class="col-xs-3 entregadaRQ">
+                                <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$insumos["stock"].'" name="nuevaCantidadEntregada" min="1" value="'.$insumos["stock"].'" required>
+                              </div>
+                            </div>';
+                            }
+                            else
+                            {
+                              echo '<div class="row" style="padding:5px 15px">
+                              <div class="col-xs-5" style="padding-right:0px">
+                                <div class="input-group">
+                                  <span class="input-group-addon">
+                                    <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$insumos["id"].'"><i class="fa fa-times"></i></button>
+                                  </span>
+                                <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$insumos["id"].'" value="'.$insumos["descripcion"].'" readonly>
+                                </div>
+                              </div>
+                              <div class="col-xs-3 pedidaRQ">
+                                <input type="number" class="form-control nuevaCantidadPedida" stock="'.$insumos["stock"].'" name="nuevaCantidadPedida" min="1" value="'.$value["solicitado"].'" required>
+                              </div>
+                              <div class="col-xs-3 entregadaRQ">
+                                <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$insumos["stock"].'" name="nuevaCantidadEntregada" min="1" value="'.$value["entregar"].'" required>
+                              </div>
+                            </div>';
+                            }
                           }
+                        }
+                        else
+                        {
+                          $matchError.= '<li><small class="label label-danger">Error</small><span class="text">El Insumo Con codigo <b>'.$valor.'</b> no Existe.</span></li>';
                         }
                       }
                       else
                       {
-                        $matchError.= '<li><small class="label label-danger">Error</small><span class="text">El Insumo Con codigo <b>'.$value["codigo"].'</b> no Existe.</span></li>';
+                        $matchError.= '<li><small class="label label-danger">Error</small><span class="text">El registro con código <b>'.$valor.'</b> no son digitos.</span></li>';
                       }
 
-                    }
+
+                    }//foreach
                   }
                   else
                   {
