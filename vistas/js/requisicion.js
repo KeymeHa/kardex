@@ -25,7 +25,7 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 			$(".nuevoInsumoAgregadoRq").append(
 
 				'<div class="row" style="padding:5px 15px">'+
-                  '<div class="col-xs-5" style="padding-right:0px">'+
+                  '<div class="col-xs-6" style="padding-right:0px">'+
                    ' <div class="input-group">'+
                     '  <span class="input-group-addon">'+
                      '   <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'+idInsumo+'"><i class="fa fa-times"></i></button>'+

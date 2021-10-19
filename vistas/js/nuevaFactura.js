@@ -104,7 +104,7 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 		                	'<input type="text" class="form-control input-lg" id="totalSinIVA" value readonly required>'+
 		              	'</div>'+
 		              '</div>'+
-		              '<div class="col-xs-3" style="padding-right:0px">'+
+		              '<div class="col-xs-4" style="padding-right:0px">'+
 		               	'<div class="input-group" title="IVA">'+
 		                	'<input type="number" class="form-control input-lg" id="iva" value="'+imp+'" readonly required>'+
 		              		'<span class="input-group-addon">'+

@@ -87,16 +87,8 @@
                 </div>
               </div><!--row-->
 
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">          
-                    <div class="input-group">                   
-                      <textarea type="text" class="form-control input-xs" name="observacionRq" placeholder="Observaciones" autocomplete="off" style="width: 500px; height: 69px; resize: none"></textarea>
-                    </div>
-                   </div>
-                </div> 
-              </div>
-              
+              <textarea class="form-control" rows="3" name="observacionRq" rows="3" name="observacionRq" placeholder="Observaciones" autocomplete="off" style="resize: none"></textarea>
+
               <div class="row">
                 <div class="col-xs-1"></div>
                 <div class="col-xs-5" style="padding-right:0px">

@@ -113,19 +113,6 @@
 					<li><a href="actas"><i class="fa fa-file-o"></i>Listado de Actas</a></li>
 				</ul>
 			</li>
-
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'reportes'){ echo 'active';} }?>">
-				<a href="reportes">
-					<i class="fa fa-area-chart"></i>
-					<span>Historiales</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-tight"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="reportes"><i class="fa fa-area-chart"></i>Ver Reportes</a></li>
-				</ul>
-			</li>
 		</ul>
 	 </section>
 </aside>

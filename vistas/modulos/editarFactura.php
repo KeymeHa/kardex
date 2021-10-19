@@ -130,15 +130,8 @@
                 </div>        
               </div>
 
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">          
-                    <div class="input-group">                   
-                      <textarea type="text" class="form-control input-xs" name="observacionNF" placeholder="Observaciones" autocomplete="off" style="width: 500px; height: 69px; resize: none"><?php  echo $facturas["observacion"];?></textarea>
-                    </div>
-                   </div>
-                </div> 
-              </div>
+              
+              <textarea class="form-control" rows="3" name="observacionNF" placeholder="Observaciones" style="resize: none"><?php  echo $facturas["observacion"];?></textarea>
 
               <div class="row">
                  <div class="col-xs-7">
@@ -229,7 +222,7 @@
                       <input type="text" class="form-control input-lg" id="totalSinIVA" value="<?php echo $facturas['inversion'];?>" disabled readonly required>
                     </div>
                   </div>
-                  <div class="col-xs-3" style="padding-right:0px">
+                  <div class="col-xs-4" style="padding-right:0px">
                     <div class="input-group" title="IVA">
                       <input type="number" class="form-control input-lg" id="iva" value="<?php echo $parametros['valorIVA'];?>" disabled readonly required>
                       <span class="input-group-addon">

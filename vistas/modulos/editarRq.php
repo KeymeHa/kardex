@@ -112,19 +112,11 @@
                 </div>
               </div><!--row-->
 
-              <div class="row">
-                <div class="col-lg-12 col-md-12">
-                  <div class="form-group">          
-                    <div class="input-group">                   
-                      <textarea type="text" class="form-control input-xs" name="observacionRq" rows="3" placeholder="Observaciones" autocomplete="off" style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
-                    </div>
-                   </div>
-                </div> 
-              </div>
+               <textarea class="form-control" rows="3" name="observacionRq" rows="3" placeholder="Observaciones" autocomplete="off" style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
               
               <div class="row">
                 <div class="col-xs-1"></div>
-                <div class="col-xs-5" style="padding-right:0px">
+                <div class="col-xs-6" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
                 <div class="col-xs-2">
@@ -149,7 +141,7 @@
                        $stock = intval($value["ent"]) + $insumo["stock"];
 
                         echo '<div class="row" style="padding:5px 15px">
-                          <div class="col-xs-5" style="padding-right:0px">
+                          <div class="col-xs-6" style="padding-right:0px">
                             <div class="input-group">
                               <span class="input-group-addon">
                                 <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-times"></i></button>
