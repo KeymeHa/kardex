@@ -90,7 +90,6 @@ class ControladorUsuarios
 
 						if ( $intento == 3) 
 						{
-							$actualizar = ModeloUsuarios::mdlIncrementarintento($tabla,$respuesta["usuario"],$intento);
 							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "estado", 0, "usuario", $respuesta["usuario"]);
 
 							echo '<script>
@@ -119,6 +118,7 @@ class ControladorUsuarios
 						{
 							if ($respuesta["estado"] == 0 ) 
 							{
+								$actualizar = ModeloUsuarios::mdlIncrementarintento($tabla,$respuesta["usuario"],$intento);
 								echo '<script>
 
 										swal({
@@ -164,7 +164,7 @@ class ControladorUsuarios
 							
 
 								</script>';
-								
+
 							}
 						}
 					}
