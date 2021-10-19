@@ -58,3 +58,37 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 	});
 
 })
+
+$("#nuevoNit").change(function(){
+
+	var nit = $(this).val();
+	var datos = new FormData();
+	datos.append("validarNit", nit);
+
+	$(".alert").remove();
+
+	console.log("datos ", datos);
+
+	$.ajax({
+
+		url:"ajax/proveedores.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{
+			if(respuesta)
+			{
+				$("#nuevoNit").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> El NIT ya esta registrado.</div>');
+	    		$("#nuevoNit").val("");
+    		}
+	    	
+		}
+
+	});
+
+
+})

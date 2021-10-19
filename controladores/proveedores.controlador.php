@@ -5,11 +5,16 @@ class ControladorProveedores
 	static public function ctrMostrarProveedores($item, $valor)
 	{
 		$tabla = "proveedores";
-
 		$respuesta = ModeloProveedores::mdlMostrarProveedores($tabla, $item, $valor);
-
 		return $respuesta;
+	}
 
+
+	static public function ctrMostrarNit($item, $valor)
+	{
+		$tabla = "proveedores";
+		$respuesta = ModeloProveedores::mdlMostrarNit($tabla, $item, $valor);
+		return $respuesta;
 	}
 
 	static public function ctrCrearProveedor()
