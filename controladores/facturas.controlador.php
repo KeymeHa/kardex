@@ -1049,7 +1049,10 @@ class ControladorFacturas
 			foreach ($facturas as $row => $item){
 
 				$proveedor = ControladorProveedores::ctrMostrarProveedores("id", $item["id_proveedor"]);
-				$nit = $proveedor["nit"]." - ".$proveedor["digitoNit"]; 	
+				$nit = $proveedor["nit"]." - ".$proveedor["digitoNit"]; 
+
+				$arrayCan = [];
+				
 
 				 echo utf8_decode("<tr>
 			 			<td style='border:1px solid #eee;'>".$item["codigoInt"]."</td>
@@ -1077,6 +1080,7 @@ class ControladorFacturas
 
 			 	foreach ($insumos as $key => $valueinsumos) 
 			 	{	
+					array_push($arrayCan, $valueinsumos["can"]);
 		 			echo utf8_decode($valueinsumos["can"]."<br>");
 			 	}
 
@@ -1084,22 +1088,23 @@ class ControladorFacturas
 
 			 	foreach ($insumos as $key => $valueinsumos) 
 			 	{	
-		 			echo utf8_decode(number_format($valueinsumos["pre"],2)."<br>");
+		 			echo utf8_decode("$ ".$valueinsumos["pre"]."<br>");
 			 	}
 
 			 	echo utf8_decode("</td><td style='border:1px solid #eee;'>");
 
 			 	foreach ($insumos as $key => $valueinsumos) 
 			 	{	
-		 			echo utf8_decode(number_format($valueinsumos["pre"],2)."<br>");
+			 		$neto = intval($valueinsumos["pre"]) * intval($arrayCan[$key]);
+		 			echo utf8_decode("$ ".$neto."<br>");
 			 	}
 
 			 	$total = intval($item["inversion"]) + intval($item["iva"]);
 
 		 		echo utf8_decode("</td>
-					<td style='border:1px solid #eee;'>$ ".number_format($item["inversion"],2)."</td>
-					<td style='border:1px solid #eee;'>$ ".number_format($item["iva"],2)."</td>	
-					<td style='border:1px solid #eee;'>$ ".number_format($total,2)."</td>
+					<td style='border:1px solid #eee;'>$ ".$item["inversion"]."</td>
+					<td style='border:1px solid #eee;'>$ ".$item["iva"]."</td>	
+					<td style='border:1px solid #eee;'>$ ".$total."</td>
 					<td style='border:1px solid #eee;'>".$item["fecha"]."</td>		
 		 			</tr>");
 			}
