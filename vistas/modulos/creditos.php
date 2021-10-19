@@ -35,15 +35,15 @@
         <div class="col-sm-4 invoice-col">
           Analistas:
           <address>
-            <strong>Peter Zahn</strong><br>
-            <strong>Fernando Barcelo</strong><br>
+            <!--<strong></strong><br>
+            <strong></strong><br>-->
           </address>
         </div>
 
         <div class="col-sm-4 invoice-col">
           Apoyo:
           <address>
-            <strong>Juan Fernando Urrego</strong><br>
+           <!-- <strong></strong><br>-->
           </address>
         </div>
 
