@@ -167,7 +167,7 @@ $(".tablaInsumos").on("click", "button.btn-stock", function(){
 function agregarDivStock()
 {
 	$("#tab_stock").append('<div class="tab-pane" id="box-entradas" style="position: relative;">'+
-    '<table class="table table-bordered table-striped dt-responsive tablaEntradas" width="100%" data-page-length="15">'+       
+    '<table class="table table-bordered table-striped dt-responsive tablaEntradas" width="100%" data-page-length="10">'+       
 	'<thead>'+      
 	 '<tr>'+
 	  '<th style="width:10px">#</th>'+
@@ -180,7 +180,7 @@ function agregarDivStock()
 	'</table>'+
     '</div>'+
     '<div class="tab-pane active" id="box-Salidas" style="position: relative;">'+
-    '<table class="table table-bordered table-striped dt-responsive tablaSalidas" width="100%" data-page-length="15">'+       
+    '<table class="table table-bordered table-striped dt-responsive tablaSalidas" width="100%" data-page-length="10">'+       
 	'<thead>'+      
 	 '<tr>'+
 	  '<th style="width:10px">#</th>'+
