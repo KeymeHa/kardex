@@ -10,8 +10,8 @@
         <div class="modal-body" id="bodymodal-insumoStock">
           <div class="nav-tabs-custom" style="cursor: move;">
               <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                <li class=""><a href="#box-entradas" data-toggle="tab" aria-expanded="false">Entradas</a></li>
                 <li class="active"><a href="#box-Salidas" data-toggle="tab" aria-expanded="true">Salidas</a></li>
+                <li class=""><a href="#box-entradas" data-toggle="tab" aria-expanded="false">Entradas</a></li>
                 <li class="pull-left header"><i class="fa fa-retweet"></i> Movimientos</li>
               </ul>
               <div class="tab-content no-padding" id="tab_stock">
