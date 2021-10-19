@@ -84,6 +84,7 @@ $("#nuevoNit").change(function(){
 			{
 				$("#nuevoNit").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> El NIT ya esta registrado.</div>');
 	    		$("#nuevoNit").val("");
+	    		ocultarAlert();
     		}
 	    	
 		}

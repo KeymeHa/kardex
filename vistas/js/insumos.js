@@ -198,6 +198,12 @@ function agregarDivStock()
 
 $("#btn-AddInsumo").click(function(){
 
+	codigoNuevo();
+
+})
+
+function codigoNuevo()
+{
 	var newCodigo = 1;
 	var datos = new FormData();
 
@@ -220,7 +226,7 @@ $("#btn-AddInsumo").click(function(){
     		}	
 		}
 	});
-})
+}
 
 
 $("#nuevoCodigo").change(function(){
@@ -250,6 +256,9 @@ $("#nuevoCodigo").change(function(){
 			{
 				$("#nuevoCodigo").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> El Insumo <b>'+respuesta["descripcion"]+'</b> Tiene el mismo codigo.</div>');
 	    		$("#nuevoCodigo").val("");
+
+	    		ocultarAlert();
+	    		codigoNuevo();
     		}
 	    	
 		}
@@ -289,6 +298,8 @@ $("#eCodigoP").change(function(){
 				{
 					$("#nuevoCodigo").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> El Insumo <b>'+respuesta["descripcion"]+'</b> Tiene el mismo codigo.</div>');
 		    		$("#nuevoCodigo").val("");
+		    		ocultarAlert();
+		    		codigoNuevo();
 	    		}
 	    	
 		}

@@ -437,3 +437,10 @@ function paginaCargada(pagina){
 	}
 
 }
+
+
+function ocultarAlert()
+{
+	$('.alert').hide(10000)
+	$('.alert').hide("fast");
+}

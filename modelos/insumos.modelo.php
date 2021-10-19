@@ -38,7 +38,7 @@ class ModeloInsumos
 			}
 			elseif($item == "codigo")
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT codigo FROM $tabla WHERE $item = :$item AND elim = 0");
+				$stmt = Conexion::conectar()->prepare("SELECT codigo, descripcion FROM $tabla WHERE $item = :$item AND elim = 0");
 
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 

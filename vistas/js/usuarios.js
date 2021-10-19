@@ -1,48 +1,3 @@
-/*
-$("#btnParamIns").on("click", ".btnVerArchivos", function(){
-
-	var idUsuario = $(this).attr("idUsuario");
-	
-	var datos = new FormData();
-	datos.append("idUsuario", idUsuario);
-
-	$.ajax({
-
-		url:"ajax/usuarios.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(respuesta){
-			
-			$("#editarNombre").val(respuesta["nombre"]);
-			$("#editarUsuario").val(respuesta["usuario"]);
-			$("#tituloUsuario").html(respuesta["usuario"]);
-			$("#editarPerfil").html(respuesta["perfil"]);
-			$("#editarPerfil").val(respuesta["perfil"]);
-			$("#fotoActual").val(respuesta["foto"]);
-
-			$("#actualPassword").val(respuesta["password"]);
-
-			if(respuesta["foto"] != ""){
-
-				$(".previsualizarEditar").attr("src", respuesta["foto"]);
-
-			}else{
-
-				$(".previsualizarEditar").attr("src", "vistas/img/usuarios/default/anonymous.png");
-
-			}
-
-		}
-
-	});
-
-})
-*/
-
 $("#nuevoUsuario").change(function(){
 
 	var idUsuario = $(this).val();
@@ -68,6 +23,7 @@ $("#nuevoUsuario").change(function(){
 				{
 					$("#nuevoUsuario").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe ese Usuario.</div>');
 		    		$("#nuevoUsuario").val("");
+		    		ocultarAlert();
 	    		}
 	    	
 		}
