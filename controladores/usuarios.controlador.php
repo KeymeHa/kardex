@@ -72,8 +72,9 @@ class ControladorUsuarios
 										"sid" => $_SESSION['sid'],
 										"usuario" => $_POST["ingUsuario"]);
 
+						$actualizar = ModeloUsuarios::mdlIncrementarintento($tabla,$respuesta["usuario"],0);
 						$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
-						$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, "usuario", $respuesta["usuario"]);
+
 						echo '<script>
 								window.location = "inicio";			
 							</script>';
