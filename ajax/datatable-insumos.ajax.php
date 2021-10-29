@@ -53,13 +53,19 @@ class TablaInsumos
 	    $limStock = ControladorParametros::ctrMostrarLimInsumos($item, $valor); 
 	    $dJson = '{"data": [';
 	    if ( count($insumos) == 0) 
-	    {  	echo'{"data": []}';	return; }
+	    {  $parametro = ControladorParametros::ctrVerificarIns();
+
+			if($parametro == 1)
+	         {
+	            $respuesta = ControladorParametros::ctrActualizarIns(0);
+	         } echo'{"data": []}';	return; }
 		else
 		{
 			$parametro = ControladorParametros::ctrVerificarIns();
+
 			if($parametro == 0)
 	         {
-	            $respuesta = ControladorParametros::ctrActualizarIns();
+	            $respuesta = ControladorParametros::ctrActualizarIns(1);
 	         }
 		}
 

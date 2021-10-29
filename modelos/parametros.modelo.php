@@ -82,10 +82,8 @@ class ModeloParametros
 		$stmt = null;
 	}
 
-	static public function mdlActualizarIns($tabla)
+	static public function mdlActualizarIns($tabla, $valor)
 	{
-		$valor = 1;
-
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET validarIns = 1 WHERE id = :id");
 
 		$stmt -> bindParam(":id", $valor, PDO::PARAM_INT);

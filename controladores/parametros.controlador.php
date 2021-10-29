@@ -165,14 +165,32 @@ class ControladorParametros
 	{
 		if($sw == 0)
 		{
-			$fecha = substr($fechaI,8,10);
-            $fecha .= "-".substr($fechaI,5,-3);
-            $fecha .= "-".substr($fechaI,0,-6);
+			if(strlen($fechaI) == 10)
+		    {
+		        $fecha = substr($fechaI,8,10);
+		        $fecha .= "-".substr($fechaI,5,-3);
+		        $fecha .= "-".substr($fechaI,0,-6);
+		    }
+		    else
+		    {
+		        $fecha = substr($fechaI,8,-9);
+		        $fecha .= "-".substr($fechaI,5,-12);
+		        $fecha .= "-".substr($fechaI,0,-15);
+		    }
 		}
 		elseif($sw == 1)
 		{
-			$fecha = substr($fechaI,8,10);
-			$meses = substr($fechaI,5,-3);
+			if(strlen($fechaI) == 10)
+			    {
+			       $fecha = substr($fechaI,8,10);
+				   $meses = substr($fechaI,5,-3);
+			    }
+			    else
+			    {
+			        $fecha = substr($fechaI,8,-9);
+			        $meses .= "-".substr($fechaI,5,-12);
+			    }
+
 			if($meses == "01")
 				{
 				$mes = "Enero";
@@ -200,20 +218,37 @@ class ControladorParametros
 				$mes = "Diciembre";
 				}
 				$fecha.= "-".$mes;
-				$fecha .= "-".substr($fechaI,0,-6);
+				$fecha .= "-".substr($fechaI,0,-15);
 		}
 		elseif($sw == 2)
 		{
-			$fecha = substr($fechaI,8,10);
-            $fecha .= "/".substr($fechaI,5,-3);
-            $fecha .= "/".substr($fechaI,0,-6);
+			if(strlen($fechaI) == 10)
+		    {
+		        $fecha = substr($fechaI,8,10);
+		        $fecha .= "/".substr($fechaI,5,-3);
+		        $fecha .= "/".substr($fechaI,0,-6);
+		    }
+		    else
+		    {
+		        $fecha = substr($fechaI,8,-9);
+		        $fecha .= "/".substr($fechaI,5,-12);
+		        $fecha .= "/".substr($fechaI,0,-15);
+		    }
+
 		}
 		elseif ($sw == 3) 
 		{
 			$fecha = substr($fechaI,8,-9);//dd
 	        $fecha .= "/".substr($fechaI,5,-12);//mm
 	        $fecha .= "/".substr($fechaI,0,-15);//YY
-	        $fecha .= " - ".substr($fechaI,-9,-3);//YY
+	        $fecha .= " - ".substr($fechaI,-9,-3);//hh-mm
+		}
+		elseif ($sw == 4) 
+		{
+			$fecha = substr($fechaI,8,-9);//dd
+	        $fecha .= "/".substr($fechaI,5,-12);//mm
+	        $fecha .= "/".substr($fechaI,0,-15);//YY
+	        $fecha .= " - ".substr($fechaI,-9,0);//hh-mm:ss
 		}
 		return $fecha;
 	}
@@ -473,10 +508,10 @@ class ControladorParametros
 		return $respuesta["validarIns"];
 	}
 
-	static public function ctrActualizarIns()
+	static public function ctrActualizarIns($valor)
 	{
 		$tabla = "parametros";
-		$respuesta = ModeloParametros::mdlActualizarIns($tabla);
+		$respuesta = ModeloParametros::mdlActualizarIns($tabla, $valor);
 		return $respuesta;
 	}
 
