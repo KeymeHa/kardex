@@ -18,7 +18,7 @@ class tablaStock
 		$tipoS = $this->tipo;
 		$valorN = null;
 
-				if ($tipoS == "in") 
+		if ($tipoS == "in") 
 		{
 			$respuesta = ControladorFacturas::ctrMostrarFacturas($valorN, $valorN);
 		}

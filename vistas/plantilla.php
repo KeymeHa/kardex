@@ -52,51 +52,12 @@
       echo '<div class="wrapper">';
       include "modulos/cabezote.php";
       include "modulos/menu.php";
-      if(isset($_GET["ruta"])){
-        if($_GET["ruta"] == "inicio" ||
-           $_GET["ruta"] == "usuarios" ||
-           $_GET["ruta"] == "actas" ||
-           $_GET["ruta"] == "editarActa" ||
-           $_GET["ruta"] == "verActa" ||
-           $_GET["ruta"] == "verArea" ||
-           $_GET["ruta"] == "nuevaActa" ||
-           $_GET["ruta"] == "insumos" ||
-           $_GET["ruta"] == "categorias" ||
-           $_GET["ruta"] == "verCategoria" ||
-           $_GET["ruta"] == "generaciones" ||
-           $_GET["ruta"] == "pedidos" ||
-           $_GET["ruta"] == "ordendecompras" ||
-           $_GET["ruta"] == "editarOrden" ||
-           $_GET["ruta"] == "verOrden" ||
-           $_GET["ruta"] == "nuevaOrdendeCompras" ||
-           $_GET["ruta"] == "cotizaciones" ||
-           $_GET["ruta"] == "facturas" ||
-           $_GET["ruta"] == "personas" ||
-           $_GET["ruta"] == "requisiciones" ||
-           $_GET["ruta"] == "requisicion" ||
-           $_GET["ruta"] == "verRequisicion" ||
-           $_GET["ruta"] == "areas" ||
-           $_GET["ruta"] == "proveedores" ||
-           $_GET["ruta"] == "proveedor" ||
-           $_GET["ruta"] == "nuevaFactura" ||
-           $_GET["ruta"] == "verFactura" ||
-           $_GET["ruta"] == "inventario" ||
-           $_GET["ruta"] == "creditos" ||
-           $_GET["ruta"] == "historialUsuarios" ||
-           $_GET["ruta"] == "historialInsumos" ||
-           $_GET["ruta"] == "historialOrdenes" ||
-           $_GET["ruta"] == "historialRq" ||
-           $_GET["ruta"] == "historialCategorias" ||
-           $_GET["ruta"] == "historialAreas" ||
-           $_GET["ruta"] == "historialPersonas" ||
-           $_GET["ruta"] == "requisicionImportada" ||
-           $_GET["ruta"] == "editarRq" ||
-           $_GET["ruta"] == "editarRequisicion" ||
-           $_GET["ruta"] == "editarFactura" ||
-           $_GET["ruta"] == "reportesRq" ||
-           $_GET["ruta"] == "perfil" ||
-           $_GET["ruta"] == "salir"){
 
+      if(isset($_GET["ruta"])){
+
+        $documento = "vistas/modulos/".$_GET["ruta"].".php";
+
+        if(file_exists($documento)){
 
             $paginaCargada = '<script type="text/javascript">
                 $( document ).ready(function() {
@@ -129,6 +90,8 @@
             {$paginaCargada.="18";}
             elseif ($_GET["ruta"] == "proveedor")
             {$paginaCargada.="19";}
+            elseif ($_GET["ruta"] == "inversionInsumos") 
+            {$paginaCargada.="23";}
             else
             {$paginaCargada.="0";}
 

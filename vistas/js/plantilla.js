@@ -333,6 +333,26 @@ function paginaCargada(pagina){
 
 			
 		}
+		else if(pagina == 23)
+		{
+
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaFacturas');
+			tablaAjax = 'facturas';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null&inv=1";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1";
+			}
+
+			
+		}
 
 
 		 $.ajax({
@@ -341,7 +361,7 @@ function paginaCargada(pagina){
 				success:function(respuesta)
 				{
 						
-				//console.log("respuesta", respuesta);
+				console.log("respuesta", respuesta);
 
 				}
 

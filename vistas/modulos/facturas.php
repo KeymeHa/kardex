@@ -65,6 +65,26 @@
       </div>
     </div>
 
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Inversiones por insumos</h3>
+        <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+      </div>
+      </div>
+      <div class="box-body">
+        <a href="inversionInsumos">
+          <button type="button" class="btn btn-success">    
+              <span>
+                <i class="fa  fa-area-chart"></i> Ver Informe
+              </span>
+          </button>
+        </a>
+      </div>
+
+    </div>
+
     <?php
 
     if (isset($_GET["fechaInicial"])) 
