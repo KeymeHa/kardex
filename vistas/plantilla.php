@@ -59,45 +59,19 @@
 
         if(file_exists($documento)){
 
-            $paginaCargada = '<script type="text/javascript">
+
+            $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
+
+            if ( $js_data != null ) 
+            {
+              $paginaCargada = '<script type="text/javascript">
                 $( document ).ready(function() {
-                  var pagina = ';
-            if($_GET["ruta"] == "categorias")
-            {$paginaCargada.="1";}
-            elseif($_GET["ruta"] == "verCategoria")
-            {$paginaCargada.="2";}
-            elseif($_GET["ruta"] == "insumos")
-            {$paginaCargada.="3";}
-            elseif ($_GET["ruta"] == "ordendecompras") 
-            {$paginaCargada.="4";}
-            elseif ($_GET["ruta"] == "facturas") 
-            {$paginaCargada.="5";}
-            elseif ($_GET["ruta"] == "requisiciones") 
-            {$paginaCargada.="8";}
-            elseif ($_GET["ruta"] == "nuevaFactura" || $_GET["ruta"] == "editarFactura") 
-            {$paginaCargada.="10";}
-            elseif ($_GET["ruta"] == "requisicion" || $_GET["ruta"] == "requisicionImportada" || $_GET["ruta"] == "editarRq")
-            {$paginaCargada.="11";}
-            elseif ($_GET["ruta"] == "actas")
-            {$paginaCargada.="14";}
-            elseif ($_GET["ruta"] == "areas")
-            {$paginaCargada.="15";}
-            elseif ($_GET["ruta"] == "personas")
-            {$paginaCargada.="16";}
-            elseif ($_GET["ruta"] == "inicio" || $_GET["ruta"] == "reportesRq")
-            {$paginaCargada.="17";}
-            elseif ($_GET["ruta"] == "verArea")
-            {$paginaCargada.="18";}
-            elseif ($_GET["ruta"] == "proveedor")
-            {$paginaCargada.="19";}
-            elseif ($_GET["ruta"] == "inversionInsumos") 
-            {$paginaCargada.="23";}
-            else
-            {$paginaCargada.="0";}
+                  var pagina = '.$js_data["num"].';';
 
-            $paginaCargada .= ';paginaCargada(pagina);});</script>';
+              $paginaCargada .= ';paginaCargada(pagina);});</script>';
 
-            echo $paginaCargada;
+              echo $paginaCargada;
+            }
 
           include "modulos/".$_GET["ruta"].".php";
           include "modulos/notificaciones-modal.php";

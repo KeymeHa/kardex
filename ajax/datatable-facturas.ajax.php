@@ -133,7 +133,7 @@ class TablaFacturas
 		          	 $imagen = "<img src='vistas/img/productos/default/anonymous.png' width='42px'>";
 		          }
 
-		          $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success' idInsu='".$array_id[$i]."' title='Detalles'><i class='fa fa-file-text-o'></i></button></div></div>";
+		          $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-inver' idInsumo='".$array_id[$i]."' desInsumo='".$insumos["descripcion"]."' title='Detalles' data-toggle='modal' data-target='#modal-insumoInver'><i class='fa fa-file-text-o'></i></button></div></div>";
 
 		          $sumatoria = ControladorParametros::ctrSumatoria($array_total[$i],0);
 

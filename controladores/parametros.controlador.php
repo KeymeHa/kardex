@@ -129,6 +129,13 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrJs_data($ruta)
+	{
+		$tabla = "js_data";
+		$respuesta = ModeloParametros::mdlJs_data($ruta,$tabla);
+		return $respuesta;
+	}
+
 	static public function ctrSumatoria($valor1, $valor2)
 	{
 		if($valor2 != null)

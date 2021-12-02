@@ -72,6 +72,17 @@ class ModeloParametros
 		$stmt = null;
 	}
 
+	static public function mdlJs_data($ruta, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT page, num FROM $tabla WHERE page = :page");
+		$stmt -> bindParam(":page", $ruta, PDO::PARAM_STR);
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlJs_Terms($tabla)
 	{
 		$stmt = Conexion::conectarRead()->prepare("SELECT * FROM $tabla");

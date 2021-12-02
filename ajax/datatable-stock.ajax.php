@@ -22,7 +22,7 @@ class tablaStock
 		{
 			$respuesta = ControladorFacturas::ctrMostrarFacturas($valorN, $valorN);
 		}
-		else
+		elseif($tipoS == "out")
 		{
 			$respuesta = ControladorRequisiciones::ctrMostrarRequisiciones($valorN, $valorN);
 		}

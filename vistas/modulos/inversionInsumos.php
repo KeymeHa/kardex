@@ -82,7 +82,7 @@
       }
 
     include "reportes/inversionInsumo.php";
-
+    include "modal/modalInverInsu.php";
 
 
     ?>

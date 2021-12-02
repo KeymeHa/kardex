@@ -17,6 +17,54 @@ function validarRuta()
 	}
 }
 
+$(".tablaFacturas").on("click", "button.btn-inver", function(){
+
+	var idInsumo = $(this).attr("idInsumo");
+	var des = $(this).attr("desInsumo");
+	$('#tituloInsumo').html(des);
+
+	if (localStorage.getItem("idInver") != null) 
+	{
+		localStorage.setItem("idInver", idInsumo);
+	}
+	else
+	{
+		localStorage.setItem("idInver", idInsumo);
+	}
+
+	if($("#tabInversion").children().length != 0)
+	{
+		$("#tabInversion").children().remove();
+		agregarDivInver();
+		paginaCargada(24);
+
+	}
+	else
+	{
+		agregarDivInver();
+		paginaCargada(24);
+	}
+
+})
+
+function agregarDivInver()
+{
+	$("#tabInversion").append(
+	 '<table class="table table-bordered table-striped dt-responsive tablaInver" width="100%">'+
+  '<thead>'+
+   '<tr>'+
+    '<th style="width:10px">#</th>'+
+     '<th>Código</th>'+
+     '<th>Código Factura</th>'+
+     '<th>Proveedor</th>'+
+     '<th>Cantidad</th>'+
+     '<th>Total Invertido</th>'+
+     '<th>Fecha</th>'+
+     '<th>Acciones</th>'+
+   '</tr> '+
+  '</thead>'+
+'</table>')
+}
 
 if(localStorage.getItem("capturarRango") != null)
 {

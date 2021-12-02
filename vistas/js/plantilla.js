@@ -353,7 +353,33 @@ function paginaCargada(pagina){
 
 			
 		}
+		else if(pagina == 24)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaInver');
+			tablaAjax = 'inversion';
 
+			if(localStorage.getItem("idInver") != null)
+			{
+				variable  = "?idInsumo="+localStorage.getItem("idInver");
+			}
+			else
+			{
+				variable = "?idInsumo=0";
+			}
+			
+			if(fechaInicial == null)
+			{
+			  variable+="&fechaInicial=null";
+			} 
+			else 
+			{
+			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1";
+			}	
+		}
 
 		 $.ajax({
 			 
@@ -464,3 +490,5 @@ function ocultarAlert()
 	$('.alert').hide(10000)
 	$('.alert').hide("fast");
 }
+
+

@@ -90,7 +90,7 @@ $array_total = array();
 
           $insumos = ControladorInsumos::ctrMostrarInsumos("id", $array_id[$i]);
 
-         $ykeys.= "{ y: '".$insumos["descripcion"]."', inversion: ".$array_total[$i]." },";
+         $ykeys.= "{ y: '".$insumos["descripcion"]."', Invertido: ".$array_total[$i]." },";
 
         }
 
@@ -101,7 +101,7 @@ $array_total = array();
 
     }else{
 
-       echo "{ y: '0', inversion: '0' }";
+       echo "{ y: '0', Invertido: '0' }";
 
     }
 
@@ -109,8 +109,8 @@ $array_total = array();
 
     ],
     xkey             : 'y',
-    ykeys            : ['inversion'],
-    labels           : ['inversión'],
+    ykeys            : ['Invertido'],
+    labels           : ['Invertido'],
     barColors: ['#00a65a'],
     fillOpacity: 0.6,
     hideHover: 'auto',
