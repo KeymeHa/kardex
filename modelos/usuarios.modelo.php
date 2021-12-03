@@ -28,21 +28,6 @@ class ModeloUsuarios
 		$stmt = null;
 	}
 
-	static public function mdlIncrementarintento($tabla,$usuario,$intento)
-	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET try = :try WHERE usuario = :usuario");
-		$stmt->bindParam(":try", $intento, PDO::PARAM_STR);
-		$stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
-		if($stmt -> execute()){
-			return "ok";
-		}else{
-			return "error";	
-		}
-
-		$stmt -> close();
-		$stmt = null;
-	}
-
 	static public function mdlVerSID($tabla, $item, $valor)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT sid FROM usuarios WHERE $item = :$item");

@@ -72,7 +72,8 @@ class ControladorUsuarios
 										"sid" => $_SESSION['sid'],
 										"usuario" => $_POST["ingUsuario"]);
 
-						$actualizar = ModeloUsuarios::mdlIncrementarintento($tabla,$respuesta["usuario"],0);
+						$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, "usuario", $respuesta["usuario"]);
+
 						$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
 
 						echo '<script>
@@ -86,7 +87,7 @@ class ControladorUsuarios
 
 					if ($respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] != $encriptar) 
 					{
-						$intento = $respuesta["try"] + 1;
+						$intento = intval($respuesta["try"]) + 1;
 						
 
 						if ( $intento == 3) 
@@ -119,7 +120,7 @@ class ControladorUsuarios
 						{
 							if ($respuesta["estado"] == 0 ) 
 							{
-								$actualizar = ModeloUsuarios::mdlIncrementarintento($tabla,$respuesta["usuario"],$intento);
+
 								echo '<script>
 
 										swal({
@@ -144,6 +145,10 @@ class ControladorUsuarios
 							}
 							else
 							{
+
+
+								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", $intento, "usuario", $respuesta["usuario"]);
+
 							echo '<script>
 
 								swal({

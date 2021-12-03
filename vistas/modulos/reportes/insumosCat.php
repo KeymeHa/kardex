@@ -17,7 +17,7 @@
 
       <div class="row">
         <div class="col-lg-12">
-          <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
+          <div class="chart" id="bar-chart-insuCat" style="height: 250px;"></div>
         </div>
       </div>
 
@@ -67,7 +67,7 @@
       resize: true
   };
 
-  config.element = 'bar-chart-rqCanMesAnio';
+  config.element = 'bar-chart-insuCat';
   Morris.Bar(config);
 
 
