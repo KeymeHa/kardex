@@ -101,6 +101,14 @@
         <?php include "tablas/tablaInsumos.php"; ?>
       </div>
     </div>
+
+    <?php
+
+    include "reportes/insumosCat.php";
+
+    ?>
+
+
   </section>
 </div>
 

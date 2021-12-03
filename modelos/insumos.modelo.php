@@ -4,18 +4,34 @@ require_once "conexion.php";
 
 class ModeloInsumos
 {
-	static public function mdlMostrarInsumos($tabla, $item, $valor)
+	static public function mdlMostrarInsumos($tabla, $item, $valor, $sw)
 	{
 		if($item != null)
 		{
 			if($item == "id_categoria")
 			{
+
+				if ($sw == 0) 
+				{
+					# code...
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
 
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 				$stmt -> execute();
 
 				return $stmt -> fetchAll();
+
+				}
+				else
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT descripcion, stock FROM $tabla WHERE $item = :$item AND elim = 0");
+
+					$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+					$stmt -> execute();
+
+					return $stmt -> fetchAll();
+				}
+
 			}
 			elseif($item == "stock" && $valor == 12)
 			{

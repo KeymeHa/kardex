@@ -293,7 +293,14 @@ class ControladorInsumos
 	static public function ctrMostrarInsumos($item, $valor)
 	{
 		$tabla = "insumos";
-		$respuesta = ModeloInsumos::mdlMostrarInsumos($tabla, $item, $valor);
+		$respuesta = ModeloInsumos::mdlMostrarInsumos($tabla, $item, $valor, 0);
+		return $respuesta;
+	}
+
+	static public function ctrMostrarInsumosCat($item, $valor, $sw)
+	{
+		$tabla = "insumos";
+		$respuesta = ModeloInsumos::mdlMostrarInsumos($tabla, $item, $valor, $sw);
 		return $respuesta;
 	}
 
@@ -303,7 +310,6 @@ class ControladorInsumos
 		$respuesta = ModeloInsumos::mdlAgruparInsumos($tabla);
 		return $respuesta;
 	}
-
 
 	/*=============================================
 	BORRAR INSUMO
