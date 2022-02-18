@@ -10,7 +10,7 @@
    <th title="Estante">Est</th>
    <th title="Nivel">Nvl</th>
    <th title="Sección">Secc</th>
-   <th>Acciones</th>
+   <th style="width:105px">Acciones</th>
  </tr> 
 </thead>
 </table>

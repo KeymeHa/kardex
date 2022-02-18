@@ -2,11 +2,48 @@
 
 class ControladorOrdenCompra
 {
+
+	function anioActual()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
+	function anioActualProv()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(ordenCompra.fecha) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
 	static public function ctrMostrarOrdenesdeComprasRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "ordenCompra";
 
-		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesCRango($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorOrdenCompra;
+		$anio = $r->anioActual();	
+		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesCRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
@@ -15,17 +52,20 @@ class ControladorOrdenCompra
 	static public function ctrMostrarOrdenesdeCompras($item, $valor)
 	{
 		$tabla = "ordenCompra";
-
-		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesdeCompras($tabla, $item, $valor);
+		$r = new ControladorOrdenCompra;
+		$anio = $r->anioActual();
+		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesdeCompras($tabla, $item, $valor, $anio);
 
 		return $respuesta;
 	
 	}//ctrMostrarOrdenesdeCompras
 
-	static public function ctrContarOrdenProv()
+	static public function ctrContarOrdenProv($fechaInicial, $fechaFinal)
 	{
 		$tabla = "ordenCompra";
-		$respuesta = ModeloOrdenCompra::mdlAgruparOdenes($tabla);
+		$r = new ControladorOrdenCompra;
+		$anio = $r->anioActualProv();
+		$respuesta = ModeloOrdenCompra::mdlAgruparOdenes($tabla,$fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}
 
@@ -61,6 +101,9 @@ class ControladorOrdenCompra
 			$responsable = ControladorParametros::ctrValidarCaracteres($_POST["nuevoResponsable"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionOC"]);
 
+			date_default_timezone_set('America/Bogota');
+			$hoy = date("Y-m-d");
+
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
 							'id_proveedor' => $_POST["selecProveedor"],
 							'id_usr' => $_POST["idUsuario"],
@@ -70,7 +113,8 @@ class ControladorOrdenCompra
 							'formaPago' => $formaPago,
 							'responsable' => $responsable,
 							'fechaEntrega' => $observacion,
-							'observacion' => $_POST["observacionOC"]);
+							'observacion' => $_POST["observacionOC"],
+							'fecha' => $hoy);
 
 
 			$respuesta = ModeloOrdenCompra::mdlRegistrarOrdenCompra($tabla, $datos);

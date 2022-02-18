@@ -2,6 +2,8 @@
 require_once "../controladores/categorias.controlador.php";
 require_once "../controladores/insumos.controlador.php";
 require_once "../modelos/categorias.modelo.php";
+require_once "../controladores/parametros.controlador.php";
+require_once "../modelos/parametros.modelo.php";
 require_once "../modelos/insumos.modelo.php";
 class AjaxInsumos
 {	public $idInsumo;

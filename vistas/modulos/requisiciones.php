@@ -20,6 +20,7 @@
                 Nueva Requisición
               </button>
             </a>
+
             <button class="btn btn-success" data-toggle="modal" data-target="#modalimportarRq">
             <i class="fa fa-download"></i> Subir Requisición
             </button>
@@ -28,6 +29,9 @@
                 <i class="fa fa-download"></i> Plantilla Importar Rq
               </button> 
             </a>
+              <?php 
+              include "anios.php";
+            ?>
             <button type="button" class="btn btn-success pull-right" id="btn-RangoRequisicion">    
                 <span>
                   <i class="fa fa-calendar"></i> Rango de fecha
@@ -67,18 +71,28 @@
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Requisiciones realizadas</h5><br>
-                  <span class="description-text">Presente Año: <b><?php echo ControladorRequisiciones::ctrContarRequisicionesFecha(0)[0];?>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrContarRequisicionesFecha(0)[0];?>
                     
                   </b></span><br>
-                  <span class="description-text">Presente Mes: <b><?php echo ControladorRequisiciones::ctrContarRequisicionesFecha(1)[0];?></b></span>
+                  <span class="description-text"> <b><?php if (isset(ControladorRequisiciones::ctrContarRequisicionesFecha(1)[0])) {
+                    echo "Mes:".ControladorRequisiciones::ctrContarRequisicionesFecha(1)[0];
+                  } ?></b></span>
                 </div>
               </div>
 
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Requisición por Área</h5><br>
-                  <?php $countAreas = ControladorRequisiciones::ctrContarRqArea(1, null, null);
+                  <?php 
 
+                  if (isset($_GET["fechaInicial"])) 
+                  {
+                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, $_GET["fechaInicial"], $_GET["fechaFinal"]);
+                  }
+                  else
+                  {
+                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, null, null);
+                  }
                     if($countAreas != null)
                     {
                       foreach ($countAreas as $key => $value) 
@@ -101,16 +115,16 @@
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Stock Entregados</h5><br>
-                  <span class="description-text">Presente Año: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(3);?></b></span><br>
-                  <span class="description-text">Presente Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(4);?></b></span>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(3);?></b></span><br>
+                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(4);?></b></span>
                 </div>
               </div>
 
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Insumos Requeridos</h5><br>
-                  <span class="description-text">Presente Año: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(0);?></b></span><br>
-                  <span class="description-text">Presente Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(1);?></b></span>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(0);?></b></span><br>
+                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(1);?></b></span>
                 </div>
               </div>
 

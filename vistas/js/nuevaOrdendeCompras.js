@@ -1,3 +1,10 @@
+	
+if (localStorage.getItem("rutaURL") != 'nuevaOrdendeCompras') 
+{
+	localStorage.removeItem("capturarRango");
+}
+
+
 $('.tablaInsumosNOC').DataTable( {
     "ajax": "ajax/datatable-nuevaFactura.ajax.php",
     "deferRender": true,

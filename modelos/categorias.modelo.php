@@ -83,6 +83,20 @@ class ModeloCategorias
 			$stmt = null;
 	}
 
+	static public function mdlNombreCategoria($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT categoria FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+			$stmt -> close();
+
+			$stmt = null;
+	}
 
 	static public function mdlMostrarCategorias($tabla, $item, $valor)
 	{

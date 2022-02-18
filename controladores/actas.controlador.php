@@ -1,6 +1,24 @@
 <?php
 class ControladorActas
 {
+
+	function anioActual()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
 	static public function ctrNuevaActa()
 	{
 		if(isset($_POST["nuevoAutorizador"]))
@@ -13,6 +31,9 @@ class ControladorActas
 			$responsable = ControladorParametros::ctrValidarCaracteres($_POST["nuevoResponsable"]);
 			$dependenciaR = ControladorParametros::ctrValidarCaracteres($_POST["nuevaDependenciaR"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionACT"]);
+
+			date_default_timezone_set('America/Bogota');
+			$hoy = date("Y-m-d");
 			
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
 							'id_usr' => $_POST["idUsuario"],
@@ -24,7 +45,8 @@ class ControladorActas
 							'dependenciaR' => $dependenciaR,
 							'motivo' => $_POST["selecMotivo"],
 							'observacion' => $observacion,
-							'listainsumos' => $_POST["listaInsumos"]);
+							'listainsumos' => $_POST["listaInsumos"],
+							'fecha' => $hoy);
 
 			$respuesta = ModeloActas::mdlRegistrarActa($tabla, $datos);
 
@@ -148,15 +170,18 @@ class ControladorActas
 	static public function ctrMostrarActas($item, $valor)
 	{
 		$tabla = "actas";
-		$respuesta = ModeloActas::mdlMostrarActas($tabla, $item, $valor);
+		$r = new ControladorActas;
+		$anio = $r->anioActual();	
+		$respuesta = ModeloActas::mdlMostrarActas($tabla, $item, $valor, $anio);
 		return $respuesta;
 	}
 
 	static public function ctrMostrarActasRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "actas";
-
-		$respuesta = ModeloActas::mdlMostrarActasRango($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorActas;
+		$anio = $r->anioActual();
+		$respuesta = ModeloActas::mdlMostrarActasRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
@@ -165,8 +190,9 @@ class ControladorActas
 	static public function ctrContarTipo($fechaInicial, $fechaFinal)
 	{
 		$tabla = "actas";
-
-		$respuesta = ModeloActas::mdlContarTipo($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorActas;
+		$anio = $r->anioActual();
+		$respuesta = ModeloActas::mdlContarTipo($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	}

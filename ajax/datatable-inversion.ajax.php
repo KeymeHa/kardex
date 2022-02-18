@@ -4,6 +4,7 @@ require_once "../modelos/facturas.modelo.php";
 require_once "../controladores/proveedores.controlador.php";
 require_once "../modelos/proveedores.modelo.php";
 require_once "../controladores/parametros.controlador.php";
+require_once "../modelos/parametros.modelo.php";
 
 class TablaInversion
 {	

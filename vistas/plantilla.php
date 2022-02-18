@@ -68,7 +68,7 @@
                 $( document ).ready(function() {
                   var pagina = '.$js_data["num"].';';
 
-              $paginaCargada .= ';paginaCargada(pagina);});</script>';
+              $paginaCargada .= 'paginaCargada(pagina);});</script>';
 
               echo $paginaCargada;
             }
@@ -105,10 +105,6 @@
             if ($value["habilitado"] == $_GET["ruta"]) 
             {
               echo '<script type="text/javascript" src="vistas/js/'.$value["nombre"].'.js"></script>';
-            }
-            elseif($value["habilitado"] == "none")
-            {
-
             }
           }
           else

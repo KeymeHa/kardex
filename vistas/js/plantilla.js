@@ -11,6 +11,35 @@ $( document ).ready(function() {
 	}
 });
 
+$("#selectAnio").on("click", "li a", function(){
+
+	var anio = $(this).attr("anio");
+	var actual = $(this).attr("actual");
+
+	if(anio !== actual)
+	{
+		var datos = new FormData();
+		datos.append("anio", anio);
+
+		$.ajax({
+
+			url:"ajax/parametros.ajax.php",
+			method: "POST",
+			data: datos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success: function(respuesta){
+
+				 location.reload();
+
+			}
+
+		});
+	}
+})
+
 $(".tablas").DataTable({
 
 	"language": {
@@ -380,9 +409,76 @@ function paginaCargada(pagina){
 			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1";
 			}	
 		}
+		else if(pagina == 26)
+		{
 
-		 $.ajax({
-			 
+			tablaElegida =  $('.tablaEntradas');
+			tablaAjax = 'stock';
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			
+			if(localStorage.getItem("idStock") != null)
+			{
+				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=in";
+			}
+			else
+			{
+				variable = "?idInsumo=0&tipoStock=in";
+			}
+
+			if(fechaInicial == null)
+			{
+			  variable+="&fechaInicial=null";
+			} 
+			else 
+			{
+			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}	
+			validarTabla(tablaElegida, tablaAjax, variable);
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+
+			tablaElegida =  $('.tablaSalidas');
+			tablaAjax = 'stock';
+
+			if(localStorage.getItem("idStock") != null)
+			{
+				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=out";
+			}
+			else
+			{
+				variable = "?idInsumo=0&tipoStock=out";
+			}
+
+			if(fechaInicial == null)
+			{
+			  variable+="&fechaInicial=null";
+			} 
+			else 
+			{
+			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}	
+
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+		}
+		
+
+		if (pagina != 26) {
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+			validarTabla(tablaElegida, tablaAjax, variable);
+		}
+
+			
+
+		
+	}
+
+}
+
+function validarTabla(tablaElegida, tablaAjax, variable)
+{
+	 $.ajax({
 			 	url: "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
 				success:function(respuesta)
 				{
@@ -441,8 +537,11 @@ function paginaCargada(pagina){
 				})
 
 			});
+}
 
-		$(tablaElegida).DataTable( {
+function tablaDatatable(tablaElegida, tablaAjax, variable)
+{
+	$(tablaElegida).DataTable( {
 		    "ajax": "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
 		    "deferRender": true,
 			"retrieve": true,
@@ -471,19 +570,15 @@ function paginaCargada(pagina){
 						"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 						"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 					}
-			}
-		} );
+				}
+			} );
 
-		$(tablaElegida).on("draw.dt", function(){
+			$(tablaElegida).on("draw.dt", function(){
 
-			$(".cantidadEfectivo").number(true, 0);
+				$(".cantidadEfectivo").number(true, 0);
 
-		})
-		
-	}
-
+			})
 }
-
 
 function ocultarAlert()
 {

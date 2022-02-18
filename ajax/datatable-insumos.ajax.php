@@ -89,7 +89,7 @@ class TablaInsumos
   			{$stock = "<button class='btn btn-warning btn-stock' ".$atributos.">".$insumos[$i]["stock"]."</button>";}
   			else{$stock = "<button class='btn btn-success btn-stock' ".$atributos.">".$insumos[$i]["stock"]."</button>";}
   		
-  			$acciones = "<div class='btn-group'><button class='btn btn-warning btnEditarInsumo' title='Editar' idInsumo='".$insumos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarInsumo'><i class='fa fa-pencil' ></i></button><button class='btn btn-danger btnEliminarInsumo' title='Eliminar' idInsumo='".$insumos[$i]["id"]."' desInsumo='".$insumos[$i]["descripcion"]."'><i class='fa fa-close'></i></button></div>";
+  			$acciones = "<div class='btn-group'><button class='btn btn-success btnVerInsumo' title='Detalles' idInsumo='".$insumos[$i]["id"]."'><i class='fa fa-book'></i></button></div><div class='btn-group'><button class='btn btn-warning btnEditarInsumo' title='Editar' idInsumo='".$insumos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarInsumo'><i class='fa fa-pencil' ></i></button></div><div class='btn-group'><button class='btn btn-danger btnEliminarInsumo' title='Eliminar' idInsumo='".$insumos[$i]["id"]."' desInsumo='".$insumos[$i]["descripcion"]."'><i class='fa fa-close'></i></button></div>";
 
 		    if($sw == null)
 		    {

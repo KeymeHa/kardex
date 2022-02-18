@@ -1,7 +1,5 @@
 <div class="content-wrapper">
-    <?php
-    include "bannerConstruccion.php";
-  ?>
+
 
   <section class="content-header">
     
@@ -53,7 +51,7 @@
                 </div>
                 <div class="col-xs-6">
                   <div class="form-group">
-                    <label>Proveedor</label>
+                    <label>*Proveedor</label>
                     <select class="form-control selectProv" name="selecProveedor" required>
                       <option value="0">Seleccione el Proveedor</option>
                       <?php
@@ -79,7 +77,7 @@
                   <div class="form-group">              
                     <div class="input-group">               
                       <span class="input-group-addon"><i class="fa fa-money"></i></span> 
-                      <input type="text" class="form-control input-xs" title="Forma de Pago" name="nuevaFormaPago" placeholder="Forma de Pago" autocomplete="off" required>
+                      <input type="text" class="form-control input-xs" title="Forma de Pago" name="nuevaFormaPago" placeholder="*Forma de Pago" autocomplete="off" required>
                     </div>
                   </div>
                 </div>
@@ -87,7 +85,7 @@
                   <div class="form-group">              
                     <div class="input-group">               
                       <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-                      <input type="text" class="form-control input-xs" name="nuevoResponsable" title="Responsable" placeholder="Responsable" autocomplete="off" required>
+                      <input type="text" class="form-control input-xs" name="nuevoResponsable" title="Responsable" placeholder="*Responsable" autocomplete="off" required>
                     </div>
                   </div>
                 </div>

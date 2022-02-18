@@ -20,16 +20,7 @@
                   <!-- EDITAR ID -->       
                   <input type="hidden" class="form-control input-lg" id="eIdP" name="eIdP" readonly>    
                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                  <select class="form-control input-lg" id="EsCategoria" name="EsCategoria" required>                 
-                    <?php
-                    /*<option id="eCategoriaP" value=""></option>
-                    $item = null;
-                    $valor = null;
-                    $categorias = ControladorCategorias::ctrMostrarCategoriasConFiltro($item, $valor);
-                    foreach ($categorias as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
-                    }*/
-                    ?>
+                  <select class="form-control input-lg" id="EsCategoria" name="EsCategoria" required>
                   </select>
                 </div>
               </div>
@@ -65,6 +56,16 @@
                     </div>
                   </div>
                </div>
+
+               <div class="form-group">          
+                <div class="input-group">
+                  <!-- EDITAR ID -->       
+                  <input type="hidden" class="form-control input-lg" id="eIdI" name="eIdI" readonly>    
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                  <select class="form-control input-lg" id="EsUnidad" name="EsUnidad" required>
+                  </select>
+                </div>
+              </div>
 
               <!-- UBICACION EN BODEGA -->
                <div class="form-group row">

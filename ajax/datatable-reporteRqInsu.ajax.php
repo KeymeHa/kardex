@@ -4,6 +4,7 @@ require_once "../modelos/requisiciones.modelo.php";
 require_once "../controladores/parametros.controlador.php";
 require_once "../controladores/insumos.controlador.php";
 require_once "../modelos/insumos.modelo.php";
+require_once "../modelos/parametros.modelo.php";
 
 class TablaRequisiciones
 {
@@ -83,19 +84,12 @@ class TablaRequisiciones
            }             
          }
 
-          for ($i=0; $i < count($array_des); $i++) 
+          for ($i=0; $i < count($array_id); $i++) 
           {
 
             $imagenInsumo = ControladorInsumos::ctrVerImagen($array_id[$i]);
 
-                if ($imagenInsumo[0] != null || $imagenInsumo[0] != "") 
-                {
-                  $imagen ="<img src='".$imagen."' width='42px'>";
-                }
-                else
-                {
-                   $imagen = "<img src='vistas/img/productos/default/anonymous.png' width='42px'>";
-                }
+            $imagen = "<img src='vistas/img/productos/default/anonymous.png' width='42px'>";
 
             $dJson .='[
               "'.($i + 1).'",

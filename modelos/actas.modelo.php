@@ -7,7 +7,7 @@ class ModeloActas
 	{
 		if($datos["tipo"] == 1)
 		{
-			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigoInt, id_usr, tipo, fechaSal, autorizado, dependencia, responsable, dependenciaR, motivo, observacion, listainsumos) VALUES (:codigoInt, :id_usr, :tipo, :fechaSal, :autorizado, :dependencia, :responsable, :dependenciaR, :motivo, :observacion, :listainsumos)");
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigoInt, id_usr, tipo, fechaSal, autorizado, dependencia, responsable, dependenciaR, motivo, observacion, listainsumos, fecha) VALUES (:codigoInt, :id_usr, :tipo, :fechaSal, :autorizado, :dependencia, :responsable, :dependenciaR, :motivo, :observacion, :listainsumos, :fecha)");
 
 			$stmt->bindParam(":codigoInt", $datos["codigoInt"], PDO::PARAM_STR);
 			$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
@@ -20,6 +20,7 @@ class ModeloActas
 			$stmt->bindParam(":motivo", $datos["motivo"], PDO::PARAM_INT);
 			$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
 			$stmt->bindParam(":listainsumos", $datos["listainsumos"], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		}
 		else
 		{
@@ -50,11 +51,11 @@ class ModeloActas
 		$stmt = null;
 	}
 
-	static public function mdlMostrarActasRango($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlMostrarActasRango($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
 
 			$stmt -> execute();
 
@@ -100,11 +101,11 @@ class ModeloActas
 
 	}
 
-	static public function mdlContarTipo($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlContarTipo($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT tipo, COUNT(tipo) FROM $tabla GROUP BY tipo  ORDER BY COUNT(tipo) DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT tipo, COUNT(tipo) FROM $tabla $anio GROUP BY tipo  ORDER BY COUNT(tipo) DESC");
 
 			$stmt -> execute();
 
@@ -145,7 +146,7 @@ class ModeloActas
 		}		
 	}
 
-	static public function mdlMostrarActas($tabla, $item, $valor)
+	static public function mdlMostrarActas($tabla, $item, $valor, $anio)
 	{
 		if($item != null)
 		{
@@ -159,7 +160,7 @@ class ModeloActas
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
 
 			$stmt -> execute();
 

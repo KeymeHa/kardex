@@ -1,7 +1,6 @@
 <?php
 class ControladorInsumos
 {
-
 	static public function ctrCrearInsumo(){
 
 		if(isset($_POST["nuevaDescripcion"]))
@@ -88,7 +87,8 @@ class ControladorInsumos
 							   "seccion" => $_POST["nuevaSeccion"],
 							   "imagen" => $ruta,
 							   "fecha" => $fechaActual,
-							   "prioridad" => $_POST["nuevaPrioridad"]);
+							   "prioridad" => $_POST["nuevaPrioridad"],
+								"unidad" => $_POST["nuevaUnidad"]);
 
 				$respuesta = ModeloInsumos::mdlIngresarInsumo($tabla, $datos);
 
@@ -424,6 +424,12 @@ class ControladorInsumos
 		return $respuesta;
 	}
 
+
+	static public function ctrSumarStock($id)
+	{
+
+	}
+
 	static public function ctrActualizarPrecio($tabla, $datos)
 	{
 		$tabla = "insumos";
@@ -480,5 +486,80 @@ class ControladorInsumos
 		return $respuesta;
 	}//ctrVerificarCanInsumos($tabla)
 	
+
+	static public function ctrInforStock($id, $fechaInicial ,$fechaFinal)
+	{
+		//traer datos de requisiciones
+		$requisiciones = ControladorRequisiciones::ctrTraerInsumosRqRango($fechaInicial, $fechaFinal);
+		$facturas = ControladorFacturas::ctrTraerInsumosFacRango($fechaInicial, $fechaFinal);
+
+		$arrayInfo = array();
+
+	    //Requerido
+		$arrayInfo["rq"] = 0;
+		//Ingresado
+		$arrayInfo["ing"] = 0;
+		//Ingresado Total
+		$arrayInfo["ing_t"] = 0;
+		//Egresado Total
+		$arrayInfo["ing_e"] = 0;
+		//invertido
+		$arrayInfo["inv"] = 0;
+
+		if ( count($requisiciones) == 0) 
+        {
+          return $arrayInfo;
+        }
+        else
+        {
+         foreach ($requisiciones as $key => $value) 
+         {
+
+           $insumo = json_decode($value["insumos"], true);
+
+	         $sw = 0;
+
+	          for ($i=0; $i < count($insumo); $i++) 
+	          { 
+	            if ($id == $insumo[$i]["id"]) 
+	            {
+	            	$arrayInfo["rq"]+=1;
+	            	$arrayInfo["ing_e"]+=$insumo[$i]["ent"];
+	            }
+	          }   
+		 }
+		     
+		}
+		//recorrer requisiciones
+
+		//traer datos de facturas
+		if ( count($facturas) == 0) 
+        {
+          return $arrayInfo;
+        }
+        else
+        {
+         foreach ($facturas as $key => $value) 
+         {
+
+           $insumo = json_decode($value["insumos"], true);
+
+	         $sw = 0;
+
+	          for ($i=0; $i < count($insumo); $i++) 
+	          { 
+	            if ($id == $insumo[$i]["id"]) 
+	            {
+	            	$arrayInfo["ing"]+=1;
+	            	$arrayInfo["ing_t"]+=$insumo[$i]["can"];
+	            	$arrayInfo["inv"]+=$insumo[$i]["sub"];
+	            }
+	          }   
+		 }
+		     
+		}
+		//recorrer facturas
+		return $arrayInfo;
+	}
 
 }#ControladorInsumos

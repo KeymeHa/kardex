@@ -44,6 +44,10 @@
           </button>
         </a>
 
+         <?php 
+            include "anios.php";
+          ?>
+
         <button type="button" class="btn btn-success pull-right" id="btn-RangoInversionInsu">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha

@@ -1,3 +1,8 @@
+<?php 
+
+ $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv($fechaInicial, $fechaFinal);
+?>
+
 <div class="box">
    
    <div class="box-header">
@@ -17,13 +22,12 @@
 
       <div class="row">
         <div class="col-lg-9">
+
           <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
         </div>
 
         <div class="col-lg-3">
           <?php
-
-             $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv();
 
             if( $countOrdProv != null)
             {
@@ -60,8 +64,6 @@
 
  var data = [
      <?php
-
-     $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv();
 
    if($countOrdProv != null)
     {

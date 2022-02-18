@@ -184,7 +184,7 @@ class ModeloInsumos
 	=============================================*/
 	static public function mdlIngresarInsumo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad, unidad) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad, :unidad)");
 
 		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
@@ -197,6 +197,7 @@ class ModeloInsumos
 		$stmt->bindParam(":seccion", $datos["seccion"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_INT);
+		$stmt->bindParam(":unidad", $datos["unidad"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 

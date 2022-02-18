@@ -1,4 +1,5 @@
 <?php
+
 $facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaInicial, $fechaFinal);
 $arrayFechas = array();
 $sumaPagosMes = array();

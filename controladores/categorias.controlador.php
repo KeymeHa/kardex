@@ -89,6 +89,13 @@ class ControladorCategorias
 		return $respuesta;
 	}
 
+	static public function ctrMostrarNombreCategoria($item, $valor)
+	{
+		$tabla = "categorias";
+		$respuesta = ModeloCategorias::mdlNombreCategoria($tabla, $item, $valor);
+		return $respuesta;
+	}
+
 	static public function ctrMostrarCategoriasConFiltro($item, $valor)
 	{
 		$tabla = "categorias";

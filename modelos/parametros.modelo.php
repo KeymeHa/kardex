@@ -61,6 +61,83 @@ class ModeloParametros
 
 	}
 
+	static public function mdlVerAnio($tabla, $valor)
+	{
+
+		if( $valor == false )
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT anio FROM $tabla");
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+			$stmt -> close();
+			$stmt = null;
+		}
+		elseif( $valor == true )
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT anio FROM $tabla WHERE id = 1");
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+			$stmt -> close();
+			$stmt = null;
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT anio FROM $tabla WHERE anio = $valor");
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+			$stmt -> close();
+			$stmt = null;
+		}
+
+		
+	}
+
+	static public function mdlActualizaranio($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = :$item WHERE id = 1");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+	static public function mdlNuevoyear($tabla, $ActualY)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (anio) VALUES (:anio)");
+
+		$stmt -> bindParam(":anio", $datos["ActualY"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 
 	static public function mdlJs_Files($tabla)
 	{
@@ -257,6 +334,26 @@ class ModeloParametros
 
 		$stmt -> close();
 
+		$stmt = null;
+	}
+
+	static public function mdlMostrarUnidades($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarUnidad($tabla, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT unidad FROM $tabla WHERE id=$valor");
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		$stmt -> close();
 		$stmt = null;
 	}
 

@@ -52,8 +52,8 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<!--<li><a href="pedidos"><i class="fa fa-file-text"></i>Pedidos</a></li>
-					<li><a href="cotizaciones"><i class="fa fa-file-text"></i>Cotizaciones</a></li>-->
+					<!--<li><a href="pedidos"><i class="fa fa-file-text"></i>Pedidos</a></li>-->
+					<li><a href="cotizaciones"><i class="fa fa-file-text"></i>Cotizaciones</a></li>
 					<li><a href="ordendecompras"><i class="fa fa-file-text"></i>Ordenes de Compra</a></li>
 					<li><a href="facturas"><i class="fa fa-file-text"></i>Facturas</a></li>
 				</ul>
@@ -69,6 +69,7 @@
 				</a>
 				<ul class="treeview-menu">
 					<li><a href="areas"><i class="fa fa-users"></i>Areas</a></li>
+					<li><a href="proyectos"><i class="fa fa-user"></i>Proyectos</a></li>
 					<li><a href="personas"><i class="fa fa-user"></i>Personas</a></li>
 					<li><a href="requisiciones"><i class="fa fa-file-text"></i>Requisiciones</a></li>
 				</ul>

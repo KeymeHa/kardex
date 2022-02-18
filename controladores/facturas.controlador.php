@@ -2,11 +2,47 @@
 
 class ControladorFacturas
 {
+
+	function anioActual()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
+	function anioActualProv()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(facturas.fecha) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
 	static public function ctrMostrarFacturasRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "facturas";
-
-		$respuesta = ModeloFacturas::mdlMostrarFacturasRango($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorFacturas;
+		$anio = $r->anioActual();	
+		$respuesta = ModeloFacturas::mdlMostrarFacturasRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
@@ -15,9 +51,9 @@ class ControladorFacturas
 	static public function ctrMostrarFacturas($item, $valor)
 	{
 		$tabla = "facturas";
-
-		$respuesta = ModeloFacturas::mdlMostrarFacturas($tabla, $item, $valor);
-
+		$r = new ControladorFacturas;
+		$anio = $r->anioActual();
+		$respuesta = ModeloFacturas::mdlMostrarFacturas($tabla, $item, $valor, $anio);
 		return $respuesta;
 	
 	}//ctrMostrarFacturas
@@ -25,14 +61,18 @@ class ControladorFacturas
 	static public function ctrContarFacturasProv($fechaInicial, $fechaFinal)
 	{
 		$tabla = "facturas";
-		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorFacturas;
+		$anio = $r->anioActualProv();
+		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}
 
 	static public function ctrContarFacProv($fechaInicial, $fechaFinal)
 	{
 		$tabla = "facturas";
-		$respuesta = ModeloFacturas::mdlAgruparFacturasCan($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorFacturas;
+		$anio = $r->anioActualProv();
+		$respuesta = ModeloFacturas::mdlAgruparFacturasCan($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}
 
@@ -184,6 +224,9 @@ class ControladorFacturas
 			$codigoFac = ControladorParametros::ctrValidarCaracteres($_POST["codigoFactura"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionNF"]);
 
+			date_default_timezone_set('America/Bogota');
+			$hoy = date("Y-m-d");
+
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
 							'codigo' => $codigoFac,
 							'id_usr' => $_POST["idUsuario"],
@@ -192,7 +235,8 @@ class ControladorFacturas
 							'insumos' => $_POST["listaInsumos"],
 							'inversion' => $_POST["valorSub"],
 							'iva' => $_POST["valorIva"],
-							'observacion' => $observacion);
+							'observacion' => $observacion,
+							'fecha' => $hoy);
 
 
 			$respuesta = ModeloFacturas::mdlRegistrarFactura($tabla, $datos);
@@ -996,18 +1040,18 @@ class ControladorFacturas
 		if(isset($_GET["r"])){
 
 			$tabla = "facturas";
+			$verFacturas = new ControladorFacturas();
 
 			if(isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]))
 			{
 
-				$verFacturas = new ctrMostrarFacturasRango();
+				
 				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, $_GET["fechaInicial"], $_GET["fechaFinal"]);
 
 			}
 			else
 			{
-
-				$facturas = Modelofacturas::mdlMostrarfacturas($tabla, null, null);
+				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, null, null);
 
 			}
 			
@@ -1110,6 +1154,18 @@ class ControladorFacturas
 			}
 			echo "</table>";
 		}
+	}
+
+
+	public function ctrTraerInsumosFacRango($fechaInicial, $fechaFinal)
+	{
+		$tabla = "facturas";
+
+		$r = new ControladorFacturas;
+		$anio = $r->anioActual();	
+		$respuesta = ModeloFacturas::MdlTraerInsumosFacRango($tabla, $fechaInicial, $fechaFinal, $anio);
+
+		  return $respuesta;
 	}
 
 

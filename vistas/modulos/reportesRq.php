@@ -17,7 +17,10 @@
           <button class="btn btn-success pull-left">
             <i class="fa  fa-chevron-left"></i>&nbsp;Regresar 
           </button>
-        </a>
+        </a> &nbsp;
+        <?php 
+          include "anios.php";
+        ?>
         <button type="button" class="btn btn-success pull-right" id="btn-RangoReporteRq">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha

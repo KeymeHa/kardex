@@ -170,21 +170,23 @@
                   </div>
                </div>
                <!-- ENTRADA PARA PRECIO COMPRA -->
-               <div class="form-group row">
-                  <label>Precio de Compra</label>                
-                  <div class="col-xs-6">
-                    <div class="input-group">                   
-                      <span class="input-group-addon"><i class="fa fa-money"></i></span> 
-                      <input type="number" class="form-control input-lg" id="nuevoPrecioCompra" name="nuevoPrecioCompra" step="any" min="0" value="0" title="Precio de Compra" placeholder="Precio de compra" autocomplete="off" required>
-                    </div>
-                  </div>
-               </div>
 
-               <div class="form-group row">          
-                    <div class="input-group">                   
-                      <textarea type="text" class="form-control input-lg" title="Codigo del Insumo" name="nuevaObserInsu" placeholder="Observaciones" style="width: 566px; resize: none"></textarea>
-                    </div>
-               </div>
+               <div class="form-group">  
+               <label>Precio de Compra</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-money"></i></span> 
+                  <input type="number" class="form-control input-lg" id="nuevoPrecioCompra" name="nuevoPrecioCompra" step="any" min="0" value="0" title="Precio de Compra" placeholder="Precio de compra" autocomplete="off" required>
+                </div>
+              </div>
+
+               <div class="form-group">  
+               <label>Unidad de Medida</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
+                  <select class="form-control input-lg" id="nuevaUnidad" name="nuevaUnidad" required>
+                  </select>
+                </div>
+              </div>
 
                <div class="form-group">          
                 <label>Prioridad</label>           

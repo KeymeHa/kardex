@@ -15,6 +15,10 @@
           Nueva Acta de Salida
         </button>
 
+        <?php 
+            include "anios.php";
+          ?>
+
         <button type="button" class="btn btn-success pull-right" id="btn-RangoActas">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha

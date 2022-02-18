@@ -71,7 +71,9 @@ class ControladorParametros
 								"codActa"=> $i,
 							   "id"=> $i );
 
+
 				$respuesta2 = ModeloParametros::mdlActualizarYear($tabla, $datos);
+				$respuesta3 = ModeloParametros::mdlNuevoyear("anios", $ActualY);
 		
 				if($val == 4)
 				{
@@ -434,6 +436,20 @@ class ControladorParametros
 	}
 
 
+	static public function ctrVerAnio($valor)
+	{
+		$tabla = "anios";
+		$respuesta = ModeloParametros::mdlVerAnio($tabla, $valor);
+		return $respuesta;
+	}
+
+	static public function ctrActualizarAnio($item, $valor)
+	{
+		$tabla = "anios";
+		$respuesta = ModeloParametros::mdlActualizaranio($tabla, $item, $valor);
+		return $respuesta;
+	}
+
 
 	static public function ctrEditarDatosFac()
 	{
@@ -621,4 +637,21 @@ class ControladorParametros
 			}
 		}	
 	}
+
+	public static function ctrMostrarUnidades()
+	{
+		$tabla = "insumosunidad";
+		$respuesta = ModeloParametros::mdlMostrarUnidades($tabla);
+		return $respuesta;
+	}
+
+
+	public static function ctrMostrarUnidad($valor)
+	{
+		$tabla = "insumosunidad";
+		$respuesta = ModeloParametros::mdlMostrarUnidad($tabla, $valor);
+		return $respuesta["unidad"];
+	}
+
+
 }//class

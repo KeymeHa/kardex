@@ -2,17 +2,14 @@
 
 require_once "conexion.php";
 
-/**
- * 
- */
 
 class ModeloOrdenCompra
 {
-	static public function mdlMostrarOrdenesCRango($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlMostrarOrdenesCRango($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id ASC");
 
 			$stmt -> execute();
 
@@ -59,9 +56,41 @@ class ModeloOrdenCompra
 	}
 	
 
-	static public function mdlAgruparOdenes($tabla)
+	static public function mdlAgruparOdenes($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+
+		if ($fechaInicial == null) 
+		{
+		$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id $anio GROUP BY(proveedores.nombreComercial)  ORDER BY COUNT(proveedores.nombreComercial)");
+
+		}elseif($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id  WHERE $tabla.fecha like '%$fechaFinal%' GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id WHERE $tabla.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT proveedores.nombreComercial, COUNT(proveedores.nombreComercial) FROM $tabla INNER JOIN proveedores ON $tabla.id_proveedor	 = proveedores.id WHERE $tabla.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(proveedores.nombreComercial) ORDER BY COUNT(proveedores.nombreComercial)");
+
+			}
+
+		}
 
 		$stmt -> execute();
 		return $stmt -> fetchAll();
@@ -69,25 +98,20 @@ class ModeloOrdenCompra
 		$stmt = null;
 	}
 
-	static public function mdlMostrarOrdenesdeCompras($tabla, $item, $valor)
+	static public function mdlMostrarOrdenesdeCompras($tabla, $item, $valor, $anio)
 	{
 		if($item != null)
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
-
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-
 			$stmt -> execute();
-
 			return $stmt -> fetch();
 
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
-
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio");
 			$stmt -> execute();
-
 			return $stmt -> fetchAll();
 
 		}
@@ -161,7 +185,7 @@ class ModeloOrdenCompra
 
 	static public function mdlRegistrarOrdenCompra($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigoInt, 	id_proveedor, id_usr, insumos, inversion, iva, formaPago, responsable, fechaEntrega, observacion) VALUES (:codigoInt, :id_proveedor, :id_usr, :insumos, :inversion, :iva, :formaPago, :responsable, :fechaEntrega, :observacion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigoInt, 	id_proveedor, id_usr, insumos, inversion, iva, formaPago, responsable, fechaEntrega, observacion, fecha) VALUES (:codigoInt, :id_proveedor, :id_usr, :insumos, :inversion, :iva, :formaPago, :responsable, :fechaEntrega, :observacion, :fecha)");
 
 		$stmt->bindParam(":codigoInt", $datos["codigoInt"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_proveedor", $datos["id_proveedor"], PDO::PARAM_INT);
@@ -173,6 +197,7 @@ class ModeloOrdenCompra
 		$stmt->bindParam(":responsable", $datos["responsable"], PDO::PARAM_STR);
 		$stmt->bindParam(":fechaEntrega", $datos["fechaEntrega"], PDO::PARAM_STR);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
 		{

@@ -2,6 +2,7 @@
 require_once "../controladores/requisiciones.controlador.php";
 require_once "../modelos/requisiciones.modelo.php";
 require_once "../controladores/parametros.controlador.php";
+require_once "../modelos/parametros.modelo.php";
 require_once "../controladores/personas.controlador.php";
 require_once "../modelos/personas.modelo.php";
 require_once "../controladores/areas.controlador.php";

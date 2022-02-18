@@ -1,3 +1,21 @@
+$(".tablaInsumos").on("click", ".btnVerInsumo", function(){
+
+	var idInsumo = $(this).attr("idInsumo");
+
+	if (localStorage.getItem("idStock") != null) 
+	{
+		localStorage.setItem("idStock", idInsumo);
+	}
+	else
+	{
+		localStorage.setItem("idStock", idInsumo);
+	}
+
+	window.location = "index.php?ruta=verInsumo&idInsumo="+idInsumo;
+
+})
+
+
 $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 	var idInsumo = $(this).attr("idInsumo");
 	var idCat = 0;
@@ -103,11 +121,38 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			}
 		});
 	
-
-	
 })
 
+function llamarUnidad()
+{
+	var datosDos = new FormData();
+		datosDos.append("unidad", 1);
+		$.ajax({
+			url:"ajax/parametros.ajax.php",
+			method: "POST",
+			data: datosDos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success: function(respuesta)
+			{	
 
+					$('#nuevaUnidad').append('<option value="0">Seleccione unidad</option>');
+
+				for (var i = 0; i < respuesta.length; i++) 
+				{
+					$('#nuevaUnidad').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['unidad']+'</option>');
+				}
+			}
+	});
+}
+
+$("#btn-AddInsumo").click(llamarUnidad())
+
+$(".tablaInsumos").on("click", "#btn-AddInsumo", function(){
+	llamarUnidad();
+})
 
 $("#nombreResp").change(function(){
 

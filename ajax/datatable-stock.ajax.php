@@ -7,24 +7,28 @@ require_once "../controladores/requisiciones.controlador.php";
 require_once "../modelos/requisiciones.modelo.php";
 
 require_once "../controladores/parametros.controlador.php";
+require_once "../modelos/parametros.modelo.php";
 
 class tablaStock
 {	
 	public $idInsumo;
 	public $tipo;
+	public $fechaInicial;
+	public $fechaFinal;
 	public function mostrarTablaSotck()
 	{	
+		$fechaIn = $this->fechaInicial;
+		$fechaOut = $this->fechaFinal;
 		$valor = $this->idInsumo;
 		$tipoS = $this->tipo;
-		$valorN = null;
 
 		if ($tipoS == "in") 
 		{
-			$respuesta = ControladorFacturas::ctrMostrarFacturas($valorN, $valorN);
+			$respuesta = ControladorFacturas::ctrMostrarFacturasRango($fechaIn, $fechaOut);
 		}
 		elseif($tipoS == "out")
 		{
-			$respuesta = ControladorRequisiciones::ctrMostrarRequisiciones($valorN, $valorN);
+			$respuesta = ControladorRequisiciones::ctrMostrarRequisiciones($fechaIn, $fechaOut);
 		}
 
 	    if ( count($respuesta) == 0) 
@@ -50,10 +54,12 @@ class tablaStock
     			{
     				if ($tipoS == "in") 
     				{
+    					//cantidad ingresada
     					array_push($array_can, $lista[$j]["can"]);
     				}
     				else
     				{
+    					//entregado
     					array_push($array_can, $lista[$j]["ent"]);
     				}
 
@@ -103,14 +109,30 @@ class tablaStock
 	}
 }
 
-if( isset($_GET["tipoStock"]))
+if( isset($_GET["tipoStock"]) )
 {
 	if ($_GET["tipoStock"] == "in" || $_GET["tipoStock"] == "out") 
 	{
-		$stockTipo = new tablaStock();
-		$stockTipo -> idInsumo = $_GET["idInsumo"];
-		$stockTipo -> tipo = $_GET["tipoStock"];
-		$stockTipo -> mostrarTablaSotck();
+		if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
+		{
+			if($_GET["fechaInicial"] == "undefined" || $_GET["fechaInicial"] == null)
+			{
+				$stockTipo-> fechaInicial = null;
+				$stockTipo-> fechaFinal = null;
+			}
+			else
+			{
+				$stockTipo-> fechaInicial = $_GET["fechaInicial"];
+				$stockTipo-> fechaFinal = $_GET["fechaFinal"];
+			}
+		}
+		else
+		{
+			$stockTipo = new tablaStock();
+			$stockTipo-> idInsumo = $_GET["idInsumo"];
+			$stockTipo-> tipo = $_GET["tipoStock"];
+			$stockTipo-> mostrarTablaSotck();
+		}
 		
 	}
 	else
@@ -120,3 +142,6 @@ if( isset($_GET["tipoStock"]))
 
 
 }
+
+//-------------------------------------
+

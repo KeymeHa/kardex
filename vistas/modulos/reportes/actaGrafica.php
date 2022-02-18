@@ -23,7 +23,6 @@
         <div class="col-lg-2">
 
           <?php
-
             $tipoActa = ControladorActas::ctrContarTipo($fechaInicial, $fechaFinal);
 
             if($tipoActa != null)

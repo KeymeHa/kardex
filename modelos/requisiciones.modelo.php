@@ -8,7 +8,7 @@ class ModeloRequisiciones
 
 	static public function mdlRegistrarRequisicion($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, observacion) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :observacion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, observacion, fecha) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :observacion, :fecha)");
 
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
@@ -17,6 +17,7 @@ class ModeloRequisiciones
 		$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
 		{
@@ -30,11 +31,11 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
 
 			$stmt -> execute();
 
@@ -80,12 +81,12 @@ class ModeloRequisiciones
 
 	}
 
-	static public function MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal)
+	static public function MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id $anio GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
 
 			$stmt -> execute();
 
@@ -135,24 +136,35 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function MdlTraerInsumosRq($tabla, $sw)
+	static public function MdlTraerInsumosRq($tabla, $sw, $anio)
 	{
 		date_default_timezone_set('America/Bogota');
-		$anio = date("Y");
 		$mes = date("m");
 
 		if ($sw == 0 || $sw == 3)#presente anio
 		{
 
-			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE YEAR(fecha_sol) = '$anio'");
+			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla $anio");
 
 			$stmt -> execute();
 		}
 		else #presente anio y mes
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE YEAR(fecha_sol) = '$anio' AND MONTH(fecha_sol) = '$mes'");
 
-			$stmt -> execute();
+			if ($anio != "") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla $anio AND MONTH(fecha_sol) = '$mes'");
+
+				$stmt -> execute();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla");
+
+				$stmt -> execute();
+			}
+
+			
 		}
 
 		return $stmt -> fetchAll();	
@@ -190,11 +202,11 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function MdlTraerInsumosRqRango($tabla,$fechaInicial, $fechaFinal)
+	static public function MdlTraerInsumosRqRango($tabla,$fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla $anio");
 
 
 		}else if($fechaInicial == $fechaFinal){
@@ -226,6 +238,8 @@ class ModeloRequisiciones
 		}
 			$stmt -> execute();
 			return $stmt -> fetchAll();
+			$stmt -> close();
+			$stmt = null;
 	}
 
 
@@ -236,7 +250,7 @@ class ModeloRequisiciones
 	{
 		if ($sw == 0) 
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE YEAR(fecha_sol) = '$anio'");
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio");
 
 			$stmt -> execute();
 
@@ -244,7 +258,7 @@ class ModeloRequisiciones
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE YEAR(fecha_sol) = '$anio' AND MONTH(fecha_sol) = '$mes'");
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio AND MONTH(fecha_sol) = '$mes'");
 
 			$stmt -> execute();
 
@@ -258,11 +272,11 @@ class ModeloRequisiciones
 
 	}
 
-	static public function MdlContarRqArea($tabla, $sw, $fechaInicial, $fechaFinal)
+	static public function MdlContarRqArea($tabla, $sw, $fechaInicial, $fechaFinal, $anio)
 	{
 		if ($sw == 1) 
 		{
-			$stmt = Conexion::conectar() -> prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre) LIMIT 5");
+			$stmt = Conexion::conectar() -> prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio GROUP BY(areas.nombre) LIMIT 5");
 			$stmt -> execute();
 			return $stmt -> fetchAll();
 			
@@ -271,7 +285,7 @@ class ModeloRequisiciones
 		{
 			if($fechaInicial == null){
 
-				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio  GROUP BY(areas.nombre)");
 
 				$stmt -> execute();
 
@@ -324,11 +338,11 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal)
+	static public function MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal, $anio)
 	{
 		if ($sw == 1) 
 		{
-			$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones GROUP BY MONTH(fecha_sol) LIMIT 5 ORDER BY COUNT(MONTH(fecha_sol)) DESC");
+			$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio GROUP BY MONTH(fecha_sol)  LIMIT 5 ORDER BY COUNT(MONTH(fecha_sol)) DESC");
 			$stmt -> execute();
 			return $stmt -> fetchAll();
 			
@@ -339,7 +353,7 @@ class ModeloRequisiciones
 
 			if($fechaInicial == null){
 
-				$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones GROUP BY MONTH(fecha_sol) ORDER BY COUNT(MONTH(fecha_sol)) DESC");
+				$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio GROUP BY MONTH(fecha_sol) ORDER BY COUNT(MONTH(fecha_sol)) DESC");
 				$stmt -> execute();
 				return $stmt -> fetchAll();
 
@@ -391,7 +405,7 @@ class ModeloRequisiciones
 	}
 	
 
-	static public function mdlMostrarRequisiciones($tabla, $item, $valor)
+	static public function mdlMostrarRequisiciones($tabla, $item, $valor, $anio)
 	{
 		if($item != null)
 		{
@@ -406,7 +420,7 @@ class ModeloRequisiciones
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
 
 			$stmt -> execute();
 

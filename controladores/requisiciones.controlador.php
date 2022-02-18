@@ -4,11 +4,47 @@
 
 class ControladorRequisiciones
 {
+
+	function anioActual()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
+	function anioActualArea()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
 	static public function ctrMostrarRequisiciones($item, $valor)
 	{
 		$tabla = "requisiciones";
-
-		$respuesta = ModeloRequisiciones::mdlMostrarRequisiciones($tabla, $item, $valor);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisiciones($tabla, $item, $valor, $anio);
 
 		return $respuesta;
 	
@@ -17,8 +53,9 @@ class ControladorRequisiciones
 	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "requisiciones";
-
-		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
@@ -29,22 +66,33 @@ class ControladorRequisiciones
 	{
 		date_default_timezone_set('America/Bogota');
 
-		$anio = date("Y");
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
 		$mes = date("m");
-
 		$tabla = "requisiciones";
 		$respuesta = ModeloRequisiciones::mdlContarRequisicionesFecha($tabla, $sw, $anio, $mes);
 
+		if ($sw == 1) 
+		{
+
+			if ($anio != "") 
+			{
+				$mes = ControladorParametros::nombreMes($mes);
+				$respuesta[0] = $mes." ".$respuesta[0];
+			}
+		}
 
 		return $respuesta;
 	}
 
 
-	static public function ctrContarRqArea($sw,  $fechaInicial, $fechaFinal)
+	static public function ctrContarRqArea($sw, $fechaInicial, $fechaFinal)
 	{
 		$tabla = "requisiciones";
 
-		$respuesta = ModeloRequisiciones::MdlContarRqArea($tabla, $sw, $fechaInicial, $fechaFinal);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualArea();
+		$respuesta = ModeloRequisiciones::MdlContarRqArea($tabla, $sw, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 
@@ -63,8 +111,9 @@ class ControladorRequisiciones
 	static public function ctrContarRqdePersonas($fechaInicial, $fechaFinal)
 	{
 		$tabla = "requisiciones";
-
-		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualArea();
+		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 
@@ -75,8 +124,9 @@ class ControladorRequisiciones
 	{
 		$tabla = "requisiciones";
 
-		
-		$respuesta = ModeloRequisiciones::MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	}
@@ -85,8 +135,9 @@ class ControladorRequisiciones
 	{
 
 		$tabla = "requisiciones";
-
-		$respuesta = ModeloRequisiciones::MdlTraerInsumosRq($tabla, $sw);
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::MdlTraerInsumosRq($tabla, $sw, $anio);
 
 		if ($respuesta != null) 
 		{
@@ -148,19 +199,12 @@ class ControladorRequisiciones
 
 		$tabla = "requisiciones";
 
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::MdlTraerInsumosRqRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
-		$respuesta = ModeloRequisiciones::MdlTraerInsumosRqRango($tabla, $fechaInicial, $fechaFinal);
+		return $respuesta;
 
-		if($respuesta != null)
-		{
-		
-		  return $respuesta;
-
-		}
-		else
-		{
-			return 0;
-		}
 		
 	}
 
@@ -186,13 +230,15 @@ class ControladorRequisiciones
 	        $valor = $_POST["id_persona"];
 			$personas = ControladorPersonas::ctrMostrarPersonas($item, $valor);
 			$tabla = "requisiciones";
+			$hoy = date("Y-m-d");
 			$datos = array( 'id_area' => $personas["id_area"],  
 							'id_persona' => $_POST["id_persona"],
 							'id_usr' => $_POST["idUsuario"],
 							'codigoInt' => $_POST["codigoInterno"],
 							'insumos' => $_POST["listadoInsumosRq"],
 							'fecha_sol' => $_POST["nuevaFechaSolRq"],
-							'observacion' => $_POST["observacionRq"]);
+							'observacion' => $_POST["observacionRq"],
+							'fecha' => $hoy);
 
 			$respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos);
 

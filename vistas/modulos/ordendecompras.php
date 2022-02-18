@@ -17,6 +17,9 @@
             Nueva Orden de Compra 
           </button>
         </a>
+          <?php 
+            include "anios.php";
+          ?>
         <div class="btn-group pull-right">
           <button class="btn btn-success" id="btnParamDatosFAC" paramDFac="1" data-toggle="modal" data-target="#modalDatosFacturación">
             Datos Facturación
@@ -52,6 +55,17 @@
     </div>
 
     <?php
+
+    if (isset($_GET["fechaInicial"])) 
+    {
+      $fechaInicial = $_GET["fechaInicial"];
+      $fechaFinal = $_GET["fechaFinal"];
+    }
+    else
+    {
+      $fechaInicial = null;
+      $fechaFinal = null;
+    }
     include "reportes/ordenGrafica.php";?>
   </section>
 </div>
