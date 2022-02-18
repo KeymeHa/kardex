@@ -59,23 +59,31 @@
 
         if(file_exists($documento)){
 
+           $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
+           $gatillo = ControladorParametros::ctrValidarPermiso($_SESSION["perfil"], $js_data);
 
-            $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
-
+          if ($gatillo == 1) 
+          {        
             if ( $js_data != null ) 
             {
-              $paginaCargada = '<script type="text/javascript">
-                $( document ).ready(function() {
-                  var pagina = '.$js_data["num"].';';
+                $paginaCargada = '<script type="text/javascript">
+                  $( document ).ready(function() {
+                    var pagina = '.$js_data["num"].';';
 
-              $paginaCargada .= 'paginaCargada(pagina);});</script>';
+                $paginaCargada .= 'paginaCargada(pagina);});</script>';
 
-              echo $paginaCargada;
-            }
+                echo $paginaCargada;
+              }
 
-          include "modulos/".$_GET["ruta"].".php";
-          include "modulos/notificaciones-modal.php";
-          include "modulos/li.php";
+            include "modulos/".$_GET["ruta"].".php";
+            include "modulos/notificaciones-modal.php";
+            include "modulos/li.php";
+          }
+          else
+          {
+            include "modulos/noAutorizado.php";
+          }
+
         }else{
           include "modulos/404.php";
         }      

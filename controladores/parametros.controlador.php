@@ -653,5 +653,32 @@ class ControladorParametros
 		return $respuesta["unidad"];
 	}
 
+	public function ctrVerPerfil($valor)
+	{
+		$tabla = "perfiles";
+		$respuesta = ModeloParametros::mdlVerPerfil($tabla, $valor);
+		return $respuesta;
+	}
+
+	public function ctrValidarPermiso($perfil, $jdata)
+	{
+		$sw = 0;
+		$permiso = array(1 => "pUno",
+						2 => "pDos",
+						3 => "pTres",
+						4 => "pCuatro");
+		if($perfil == 1)
+          {
+            if ($jdata[$permiso[$perfil]] == $perfil) 
+            {
+              $sw = 1;
+            }
+            else
+            {
+              $sw = 0;
+            }
+          }
+		return $sw;
+	}
 
 }//class

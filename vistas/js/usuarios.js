@@ -128,8 +128,8 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 			$("#editarNombre").val(respuesta["nombre"]);
 			$("#editarUsuario").val(respuesta["usuario"]);
 			$("#actualPassword").val(respuesta["password"]);
-			$("#editarPerfil").val(respuesta["perfil"]);
-			$("#editarPerfil").html(respuesta["perfil"]);
+			//$("#editarPerfil").val(respuesta["perfil"]);
+			//$("#editarPerfil").html(respuesta["perfil"]);
 			$("#editarFoto").val(respuesta["foto"]);
 
 		}

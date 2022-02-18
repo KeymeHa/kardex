@@ -17,7 +17,7 @@
 				</a>
 				
 				<?php 
-					if($_SESSION["perfil"] == "root" || $_SESSION["perfil"] == "Administrador")
+					if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
 					{
 						echo'<a href="usuarios">
 								<i class="fa fa-user"></i>

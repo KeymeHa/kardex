@@ -37,7 +37,7 @@
       <div class="box-body">
        
           <div class="row">
-                <?php if($_SESSION["perfil"] == "root" || $_SESSION["perfil"] == "Administrador"){ echo'<div class="col-lg-3 col-xs-6">
+                <?php if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2){ echo'<div class="col-lg-3 col-xs-6">
 
 
                 <!-- small box -->

@@ -20,11 +20,17 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fa fa-user-plus"></i>        
-          Crear usuario
-        </button>
+        <?php 
+             if($_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 1)
+              {
+                echo' <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fa fa-user-plus"></i>        
+                    Crear usuario
+                  </button>';
+              }
+           ?>
+       
       </div>
-      <div class="box-body">      
+      <div class="box-body">  
        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">        
         <thead>        
          <tr>          
@@ -36,7 +42,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
            <th>Estado</th>
            <th>Último login</th>
            <?php 
-             if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "root")
+             if($_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 1)
               {
                 echo'<th>Acciones</th>';
               }
@@ -49,13 +55,16 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
           $item = null;
           $valor = null;
           $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
-         foreach ($usuarios as $key => $value){        
+         foreach ($usuarios as $key => $value){  
+
+            $perfil = ControladorParametros::ctrVerPerfil($value["perfil"]);
+
             echo ' <tr>
                 <td>'.($key+1).'</td>
                 <td>'.$value["nombre"].'</td>
                 <td>'.$value["usuario"].'</td>
                 <td><img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail" width="40px"></td>
-                <td>'.$value["perfil"].'</td>';
+                <td>'.$perfil["perfil"].'</td>';
             if($value["estado"] != 0)
             {echo '<td><button class="btn btn-success btn-xs btnActivarUsr" estadoUsuario="0" idUsuario="'.$value["id"].'">Activado</button></td>';}else{
               echo '<td><button class="btn btn-danger btn-xs btnActivarUsr" estadoUsuario="1" idUsuario="'.$value["id"].'">Desactivado</button></td>';}
@@ -69,7 +78,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
               }
 
 
-              if ($_SESSION["perfil"] == "root") 
+              if ($_SESSION["perfil"] == 1) 
               {
                 echo ' 
                     <td>
@@ -94,7 +103,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
                 else
                 {
 
-                  if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "root")
+                  if($_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 1)
                   {
                     echo ' 
                     <td>
@@ -181,10 +190,28 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
               <div class="input-group">          
                 <span class="input-group-addon"><i class="fa fa-users"></i></span> 
                  <select class="form-control input-lg" name="nuevoPerfil">
-                  <option value="">Selecionar perfil</option>
-                  <option value="Administrador">Administrador</option>
-                  <option value="Auxiliar">Auxiliar</option>
-                  <option value="Auditor">Auditor</option>
+
+                  <?php
+
+                  $perfiles = ControladorParametros::ctrVerPerfil(null);
+
+                  if (!is_null($perfiles)) {
+                   if(count($perfiles) > 0)
+                   {
+                    foreach ($perfiles as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["perfil"].'</option>';
+                    }
+                   }
+                   else
+                   {
+                    echo '<option value="">Selecionar perfil</option>';
+                   }
+                  }
+                  else
+                  {echo '<option value="">Selecionar perfil</option>';}
+
+                  ?>
                 </select>
               </div>
             </div>

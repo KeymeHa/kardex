@@ -151,7 +151,7 @@ class ModeloParametros
 
 	static public function mdlJs_data($ruta, $tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT page, num FROM $tabla WHERE page = :page");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE page = :page");
 		$stmt -> bindParam(":page", $ruta, PDO::PARAM_STR);
 		$stmt -> execute();
 
@@ -354,6 +354,30 @@ class ModeloParametros
 
 		return $stmt -> fetch();
 		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlVerPerfil($tabla, $valor)
+	{
+		if($valor != null)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT perfil FROM $tabla WHERE id = :id");
+
+			$stmt -> bindParam(":id", $valor, PDO::PARAM_INT);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+		}
+		$stmt->close();
 		$stmt = null;
 	}
 
