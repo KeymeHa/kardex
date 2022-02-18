@@ -198,9 +198,9 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
                   if (!is_null($perfiles)) {
                    if(count($perfiles) > 0)
                    {
-                    foreach ($perfiles as $key => $value) 
-                    {
-                      echo '<option value="'.$value["id"].'">'.$value["perfil"].'</option>';
+                    echo '<option value="0">Selecionar perfil</option>';
+                    for ( $i=1; $i < count($perfiles); $i++) { 
+                      echo '<option value="'.$perfiles[$i]["id"].'">'.$perfiles[$i]["perfil"].'</option>';
                     }
                    }
                    else
@@ -299,11 +299,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
             <div class="form-group">      
               <div class="input-group">      
                 <span class="input-group-addon"><i class="fa fa-users"></i></span> 
-                <select class="form-control input-lg" name="editarPerfil">          
-                  <option value="" id="editarPerfil"></option>
-                  <option value="Administrador">Administrador</option>
-                  <option value="Auxiliar">Auxiliar</option>
-                  <option value="Auditor">Auditor</option>
+                <select class="form-control input-lg" name="editarPerfil" id="editarPerfil">
                 </select>
               </div>
             </div>

@@ -1,6 +1,8 @@
 <?php
 require_once "../controladores/usuarios.controlador.php";
 require_once "../modelos/usuarios.modelo.php";
+require_once "../controladores/parametros.controlador.php";
+require_once "../modelos/parametros.modelo.php";
 class AjaxUsuarios
 {
 
@@ -10,9 +12,9 @@ class AjaxUsuarios
 
 		$item = "id";
 		$valor = $this->idUsuario;
-
 		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
-
+		$respuestad = ControladorParametros::ctrVerPerfil($respuesta["perfil"]);
+		$respuesta["nomperfil"] = $respuestad["perfil"];
 		echo json_encode($respuesta);
 
 	}

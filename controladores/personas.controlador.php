@@ -10,18 +10,51 @@ class ControladorPersonas
 	{
 		$tabla = "personas";
 
-		$respuesta = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
+		$respuesta= [[]];
+
+		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
+
+		foreach ($res as $key => $values):
+
+			  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
+		      $respuesta[$key]['id'] = $usuario["id"];
+		      $respuesta[$key]['nombre'] = $usuario["nombre"];
+		      $respuesta[$key]['id_area'] = $values["id_area"];
+		 
+		endforeach;
 
 		return $respuesta;
+
+
+
 	}#ctrMostrarPersonas
 
 	static public function ctrMostrarPersonasArea($item, $valor)
 	{
 		$tabla = "personas";
 
-		$respuesta = ModeloPersonas::mdlMostrarPersonasArea($tabla, $item, $valor);
+		$respuesta= [[]];
 
-		return $respuesta;
+		$res = ModeloPersonas::mdlMostrarPersonasArea($tabla, $item, $valor);
+
+		if (count($res) == 0) {
+			return 0;
+		}
+		else
+		{
+			
+			foreach ($res as $key => $values):
+
+				  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
+			      $respuesta[$key]['id'] = $usuario["id"];
+			      $respuesta[$key]['nombre'] = $usuario["nombre"];
+			      $respuesta[$key]['id_area'] = $values["id_area"];
+			 
+			endforeach;
+
+			return $respuesta;
+		}
+
 	}#ctrMostrarPersonas
 
 
@@ -177,6 +210,7 @@ class ControladorPersonas
 		{
 			$tabla = "personas";
 			$respuesta = ModeloPersonas::mdlBorrarPersona($tabla, $_GET["idPer"]);
+			$respuesta = ControladorUsuarios::ctrDesvincularUsuario($_GET["idPer"]);
 
 			if($respuesta == "ok")
 			{
@@ -195,7 +229,7 @@ class ControladorPersonas
 
 					swal({
 						  type: "success",
-						  title: "¡Se ha eliminado correctamente!",
+						  title: "¡Se ha Desvinculado correctamente!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result) {

@@ -4,7 +4,7 @@
     
     <h1>
       
-      Administrar Personas
+      Administrar Encargados
     
     </h1>
 
@@ -14,7 +14,7 @@
 
        <li><a href="#">Requisiciones</a></li>
       
-      <li class="active">Personas</li>
+      <li class="active">Encargados</li>
     
     </ol>
 
@@ -27,17 +27,20 @@
       <div class="box-header with-border">
 
         <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
-          
-          Agregar Persona
-
+          Asignar Encargado
         </button>
+
+        <?php 
+            include "anios.php";
+          ?>
 
       </div>
 
       <div class="box-body">
+
+
         
       <?php
-
       include "tablas/tablaPersonas.php";
 
       ?>

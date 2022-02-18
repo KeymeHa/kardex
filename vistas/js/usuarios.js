@@ -109,8 +109,8 @@ $(".btnEliminarUsuario").click(function(){
 $(".tablas").on("click", ".btnEditarUsuario", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
-	
 	var datos = new FormData();
+	$("#editarPerfil").children().remove();
 	datos.append("idUsuario", idUsuario);
 
 	$.ajax({
@@ -128,9 +128,36 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 			$("#editarNombre").val(respuesta["nombre"]);
 			$("#editarUsuario").val(respuesta["usuario"]);
 			$("#actualPassword").val(respuesta["password"]);
-			//$("#editarPerfil").val(respuesta["perfil"]);
-			//$("#editarPerfil").html(respuesta["perfil"]);
 			$("#editarFoto").val(respuesta["foto"]);
+			$("#editarPerfil").append(
+			'<option value="'+respuesta["perfil"]+'">'+respuesta["nomperfil"]+'</option>'
+			);
+
+			var datosD = new FormData();
+			datosD.append("perfil", respuesta["perfil"]);
+
+			$.ajax({
+				url:"ajax/parametros.ajax.php",
+				method: "POST",
+				data: datosD,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function(respuestaD){
+					for (var i = 1; i < respuestaD.length; i++) {
+
+						if (respuesta["perfil"] != respuestaD[i]["id"])
+						{
+							$("#editarPerfil").append(
+							'<option value="'+respuestaD[i]["id"]+'">'+respuestaD[i]["perfil"]+'</option>'
+							);
+						}
+					}
+				}
+
+			});
+			
 
 		}
 

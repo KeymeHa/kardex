@@ -11,7 +11,7 @@ class ModeloPersonas
 	{
 		if($item != null)
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -22,7 +22,7 @@ class ModeloPersonas
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 
 			$stmt -> execute();
 
@@ -38,9 +38,9 @@ class ModeloPersonas
 	static public function mdlMostrarPersonasArea($tabla, $item, $valor)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 
 		$stmt -> execute();
 
@@ -79,7 +79,7 @@ class ModeloPersonas
 
 	static public function mdlAgruparPersonas($tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE $tabla.elim = 0 GROUP BY(areas.nombre)");
+		$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre)");
 
 		$stmt -> execute();
 		return $stmt -> fetchAll();
@@ -91,7 +91,7 @@ class ModeloPersonas
 	{
 		if (!$item == null) 
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND elim = 0");
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -99,7 +99,7 @@ class ModeloPersonas
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE elim = 0");
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla");
 
 			$stmt -> execute();
 		}
@@ -136,7 +136,7 @@ class ModeloPersonas
 
 	static public function mdlBorrarPersona($tabla, $id)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET elim = 1 WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("DELETE $tabla WHERE id = :id");
 		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
 
 		if($stmt -> execute())

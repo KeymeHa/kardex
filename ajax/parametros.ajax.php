@@ -11,7 +11,6 @@ class AjaxParametros
 		echo json_encode($respuesta);
 	}
 
-
 	public $anio;
 	public function ajaxActualizarAnio(){
 		$item = "anio";
@@ -24,6 +23,11 @@ class AjaxParametros
 		$respuesta = ControladorParametros::ctrMostrarUnidades();
 		echo json_encode($respuesta);
 	}	
+
+	public function ajaxPerfil(){
+		$respuesta = ControladorParametros::ctrVerPerfil(null);
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["paramIns"]))
@@ -39,3 +43,8 @@ if(isset($_POST["anio"]))
 if(isset($_POST["unidad"]))
 {	$limIns = new AjaxParametros();
 	$limIns -> ajaxUnidades();}
+
+if(isset($_POST["perfil"]))
+{	$limIns = new AjaxParametros();
+	$limIns -> ajaxPerfil();}
+

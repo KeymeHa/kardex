@@ -75,7 +75,7 @@ $(".tablaAreas").on("click", ".btnEliminarArea", function(){
 					{
 						swal({
 						  type: "error",
-						  title: "El àrea "+nomArea+" tiene "+respuesta+" personas asociadas, debe migrarlos primero a otra, antes de eliminar.",
+						  title: "El área "+nomArea+" tiene "+respuesta+" personas asociadas, debe migrarlos primero a otra, antes de eliminar.",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  })

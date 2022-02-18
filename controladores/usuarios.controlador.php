@@ -291,12 +291,27 @@ class ControladorUsuarios
 				}
 				else
 				{
+					$error ="";
+
+					if (count($respuesta) > 0) 
+					{
+						for ($i=0; $i < count($respuesta); $i++) { 
+							$error+= $respuesta[$i];						
+						}
+					}
+					else
+					{
+						$error =$respuesta;
+					}
+
 					echo '<script>
+
+					console.log('.$error.');
 
 					swal({
 
 						type: "error",
-						title: "¡El Usuario no fue Registrado!",
+						title: "¡El Usuario no fue Registrado Codigo '.$error.'!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar"
 
@@ -484,6 +499,13 @@ class ControladorUsuarios
 			}
 		}
 
+	}
+
+	static public function ctrDesvincularUsuario($id)
+	{
+		$tabla = "usuarios";
+		$respuesta = ModeloUsuarios::mdlDesvincularUsuario($tabla, $id);
+		return $respuesta;
 	}
 
 }

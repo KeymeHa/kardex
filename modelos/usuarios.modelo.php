@@ -67,7 +67,7 @@ class ModeloUsuarios
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
-		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
+		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_INT);
 		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
@@ -76,7 +76,7 @@ class ModeloUsuarios
 		}
 		else
 		{
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt->close();
@@ -195,6 +195,23 @@ class ModeloUsuarios
 			return "error";	
 		}
 		$stmt->close();	
+		$stmt = null;
+	}
+
+
+	static public function mdlDesvincularUsuario($tabla, $id)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_area = 0 WHERE id = :id");
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute())
+		{
+			return "ok";	
+		}else{
+			return "error";	
+		}
+
+		$stmt -> close();
 		$stmt = null;
 	}
 }
