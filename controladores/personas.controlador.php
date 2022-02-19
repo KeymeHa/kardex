@@ -42,7 +42,6 @@ class ControladorPersonas
 		}
 		else
 		{
-			
 			foreach ($res as $key => $values):
 
 				  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);

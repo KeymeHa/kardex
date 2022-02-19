@@ -7,6 +7,8 @@ require_once "../controladores/personas.controlador.php";
 require_once "../modelos/personas.modelo.php";
 require_once "../controladores/areas.controlador.php";
 require_once "../modelos/areas.modelo.php";
+require_once "../controladores/usuarios.controlador.php";
+require_once "../modelos/usuarios.modelo.php";
 
 class TablaRequisiciones
 {
@@ -40,7 +42,7 @@ class TablaRequisiciones
 	    {
            	$item = "id";
             $valor =  $requisiciones[$i]["id_persona"];
-            $persona = ControladorPersonas::ctrMostrarPersonas($item, $valor);
+            $usuario = ControladorUsuarios::ctrMostrarNombre($item, $valor);
             $valor = $requisiciones[$i]["id_area"];
             $area = ControladorAreas::ctrMostrarAreas($item, $valor);
 
@@ -53,7 +55,7 @@ class TablaRequisiciones
 	    	$dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$requisiciones[$i]["codigoInt"].'",
-	    		"'.$persona['nombre'].'",
+	    		"'.$usuario['nombre'].'",
 	    		"'.$area['nombre'].'",
 	    		"'.$cantidadInsumos.'",
 	    		"'.$fecha.'",

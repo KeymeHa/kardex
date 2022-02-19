@@ -44,7 +44,7 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol like '%$fechaFinal%' ORDER BY id DESC");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -64,12 +64,12 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
 
 			}
 		
