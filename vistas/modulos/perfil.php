@@ -10,7 +10,7 @@
   </section>
   <section class="content">
 
-    <div class="col-md-3">
+    <div class="col-md-3 col-lg-4 col-sm-12">
       <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="<?php if($_SESSION["foto"] != ""){ echo $_SESSION["foto"]; }else{ echo'vistas/img/usuarios/default/anonymous.png'; }?>" alt="User profile picture">
@@ -22,9 +22,6 @@
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Mi ultima Conexión:</b> <a class="pull-right"><?php echo $_SESSION["ultimoLogin"];?></a>
-                </li>
-                <li class="list-group-item">
-                  <b>Perfil:</b> <a class="pull-right"><?php echo $_SESSION["perfil"];?></a>
                 </li>
               </ul>
             </div>

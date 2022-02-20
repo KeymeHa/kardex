@@ -462,6 +462,11 @@ function paginaCargada(pagina){
 
 			tablaDatatable(tablaElegida, tablaAjax, variable);
 		}
+		else if(pagina == 27)
+		{
+			tablaElegida =  $('.tablaproyectos');
+			tablaAjax = 'proyectos';
+		}
 		
 
 		if (pagina != 26) {

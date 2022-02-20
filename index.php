@@ -17,6 +17,7 @@ require_once "controladores/requisiciones.controlador.php";
 require_once "controladores/ordencompra.controlador.php";
 require_once "controladores/actas.controlador.php";
 require_once "controladores/historial.controlador.php";
+require_once "controladores/proyectos.controlador.php";
 //MODELOS
 require_once "modelos/usuarios.modelo.php";
 require_once "modelos/categorias.modelo.php";
@@ -33,5 +34,7 @@ require_once "modelos/requisiciones.modelo.php";
 require_once "modelos/ordenCompra.modelo.php";
 require_once "modelos/actas.modelo.php";
 require_once "modelos/historial.modelo.php";
+require_once "modelos/proyectos.modelo.php";
+
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();

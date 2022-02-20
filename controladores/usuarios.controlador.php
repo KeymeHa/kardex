@@ -77,8 +77,8 @@ class ControladorUsuarios
 						$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
 
 						echo '<script>
-								window.location = "inicio";			
-							</script>';
+							window.location = "inicio";			
+						</script>';
 					}
 
 				}
@@ -364,7 +364,7 @@ class ControladorUsuarios
 								 );
 
 
-				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+				//$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
 
 				try {
 

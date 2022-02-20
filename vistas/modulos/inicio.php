@@ -52,10 +52,10 @@
                   </div>
                   <a href="usuarios" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->';}?>
-              
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
+              </div><!--col-lg-3 col-xs-6-->';}
+
+
+              if($_SESSION["perfil"] != 4){ echo'<div class="col-lg-3 col-xs-6">
 
                 <!-- small box -->
                 <div class="small-box bg-yellow">
@@ -69,7 +69,6 @@
                   <a href="inventario" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->
-
               <div class="col-lg-3 col-xs-6">
 
                 <!-- small box -->
@@ -85,7 +84,6 @@
                   <a href="proveedores" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->
-
               <div class="col-lg-3 col-xs-6">
 
                 <!-- small box -->
@@ -100,7 +98,44 @@
                   </div>
                   <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
+              </div><!--col-lg-3 col-xs-6-->';}
+              else
+                {                
+
+                  echo '<div class="col-lg-6 col-lg-12 col-sm-12">
+
+                <!-- small box -->
+                <div class="small-box bg-red">
+                  <div class="inner">
+                    <h3>Generar Requisición</h3>
+                    <p>Crea tu solicitud de con los insumos necesarios para tu labor.</p>
+                    
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-file-text"></i>
+                  </div>
+                  <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
               </div><!--col-lg-3 col-xs-6-->
+
+
+              <div class="col-lg-6 col-lg-12 col-sm-12">
+
+                <!-- small box -->
+                <div class="small-box bg-green">
+                  <div class="inner">
+                    <h3>Historial de Requisiciones</h3>
+                    <p>Valida las Requisiciones aprobadas.</p>
+                    
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-cart-arrow-down"></i>
+                  </div>
+                  <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+              </div><!--col-lg-3 col-xs-6-->';
+
+                }?>
 
           </div>
 
@@ -109,11 +144,18 @@
     </div>
     <!-- /.box -->
 
+     <?php
+
+      if ($_SESSION["perfil"] != 4) 
+      {
+        echo '
     <div class="row">
 
       <div class="col-lg-6">
         <div class="box">
           <div class="box-header">
+
+
              <h4>Inversiónes</h4>
 
              <div class="box-tools pull-right">
@@ -122,28 +164,27 @@
                   <i class="fa fa-minus"></i></button>
               </div>
           </div>
-          <div class="box-body">
-            <?php
+          <div class="box-body">';
 
-              include "reportes/dgInversion.php";
+        include "reportes/dgInversion.php";
 
-            ?>
+
+        echo '
           </div>
         </div>
         
       </div>
 
-      <div class="col-lg-6">
-        <?php
+      <div class="col-lg-6">';
 
-          include "reportes/rqInsumos.php";
+        include "reportes/rqInsumos.php";
 
-        ?>
-
+        echo '
       </div>
       
-    </div>
-
+    </div>';
+      }
+    ?>
   </section>
   <!-- /.content -->
 

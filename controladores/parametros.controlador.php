@@ -667,17 +667,16 @@ class ControladorParametros
 						2 => "pDos",
 						3 => "pTres",
 						4 => "pCuatro");
-		if($perfil == 1)
-          {
-            if ($jdata[$permiso[$perfil]] == $perfil) 
-            {
-              $sw = 1;
-            }
-            else
-            {
-              $sw = 0;
-            }
-          }
+
+        if ($jdata[$permiso[$perfil]] == $perfil) 
+        {
+          $sw = 1;
+        }
+        else
+        {
+          $sw = 0;
+        }
+        
 		return $sw;
 	}
 

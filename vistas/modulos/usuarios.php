@@ -1,6 +1,6 @@
 <?php
 
-if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
+if(!$_SESSION["perfil"] == "1" || !$_SESSION["perfil"] == "2")
 {
    echo'<script> window.location="inicio";</script>';
 }
@@ -69,7 +69,7 @@ if(!$_SESSION["perfil"] == "Administrador" || !$_SESSION["perfil"] == "root")
             {echo '<td><button class="btn btn-success btn-xs btnActivarUsr" estadoUsuario="0" idUsuario="'.$value["id"].'">Activado</button></td>';}else{
               echo '<td><button class="btn btn-danger btn-xs btnActivarUsr" estadoUsuario="1" idUsuario="'.$value["id"].'">Desactivado</button></td>';}
 
-              if( $value["ultimo_login"] != null )
+              if($value["ultimo_login"] != "0000-00-00 00:00:00")
               { 
                 echo '<td>'.$value["ultimo_login"].'</td>';
               }else

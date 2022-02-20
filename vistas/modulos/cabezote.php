@@ -17,8 +17,8 @@
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 		              <i class="fa fa-bell-o"></i>
 		              <?php 
-
 		              	$noti = 0;
+		              if ($_SESSION["perfil"] != 4) {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
 		              	$escasos = ControladorInsumos::ctrVerificarInsEscasos(null, null);
 
@@ -27,8 +27,14 @@
 		              	if($escasos != 0)
 		              	{$noti+= 1;}
 
+		              	if ($noti > 0) {
+
+		              		echo '
+		              		<span class="label label-warning">'.$noti.'</span>';
+		              	}
+		              }
 		              ?>
-		              <span class="label label-warning"><?php echo $noti;?></span>
+		              
 		            </a>
 		            <ul class="dropdown-menu">
 		              <li class="header">Notificaciones</li>
@@ -36,17 +42,19 @@
 		                <ul class="menu">
 		                  
 		                    	<?php
-			                    	if($agotado != 0)
-			                    	{
-			                    		echo'<li><a href="#"><i class="fa fa-warning text-red"></i>Hay '.$agotado.' Insumos Agotados &nbsp &nbsp<button class="btn btn-success btn-xs btnNotificaciones" valor="1" data-toggle="modal" data-target="#modal-Notificaciones"> Ver</button></a></li>';
-			                    	}
 
-			                    	if($escasos != 0)
-			                    	{
-			                    		echo'<li><a href="#"><i class="fa fa-warning text-yellow"></i>Hay '.$escasos.' Insumos Por agotarse &nbsp &nbsp<button class="btn btn-success btn-xs btnNotificaciones" valor="2" data-toggle="modal" data-target="#modal-Notificaciones"> Ver</button></a></li>';
-			                    	}
+		                    		if ($_SESSION["perfil"] != 4) 
+		                    		{
+		                    			if($agotado != 0)
+				                    	{
+				                    		echo'<li><a href="#"><i class="fa fa-warning text-red"></i>Hay '.$agotado.' Insumos Agotados &nbsp &nbsp<button class="btn btn-success btn-xs btnNotificaciones" valor="1" data-toggle="modal" data-target="#modal-Notificaciones"> Ver</button></a></li>';
+				                    	}
 
-
+				                    	if($escasos != 0)
+				                    	{
+				                    		echo'<li><a href="#"><i class="fa fa-warning text-yellow"></i>Hay '.$escasos.' Insumos Por agotarse &nbsp &nbsp<button class="btn btn-success btn-xs btnNotificaciones" valor="2" data-toggle="modal" data-target="#modal-Notificaciones"> Ver</button></a></li>';
+				                    	}
+		                    		}
 		                    	?>
 		                    
 		                </ul>

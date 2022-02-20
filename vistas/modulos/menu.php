@@ -3,33 +3,46 @@
 		<ul class="sidebar-menu">
 
 			<li <?php if(isset($_GET["ruta"])){ if($_GET["ruta"] == "inicio"){ echo'class="active"'; } }else{ echo'class="active"';}?>>
-				<a href="inicio">
+
+			<a href="inicio">
 					<i class="fa fa-home"></i>
 					<span>Inicio</span>
 				</a>
 			</li>
-			
-			<li <?php if(isset($_GET["ruta"])){ if($_GET["ruta"] == "usuarios" || $_GET["ruta"] == "perfil"){ echo'class="active"'; } }?>>
 
-				<a href="perfil">
+			<li <?php if(isset($_GET["ruta"])){ if($_GET["ruta"] == "perfil"){ echo'class="active"'; } }?>><a href="perfil">
 					<i class="fa fa-user"></i>
 					<span>Perfil</span>
 				</a>
-				
-				<?php 
-					if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
-					{
-						echo'<a href="usuarios">
-								<i class="fa fa-user"></i>
-								<span>Usuarios</span>
-							</a>';
-					}
-				?>
 
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'inventario' || $_GET['ruta'] == 'insumos' || $_GET['ruta'] == 'categorias' || $_GET['ruta'] == 'verCategoria' ){ echo 'active';} }?>">
-				<a href="inventario">
+
+			<?php
+
+			if ($_SESSION["perfil"] != 4) 
+			{
+				echo '
+			<li ';
+
+			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "usuarios"){ echo'class="active"'; } }
+
+
+			if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
+					{
+						echo'><a href="usuarios">
+								<i class="fa fa-users"></i>
+								<span>Usuarios</span>
+							</a>';
+					}
+
+			echo '</li>
+
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'inventario' || $_GET['ruta'] == 'insumos' || $_GET['ruta'] == 'categorias' || $_GET['ruta'] == 'verCategoria' ){ echo 'active';} }
+
+			echo '"><a href="inventario">
 					<i class="fa fa-shopping-cart"></i>
 					<span>Inventario</span>
 					<span class="pull-right-container">
@@ -43,8 +56,11 @@
 
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'generaciones' || $_GET['ruta'] == 'pedidos' || $_GET['ruta'] == 'cotizaciones' || $_GET['ruta'] == 'ordendecompras' || $_GET['ruta'] == 'facturas'){ echo 'active';} }?>">
-				<a href="#">
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'generaciones' || $_GET['ruta'] == 'pedidos' || $_GET['ruta'] == 'cotizaciones' || $_GET['ruta'] == 'ordendecompras' || $_GET['ruta'] == 'facturas'){ echo 'active';} }
+
+			echo '"><a href="#">
 					<i class="fa fa-file-text-o"></i>
 					<span>Generaciones</span>
 					<span class="pull-right-container">
@@ -59,8 +75,11 @@
 				</ul>
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea'){ echo 'active';} }?>">
-				<a href="#">
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea'){ echo 'active';} }
+
+			echo '"><a href="#">
 					<i class="fa fa-file-text-o"></i>
 					<span>Requisiciones</span>
 					<span class="pull-right-container">
@@ -76,15 +95,21 @@
 
 			</li>
 
-			<li <?php if(isset($_GET["ruta"])){ if($_GET["ruta"] == "proveedores" || $_GET["ruta"] == "proveedor" ){ echo'class="active"'; } }?>>
-				<a href="proveedores">
+			<li ';
+
+			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "proveedores" || $_GET["ruta"] == "proveedor" ){ echo'class="active"'; } }
+
+			echo '><a href="proveedores">
 					<i class="fa  fa-briefcase"></i>
 					<span>Proveedores</span>
 				</a>
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'historialUsuarios' || $_GET['ruta'] == 'historialInsumos' || $_GET['ruta'] == 'historialCategorias' || $_GET['ruta'] == 'historialAreas' || $_GET['ruta'] == 'historialPersonas' || $_GET['ruta'] == 'historialOrdenes' || $_GET['ruta'] == 'historialRq'){ echo 'active';} }?>">
-				<a href="#">
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'historialUsuarios' || $_GET['ruta'] == 'historialInsumos' || $_GET['ruta'] == 'historialCategorias' || $_GET['ruta'] == 'historialAreas' || $_GET['ruta'] == 'historialPersonas' || $_GET['ruta'] == 'historialOrdenes' || $_GET['ruta'] == 'historialRq'){ echo 'active';} }
+
+			echo '"><a href="#">
 					<i class="fa fa-calendar-minus-o"></i>
 					<span>Historiales</span>
 					<span class="pull-right-container">
@@ -102,8 +127,11 @@
 				</ul>
 			</li>
 
-			<li class="treeview <?php if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'actas' || $_GET['ruta'] == 'VerActa' || $_GET['ruta'] == 'editarActa'){ echo 'active';} }?>">
-				<a href="actas">
+			<li class="treeview ';
+
+			 if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'actas' || $_GET['ruta'] == 'VerActa' || $_GET['ruta'] == 'editarActa'){ echo 'active';} }
+
+			 echo '"><a href="actas">
 					<i class="fa fa-file"></i>
 					<span>Actas</span>
 					<span class="pull-right-container">
@@ -113,7 +141,17 @@
 				<ul class="treeview-menu">
 					<li><a href="actas"><i class="fa fa-file-o"></i>Listado de Actas</a></li>
 				</ul>
-			</li>
+			</li>';
+
+			}
+			else
+			{
+
+			}
+
+
+			?>
+
 		</ul>
 	 </section>
 </aside>
