@@ -218,9 +218,7 @@ class ControladorUsuarios
 	static public function ctrMostrarUsuarios($item, $valor)
 	{
 		$tabla = "usuarios";
-
 		$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
-
 		return $respuesta;
 
 	}
@@ -235,13 +233,24 @@ class ControladorUsuarios
 	{
 		if (isset($_POST["nuevoUsuario"])) {
 			if (preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoNombre"]) &&
-				preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoUsuario"]) &&
+				preg_match('/^[a-zA-Z-0-9]+$/', $_POST["nuevoUsuario"]) &&
 				preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoPassword"])) 
 			{
 
+				/*
+
+				nuevoNombre
+				idUsr
+				nuevoUsuario
+				nuevoPassword
+				nuevoPerfil
+				nuevaFoto
+
+				*/
+
 				$tabla = "usuarios";
 
-				$encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+				$encriptar = crypt($_POST["nuevoPassword"],'2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 				$datos = array('nombre' => $_POST["nuevoNombre"],
 								'usuario' => $_POST["nuevoUsuario"],
@@ -262,7 +271,7 @@ class ControladorUsuarios
 								"id_usr" => $_POST["idUsr"]
 								 );
 
-					$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+					$respuesta2 = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
 
 
 					echo '<script>
@@ -296,17 +305,17 @@ class ControladorUsuarios
 					if (count($respuesta) > 0) 
 					{
 						for ($i=0; $i < count($respuesta); $i++) { 
-							$error+= $respuesta[$i];						
+							$error+= $respuesta[$i].", ";						
 						}
 					}
 					else
 					{
-						$error =$respuesta;
+						$error = $respuesta;
 					}
 
 					echo '<script>
 
-					console.log('.$error.');
+					console.log(Error en DB'.$error.');
 
 					swal({
 
@@ -446,7 +455,7 @@ class ControladorUsuarios
 
 			$tabla = "usuarios";
 			$idUsr = $_GET["idUsuario"];
-			$respuesta = ModeloUsuarios::mdlBorrarUsuario($tabla, $idUsr);
+			$respuesta = ModeloUsuarios::mdlModificarCampo($tabla,"elim",$idUsr);
 
 			if($respuesta == "ok")
 			{
@@ -501,11 +510,10 @@ class ControladorUsuarios
 
 	}
 
-	static public function ctrDesvincularUsuario($id)
+	static public function ctrasignacionArea($id, $valor)
 	{
 		$tabla = "usuarios";
-		$respuesta = ModeloUsuarios::mdlDesvincularUsuario($tabla, $id);
+		$respuesta = ModeloUsuarios::mdlasignacionArea($tabla,$valor,$id);
 		return $respuesta;
 	}
-
 }

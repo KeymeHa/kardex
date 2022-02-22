@@ -1,6 +1,6 @@
 <?php
 
-if(!$_SESSION["perfil"] == "1" || !$_SESSION["perfil"] == "2")
+if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
 {
    echo'<script> window.location="inicio";</script>';
 }
@@ -198,7 +198,7 @@ if(!$_SESSION["perfil"] == "1" || !$_SESSION["perfil"] == "2")
                   if (!is_null($perfiles)) {
                    if(count($perfiles) > 0)
                    {
-                    echo '<option value="0">Selecionar perfil</option>';
+                    echo '<option value="">Selecionar perfil</option>';
                     for ( $i=1; $i < count($perfiles); $i++) { 
                       echo '<option value="'.$perfiles[$i]["id"].'">'.$perfiles[$i]["perfil"].'</option>';
                     }

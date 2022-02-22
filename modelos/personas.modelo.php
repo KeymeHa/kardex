@@ -56,10 +56,10 @@ class ModeloPersonas
 	=============================================*/
 	static public function mdlIngresarPersona($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, nombre) VALUES (:id_area, :nombre)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_usuario) VALUES (:id_area, :id_usuario)");
 
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
-		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -114,11 +114,10 @@ class ModeloPersonas
 
 	static public function mdlEditarPersona($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, id_area = :id_area WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_area = :id_area WHERE id_usuario = :id_usuario");
 		
-		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt -> bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
 
 		if($stmt -> execute())
 		{
@@ -136,8 +135,9 @@ class ModeloPersonas
 
 	static public function mdlBorrarPersona($tabla, $id)
 	{
-		$stmt = Conexion::conectar()->prepare("DELETE $tabla WHERE id = :id");
-		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_usuario = :id_usuario");
+		$stmt -> bindParam(":id_usuario", $id, PDO::PARAM_INT);
 
 		if($stmt -> execute())
 		{

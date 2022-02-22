@@ -77,7 +77,7 @@
 
 			<li class="treeview ';
 
-			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea'){ echo 'active';} }
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea' || $_GET['ruta'] == 'proyectos'){ echo 'active';} }
 
 			echo '"><a href="#">
 					<i class="fa fa-file-text-o"></i>

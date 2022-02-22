@@ -8,13 +8,20 @@ class ModeloUsuarios
 	{
 		if($item != null)
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
-
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-
-			$stmt -> execute();
-
-			return $stmt -> fetch();
+			if ($item == "id_area") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetchAll();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();
+			}
 		}
 		else
 		{
@@ -64,6 +71,10 @@ class ModeloUsuarios
 	static public function mdlRegistrarUsuario($tabla, $datos)
 	{
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, perfil, foto) VALUES (:nombre, :usuario, :password, :perfil, :foto)");
+
+
+
+
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
@@ -159,22 +170,33 @@ class ModeloUsuarios
 	BORRAR USUARIO
 	=============================================*/
 
-	static public function mdlBorrarUsuario($tabla, $datos)
+	static public function mdlModificarCampo($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET elim = 1 WHERE id = :id");
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
-
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = :$item WHERE id = :id");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 		if($stmt -> execute())
 		{
 			return "ok";	
 		}else{
 			return "error";	
 		}
-
 		$stmt -> close();
 		$stmt = null;
+	}
 
-
+	static public function mdlasignacionArea($tabla, $valor,$id)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_area = :id_area WHERE id = :id");
+		$stmt -> bindParam(":id_area", $valor, PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+		if($stmt -> execute())
+		{
+			return "ok";	
+		}else{
+			return "error";	
+		}
+		$stmt -> close();
+		$stmt = null;
 	}
 
 	static public function mdlIngresarUsuario($tabla, $datos)
@@ -195,23 +217,6 @@ class ModeloUsuarios
 			return "error";	
 		}
 		$stmt->close();	
-		$stmt = null;
-	}
-
-
-	static public function mdlDesvincularUsuario($tabla, $id)
-	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_area = 0 WHERE id = :id");
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
-
-		if($stmt -> execute())
-		{
-			return "ok";	
-		}else{
-			return "error";	
-		}
-
-		$stmt -> close();
 		$stmt = null;
 	}
 }

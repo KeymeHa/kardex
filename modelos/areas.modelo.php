@@ -26,6 +26,17 @@ class ModeloAreas
 		$stmt = null;
 	}
 
+	static public function mdlMostrarNombreAreas($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE $item = :$item");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+	}
+
 	static public function mdlMostrarAreas($tabla, $item, $valor)
 	{
 		if($item != null)

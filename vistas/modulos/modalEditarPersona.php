@@ -14,7 +14,7 @@
 
             <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-            <h4 class="modal-title">Editar Persona</h4>
+            <h4 class="modal-title">Cambiar de área a <strong id="titulo-editar-persona"></strong></h4>
 
           </div>
 
@@ -35,26 +35,9 @@
                 
                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                  <input type="hidden" class="form-control input-lg" id="editarId" name="editarId" autocomplete="off" required>
+                  <input type="hidden" class="form-control input-lg" id="editarId" name="editarId" autocomplete="off" required readonly>
 
-                  <select class="form-control input-lg" name="editarAreaP" required>
-
-                    <option id="editarAreaP" value=""></option>
-                    
-                    <?php
-
-                    $item = null;
-                    $valor = null;
-
-                    $areas = ControladorAreas::ctrMostrarAreas($item, $valor);
-
-                    foreach ($areas as $key => $value) {
-                      
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                    }
-
-                    ?>
-    
+                  <select class="form-control input-lg" name="editarAreaP" id="editarAreaP" required>
                   </select>
 
                 </div>
@@ -62,21 +45,7 @@
               </div>
 
               <!-- ENTRADA PARA LA NOMBRE -->
-
-               <!-- ENTRADA PARA EL CÓDIGO -->
-              
-              <div class="form-group">
-                
-                <div class="input-group">
-                
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-
-                  <input type="text" class="form-control input-lg" id="editarPersona" name="editarPersona" placeholder="Nombre" autocomplete="off" required>
-
-                </div>
-
-              </div>
-
+              <p class="help-block">* Para Modificar los datos basicos del encargado/a debe hacerse desde el modulo de usuarios.</p>  
               
           </div><!--box-body-->
         </div><!--modal-body-->

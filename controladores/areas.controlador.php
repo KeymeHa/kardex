@@ -66,6 +66,15 @@ class ControladorAreas
 		}//iseet
 	}
 
+	static public function ctrMostrarNombreAreas($item, $valor)
+	{
+		$tabla = "areas";
+
+		$respuesta = ModeloAreas::mdlMostrarNombreAreas($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
 	static public function ctrMostrarAreas($item, $valor)
 	{
 		$tabla = "areas";

@@ -9,25 +9,40 @@ class ControladorPersonas
 	static public function ctrMostrarPersonas($item, $valor)
 	{
 		$tabla = "personas";
-
 		$respuesta= [[]];
-
 		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
 
-		foreach ($res as $key => $values):
+		if ($item != "id_usuario") 
+		{
+			foreach ($res as $key => $values):
 
-			  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
-		      $respuesta[$key]['id'] = $usuario["id"];
-		      $respuesta[$key]['nombre'] = $usuario["nombre"];
-		      $respuesta[$key]['id_area'] = $values["id_area"];
-		 
-		endforeach;
+				  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
+			      $respuesta[$key]['id'] = $usuario["id"];
+			      $respuesta[$key]['nombre'] = $usuario["nombre"];
+			      $respuesta[$key]['id_area'] = $values["id_area"];
+			 
+			endforeach;
 
-		return $respuesta;
-
-
-
+			return $respuesta;
+		}
+		else
+		{
+			return $res;
+		}
+		
 	}#ctrMostrarPersonas
+
+
+
+
+	static public function ctrMostrarListaPersonas()
+	{
+		$item = "id_area";
+		$valor = 0;
+		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+		return $respuesta;
+	}
+
 
 	static public function ctrMostrarPersonasArea($item, $valor)
 	{
@@ -65,15 +80,17 @@ class ControladorPersonas
 		{
 			$tabla = "personas";
 
-			$persona = ControladorParametros::ctrValidarCaracteres($_POST["nuevaPersona"]);
-
 			$datos = array("id_area" => $_POST["nuevaAreaP"],
-						   "nombre" => $persona);
+						   "id_usuario" => $_POST["nuevaPersona"]);
 
 			$respuesta = ModeloPersonas::mdlIngresarPersona($tabla, $datos);
 
 			if($respuesta == "ok")
-			{	echo'<script>
+			{	
+
+				$r2 = ControladorUsuarios::ctrasignacionArea($_POST["nuevaPersona"], 1);
+
+				echo'<script>
 
 					swal({
 						  type: "success",
@@ -130,14 +147,12 @@ class ControladorPersonas
 
 	static public function ctrEditarPersona()
 	{
-		if(isset($_POST["editarPersona"]))
+		if(isset($_POST["editarId"]))
 		{
 			$tabla = "personas";
-			$persona = ControladorParametros::ctrValidarCaracteres($_POST["editarPersona"]);
 
 			$datos = array("id_area" => $_POST["editarAreaP"],
-						   "nombre" => $persona,
-							"id" => $_POST["editarId"]);
+							"id_usuario" => $_POST["editarId"]);
 
 			$respuesta = ModeloPersonas::mdlEditarPersona($tabla, $datos);
 
@@ -209,7 +224,8 @@ class ControladorPersonas
 		{
 			$tabla = "personas";
 			$respuesta = ModeloPersonas::mdlBorrarPersona($tabla, $_GET["idPer"]);
-			$respuesta = ControladorUsuarios::ctrDesvincularUsuario($_GET["idPer"]);
+			$tabla = "usuarios";
+			$r2 = ControladorUsuarios::ctrasignacionArea($_GET["idPer"], 0);
 
 			if($respuesta == "ok")
 			{

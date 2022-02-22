@@ -26,7 +26,7 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
+        <button class="btn btn-success" id="btn-nuevaPersona" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
           Asignar Encargado
         </button>
 
@@ -128,13 +128,16 @@
 
                <!-- ENTRADA PARA EL CÓDIGO -->
               
+              
               <div class="form-group">
                 
                 <div class="input-group">
                 
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                  <input type="text" class="form-control input-lg" id="nuevaPersona" name="nuevaPersona" placeholder="Nombre" autocomplete="off" required>
+                  <select class="form-control input-lg" id="nuevaPersona" name="nuevaPersona" required>
+  
+                  </select>
 
                 </div>
 
