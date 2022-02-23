@@ -23,17 +23,12 @@ class TablaProyecto
 		{	
 		    $accionesDos = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerProyecto' title='Ver Proyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-book'></i></button></div><div class='col-md-4'><button class='btn btn-warning btnEditarProyecto'  title='Editar Proyecto' data-toggle='modal' data-target='#modalEditarProyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarProyecto' nomProyecto='".$proyecto[$i]["nombre"]."' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-times'></i></button></div></div>";
 
-		    if (ControladorProyectos::ctrContarAreas("id_proyecto", $proyecto[$i]["id"]) == 0) 
-		    {
-		    	$countArea = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerProyecto' title='Ver Proyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-book'></i> Asignar</button></div></div>";
-		    }
-		    else
-		    {
-		    	$countArea = ControladorProyectos::ctrContarAreas("id_proyecto", $proyecto[$i]["id"]);
-		    }
+		    $count = ControladorProyectos::ctrContarAreas("id_proyecto", $proyecto[$i]["id"]);
 
-		    $fechaIn = ControladorParametros::ctrOrdenFecha($proyecto[$i]["fecha_inicio"], 0);
-		    
+		    if ($count == 0) 
+		    {
+		    	$count = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerProyecto' title='Ver Proyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-book'></i> Asignar</button></div></div>";
+		    }
 
 		    if ($proyecto[$i]["fecha_fin"] == "0000-00-00") 
 		    {
@@ -48,9 +43,9 @@ class TablaProyecto
 	    		"'.($i + 1).'",
 	    		"'.$proyecto[$i]["nombre"].'",
 	    		"'.$proyecto[$i]["descripcion"].'",
-	    		"'.$fechaIn.'",
+	    		"'.ControladorParametros::ctrOrdenFecha($proyecto[$i]["fecha_inicio"], 0).'",
 	    		"'.$fechaOut.'",
-	    		"'.$countArea.'",
+	    		"'.$count.'",
 	    		"'.$accionesDos.'"
 	    		],';
 		}//For

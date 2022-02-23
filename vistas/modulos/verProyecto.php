@@ -57,6 +57,14 @@
 
           <div class="box-header with-border">
 
+            
+
+            <a href="javascript: history.go(-1)">
+              <button class="btn btn-success"><i class="fa fa-chevron-left"></i> 
+                Regresar
+              </button>
+            </a>
+
             <button class="btn btn-success" id="btn-editarProyecto" idProyecto="<?php echo $valor;?>" data-toggle="modal" data-target="#modalEditarProyecto"><i class="fa fa-plus"></i>
               
               Editar Datos

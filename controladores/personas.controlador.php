@@ -27,7 +27,8 @@ class ControladorPersonas
 		}
 		else
 		{
-			return $res;
+			$nombre = ControladorUsuarios::ctrMostrarNombre("id", $valor);
+			return $nombre;
 		}
 		
 	}#ctrMostrarPersonas

@@ -219,8 +219,16 @@ class ControladorProyectos
 	static public function ctrContarAreas($item, $valor)
 	{
 		$tabla = "proyectoarea";
-		$consulta = ModeloProyectos::mdlContarAreas($tabla, $item, $valor);
-		$res = $consulta[0];
+		$consulta = ModeloProyectos::mdlMostrarAsignacionArea($tabla, $item, $valor);
+		$res = 0;
+		if (!is_null($consulta["id_areas"])) {
+			if (!empty($consulta["id_areas"])) 
+			{
+				$lista = json_decode($consulta["id_areas"], true);
+				$res = count($lista);
+			}
+		}
+
 		return $res;
 	}
 

@@ -150,16 +150,12 @@ class ModeloProyectos
 		$stmt = Conexion::conectar()->prepare("SELECT id_areas FROM $tabla WHERE $item = :$item");
 		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt -> execute();
-
 		$existe = $stmt->rowCount();
-
 		if ($existe <= 0) {
 		   $crear = new ModeloProyectos;
 		   $res = $crear -> mdlCrearAsignacionArea($tabla, $valor);
 		  return "ok";
 		}else{return $stmt -> fetch();}
-
-		
 		$stmt -> close();
 		$stmt = null;
 	}

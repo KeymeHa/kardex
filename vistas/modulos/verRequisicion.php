@@ -13,7 +13,7 @@
       $valor = $_GET["idRq"];
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor);
       $valor =  $requisicion["id_persona"];
-      $persona = ControladorPersonas::ctrMostrarPersonas($item, $valor);
+      $persona = ControladorPersonas::ctrMostrarPersonas("id_usuario", $valor);
       $valor = $requisicion["id_area"];
       $area = ControladorAreas::ctrMostrarAreas($item, $valor);
       $listaInsumos = json_decode($requisicion["insumos"], true);

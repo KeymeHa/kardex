@@ -78,7 +78,7 @@ class Tablaareas
 								{
 									for ($i=0; $i < count($areas); $i++) 
 									{ 
-										if ($value["id"] != $areas["id"]) 
+										if ($value["id"] != $areas[$i]["id"]) 
 										{
 											$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnAddArea RegresarBoton' title='Asociar' idArea='".$areas[$i]["id"]."'><i class='fa fa-plus'></i></button></div></div>";
 										}
