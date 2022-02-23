@@ -684,11 +684,15 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `id_areas` text DEFAULT NULL,
   `id_proyecto` int(3) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`),
+  KEY `FK_proyectoarea_proyectos` (`id_proyecto`),
+  CONSTRAINT `FK_proyectoarea_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.proyectoarea: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectoarea` DISABLE KEYS */;
+INSERT INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
+	(1, '[{"id":"1"},{"id":"3"}]', 1);
 /*!40000 ALTER TABLE `proyectoarea` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proyectos
