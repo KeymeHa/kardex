@@ -223,4 +223,91 @@ class ControladorProyectos
 		$res = $consulta[0];
 		return $res;
 	}
+
+	static public function ctrMostrarAsignacionArea($item, $valor)
+	{
+		$tabla = "proyectoarea";
+		$res = ModeloProyectos::mdlMostrarAsignacionArea($tabla, $item, $valor);
+		return $res;
+	}
+
+	static public function ctrAsignarAreaaProyectos($idArea, $idProy, $sw)
+	{
+		$tabla = "proyectoarea";
+		$mostrar = new ControladorProyectos;
+		$areas = $mostrar->ctrMostrarAsignacionArea("id_proyecto", $idProy);
+		$lista = null;
+
+		if (is_null($areas["id_areas"]))
+		{
+			$lista = '[{"id":"'.$idArea.'"}]';
+		}
+		else
+		{
+			 if ($areas["id_areas"] == "") 
+			 {
+			 	$lista = '[{"id":"'.$idArea.'"}]';
+			 }
+			 else
+			 {
+			 	$lis = json_decode($areas["id_areas"], true);
+
+			 	$lista = '[';
+
+			 	if ($sw == "out") 
+			 	{
+			 		if (count($lis) == 1) 
+			 		{
+			 			$lista = null;
+			 		}
+			 		else
+			 		{
+			 			foreach ($lis as $key => $value) 
+				 		{
+				 			if ($value["id"] != $idArea) 
+				 			{
+				 				$lista.= '{"id":"'.$value["id"].'"},';
+				 			}
+				 		}	
+
+				 		$lista = substr($lista, 0 ,-1);  
+	    				$lista.= ']';
+			 		}	
+			 	}
+			 	else
+			 	{
+
+			 		$sw2 = 0;
+
+			 		foreach ($lis as $key => $value) 
+			 		{
+			 			
+			 			if ($value["id"] != $idArea) 
+			 			{
+			 				$lista.= '{"id":"'.$value["id"].'"},';
+			 			}
+			 			else
+			 			{
+			 				$sw2 = 1;
+			 			}
+			 		}//foreach	
+
+			 		if ($sw2 != 1) 
+			 		{
+			 			$lista.= '{"id":"'.$idArea.'"},';
+			 		}	
+
+			 		$lista = substr($lista, 0 ,-1);  
+	    			$lista.= ']';
+			 	}//else	
+			 }//else have emty
+		}//else
+
+		$datos = array( 'id_areas' => $lista,  
+						'id_proyecto' => $idProy);
+
+
+		$res = ModeloProyectos::mdlAsignacionArea($tabla, $datos);
+		return $res;
+	}
 }

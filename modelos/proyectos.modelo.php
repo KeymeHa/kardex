@@ -34,7 +34,7 @@ class ModeloProyectos
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 
 			$stmt -> execute();
 
@@ -143,5 +143,65 @@ class ModeloProyectos
 			$stmt -> close();
 
 			$stmt = null;
+	}
+
+	static public function mdlMostrarAsignacionArea($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT id_areas FROM $tabla WHERE $item = :$item");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> execute();
+
+		$existe = $stmt->rowCount();
+
+		if ($existe <= 0) {
+		   $crear = new ModeloProyectos;
+		   $res = $crear -> mdlCrearAsignacionArea($tabla, $valor);
+		  return "ok";
+		}else{return $stmt -> fetch();}
+
+		
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlAsignacionArea($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_areas = :id_areas WHERE id_proyecto = :id_proyecto");
+
+		$stmt -> bindParam(":id_areas", $datos["id_areas"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_proyecto", $datos["id_proyecto"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+	static public function mdlCrearAsignacionArea($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_proyecto) VALUES (:id_proyecto)");
+
+		$stmt->bindParam(":id_proyecto", $datos, PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "eror";
+		}
+
+		$stmt->close();
+		$stmt = null;
 	}
 }

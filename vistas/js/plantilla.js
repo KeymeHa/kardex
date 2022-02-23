@@ -11,6 +11,37 @@ $( document ).ready(function() {
 	}
 });
 
+
+
+function hoy(elemento)
+{
+	var d = new Date();
+		
+		var dia = d.getDate();
+		var mes = d.getMonth()+1;
+		var anio = d.getFullYear();
+
+		if(mes < 10){
+
+			var fecha = anio+"-0"+mes+"-"+dia;
+
+		}else if(dia < 10){
+
+			var fecha = anio+"-"+mes+"-0"+dia;
+
+		}else if(mes < 10 && dia < 10){
+
+			var fecha = anio+"-0"+mes+"-0"+dia;
+
+		}else{
+
+			var fecha = anio+"-"+mes+"-"+dia;
+
+		}	
+
+	$(elemento).val(fecha);
+}
+
 $("#selectAnio").on("click", "li a", function(){
 
 	var anio = $(this).attr("anio");
@@ -466,6 +497,21 @@ function paginaCargada(pagina){
 		{
 			tablaElegida =  $('.tablaproyectos');
 			tablaAjax = 'proyectos';
+		}
+		else if(pagina == 28)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idProy = urlParams.get('idProy');
+			if(idProy == null)
+			{
+			  variable = "?idProy=null";
+			} else 
+			{
+			  variable ="?idProy="+idProy;
+			}
+			tablaElegida =  $('.tablaproyectoArea');
+			tablaAjax = 'areas';
 		}
 		
 

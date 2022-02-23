@@ -25,7 +25,7 @@ class TablaProyecto
 
 		    if (ControladorProyectos::ctrContarAreas("id_proyecto", $proyecto[$i]["id"]) == 0) 
 		    {
-		    	$countArea = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnAsignarProyecto' title='Ver Proyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-book'></i> Asignar</button></div></div>";
+		    	$countArea = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerProyecto' title='Ver Proyecto' idProyecto='".$proyecto[$i]["id"]."'><i class='fa fa-book'></i> Asignar</button></div></div>";
 		    }
 		    else
 		    {
