@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `actas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.actas: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.actas: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `actas` DISABLE KEYS */;
 INSERT INTO `actas` (`id`, `codigoInt`, `tipo`, `id_usr`, `fecha`, `fechaSal`, `fechaEnt`, `autorizado`, `dependencia`, `responsable`, `dependenciaR`, `motivo`, `observacion`, `listainsumos`) VALUES
 	(1, 'ACT-001-2021', 1, 1, '2021-09-07', '2021-09-07', '2021-09-10', 'Fernando', 'Sis', 'Kevin', 'Estanco', 3, '', '[{"sn":"xcvfbgtfc","mc":"Hp","des":"Computador","can":"1","obs":"N/A"}]'),
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `anios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.anios: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.anios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `anios` DISABLE KEYS */;
 INSERT INTO `anios` (`id`, `anio`) VALUES
 	(1, 2022),
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.areas: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.areas: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
 INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
 	(1, 'Sistemas', '&quotEncargados del àrea de Sistemas&quot', 0, ''),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `carpetasprov` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.carpetasprov: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.carpetasprov: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `carpetasprov` DISABLE KEYS */;
 INSERT INTO `carpetasprov` (`id`, `nombre`, `carpeta`, `id_prov`, `fecha`) VALUES
 	(1, 'Certificados', 1, 1, '2021-10-06 08:24:55');
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.facturas: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.facturas: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
 INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, `id_usr`, `insumos`, `fecha`, `inversion`, `iva`, `observacion`) VALUES
 	(1, 'FAC-001-2021', 'GFD-231', 2, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"15","pre":"5501","sub":"82515"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"10","pre":"7425","sub":"74250"},{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"40","pre":"8596","sub":"343840"},{"id":"8","des":"BLANQUEADOR (LIMPIDO)","can":"50","pre":"8800","sub":"440000"}]', '2021-07-19', 1084600, 206074, ''),
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `historial` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.historial: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.historial: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `historial` DISABLE KEYS */;
 INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`) VALUES
 	(1, 4, 8, 'OC-001-2021 INSERCOP', '', '2021-08-23', 1),
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `impustoagregado` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.impustoagregado: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.impustoagregado: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `impustoagregado` DISABLE KEYS */;
 INSERT INTO `impustoagregado` (`id`, `sumatoria`, `anio`, `mes`) VALUES
 	(1, 192308, 2021, 7),
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.insumos: ~155 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumos: ~156 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
 INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `precio_compra`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`) VALUES
 	(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', NULL, 115, 0, '0000-00-00 00:00:00', 1, 5, 4, 0, 2, 1, 1),
@@ -402,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `insumosunidad` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.insumosunidad: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumosunidad: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumosunidad` DISABLE KEYS */;
 INSERT INTO `insumosunidad` (`id`, `unidad`) VALUES
 	(1, 'Bolsa');
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.inversiones: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.inversiones: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `inversiones` DISABLE KEYS */;
 INSERT INTO `inversiones` (`id`, `id_prov`, `invertido`, `anio`, `mes`) VALUES
 	(1, 0, 456290, 2021, 7),
@@ -441,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~36 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~40 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
 INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) VALUES
 	(1, 'categorias', 1, 1, 2, 3, 0),
@@ -483,7 +483,8 @@ INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) 
 	(37, 'perfil', 0, 1, 2, 3, 4),
 	(38, 'genRequisicion', 0, 0, 0, 0, 4),
 	(39, 'hisRequisicion', 0, 0, 0, 0, 4),
-	(40, 'verProyecto', 28, 1, 2, 3, 0);
+	(40, 'verProyecto', 28, 1, 2, 3, 0),
+	(41, 'verRequisicion', 0, 1, 2, 3, 0);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files
@@ -494,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_files: ~28 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_files: ~34 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
 INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(1, 'plantilla', 'all'),
@@ -570,7 +571,7 @@ CREATE TABLE IF NOT EXISTS `ordencompra` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.ordencompra: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.ordencompra: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `ordencompra` DISABLE KEYS */;
 INSERT INTO `ordencompra` (`id`, `codigoInt`, `id_proveedor`, `id_usr`, `id_cotizacion`, `insumos`, `fecha`, `inversion`, `iva`, `fac_asociada`, `formaPago`, `responsable`, `fechaEntrega`, `observacion`) VALUES
 	(2, '2', 1, 1, 0, '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","pre":"5000","sub":"5000"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"}]', '2021-08-18', 156425, 29721, 9, 'Chan con chan', 'Kevin', '0000-00-00', ''),
@@ -611,7 +612,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.parametros: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`) VALUES
 	(1, 10, 15, 30, 4, 2, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 2, NULL, NULL, NULL, 0, 0);
@@ -689,10 +690,14 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
   CONSTRAINT `FK_proyectoarea_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.proyectoarea: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.proyectoarea: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectoarea` DISABLE KEYS */;
 INSERT INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
-	(1, '[{"id":"1"},{"id":"3"}]', 1);
+	(1, NULL, 1),
+	(2, NULL, 2),
+	(3, NULL, 2),
+	(4, NULL, 3),
+	(5, NULL, 4);
 /*!40000 ALTER TABLE `proyectoarea` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proyectos
@@ -759,7 +764,7 @@ CREATE TABLE IF NOT EXISTS `tempdatosrq` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.tempdatosrq: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.tempdatosrq: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `tempdatosrq` DISABLE KEYS */;
 INSERT INTO `tempdatosrq` (`id`, `nombre`, `fecha`, `observacion`) VALUES
 	(1, 'KEVIN BOLAÑO', '2021-05-20', NULL);
