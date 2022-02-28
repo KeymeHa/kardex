@@ -75,7 +75,6 @@ class TablaNuevaFactura
   			{
   				$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$imagen.'",
 	    		"'.$insumos[$i]["codigo"].'",
 	    		"'.$insumos[$i]["descripcion"].'",
 	    		"'.$stock.'",
@@ -86,7 +85,6 @@ class TablaNuevaFactura
   			{
   				$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$imagen.'",
 	    		"'.$insumos[$i]["codigo"].'",
 	    		"'.$insumos[$i]["descripcion"].'",
 	    		"'.$acciones.'"

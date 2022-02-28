@@ -15,7 +15,24 @@ class ControladorRequisiciones
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"].' AND aprobado = 1';
+	    }
+
+
+		return $respuesta;
+	}
+
+	function anioActualAppr()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"].' AND aprobado = 0';
 	    }
 
 
@@ -50,7 +67,39 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarFacturas   Mercado$456
 
+	static public function ctrContarRequisicionesAppr()
+	{
+		$tabla = "requisiciones";
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualAppr();
+		$respuesta = ModeloRequisiciones::mdlContarRequisicionesAppr($tabla, $anio);
+		return $respuesta[0];
+	
+	}//ctrMostrarFacturas   Mercado$456
+
+	static public function ctrMostrarRequisicionesAppr($item, $valor, $sw)
+	{
+		$tabla = "requisiciones";
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualAppr();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisiciones($tabla, $item, $valor, $anio);
+
+		return $respuesta;
+	
+	}//ctrMostrarFacturas   Mercado$456
+
 	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal)
+	{
+		$tabla = "requisiciones";
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio);
+
+		return $respuesta;
+	
+	}//ctrMostrarFacturas
+
+	static public function ctrMostrarRequisicionesRangoAppr($fechaInicial, $fechaFinal,$sw)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
@@ -242,6 +291,9 @@ class ControladorRequisiciones
 				$aprobado = 0;
 				$tipoob = "observacionE";
 			}
+
+			
+
 			$tabla = "requisiciones";
 			$datos = array( 'id_area' => $persona["id_area"],  
 							'id_persona' => $_POST["id_persona"],
@@ -250,6 +302,7 @@ class ControladorRequisiciones
 							'insumos' => $_POST["listadoInsumosRq"],
 							'fecha_sol' => $fechaSol,
 							'observacion' => $_POST["observacionRq"],
+							'id_proyecto' => $_POST["id_proyecto"],
 							'fecha' => $fechaAp,
 							'aprobado' => $aprobado);
 
@@ -285,26 +338,54 @@ class ControladorRequisiciones
 					$indiceCodigo = "codRq";
 					$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
 
-				echo '<script>
+					if ($perfil != 4) 
+					{
+						echo '<script>
 
-				swal({
-					type: "success",
-					title: "¡Requisicion Generada!",
-					showConfirmButton: true,
-					confirmButtonText: "Cerrar"
+						swal({
+							type: "success",
+							title: "¡Requisicion Generada!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
 
-				}).then(function(result){
+						}).then(function(result){
 
-					if(result.value){
+							if(result.value){
+							
+								window.location = "requisiciones";
+
+							}
+
+						});
 					
-						window.location = "requisiciones";
 
+						</script>';
+					}
+					else
+					{
+						echo '<script>
+
+						swal({
+							type: "success",
+							title: "¡Requisicion Generada!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+
+						}).then(function(result){
+
+							if(result.value){
+							
+								window.location = "inicio";
+
+							}
+
+						});
+					
+
+						</script>';
 					}
 
-				});
-			
-
-				</script>';
+				
 			}
 			else
 			{

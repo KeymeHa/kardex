@@ -14,20 +14,38 @@ class TablaRequisiciones
 {
 	public $fechaInicial;
 	public $fechaFinal;
+	public $appr;
 	public function mostrarTablaRq()
 	{
 
 		$fechaIn = $this->fechaInicial;
 		$fechaOut = $this->fechaFinal;
+		$sw = $this->appr;
 
-		if($fechaIn != null)
+		if ($sw == 1) 
 		{
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango($fechaIn, $fechaOut);
+			if($fechaIn != null)
+			{
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango($fechaIn, $fechaOut);
+			}
+			else
+			{
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisiciones(null, null);
+			}
 		}
 		else
 		{
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisiciones(null, null);
+			if($fechaIn != null)
+			{
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoAppr($fechaIn, $fechaOut, $sw);
+			}
+			else
+			{
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesAppr(null, null, $sw);
+			}
 		}
+
+		
 
 	    $dJson = '{
 	    	"data": [';
@@ -48,7 +66,16 @@ class TablaRequisiciones
 
             $cantidadInsumos = ControladorParametros::ctrContarInsumos($requisiciones[$i]["insumos"]);
 
-		  	$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRq' idRq='".$requisiciones[$i]["id"]."' title='Ver Requisición'><i class='fa fa-book'></i></button></div><div class='col-md-4'><button class='btn btn-warning btnEditarRq' idRq='".$requisiciones[$i]["id"]."' title='Editar'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarRq' idRq='".$requisiciones[$i]["id"]."' title='Eliminar Rq'><i class='fa fa-close'></i></button></div></div>";
+            if ($sw != 0) 
+            {
+            	$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRq' idRq='".$requisiciones[$i]["id"]."' title='Ver Requisición'><i class='fa fa-book'></i></button></div><div class='col-md-4'><button class='btn btn-warning btnEditarRq' idRq='".$requisiciones[$i]["id"]."' title='Editar'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarRq' idRq='".$requisiciones[$i]["id"]."' title='Eliminar Rq'><i class='fa fa-close'></i></button></div></div>";
+            }
+            else
+            {
+            	$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerSoli' idRq='".$requisiciones[$i]["id"]."' title='Tramitar'><i class='fa fa-book'></i> Tramitar</button></div></div>";
+            }
+
+		  	
 
 		  	$fecha = ControladorParametros::ctrOrdenFecha($requisiciones[$i]["fecha_sol"], 0);
 
@@ -90,11 +117,21 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 		$mostrarRq -> fechaInicial = $_GET["fechaInicial"];
 		$mostrarRq -> fechaFinal = $_GET["fechaFinal"];
 	}
-		$mostrarRq -> mostrarTablaRq();
 }
 else
 {
 	$mostrarRq -> fechaInicial = null;
 	$mostrarRq -> fechaFinal = null;
-	$mostrarRq -> mostrarTablaRq();
+	
 }
+
+if (isset($_GET["appr"])) 
+{
+	$mostrarRq -> appr = 0;
+}
+else
+{
+	$mostrarRq -> appr = 1;
+}
+
+$mostrarRq -> mostrarTablaRq();

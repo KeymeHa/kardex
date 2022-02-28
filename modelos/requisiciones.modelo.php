@@ -8,7 +8,7 @@ class ModeloRequisiciones
 
 	static public function mdlRegistrarRequisicion($tabla, $datos, $tipoob)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, $tipoob, fecha, aprobado) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :$tipoob, :fecha, :aprobado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, $tipoob, id_proyecto, fecha, aprobado) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :$tipoob, :id_proyecto, :fecha, :aprobado)");
 
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
@@ -17,6 +17,7 @@ class ModeloRequisiciones
 		$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
 		$stmt->bindParam(":".$tipoob, $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_proyecto", $datos["id_proyecto"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_INT);
 
@@ -405,6 +406,16 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 	
+	
+
+	static public function mdlContarRequisicionesAppr($tabla, $anio)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
 
 	static public function mdlMostrarRequisiciones($tabla, $item, $valor, $anio)
 	{

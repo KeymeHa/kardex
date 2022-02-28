@@ -123,16 +123,6 @@ class TablaFacturas
 			{	
 
 				$insumos = ControladorInsumos::ctrMostrarInsumos("id", $array_id[$i]);
-				$imagen = "<img src='".$insumos["imagen"]."' width='42px'>";
-
-				if($insumos["imagen"] != null)
-		          {
-		            $imagen = "<img src='".$insumos["imagen"]."' width='42px'>";
-		          }
-		          else
-		          {
-		          	 $imagen = "<img src='vistas/img/productos/default/anonymous.png' width='42px'>";
-		          }
 
 		          $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-inver' idInsumo='".$array_id[$i]."' desInsumo='".$insumos["descripcion"]."' title='Detalles' data-toggle='modal' data-target='#modal-insumoInver'><i class='fa fa-file-text-o'></i></button></div></div>";
 
@@ -141,7 +131,6 @@ class TablaFacturas
 
 				$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$imagen.'",
 	    		"'.$insumos["codigo"].'",
 	    		"'.$insumos["descripcion"].'",
 	    		"'.$array_can[$i].'",

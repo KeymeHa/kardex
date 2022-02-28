@@ -58,8 +58,24 @@
                         $area = ControladorAreas::ctrMostrarAreas("id", $personas["id_area"]);
 
                           echo '<option value="'.$personas["id"].'" name="idPersona">'.$personasN["nombre"].', '.$area["nombre"].'</option>';
-                        
+                        ?> 
+                    </select>
+                  </div>   
+                </div>
+              </div>
 
+              <div class="row">
+                <div class="col-xs-7">
+                  <div class="form-group">
+                    <label>Proyecto Asociado</label>
+                    <select class="form-control" name="id_proyecto">
+                      <?php
+                        $proyecto = ControladorProyectos::ctrMostrarProyectosPorArea($personas["id_area"]);
+                        var_dump($proyecto);
+                        for ($i=0; $i < count($proyecto); $i++) 
+                        { 
+                          echo '<option value="'.$proyecto[$i]["id"].'" name="idProyecto">'.$proyecto[$i]["nombre"].'</option>';
+                        }
                         ?> 
                     </select>
                   </div>   
@@ -81,10 +97,10 @@
 
               <div class="row">
                 <div class="col-xs-1"></div>
-                <div class="col-xs-5" style="padding-right:0px">
+                <div class="col-xs-7" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                   <p class="help-block">Solicitado</p> 
                 </div>
                 <br>
@@ -124,7 +140,6 @@
                <tr>
                  
                 <th style="width:10px">#</th>
-                 <th style="width:45px">Imagen</th>
                  <th style="width:10px">Código</th>
                  <th>Descripción</th>
                  <th style="width:15px">Acciones</th>

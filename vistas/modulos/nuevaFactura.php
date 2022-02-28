@@ -24,7 +24,7 @@
 
   <section class="content">
     <div class="row">
-      <div class="col-lg-5">
+      <div class="col-lg-6">
         <div class="box box-success">
 
           <div class="box-header with-border">
@@ -118,16 +118,19 @@
 
               
               <div class="row">
-                <div class="col-xs-3" style="padding-right:0px">
+                <div class="col-sm-3" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-sm-2">
                   <p class="help-block">Cantidad</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-sm-2">
+                  <p class="help-block">Contenido</p> 
+                </div>
+                <div class="col-sm-2">
                   <p class="help-block">Precio</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-sm-3">
                   <p class="help-block">SubTotal Item</p> 
                 </div>
                 <br>
@@ -150,7 +153,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-7">
+      <div class="col-lg-6">
         <div class="box box-success">
           <div class="box-header with-border">
             Seleccionar Insumos
@@ -159,8 +162,6 @@
              <table class="table table-bordered table-striped dt-responsive tablaInsumosNFactura" width="100%">              
               <thead>              
                <tr>                 
-                <th style="width:10px">#</th>
-                 <th style="width:45px">Imagen</th>
                  <th style="width:10px">Código</th>
                  <th>Descripción</th>
                  <th style="width:20px">Stock</th>

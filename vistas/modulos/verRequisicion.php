@@ -90,8 +90,14 @@
           </div>
           <div class="col-sm-2 col-xs-6">
             <div class="description-block border-right">
-              <span class="description-text">Fecha</span>
-              <h5 class="description-header"><?php echo $requisicion["fecha"];?></h5>
+              <span class="description-text">Fecha Solicitud</span>
+              <h5 class="description-header"><?php echo ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 0);?></h5>
+            </div>
+          </div>
+           <div class="col-sm-2 col-xs-6">
+            <div class="description-block border-right">
+              <span class="description-text">Fecha de Aprobación</span>
+              <h5 class="description-header"><?php echo ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 0);?></h5>
             </div>
           </div>
           <!-- /.col -->
@@ -179,7 +185,9 @@
             </h3>
           </div>
           <div class="box-body">
+            <ul class="todo-list ui-sortable">
             '.$requisicion["registro"].'
+            </ul>
           </div>
         </div>
       </div>

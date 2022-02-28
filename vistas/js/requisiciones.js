@@ -22,6 +22,11 @@ $(".tablaRqs").on("click", "button.btnVerRq", function(){
 	window.location = "index.php?ruta=verRequisicion&idRq="+idRq;
 })
 
+$(".tablaRqsAppr").on("click", "button.btnVerSoli", function(){
+	var idRq = $(this).attr("idRq");
+	window.location = "index.php?ruta=verRequisicionS&idRq="+idRq;
+})
+
 
 $(".tablaRqs").on("click", "button.btnEditarRq", function(){
 	var idRq = $(this).attr("idRq");

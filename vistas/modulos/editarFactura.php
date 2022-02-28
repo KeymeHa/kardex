@@ -48,7 +48,7 @@
 
   <section class="content">
     <div class="row">
-      <div class="col-lg-5">
+      <div class="col-lg-6">
         <div class="box box-success">
 
           <div class="box-header with-border">
@@ -154,10 +154,13 @@
                 <div class="col-xs-3" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                   <p class="help-block">Cantidad</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
+                  <p class="help-block">Contenido</p> 
+                </div>
+                <div class="col-xs-2">
                   <p class="help-block">Precio</p> 
                 </div>
                 <div class="col-xs-3">
@@ -183,22 +186,19 @@
                           <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$value["id"].'"  value="'.$value["des"].'" title="'.$value["des"].'" readonly>
                           </div>
                         </div>
-                        <div class="col-xs-3 ingresoCantidad">
-                          <input type="number" class="form-control nuevaCantidadInsumo" name="nuevaCantidadInsumo" autocomplete="off" min="1" value="'.$value["can"].'" required>
+                        <div class="col-xs-2 ingresoCantidad">
+                          <input type="number" class="form-control nuevaCantidadInsumo"  autocomplete="off" min="1" value="'.$value["can"].'" required>
                         </div>
-                        <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                        <div class="col-xs-2 ingresoContenido">
+                          <input type="number" class="form-control nuevoContenido"  autocomplete="off" min="1" value="'.$value["con"].'" required>
+                        </div>
+                        <div class="col-xs-2 ingresoPrecio" style="padding-left:0px">
                           <div class="input-group">
-                            <span class="input-group-addon">
-                              <i class="ion ion-social-usd"></i>
-                            </span>
                             <input type="text" class="form-control nuevoPrecioInsumo" min="1" name="nuevoPrecioInsumo" value="'.$value["pre"].'" autocomplete="off" required>
                           </div>
                         </div>
                         <div class="col-xs-3 ingresoSubT" style="padding-left:0px">
                           <div class="input-group">
-                            <span class="input-group-addon">
-                              <i class="ion ion-social-usd"></i>
-                            </span>
                             <input type="text" class="form-control subTotalInsumo" min="1" name="subTotalInsumo" readonly value="'.$value["sub"].'" required>
                           </div>
                         </div>
@@ -258,17 +258,15 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-7">
+      <div class="col-lg-6">
         <div class="box box-success">
           <div class="box-header with-border">
             Seleccionar Insumos
           </div>
           <div class="box-body">            
-             <table class="table table-bordered table-striped dt-responsive tablaInsumosNFactura" width="100%">
+             <table class="table table-bordered table-striped dt-responsive tablaInsumosNFactura" width="100%">              
               <thead>              
                <tr>                 
-                <th style="width:10px">#</th>
-                 <th style="width:45px">Imagen</th>
                  <th style="width:10px">Código</th>
                  <th>Descripción</th>
                  <th style="width:20px">Stock</th>

@@ -21,10 +21,13 @@
 		              if ($_SESSION["perfil"] != 4) {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
 		              	$escasos = ControladorInsumos::ctrVerificarInsEscasos(null, null);
+		              	$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr();
 
 		              	if($agotado != 0)
 		              	{$noti+= 1;}
 		              	if($escasos != 0)
+		              	{$noti+= 1;}
+		              	if($solicitud != 0)
 		              	{$noti+= 1;}
 
 		              	if ($noti > 0) {
@@ -53,6 +56,11 @@
 				                    	if($escasos != 0)
 				                    	{
 				                    		echo'<li><a href="#"><i class="fa fa-warning text-yellow"></i>Hay '.$escasos.' Insumos Por agotarse &nbsp &nbsp<button class="btn btn-success btn-xs btnNotificaciones" valor="2" data-toggle="modal" data-target="#modal-Notificaciones"> Ver</button></a></li>';
+				                    	}
+
+				                    	if($solicitud != 0)
+				                    	{
+				                    		echo'<li><a href="requisiciones"><i class="fa fa-shopping-cart text-green"></i>Hay '.$solicitud.' Solicitud(es) de insumos</a></li>';
 				                    	}
 		                    		}
 		                    	?>

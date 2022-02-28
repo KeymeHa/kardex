@@ -193,7 +193,6 @@
               <thead>
                <tr>
                 <th style="width:10px">#</th>
-                 <th style="width:45px">Imagen</th>
                  <th style="width:10px">Código</th>
                  <th>Descripción</th>
                  <th style="width:20px">Stock</th>

@@ -319,11 +319,25 @@ class ModeloInsumos
 
 	static public function mdlActualizarStock($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET stock = :stock, precio_compra = :precio_compra WHERE id = :id");
+		if ( isset($datos["contenido"])) 
+		{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET stock = :stock, precio_compra = :precio_compra, contenido = :contenido WHERE id = :id");
 
-		$stmt -> bindParam(":stock", $datos["stock"] , PDO::PARAM_INT);
-		$stmt -> bindParam(":precio_compra", $datos["precio_compra"] , PDO::PARAM_INT);
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+			$stmt -> bindParam(":stock", $datos["stock"] , PDO::PARAM_INT);
+			$stmt -> bindParam(":precio_compra", $datos["precio_compra"] , PDO::PARAM_INT);
+			$stmt -> bindParam(":contenido", $datos["contenido"] , PDO::PARAM_INT);
+			$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET stock = :stock, precio_compra = :precio_compra WHERE id = :id");
+
+			$stmt -> bindParam(":stock", $datos["stock"] , PDO::PARAM_INT);
+			$stmt -> bindParam(":precio_compra", $datos["precio_compra"] , PDO::PARAM_INT);
+			$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		}
+
+		
 		
 
 		if($stmt -> execute()){

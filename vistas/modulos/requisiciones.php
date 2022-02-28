@@ -61,6 +61,31 @@
     </div>
 
     <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Solicitudes</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered table-striped dt-responsive tablaRqsAppr" width="100%">
+            <thead>
+             <tr>
+               <th style="width:10px">#</th>
+               <th>Codigo</th>
+               <th>Persona</th>
+               <th>Area</th>
+               <th>Insumos</th>
+               <th>Fecha</th>
+               <th style="width:150px">Acciones</th>
+             </tr> 
+            </thead>
+           </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
         <div class="box">
           <div class="box-header with-border">

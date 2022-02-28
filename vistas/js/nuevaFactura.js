@@ -57,6 +57,7 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 			var descripcion = respuesta["descripcion"];
 			var stock = respuesta["stock"];
 			var precio = respuesta["precio_compra"];
+			var contenido = respuesta["contenido"];
 			$(".nuevoInsumoAgregado").append(
 
 				'<div class="row" style="padding:5px 15px">'+
@@ -68,22 +69,19 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
                     '<input type="text" class="form-control nuevaDescripcionInsumo" title="'+descripcion+'" idInsumo="'+idInsumo+'" value="'+descripcion+'" readonly>'+
                   	'</div>'+
                   '</div>'+
-                  '<div class="col-xs-3 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadInsumo"  stock="'+stock+'" name="nuevaCantidadInsumo" autocomplete="off" min="1" value="1" required>'+
+                  '<div class="col-xs-2 ingresoCantidad">'+
+                   ' <input type="number" class="form-control nuevaCantidadInsumo"  stock="'+stock+'" autocomplete="off" min="1" value="1" required>'+
                   '</div>'+
-                  '<div class="col-xs-3 ingresoPrecio" style="padding-left:0px">'+
+                  '<div class="col-xs-2 ingresoContenido">'+
+                   ' <input type="number" class="form-control nuevoContenido" autocomplete="off" min="1" value="'+contenido+'" required>'+
+                  '</div>'+
+                  '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
                    ' <div class="input-group">'+
-                    '  <span class="input-group-addon">'+
-                     '   <i class="ion ion-social-usd"></i>'+
-                     ' </span>'+
-                     ' <input type="text" class="form-control nuevoPrecioInsumo" min="1" name="nuevoPrecioInsumo" value="'+precio+'" autocomplete="off" required>'+
+                     ' <input type="text" class="form-control nuevoPrecioInsumo" min="1" value="'+precio+'" autocomplete="off" required>'+
                     '</div>'+
                   '</div>'+
                   '<div class="col-xs-3 ingresoSubT" style="padding-left:0px">'+
                    ' <div class="input-group">'+
-                    '  <span class="input-group-addon">'+
-                     '   <i class="ion ion-social-usd"></i>'+
-                     ' </span>'+
                      ' <input type="text" class="form-control subTotalInsumo" min="1" name="subTotalInsumo" readonly value="'+precio+'" required>'+
                     '</div>'+
                   '</div>'+
@@ -298,6 +296,8 @@ function listarInsumosNF(){
 
 	var cantidad = $(".nuevaCantidadInsumo");
 
+	var contenido = $(".nuevoContenido");
+
 	var precio = $(".nuevoPrecioInsumo");
 
 	var subTItem = $(".subTotalInsumo");
@@ -307,6 +307,7 @@ function listarInsumosNF(){
 		listaInsumos.push({ "id" : $(descripcion[i]).attr("idInsumo"), 
 							  "des" : $(descripcion[i]).val().replace(/"/gi,'&quot'),
 							  "can" : $(cantidad[i]).val(),
+							  "con" : $(contenido[i]).val(),
 							  "pre" : $(precio[i]).val(),
 							  "sub" : $(subTItem[i]).val()})
 

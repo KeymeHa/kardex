@@ -258,6 +258,12 @@ function paginaCargada(pagina){
 			{
 			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 			}
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+			variable+= "&appr=0";
+			tablaElegida =  $('.tablaRqsAppr');
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+
+
 		}
 		else if(pagina == 10)
 		{
@@ -521,7 +527,7 @@ function paginaCargada(pagina){
 		}
 		
 
-		if (pagina != 26) {
+		if (pagina != 26 && pagina != 8) {
 			tablaDatatable(tablaElegida, tablaAjax, variable);
 			validarTabla(tablaElegida, tablaAjax, variable);
 		}

@@ -94,9 +94,9 @@ class ControladorProyectos
 	{
 		$tabla = "proyectoarea";
 		$lista = [[]];
-		$areas = ModeloProyectos::mdlMostrarAsignacionArea($tabla, null, null);
-		$mostrar = new ControladorProyectos;
-		$llave = -1;
+		$nombre = [];
+		$ids = [];
+		$areas = ModeloProyectos:: mdlMostrarProyectosArea($tabla, null, null);
 		if (!is_null($areas[0]["id_areas"]))
 		{
 			if (!$areas[0]["id_areas"] == "") 
@@ -109,14 +109,19 @@ class ControladorProyectos
 				 	{
 				 		if ($val["id"] == $valor) 
 				 		{
-				 			$llave++;
-				 			$lista[$llave]['id'] = $value["id"];
-				 			$proyecto = ModeloProyectos::mdlMostrarProyectosConFiltro("proyectos", "id", $value["id"]);
-				 			$lista[$llave]['nombre'] = $proyecto["nombre"];
+				 			array_push($ids, $value["id_proyecto"]);
+				 			$proyecto = ModeloProyectos::mdlMostrarProyectosConFiltro("proyectos", "id", $value["id_proyecto"]);
+				 			array_push($nombre, $proyecto["nombre"]);
 				 		}
 				 	}
 			 	}
 			 }
+		}
+
+		for ($i=0; $i < count($ids); $i++) 
+		{ 
+			$lista[$i]["id"] = $ids[$i];
+			$lista[$i]["nombre"] = $nombre[$i];
 		}
 
 		return $lista;

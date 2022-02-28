@@ -1,6 +1,3 @@
-
-
-
 $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
@@ -28,7 +25,7 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 			$(".nuevoInsumoAgregadoRq").append(
 
 				'<div class="row" style="padding:5px 15px">'+
-                  '<div class="col-xs-7" style="padding-right:0px">'+
+                  '<div class="col-xs-6" style="padding-right:0px">'+
                    ' <div class="input-group">'+
                     '  <span class="input-group-addon">'+
                      '   <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'+idInsumo+'"><i class="fa fa-times"></i></button>'+
@@ -36,8 +33,11 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
                     '<input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'+idInsumo+'" value="'+descripcion+'" readonly>'+
                   	'</div>'+
                   '</div>'+
-                  '<div class="col-xs-4 ingresoCantidad">'+
+                  '<div class="col-xs-3 ingresoCantidad">'+
                    ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="1" value="1" required>'+
+                  '</div>'+
+                  '<div class="col-xs-3 ingresoCantidad">'+
+                   ' <input type="number" class="form-control nuevaCantidadEntregada" stock="'+stock+'" name="nuevaCantidadEntregada" min="1" value="1" required>'+
                   '</div>'+
                 '</div>'
 				)
@@ -136,13 +136,35 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadPedida", function(){
 
 })
 
+$(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
+
+	if(Number($(this).val()) > Number($(this).attr("stock")))
+	{
+		$(this).val(Number($(this).attr("stock")));
+
+		swal({
+
+			type: "error",
+			title: "¡No hay esa Cantidad de Stock Disponible!",
+			showConfirmButton: true,
+			confirmButtonText: "Cerrar"
+
+		})
+	}else
+	
+	if(Number($(this).val()) === 0)
+	{
+		$(this).val(Number(1));
+	}else if (Number($(this).val()) < 0)
+	{
+		$(this).val(Number(1));
+	}
+
+	listarProductosRq();
+
+})
 
 $(document).ready(function() {
-
-	var elemento = $("#fechaGeneracion");
-
-	hoy(elemento);
-
     $(".formularioNuevaRq").keypress(function(e) {
         if (e.which == 13) {
             return false;
@@ -157,13 +179,13 @@ function listarProductosRq(){
 	var listaInsumosRq = [];
 	var descripcionRq = $(".nuevaDescripcionInsumo");
 	var pedidaRq = $(".nuevaCantidadPedida");
-	var entregadaRq = 0;
+	var entregadaRq = $(".nuevaCantidadEntregada");
 
 	for(var i = 0; i < descripcionRq.length; i++){
 		listaInsumosRq.push({ "id" : $(descripcionRq[i]).attr("idInsumo"), 
 							  "des" : $(descripcionRq[i]).val(),
 							  "ped" : $(pedidaRq[i]).val(),
-							  "ent" : entregadaRq})
+							  "ent" : $(entregadaRq[i]).val()})
 	}
 
 	console.log(listaInsumosRq);
@@ -171,3 +193,30 @@ function listarProductosRq(){
 	$("#listadoInsumosRq").val(JSON.stringify(listaInsumosRq)); 
 
 }
+
+
+function quitarAgregarInsumo(){
+	var idInsumo = $(".quitarInsumo");
+	var botonesTabla = $(".tablaInsumosNRq tbody button.agregarInsumo");
+	if(idInsumo.length == 0)
+	{
+		$("button.btnGuardarRq").removeClass("btn-success");
+    	$("button.btnGuardarRq").addClass("btn-default");
+    	$('button.btnGuardarRq').attr("disabled", true);
+	}
+
+	for(var i = 0; i < idInsumo.length; i++){
+		var boton = $(idInsumo[i]).attr("idInsumo");
+		for(var j = 0; j < botonesTabla.length; j ++){
+			if($(botonesTabla[j]).attr("idInsumo") == boton){
+				$(botonesTabla[j]).removeClass("btn-success agregarInsumo");
+				$(botonesTabla[j]).addClass("btn-default");
+			}
+		}
+	}
+}
+
+$('.tablaInsumosNRq').on('draw.dt', function(){
+	quitarAgregarInsumo();
+	listarProductosRq();
+})

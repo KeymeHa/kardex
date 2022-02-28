@@ -256,259 +256,9 @@ class ControladorFacturas
 						$respuesta = ModeloOrdenCompra::mdlEnlazarOC($tabla, $datos);
 					}		
 				} catch (Exception $e) {
-
-					echo '<script>
-
-						swal({
-
-							type: "error",
-							title: "¡Error al Registrar inversion!",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-
-						}).then(function(result){
-
-							if(result.value){
-			
-								window.location = "nuevaFactura";
-
-							}
-
-						});
-					
-
-						</script>';
 					
 				}
 
-				//---------------------------------INVERSION----------------------------------------------------
-
-				try {
-
-					$datos = array( 'id_prov' => $_POST["selecProveedor"],
-									'anio' => $actualY,
-									'mes' => $actualM);
-
-					$inversion = ControladorInversion::verInversion($datos);
-
-					if( $inversion == null )
-					{
-						
-						$datos = array( 'id_prov' => $_POST["selecProveedor"],
-										'invertido' => $_POST["valorSub"],
-										'anio' => $actualY,
-										'mes' => $actualM);
-
-						$inversion2 = ControladorInversion::ctrRegistrarInversion($datos); 
-
-						if(!$inversion2 == "ok")
-						{
-							echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡Error al Registrar inversion!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-
-							}).then(function(result){
-
-								if(result.value){
-								
-									window.location = "nuevaFactura";
-
-								}
-
-							});
-						
-
-							</script>';
-
-							return ;
-						}
-
-					}
-					else
-					{
-						$sumInver = intval($inversion["invertido"]) + $_POST["valorSub"];
-
-						$datos = array( 'invertido' => $sumInver,
-										'id_prov' => $_POST["selecProveedor"],
-										'anio' => $actualY,
-										'mes' => $actualM);
-
-						$inversion2 = ControladorInversion::ctrActualizaInversion($datos);
-
-						if(!$inversion2 == "ok")
-						{
-							echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡Error al Modificar inversion!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-
-							}).then(function(result){
-
-								if(result.value){
-								
-									window.location = "nuevaFactura";
-
-								}
-
-							});
-						
-
-							</script>';
-
-							return ;
-						}
-					}
-					
-				} 
-				catch (Exception $e) 
-				{
-					echo '<script>
-
-						swal({
-
-							type: "error",
-							title: "¡Error en la inversion!",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-
-						}).then(function(result){
-
-							if(result.value){
-							
-								window.location = "nuevaFactura";
-
-							}
-
-						});
-					
-
-						</script>';
-
-						return ;	
-				}
-
-				//---------------------------------FIN INVERSION-----------------------------------------------
-
-				//---------------------------------IVA---------------------------------------------------------
-				try {
-
-					$datos = array( 'anio' => $actualY,
-									'mes' => $actualM);
-
-					$verIVA = ControladorInversion::ctrVerIva($datos);
-
-					if( $verIVA == null )
-					{
-						
-						$datos = array( 'sumatoria' => $_POST["valorIva"],
-										'anio' => $actualY,
-										'mes' => $actualM);
-
-						$inversion2 = ControladorInversion::ctrRegistrarIva($datos); 
-
-						if(!$inversion2 == "ok")
-						{
-							echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡Error al Registrar IVA!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-
-							}).then(function(result){
-
-								if(result.value){
-								
-									window.location = "nuevaFactura";
-
-								}
-
-							});
-						
-
-							</script>';
-
-							return ;
-						}
-
-					}
-					else
-					{
-						$sumInver = intval($verIVA["sumatoria"]) + $_POST["valorIva"];
-
-						$datos = array( 'sumatoria' => $sumInver,
-										'anio' => $actualY,
-										'mes' => $actualM);
-
-						$inversion2 = ControladorInversion::ctrActualizaIva($datos);
-
-						if(!$inversion2 == "ok")
-						{
-							echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡Error al sumar IVA!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-
-							}).then(function(result){
-
-								if(result.value){
-								
-									window.location = "nuevaFactura";
-
-								}
-
-							});
-						
-
-							</script>';
-
-							return ;
-						}
-					}
-					
-				} 
-				catch (Exception $e) 
-				{
-					echo '<script>
-
-						swal({
-
-							type: "error",
-							title: "¡Error en la inversion!",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-
-						}).then(function(result){
-
-							if(result.value){
-							
-								window.location = "nuevaFactura";
-
-							}
-
-						});
-					
-
-						</script>';
-
-						return ;	
-				}
-				//----------------------------------FIN IVA----------------------------------------------------
 				//----------------------------------INCREMENTAR CODIGO FAC-------------------------------------
 				try {
 
@@ -581,10 +331,10 @@ class ControladorFacturas
 
 						$res = ControladorInsumos::ctrMostrarInsumos($item, $valor);
 
-						$nuevoStock = intval($res["stock"]) + intval($value["can"]);
+						$nuevoStock = intval($res["stock"]) + (intval($value["can"]) * intval($value["con"])) ;
 						$precioCompra = intval($value["pre"]);
 
-						$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+						$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 
 						$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 
@@ -898,7 +648,7 @@ class ControladorFacturas
 										$nuevoStock = $insumo["stock"] - ($ant["can"] - $edit["can"]);
 									}
 
-									$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+									$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 								}
 								$sw = true;							
@@ -907,8 +657,8 @@ class ControladorFacturas
 							
 						if($sw != true)
 						{
-							$nuevoStock = $insumo["stock"] + $edit["can"];
-							$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+							$nuevoStock = $insumo["stock"] + ( intval($edit["can"]) * intval($edit["con"]));
+							$datos = array( 'stock' => $nuevoStock, 'contenido' => $edit["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 							$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 						}
 					}//foreach
@@ -929,9 +679,9 @@ class ControladorFacturas
 										$item = "id";
 										$valor = $value["id"];
 										$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
-										$nuevoStock = intval($insumo["stock"]) - intval($value["can"]);
+										$nuevoStock = intval($insumo["stock"]) - (intval($value["can"]) * intval($value["con"]) );
 										$precioCompra = $insumo["precio_compra"];
-										$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+										$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 										$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 									}
 								}
