@@ -28,6 +28,10 @@ class ModeloProyectos
 		$stmt = null;
 	}
 
+	static public function ctrMostrarNombreProyectos($tabla, $item, $valor)
+	{
+	}
+
 	static public function mdlMostrarProyectos($tabla, $item, $valor)
 	{
 		if($item != null)
@@ -147,17 +151,31 @@ class ModeloProyectos
 
 	static public function mdlMostrarAsignacionArea($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT id_areas FROM $tabla WHERE $item = :$item");
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-		$stmt -> execute();
-		$existe = $stmt->rowCount();
-		if ($existe <= 0) {
-		   $crear = new ModeloProyectos;
-		   $res = $crear -> mdlCrearAsignacionArea($tabla, $valor);
-		  return "ok";
-		}else{return $stmt -> fetch();}
-		$stmt -> close();
-		$stmt = null;
+
+		if ($item != null) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT id_areas FROM $tabla WHERE $item = :$item");
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> execute();
+			$existe = $stmt->rowCount();
+			if ($existe <= 0) {
+			   $crear = new ModeloProyectos;
+			   $res = $crear -> mdlCrearAsignacionArea($tabla, $valor);
+			  return "ok";
+			}else{return $stmt -> fetch();}
+			$stmt -> close();
+			$stmt = null;
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+			$stmt -> close();
+			$stmt = null;
+		}
+
+
 	}
 
 	static public function mdlAsignacionArea($tabla, $datos)

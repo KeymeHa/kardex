@@ -62,6 +62,16 @@ class ModeloInsumos
 
 				return $stmt -> fetch();
 			}
+			elseif($item == "habilitado")
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
+
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+				$stmt -> execute();
+
+				return $stmt -> fetchAll();
+			}
 			else
 			{
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
@@ -184,7 +194,7 @@ class ModeloInsumos
 	=============================================*/
 	static public function mdlIngresarInsumo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad, unidad) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad, :unidad)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad, unidad, unidadSal, contenido) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad, :unidad, :unidadSal, :contenido)");
 
 		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
@@ -198,6 +208,8 @@ class ModeloInsumos
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_INT);
 		$stmt->bindParam(":unidad", $datos["unidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":unidadSal", $datos["unidadSal"], PDO::PARAM_INT);
+		$stmt->bindParam(":contenido", $datos["contenido"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 

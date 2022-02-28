@@ -516,4 +516,11 @@ class ControladorUsuarios
 		$respuesta = ModeloUsuarios::mdlasignacionArea($tabla,$valor,$id);
 		return $respuesta;
 	}
+
+	static public function ctrMostrarPerfil($item, $valor)
+	{
+		$tabla = "usuarios";
+		$respuesta = ModeloUsuarios::mdMostrarPerfil($tabla,$item, $valor);
+		return $respuesta["perfil"];
+	}
 }

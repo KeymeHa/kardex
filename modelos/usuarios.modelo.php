@@ -219,4 +219,20 @@ class ModeloUsuarios
 		$stmt->close();	
 		$stmt = null;
 	}
+
+	static public function mdMostrarPerfil($tabla,$item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT perfil FROM usuarios WHERE $item = :$item");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return $stmt -> fetch();
+		}
+		else
+		{
+			return $stmt->error();
+		}
+	}
 }

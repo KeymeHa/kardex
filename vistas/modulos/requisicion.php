@@ -81,7 +81,7 @@
                   <p class="help-block">*Fecha de Solicitud</p>           
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required>
+                      <input type="date" class="form-control" id="fechaGeneracion" placeholder="dd/mm/AAAA" autocomplete="off" required>
                     </div>              
                   </div>
                 </div>

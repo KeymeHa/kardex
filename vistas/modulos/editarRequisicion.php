@@ -150,7 +150,7 @@
 
                 <?php
                   $anexarRq = new ControladorRequisiciones();
-                  $anexarRq -> ctrCrearRequisicion();
+                  $anexarRq -> ctrEditarRequisicion();
                 ?>
             </form>
           </div>

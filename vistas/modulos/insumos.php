@@ -180,10 +180,26 @@
               </div>
 
                <div class="form-group">  
-               <label>Unidad de Medida</label>           
+               <label>Unidad de Medida Entrada (Facturas)</label>           
                 <div class="input-group">           
                   <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
-                  <select class="form-control input-lg" id="nuevaUnidad" name="nuevaUnidad" required>
+                  <select class="form-control input-lg" id="nuevaUnidadEnt" name="nuevaUnidadEnt" required>
+                  </select>
+                </div>
+              </div>
+
+               <div class="form-group">              
+                <div class="input-group">               
+                  <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                  <input type="number" class="form-control input-lg" name="nuevoContenido" placeholder="Cantidad Individual" autocomplete="off" title="Ej: un paquete contiene 6 unidades de un articulo" required>
+                </div>
+              </div>
+
+               <div class="form-group">  
+               <label>Unidad de Medida Salida (Requisición)</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
+                  <select class="form-control input-lg" id="nuevaUnidadSal" name="nuevaUnidadSal" required>
                   </select>
                 </div>
               </div>
@@ -198,6 +214,15 @@
                     <option value="1" style="color: red;">Alta</option>
                   </select>
                 </div>
+              </div>
+
+              <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox">
+                      Mostrar en Requisición
+                    </label>
+                  </div>
               </div>
 
               <!-- ENTRADA PARA SUBIR FOTO -->

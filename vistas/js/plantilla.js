@@ -513,6 +513,12 @@ function paginaCargada(pagina){
 			tablaElegida =  $('.tablaproyectoArea');
 			tablaAjax = 'areas';
 		}
+		else if(pagina == 29)
+		{
+			tablaElegida =  $('.tablaInsumosNRq');
+			tablaAjax = 'nuevaRq';
+			variable = "?gen=1";
+		}
 		
 
 		if (pagina != 26) {

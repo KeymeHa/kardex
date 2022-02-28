@@ -79,10 +79,47 @@ class ControladorProyectos
 	static public function ctrMostrarProyectos($item, $valor)
 	{
 		$tabla = "proyectos";
-
 		$respuesta = ModeloProyectos::mdlMostrarProyectos($tabla, $item, $valor);
-
 		return $respuesta;
+	}
+
+	static public function ctrMostrarNombreProyectos($item, $valor)
+	{
+		$tabla = "proyectos";
+		$respuesta = ModeloProyectos::mdlMostrarProyectosConFiltro($tabla, $item, $valor);
+		return $respuesta;
+	}
+
+	static public function ctrMostrarProyectosPorArea($valor)
+	{
+		$tabla = "proyectoarea";
+		$lista = [[]];
+		$areas = ModeloProyectos::mdlMostrarAsignacionArea($tabla, null, null);
+		$mostrar = new ControladorProyectos;
+		$llave = -1;
+		if (!is_null($areas[0]["id_areas"]))
+		{
+			if (!$areas[0]["id_areas"] == "") 
+			 {
+			 	foreach ($areas as $key => $value) 
+			 	{
+			 		$lis = json_decode($value["id_areas"], true);
+
+				 	foreach ($lis as $ki => $val)
+				 	{
+				 		if ($val["id"] == $valor) 
+				 		{
+				 			$llave++;
+				 			$lista[$llave]['id'] = $value["id"];
+				 			$proyecto = ModeloProyectos::mdlMostrarProyectosConFiltro("proyectos", "id", $value["id"]);
+				 			$lista[$llave]['nombre'] = $proyecto["nombre"];
+				 		}
+				 	}
+			 	}
+			 }
+		}
+
+		return $lista;
 	}
 
 	static public function ctrEditarProyecto()
@@ -289,15 +326,7 @@ class ControladorProyectos
 
 			 		foreach ($lis as $key => $value) 
 			 		{
-			 			
-			 			if ($value["id"] != $idArea) 
-			 			{
-			 				$lista.= '{"id":"'.$value["id"].'"},';
-			 			}
-			 			else
-			 			{
-			 				$sw2 = 1;
-			 			}
+			 			$lista.= '{"id":"'.$value["id"].'"},';
 			 		}//foreach	
 
 			 		if ($sw2 != 1) 

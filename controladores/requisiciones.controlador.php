@@ -214,8 +214,6 @@ class ControladorRequisiciones
 		if ( isset($_POST["listadoInsumosRq"]) ) 
 		{
 			date_default_timezone_set('America/Bogota');
-			$actualY = date("Y");
-			$actualM = date("m"); 
 
 			if ( isset($_POST["importadoRq"]) ) 
 			{
@@ -228,25 +226,42 @@ class ControladorRequisiciones
 
 		   	$item = "id";
 	        $valor = $_POST["id_persona"];
-			$personas = ControladorPersonas::ctrMostrarPersonas($item, $valor);
+			$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
+			$perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
+			$fechaSol = date("Y-m-d");
+			
+			if ($perfil != 4) 
+			{
+				$aprobado = 1;
+				$fechaAp = date("Y-m-d");
+				$tipoob = "observacion";
+			}
+			else
+			{
+				$fechaAp = "0000-00-00";
+				$aprobado = 0;
+				$tipoob = "observacionE";
+			}
 			$tabla = "requisiciones";
-			$hoy = date("Y-m-d");
-			$datos = array( 'id_area' => $personas["id_area"],  
+			$datos = array( 'id_area' => $persona["id_area"],  
 							'id_persona' => $_POST["id_persona"],
 							'id_usr' => $_POST["idUsuario"],
 							'codigoInt' => $_POST["codigoInterno"],
 							'insumos' => $_POST["listadoInsumosRq"],
-							'fecha_sol' => $_POST["nuevaFechaSolRq"],
+							'fecha_sol' => $fechaSol,
 							'observacion' => $_POST["observacionRq"],
-							'fecha' => $hoy);
+							'fecha' => $fechaAp,
+							'aprobado' => $aprobado);
 
-			$respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos);
+			$respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos, $tipoob);
 
 			if( $respuesta == "ok")
 			{
 				//----------------------------------------------------------------------------
 
-				$listaInsumos = json_decode($_POST["listadoInsumosRq"], true);
+				if ($perfil != 4) 
+				{
+					$listaInsumos = json_decode($_POST["listadoInsumosRq"], true);
 
 					foreach ($listaInsumos as $key => $value) 
 					{
@@ -265,6 +280,7 @@ class ControladorRequisiciones
 						$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 
 					}//foreach
+				}
 
 					$indiceCodigo = "codRq";
 					$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
@@ -461,16 +477,18 @@ class ControladorRequisiciones
 					}
 				}
 
-	            $persona = ControladorPersonas::ctrMostrarPersonas("id", $_POST["id_persona"]);
-                $areas = ControladorAreas::ctrMostrarAreas("id", $persona["id_area"]);
+	            $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
 
-				#ACTUALIZAR FACTURA
+	            date_default_timezone_set('America/Bogota');
+				$fechaAp = date("Y-m-d");
+				#ACTUALIZAR REQUISICION
 				$datos = array( 'id_persona' => $_POST["id_persona"],
-								'id_area' => $areas["id"],
+								'id_area' => $persona["id_area"],
 								'id_usr' => $_POST["idUsuario"],
 								'insumos' => $_POST["listadoInsumosRq"],
-								'fecha_sol' => $_POST["nuevaFechaSolRq"],
+								'fecha' => $fechaAp,
 								'observacion' => $_POST["observacionRq"],
+								'aprobado' => 1,
 								'id' => $_POST["editarRq"]);
 
 				$tabla = "requisiciones";

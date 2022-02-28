@@ -18,9 +18,11 @@ $(".tablaInsumos").on("click", ".btnVerInsumo", function(){
 
 $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 	var idInsumo = $(this).attr("idInsumo");
-	var idCat = 0;
-	var categoria = "";
 	var datos = new FormData();
+	var ElementoUno = $('#editarUnidadEnt');
+	var ElementoDos = $('#editarUnidadSal');
+	llamarUnidad(ElementoUno, 0);
+	llamarUnidad(ElementoDos, 0);
 
 	datos.append("idInsumo", idInsumo);
 	$.ajax({
@@ -36,18 +38,13 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			$("#eIdP").val(respuesta["id"]);
 			//$("#eCategoriaP").val(respuesta["id_categoria"]);
 			//$("#eCategoriaP").html(respuesta[14]);
-			idCat = respuesta["id_categoria"];
-			categoria = respuesta[14];
-
-			if ($('#EsCategoria').length) 
-			{
-				$('#EsCategoria').children().remove();
-			}
-
-			$('#EsCategoria').append('<option value="'+idCat+'">'+categoria+'</option>');
-
+			$('#EsCategoria').children().remove();
+			$('#EsCategoria').append('<option value="'+respuesta['id_categoria']+'">'+respuesta['categoria']+'</option>');
 			$("#ePrioridadP").val(respuesta["prioridad"]);
 			$("#eCodigoP").val(respuesta["codigo"]);
+
+			llamarUnidad(ElementoUno, respuesta["unidad"]);
+			llamarUnidad(ElementoDos, respuesta["unidadSal"]);
 
 			if(respuesta["descripcion"] != null)
 			{
@@ -68,7 +65,15 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 				$("#ePrecioCompra").val(respuesta["precio_compra"]);
 			}
 
-
+			if(respuesta["contenido"] == null || respuesta["contenido"] == "")
+			{
+				$("#ediarContenido").val(0);
+			}
+			else
+			{
+				$("#ediarContenido").val(respuesta["contenido"]);
+			}
+			
 			if(respuesta["eEstanteP"] == null || respuesta["eEstanteP"] == "")
 			{
 				$("#eEstanteP").val(0);	
@@ -95,10 +100,8 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			{
 				$("#eSeccionP").val(respuesta["seccion"]);
 			}
-		}
-	});
 
-		var datosDos = new FormData();
+			var datosDos = new FormData();
 		datosDos.append("traerCat", 1);
 		$.ajax({
 			url:"ajax/categorias.ajax.php",
@@ -108,23 +111,29 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			contentType: false,
 			processData: false,
 			dataType: "json",
-			success: function(respuesta)
+			success: function(respuestaD)
 			{	
-				for (var i = 0; i < respuesta.length; i++) 
+				for (var i = 0; i < respuestaD.length; i++) 
 				{
-					if (idCat != respuesta[i]['id']) 
+					if (respuesta["id_categoria"] != respuestaD[i]['id']) 
 					{
-						$('#EsCategoria').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['categoria']+'</option>');
+						$('#EsCategoria').append('<option value="'+respuestaD[i]['id']+'">'+respuestaD[i]['categoria']+'</option>');
 					}
 
 				}
 			}
 		});
+		}
+	});
+
+		
 	
 })
 
-function llamarUnidad()
+function llamarUnidad(elemento, id)
 {
+	$(elemento).children().remove();
+
 	var datosDos = new FormData();
 		datosDos.append("unidad", 1);
 		$.ajax({
@@ -137,22 +146,36 @@ function llamarUnidad()
 			dataType: "json",
 			success: function(respuesta)
 			{	
-
-					$('#nuevaUnidad').append('<option value="0">Seleccione unidad</option>');
-
-				for (var i = 0; i < respuesta.length; i++) 
+				if (id = 0) 
 				{
-					$('#nuevaUnidad').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['unidad']+'</option>');
+					$(elemento).append('<option value="0">Seleccione unidad</option>');
+
+					for (var i = 0; i < respuesta.length; i++) 
+					{$(elemento).append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['unidad']+'</option>');}
+				}
+				else
+				{
+					for (var i = 0; i < respuesta.length; i++) 
+					{if(id == respuesta[i]['id']){$(elemento).append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['unidad']+'</option>');}}
+					for (var i = 0; i < respuesta.length; i++) 
+					{if(id != respuesta[i]['id']){$(elemento).append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['unidad']+'</option>');}}
+				
 				}
 			}
 	});
 }
 
-$("#btn-AddInsumo").click(llamarUnidad())
+$("#btn-AddInsumo").click(function(){
+	var ElementoUno = $('#nuevaUnidadEnt');
+	var ElementoDos = $('#nuevaUnidadSal');
+	llamarUnidad(ElementoUno, 0);
+	llamarUnidad(ElementoDos, 0);
+})
 
+/*
 $(".tablaInsumos").on("click", "#btn-AddInsumo", function(){
 	llamarUnidad();
-})
+})*/
 
 $("#nombreResp").change(function(){
 

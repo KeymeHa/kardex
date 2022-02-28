@@ -1,3 +1,6 @@
+
+
+
 $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
@@ -165,6 +168,11 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
 })
 
 $(document).ready(function() {
+
+	var elemento = $("#fechaGeneracion");
+
+	hoy(elemento);
+
     $(".formularioNuevaRq").keypress(function(e) {
         if (e.which == 13) {
             return false;

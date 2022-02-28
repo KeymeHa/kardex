@@ -72,27 +72,41 @@ class Tablaareas
 						}
 						else
 						{
+							$arrayId = [];
+
 							$listadoAreas = json_decode($proyecto["id_areas"], true);
 
-								foreach ($listadoAreas as $key => $value) 
-								{
-									for ($i=0; $i < count($areas); $i++) 
-									{ 
-										if ($value["id"] != $areas[$i]["id"]) 
-										{
-											$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnAddArea RegresarBoton' title='Asociar' idArea='".$areas[$i]["id"]."'><i class='fa fa-plus'></i></button></div></div>";
-										}
-										else
-										{
-											$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-danger btnAddArea RegresarBoton' title='Desasociar' idArea='".$areas[$i]["id"]."'><i class='fa fa-close'></i></button></div></div>";
-										}
+								for ($i=0; $i < count($areas); $i++) 
+								{ 
+									$j = 0;
+					                  $sw3 = false;
 
-										$dJson .='[
-							    		"'.($i + 1).'",
-							    		"'.$areas[$i]["nombre"].'",
-							    		"'.$acciones.'"
-							    		],';
-									}
+					                  while ($j < count($listadoAreas) && $sw3 == false) 
+					                  {
+					                    if ($areas[$i]["id"] == $listadoAreas[$j]["id"]) 
+					                    {
+					                      $sw3 = true;
+					                    }
+					                    else
+					                    {
+					                      $j++;
+					                    }
+					                  }
+
+					                  if ($sw3 != true) 
+					                  {
+					                    $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnAddArea RegresarBoton' title='Asociar' idArea='".$areas[$i]["id"]."'><i class='fa fa-plus'></i></button></div></div>";
+					                  }
+					                  else
+					                  {
+					                   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-danger btnAddArea RegresarBoton' title='Desasociar' idArea='".$areas[$i]["id"]."'><i class='fa fa-close'></i></button></div></div>";
+					                  }
+
+									$dJson .='[
+						    		"'.($i + 1).'",
+						    		"'.$areas[$i]["nombre"].'",
+						    		"'.$acciones.'"
+						    		],';
 								}
 							}
 						}

@@ -8,11 +8,22 @@ require_once "../modelos/insumos.modelo.php";
 class TablaNuevaFactura
 {
 	
+	public $gen;
 	public function mostrarTablaInsumos()
 	{
-		$item = null;
-	    $valor = null;
-	    $insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+		
+	    $valor = $this->gen;
+
+	    if (is_null($valor)) 
+	    {
+	    	$item = null;
+	    	$insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+	    }
+	    else
+	    {
+			$item = "habilitado";
+	    	$insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+	    } 
 
 	    $dJson = '{
 	    	"data": [';
@@ -60,8 +71,9 @@ class TablaNuevaFactura
   				$acciones = "<div class='btn-group'><button class='btn btn-default' disabled title='Sin Stock'><i class='fa fa-ban'></i></button></div>";
   			}
 
-		  
-	    	$dJson .='[
+  			if (is_null($valor)) 
+  			{
+  				$dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$imagen.'",
 	    		"'.$insumos[$i]["codigo"].'",
@@ -69,6 +81,20 @@ class TablaNuevaFactura
 	    		"'.$stock.'",
 	    		"'.$acciones.'"
 	    		],';
+  			}
+  			else
+  			{
+  				$dJson .='[
+	    		"'.($i + 1).'",
+	    		"'.$imagen.'",
+	    		"'.$insumos[$i]["codigo"].'",
+	    		"'.$insumos[$i]["descripcion"].'",
+	    		"'.$acciones.'"
+	    		],';
+  			}
+
+		  
+	    	
 
 	    }
 	    
@@ -83,5 +109,16 @@ class TablaNuevaFactura
 	}
 }
 
-$mostrarInsumos = new TablaNuevaFactura();
-$mostrarInsumos -> mostrarTablaInsumos();
+if (isset($_GET["gen"])) 
+{
+	$mostrarInsumos = new TablaNuevaFactura();
+	$mostrarInsumos -> gen = 1;
+	$mostrarInsumos -> mostrarTablaInsumos();
+}
+else
+{
+	$mostrarInsumos = new TablaNuevaFactura();
+	$mostrarInsumos -> gen = null;
+	$mostrarInsumos -> mostrarTablaInsumos();
+}
+

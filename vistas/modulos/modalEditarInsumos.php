@@ -57,12 +57,27 @@
                   </div>
                </div>
 
-               <div class="form-group">          
-                <div class="input-group">
-                  <!-- EDITAR ID -->       
-                  <input type="hidden" class="form-control input-lg" id="eIdI" name="eIdI" readonly>    
-                  <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                  <select class="form-control input-lg" id="EsUnidad" name="EsUnidad" required>
+               <div class="form-group">  
+               <label>Unidad de Medida Entrada (Facturas)</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
+                  <select class="form-control input-lg" id="editarUnidadEnt" name="editarUnidadEnt" required>
+                  </select>
+                </div>
+              </div>
+
+               <div class="form-group">              
+                <div class="input-group">               
+                  <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                  <input type="number" class="form-control input-lg" id="ediarContenido" name="ediarContenido" placeholder="Cantidad Individual" autocomplete="off" title="Ej: un paquete contiene 6 unidades de un articulo" required>
+                </div>
+              </div>
+
+               <div class="form-group">  
+               <label>Unidad de Medida Salida (Requisición)</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
+                  <select class="form-control input-lg" id="editarUnidadSal" name="editarUnidadSal" required>
                   </select>
                 </div>
               </div>
@@ -101,6 +116,15 @@
                     <option value="1" style="color: red;">Alta</option>
                   </select>
                 </div>
+              </div>
+
+              <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox">
+                      Mostrar en Requisición
+                    </label>
+                  </div>
               </div>
               <!-- ENTRADA PARA SUBIR FOTO -->
               <div class="form-group">               

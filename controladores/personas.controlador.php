@@ -6,6 +6,14 @@ class ControladorPersonas
 	/*=============================================
 	CREAR PRODUCTO
 	=============================================*/
+	static public function ctrMostrarIdPersona($item, $valor)
+	{
+		$tabla = "personas";
+		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
+		return $res;
+	}
+
+
 	static public function ctrMostrarPersonas($item, $valor)
 	{
 		$tabla = "personas";

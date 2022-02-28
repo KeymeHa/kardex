@@ -6,9 +6,9 @@ require_once "conexion.php";
 class ModeloRequisiciones
 {
 
-	static public function mdlRegistrarRequisicion($tabla, $datos)
+	static public function mdlRegistrarRequisicion($tabla, $datos, $tipoob)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, observacion, fecha) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :observacion, :fecha)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, $tipoob, fecha, aprobado) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :$tipoob, :fecha, :aprobado)");
 
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
@@ -16,8 +16,9 @@ class ModeloRequisiciones
 		$stmt->bindParam(":codigoInt", $datos["codigoInt"], PDO::PARAM_STR);
 		$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
-		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":".$tipoob, $datos["observacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
 		{
@@ -502,7 +503,7 @@ class ModeloRequisiciones
 
 	static public function mdlEditarRq($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha_sol = :fecha_sol, observacion = :observacion WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha_sol = :fecha_sol, observacion = :observacion, aprobado = :aprobado WHERE id = :id");
 
 		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
@@ -510,6 +511,7 @@ class ModeloRequisiciones
 		$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
@@ -518,7 +520,7 @@ class ModeloRequisiciones
 		}
 		else
 		{
-			return $stmt->error();
+			return "error";
 		}
 		$stmt->close();
 		$stmt = null;

@@ -63,9 +63,9 @@
                         
                           if($requisicion["id_persona"] != null)
                           {
-                            $item1 = "id";
                             $valor1 = $requisicion["id_persona"];
-                            $persona = ControladorPersonas::ctrMostrarPersonas($item1, $valor1);
+                            $persona = ControladorPersonas::ctrMostrarPersonas("id_usuario", $valor1);
+                            $item1 = "id";
                             $valor1 = $requisicion["id_area"];
                             $areas = ControladorAreas::ctrMostrarAreas($item1, $valor1);
 
@@ -113,6 +113,10 @@
               </div><!--row-->
 
                <textarea class="form-control" rows="3" name="observacionRq" rows="3" placeholder="Observaciones" autocomplete="off" style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
+
+               <br>
+               <p class="help-block">Observaciones del encargado</p>
+               <textarea class="form-control" rows="3" rows="3" placeholder="Observaciones del Encargado" autocomplete="off" style="resize: none" disabled><?php echo $requisicion["observacionE"]; ?></textarea>
               
               <div class="row">
                 <div class="col-xs-1"></div>
@@ -168,7 +172,7 @@
                 <a href="requisiciones">
                   <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
                 </a>
-                <button type="submit" style="color: white;" class="btn btn-success pull-right btnGuardarRq">Editar</button>
+                <button type="submit" style="color: white;" class="btn btn-success pull-right btnGuardarRq"><?php if($requisicion['aprobado'] == 0){echo 'Aprobar';}else{echo 'Editar';}?></button>
 
                 <?php
                   $editarRq = new ControladorRequisiciones();

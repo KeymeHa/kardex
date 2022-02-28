@@ -13,7 +13,7 @@ class AjaxInsumos
 		$respuesta = ControladorInsumos::ctrMostrarInsumos($item, $valor);
 		$valor = $respuesta["id_categoria"];
 		$categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
-		array_push($respuesta, $categorias["categoria"]);
+		$respuesta["categoria"] = $categorias["categoria"];
 		echo json_encode($respuesta);
 	}#ajaxEditarInsumo
 	public $validarInsumo;

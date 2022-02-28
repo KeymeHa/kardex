@@ -12,47 +12,52 @@ class ControladorInsumos
 
 			   	if(isset($_FILES["eImagenP"]["tmp_name"])){
 
-					list($ancho, $alto) = getimagesize($_FILES["eImagenP"]["tmp_name"]);
+			   		if (!is_null($_FILES["eImagenP"]["tmp_name"]) || empty($_FILES["eImagenP"]["tmp_name"])) {
+			   			list($ancho, $alto) = getimagesize($_FILES["eImagenP"]["tmp_name"]);
 
-					$nuevoAncho = 500;
-					$nuevoAlto = 500;
+						$nuevoAncho = 500;
+						$nuevoAlto = 500;
 
-					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
+						$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
 
-					mkdir($directorio, 0755);
+						mkdir($directorio, 0755);
 
-					if($_FILES["eImagenP"]["type"] == "image/jpeg"){
+						if($_FILES["eImagenP"]["type"] == "image/jpeg"){
 
-						$aleatorio = mt_rand(100,999);
+							$aleatorio = mt_rand(100,999);
 
-						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
+							$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["eImagenP"]["tmp_name"]);						
+							$origen = imagecreatefromjpeg($_FILES["eImagenP"]["tmp_name"]);						
 
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+							$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+							imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-						imagejpeg($destino, $ruta);
+							imagejpeg($destino, $ruta);
 
-					}
+						}
 
-					if($_FILES["eImagenP"]["type"] == "image/png"){
+						if($_FILES["eImagenP"]["type"] == "image/png"){
 
-						$aleatorio = mt_rand(100,999);
+							$aleatorio = mt_rand(100,999);
 
-						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
+							$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
 
-						$origen = imagecreatefrompng($_FILES["eImagenP"]["tmp_name"]);						
+							$origen = imagecreatefrompng($_FILES["eImagenP"]["tmp_name"]);						
 
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+							$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+							imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-						imagepng($destino, $ruta);
+							imagepng($destino, $ruta);
 
-					}
-
+						}
+			   		}
+			   		else
+			   		{
+			   			$ruta = "";
+			   		}
 				}
 
 				$tabla = "insumos";
@@ -75,6 +80,8 @@ class ControladorInsumos
 					$obsValidada = "";
 				}
 
+				
+
 
 
 				$datos = array("id_categoria" => $_POST["nuevaCategoria"],
@@ -88,7 +95,9 @@ class ControladorInsumos
 							   "imagen" => $ruta,
 							   "fecha" => $fechaActual,
 							   "prioridad" => $_POST["nuevaPrioridad"],
-								"unidad" => $_POST["nuevaUnidad"]);
+							   "unidad" => $_POST["nuevaUnidadEnt"],
+							   "unidadSal" => $_POST["nuevaUnidadSal"],
+							   "contenido" => $_POST["nuevoContenido"]);
 
 				$respuesta = ModeloInsumos::mdlIngresarInsumo($tabla, $datos);
 

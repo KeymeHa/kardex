@@ -114,7 +114,7 @@
                   <div class="icon">
                     <i class="fa fa-file-text"></i>
                   </div>
-                  <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="genRequisicion" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->
 
@@ -131,7 +131,7 @@
                   <div class="icon">
                     <i class="fa fa-cart-arrow-down"></i>
                   </div>
-                  <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="historialRq" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->';
 
