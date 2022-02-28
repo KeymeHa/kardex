@@ -22,6 +22,23 @@ class ControladorRequisiciones
 		return $respuesta;
 	}
 
+	function anioActualSinAppr()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+
+	    if ($anio["anio"] == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"];
+	    }
+
+
+		return $respuesta;
+	}
+
 	function anioActualAppr()
 	{
 	    $anio = ControladorParametros::ctrVerAnio(true);
@@ -67,6 +84,17 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarFacturas   Mercado$456
 
+	static public function ctrMostrarRequisicionesId($item, $valor, $id)
+	{
+		$tabla = "requisiciones";
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualSinAppr();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesId($tabla, $item, $valor, $anio, $id);
+
+		return $respuesta;
+	
+	}//ctrMostrarFacturas   Mercado$456
+
 	static public function ctrContarRequisicionesAppr()
 	{
 		$tabla = "requisiciones";
@@ -88,6 +116,17 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarFacturas   Mercado$456
 
+	static public function ctrMostrarRequisicionesRangoId($fechaInicial, $fechaFinal, $id)
+	{
+		$tabla = "requisiciones";
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoIdUsr($tabla, $fechaInicial, $fechaFinal, $anio, $id);
+
+		return $respuesta;
+	
+	}//ctrMostrarFacturas
+
 	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "requisiciones";
@@ -103,8 +142,8 @@ class ControladorRequisiciones
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
-		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio);
+		$anio = $r->anioActualAppr();
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoAppr($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	

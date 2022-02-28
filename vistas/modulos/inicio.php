@@ -131,7 +131,7 @@
                   <div class="icon">
                     <i class="fa fa-cart-arrow-down"></i>
                   </div>
-                  <a href="historialRq" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="index.php?ruta=hisRequisicion&iduser='.$_SESSION["id"].'" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->';
 

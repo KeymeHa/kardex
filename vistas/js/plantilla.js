@@ -525,6 +525,27 @@ function paginaCargada(pagina){
 			tablaAjax = 'nuevaRq';
 			variable = "?gen=1";
 		}
+		else if(pagina == 30)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			var iduser = urlParams.get('iduser');
+			tablaElegida =  $('.tablaRqs');
+			tablaAjax = 'solRequisiciones';
+			variable = "?iduser="+iduser;
+			if(fechaInicial == null)
+			{
+			  variable+= "&fechaInicial=null";
+			} else 
+			{
+			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+			tablaDatatable(tablaElegida, tablaAjax, variable);
+
+
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {

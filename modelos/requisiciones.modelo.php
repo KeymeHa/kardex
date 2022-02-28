@@ -34,11 +34,11 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio)
+		static public function mdlMostrarRequisicionesRangoIdUsr($tabla, $fechaInicial, $fechaFinal, $anio, $id)
 	{
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio AND id_persona = $id ORDER BY id DESC");
 
 			$stmt -> execute();
 
@@ -47,7 +47,7 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol like '%$fechaFinal%' ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol like '%$fechaFinal%' AND id_persona = $id ORDER BY id DESC");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -67,12 +67,112 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND id_persona = $id ORDER BY id DESC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' AND id_persona = $id ORDER BY id DESC");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
+
+	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio)
+	{
+		if($fechaInicial == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol like '%$fechaFinal%' ORDER BY id DESC");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
+
+	static public function mdlMostrarRequisicionesRangoAppr($tabla, $fechaInicial, $fechaFinal, $anio)
+	{
+		if($fechaInicial == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 0 AND fecha_sol like '%$fechaFinal%'  ORDER BY id DESC");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 0 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 0 AND  fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
 
 			}
 		
@@ -434,6 +534,34 @@ class ModeloRequisiciones
 		else
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio ORDER BY id DESC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMostrarRequisicionesId($tabla, $item, $valor, $anio, $id)
+	{
+		if($item != null)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND id_persona = $id");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio AND id_persona = $id ORDER BY id DESC");
 
 			$stmt -> execute();
 

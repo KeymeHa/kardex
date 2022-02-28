@@ -149,11 +149,11 @@
 
                        if ($insumo["stock"] == 0) 
                        {
-                        $matchError = $insumo["descripcion"]." con Codigo ".$insumo["codigo"].", no tiene stock.:";
+                        $matchError.= $insumo["descripcion"]." con Codigo ".$insumo["codigo"].", no tiene stock.:";
                        }
                        elseif($insumo["stock"] < $value["ped"]) 
                        {
-                         $matchError = $insumo["descripcion"]."con codigo ".$insumo["codigo"].", tiene menor stock al solicitado.:";
+                         $matchError.= $insumo["descripcion"]." con codigo ".$insumo["codigo"].", tiene menor stock al solicitado.:";
                        }
 
                        $stock = intval($value["ent"]) + $insumo["stock"];

@@ -4,7 +4,7 @@
   {
     if($_GET["idRq"] == null)
     {
-      echo'<script> window.location="requisiciones";</script>';
+      echo'<script> window.location="hisRequisicion";</script>';
 
     }
     else
@@ -31,7 +31,7 @@
   }
   else{
 
-   echo'<script> window.location="requisiciones";</script>';
+   echo'<script> window.location="index.php?ruta=hisRequisicion&iduser='.$_SESSION["id"].';</script>';
 
   }
 
@@ -180,7 +180,7 @@
           </div>
           <div class="box-body">
             <p>
-              <?php echo $requisicion["observacion"];?>
+              <?php echo $requisicion["observacionE"];?>
             </p>
           </div>
         </div>
@@ -190,12 +190,12 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">
-              Observaciones del Encargado
+              Observaciones de Compras
             </h3>
           </div>
           <div class="box-body">
             <p>
-              <?php echo $requisicion["observacionE"];?>
+              <?php echo $requisicion["observacion"];?>
             </p>
           </div>
         </div>
