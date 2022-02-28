@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `actas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.actas: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.actas: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `actas` DISABLE KEYS */;
 INSERT INTO `actas` (`id`, `codigoInt`, `tipo`, `id_usr`, `fecha`, `fechaSal`, `fechaEnt`, `autorizado`, `dependencia`, `responsable`, `dependenciaR`, `motivo`, `observacion`, `listainsumos`) VALUES
 	(1, 'ACT-001-2021', 1, 1, '2021-09-07', '2021-09-07', '2021-09-10', 'Fernando', 'Sis', 'Kevin', 'Estanco', 3, '', '[{"sn":"xcvfbgtfc","mc":"Hp","des":"Computador","can":"1","obs":"N/A"}]'),
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `anios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.anios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.anios: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `anios` DISABLE KEYS */;
 INSERT INTO `anios` (`id`, `anio`) VALUES
 	(1, 2022),
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.areas: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.areas: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
 INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
 	(1, 'Sistemas', '&quotEncargados del àrea de Sistemas&quot', 0, ''),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `carpetasprov` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.carpetasprov: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.carpetasprov: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `carpetasprov` DISABLE KEYS */;
 INSERT INTO `carpetasprov` (`id`, `nombre`, `carpeta`, `id_prov`, `fecha`) VALUES
 	(1, 'Certificados', 1, 1, '2021-10-06 08:24:55');
@@ -157,18 +157,18 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.facturas: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.facturas: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
 INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, `id_usr`, `insumos`, `fecha`, `inversion`, `iva`, `observacion`) VALUES
-	(1, 'FAC-001-2021', 'GFD-231', 2, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"15","pre":"5501","sub":"82515"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"10","pre":"7425","sub":"74250"},{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"40","pre":"8596","sub":"343840"},{"id":"8","des":"BLANQUEADOR (LIMPIDO)","can":"50","pre":"8800","sub":"440000"}]', '2021-07-19', 1084600, 206074, ''),
-	(2, 'FAC-002-2021', 'prueba1', 1, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","pre":"5501","sub":"5501"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"1","pre":"8596","sub":"8596"}]', '2021-08-17', 21522, 4089, ''),
-	(3, 'FAC-003-2021', '98-FAS', 1, '', 1, '[{"id":"152","des":"EXACTO PLÀSTICO GRANDE","can":"10","pre":"2000","sub":"20000"},{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"8","pre":"15","sub":"120"},{"id":"9","des":"BOLIGRAFO  ROJO ","can":"18","pre":"587","sub":"10566"}]', '2021-08-17', 30686, 5830, ''),
-	(4, 'FAC-004-2021', 'SAS333', 2, '', 1, '[{"id":"152","des":"EXACTO PLÀSTICO GRANDE","can":"10","pre":"2000","sub":"20000"}]', '2021-08-17', 20000, 3800, ''),
-	(5, 'FAC-005-2021', 'ccas', 2, '', 1, '[{"id":"10","des":"BOLIGRAFO NEGRO","can":"100","pre":"1500","sub":"150000"}]', '2021-08-17', 150000, 28500, ''),
-	(6, 'FAC-006-2021', 'ONLY-2012', 1, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","pre":"5501","sub":"5501"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"1","pre":"8596","sub":"8596"}]', '2021-08-21', 21522, 4089, ''),
-	(7, 'FAC-007-2021', 'GFD-232', 1, '', 1, '[{"id":"15","des":"CAFÉ TOSTADO Y MOLIDO, FUERTE","can":"15","pre":"850","sub":"12750"},{"id":"21","des":"CINTA EMP TRANSP 48X100 REF.301 3M ","can":"20","pre":"700","sub":"14000"},{"id":"29","des":"COLCAFE COFFE CREAM 100 SOBRES DE 3 GR","can":"5","pre":"8000","sub":"40000"},{"id":"34","des":"DECAMETRO STANPROF 10 MTS","can":"5","pre":"14000","sub":"70000"},{"id":"31","des":"CREMA INSTANTANEA NO LACTEA PARA CAFÉ ","can":"5","pre":"1200","sub":"6000"}]', '2021-08-22', 142750, 27122, ''),
-	(8, 'FAC-008-2021', 'frv-98', 2, '', 1, '[{"id":"51","des":"GRAPADORA 340 RANK (SENCILLA)","can":"50","pre":"500","sub":"25000"},{"id":"50","des":"GRAPA GALVANIZADA INDUSTRIAL *1000","can":"25","pre":"700","sub":"17500"},{"id":"49","des":"GRAPA COBRIZADA STANDARD *5000 ","can":"49","pre":"1000","sub":"49000"}]', '2021-12-15', 91500, 17385, ''),
-	(9, 'NF-001-2022', 'CAR-213-2022', 1, '', 1, '[{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"15","pre":"12234","sub":"183510"},{"id":"17","des":"CARTULINA BRISTOL 1/8 X 8 SURTIDAS","can":"1","pre":"2456","sub":"2456"}]', '2022-12-19', 185966, 35333, '');
+	(1, 'FAC-001-2021', 'GFD-231', 2, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"15","con":"6","pre":"5501","sub":"82515"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"10","con":"6","pre":"7425","sub":"74250"},{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","con":"6","pre":"18000","sub":"144000"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"40","con":"6","pre":"8596","sub":"343840"},{"id":"8","des":"BLANQUEADOR (LIMPIDO)","can":"50","pre":"8800","sub":"440000"}]', '2021-07-19', 1084600, 206074, ''),
+	(2, 'FAC-002-2021', 'prueba1', 1, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","con":"6","pre":"5501","sub":"5501"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","con":"6","pre":"7425","sub":"7425"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"1","con":"6","pre":"8596","sub":"8596"}]', '2021-08-17', 21522, 4089, ''),
+	(3, 'FAC-003-2021', '98-FAS', 1, '', 1, '[{"id":"152","des":"EXACTO PLÀSTICO GRANDE","can":"10","con":"6","pre":"2000","sub":"20000"},{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"8","con":"6","pre":"15","sub":"120"},{"id":"9","des":"BOLIGRAFO  ROJO ","can":"18","con":"6","pre":"587","sub":"10566"}]', '2021-08-17', 30686, 5830, ''),
+	(4, 'FAC-004-2021', 'SAS333', 2, '', 1, '[{"id":"152","des":"EXACTO PLÀSTICO GRANDE","can":"10","con":"6","pre":"2000","sub":"20000"}]', '2021-08-17', 20000, 3800, ''),
+	(5, 'FAC-005-2021', 'ccas', 2, '', 1, '[{"id":"10","des":"BOLIGRAFO NEGRO","can":"100","con":"6","pre":"1500","sub":"150000"}]', '2021-08-17', 150000, 28500, ''),
+	(6, 'FAC-006-2021', 'ONLY-2012', 1, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","con":"6","pre":"5501","sub":"5501"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","con":"6","pre":"7425","sub":"7425"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"1","con":"6","pre":"8596","sub":"8596"}]', '2021-08-21', 21522, 4089, ''),
+	(7, 'FAC-007-2021', 'GFD-232', 1, '', 1, '[{"id":"15","des":"CAFÉ TOSTADO Y MOLIDO, FUERTE","can":"15","con":"6","pre":"850","sub":"12750"},{"id":"21","des":"CINTA EMP TRANSP 48X100 REF.301 3M ","can":"20","con":"6","pre":"700","sub":"14000"},{"id":"29","des":"COLCAFE COFFE CREAM 100 SOBRES DE 3 GR","can":"5","con":"6","pre":"8000","sub":"40000"},{"id":"34","des":"DECAMETRO STANPROF 10 MTS","can":"5","con":"6","pre":"14000","sub":"70000"},{"id":"31","des":"CREMA INSTANTANEA NO LACTEA PARA CAFÉ ","can":"5","con":"6","pre":"1200","sub":"6000"}]', '2021-08-22', 142750, 27122, ''),
+	(8, 'FAC-008-2021', 'frv-98', 2, '', 1, '[{"id":"51","des":"GRAPADORA 340 RANK (SENCILLA)","can":"50","con":"6","pre":"500","sub":"25000"},{"id":"50","des":"GRAPA GALVANIZADA INDUSTRIAL *1000","can":"25","con":"6","pre":"700","sub":"17500"},{"id":"49","des":"GRAPA COBRIZADA STANDARD *5000 ","can":"49","con":"6","pre":"1000","sub":"49000"}]', '2021-12-15', 91500, 17385, ''),
+	(9, 'NF-001-2022', 'CAR-213-2022', 1, '', 1, '[{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"15","con":"6","pre":"12234","sub":"183510"},{"id":"17","des":"CARTULINA BRISTOL 1/8 X 8 SURTIDAS","can":"1","con":"6","pre":"2456","sub":"2456"}]', '2022-12-19', 185966, 35333, '');
 /*!40000 ALTER TABLE `facturas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.historial
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `historial` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.historial: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.historial: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `historial` DISABLE KEYS */;
 INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`) VALUES
 	(1, 4, 8, 'OC-001-2021 INSERCOP', '', '2021-08-23', 1),
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `impustoagregado` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.impustoagregado: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.impustoagregado: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `impustoagregado` DISABLE KEYS */;
 INSERT INTO `impustoagregado` (`id`, `sumatoria`, `anio`, `mes`) VALUES
 	(1, 192308, 2021, 7),
@@ -222,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   `observacion` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `imagen` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `stock` int(11) NOT NULL DEFAULT 0,
+  `stockIn` int(11) NOT NULL DEFAULT 0,
   `precio_compra` float NOT NULL DEFAULT 0,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `elim` int(11) NOT NULL DEFAULT 0,
@@ -231,168 +232,170 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   `prioridad` int(11) NOT NULL,
   `unidad` int(2) NOT NULL DEFAULT 1,
   `unidadSal` int(2) NOT NULL DEFAULT 1,
+  `contenido` int(2) NOT NULL DEFAULT 1,
+  `habilitado` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.insumos: ~156 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumos: ~155 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
-INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `precio_compra`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`) VALUES
-	(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', NULL, 115, 0, '0000-00-00 00:00:00', 1, 5, 4, 0, 2, 1, 1),
-	(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', NULL, 107, 89999, '0000-00-00 00:00:00', 0, 7, 7, 7, 2, 1, 1),
-	(4, 1, 3, 'ATOMIZADOR AMBIENTADOR LAVANDA', '', NULL, 129, 500, '0000-00-00 00:00:00', 0, 5, 4, 4, 2, 1, 1),
-	(5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', NULL, 72, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(6, 12, 5, 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', NULL, NULL, 183, 18000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(7, 13, 6, 'BANDEJA PORTA DOCUMENTOS', NULL, NULL, 91, 4000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(8, 1, 7, 'BLANQUEADOR (LIMPIDO)', NULL, NULL, 84, 8800, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(9, 10, 8, 'BOLIGRAFO  ROJO ', NULL, NULL, 28, 587, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(10, 10, 9, 'BOLIGRAFO NEGRO', NULL, NULL, 100, 1500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(11, 1, 10, 'BOLSA BASURA NEGRA X 90*110 ', NULL, NULL, 25, 12234, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(12, 1, 11, 'BOLSA BASURA VERDE 42*47CMS ', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(13, 14, 12, 'BORRADOR DE NATA', NULL, NULL, 17, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(14, 10, 13, 'BORRADOR DE TABLERO', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(15, 12, 14, 'CAFÉ TOSTADO Y MOLIDO, FUERTE', NULL, NULL, 15, 850, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(16, 14, 15, 'CARATULA POLY COVER CARTA ', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(17, 14, 16, 'CARTULINA BRISTOL 1/8 X 8 SURTIDAS', NULL, NULL, 2, 2456, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(18, 14, 17, 'CARTULINA BRISTOL 70*100 BLANCA', NULL, NULL, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(19, 14, 18, 'CD-R ', NULL, NULL, 39, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(20, 1, 19, 'CERA NATURAL SÓLIDA PARA MADERA AUTOBRILLO', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(21, 14, 20, 'CINTA EMP TRANSP 48X100 REF.301 3M ', NULL, NULL, 20, 700, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(22, 14, 21, 'CINTA EMP TRANSP DELGADA 12 MM X40M ', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(23, 2, 22, 'CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(24, 14, 23, 'CINTA INVISIBLE 33M:19MM PARA CHEQUES', '', NULL, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(25, 14, 24, 'CLIP MARIPOSA GIGANTE', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(26, 14, 25, 'CLIP MARIPOSA X 50 EMP*50 ', NULL, NULL, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(27, 14, 26, 'CLIP SENCILLO X 100 EMP*100', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(28, 14, 27, 'COLBON (PEGANTE UNIVERSAL) 480GR', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(29, 12, 28, 'COLCAFE COFFE CREAM 100 SOBRES DE 3 GR', NULL, NULL, 5, 8000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(30, 10, 29, 'CORRECTOR LIQUIDO LAPIZ *7 ML', NULL, NULL, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(31, 12, 30, 'CREMA INSTANTANEA NO LACTEA PARA CAFÉ ', NULL, NULL, 5, 1200, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(32, 11, 31, 'CREMA LAVALOZA ', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(33, 9, 32, 'CUENTA FACIL', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(34, 5, 33, 'DECAMETRO STANPROF 10 MTS', NULL, NULL, 5, 14000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(35, 5, 34, 'DECAMETRO STANPROF 30 MTS', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(36, 5, 35, 'DECAMETRO STANPROF 50 MTS', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(37, 1, 36, 'DESENGRASANTE', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(38, 1, 37, 'DESINFECTANTE MULTIUSOS ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(39, 1, 38, 'DETERGENTE EN POLVO ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(40, 15, 39, 'DVD +R ', NULL, NULL, 31, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(41, 1, 40, 'ESCOBA SUAVE MANGO MADERA', NULL, NULL, 0, 4500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(42, 11, 41, 'ESPONJA LAVAPLATOS DOBLE USO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(43, 5, 42, 'FLEXOMETRO LUFKIN 26/8METROS', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(44, 9, 43, 'FOLIADOR (NUMERADOR CONSECUTIVO)', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(45, 15, 44, 'FORMAS CONTINUAS 1/2 11 1/2 TROQUELADA', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(46, 15, 45, 'FORMAS CONTINUAS 9 1/2 *11 1P BLANCA 901', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(47, 15, 46, 'FORMAS CONTINUAS 9 1/2 *11 3P BLANCA 903 ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(48, 15, 47, 'GANCHO LEGAJADOR PLASTICO ', NULL, NULL, 38, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(49, 14, 48, 'GRAPA COBRIZADA STANDARD *5000 ', NULL, NULL, 55, 1000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(50, 14, 49, 'GRAPA GALVANIZADA INDUSTRIAL *1000', NULL, NULL, 35, 700, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(51, 13, 50, 'GRAPADORA 340 RANK (SENCILLA)', NULL, NULL, 50, 500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(52, 13, 51, 'GRAPADORA INDUSTRIAL HASTA 100 HOJAS', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(53, 1, 52, 'GUANTES DE LATEX DE  EXAMEN ', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(54, 1, 53, 'GUANTES SEMI-INDUSTRIALES T9-9 ½*CALIBRE 25*LATEX NATURAL*COLOR NEGRO', NULL, NULL, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(55, 15, 54, 'GUIA CLASIFICADORA  CARTULINA REF. 105 AMARILLA ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(56, 15, 55, 'GUIAS CELUGUIA', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(57, 2, 56, 'HP 10 NEGRO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(58, 2, 57, 'HP 711 AMARILLO', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(59, 2, 58, 'HP 711 CYAN', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(60, 2, 59, 'HP 711 MAGENTA', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(61, 2, 60, 'HP 711 NEGRO', NULL, NULL, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(62, 2, 61, 'HP 82 AMARILLO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(63, 2, 62, 'HP 82 NEGRO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(64, 9, 63, 'HUELLERO COLOR NEGRO', NULL, NULL, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(65, 8, 64, 'JABON LÍQUIDO PARA MANOS, ANTIBACTERIAL, BIODEGRADABLE AROMA MANZANA', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(66, 15, 65, 'LAMPARAS FLUORESCENTES SILVANIA', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(67, 10, 66, 'LAPIZ NEGRO Nº2 ORIG. 482 ', NULL, NULL, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(68, 14, 67, 'LEGAJADOR AZ OFICIO AZUL ', NULL, NULL, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(69, 14, 68, 'LEGAJOS (CARPETAS DE EDUBAR)', NULL, NULL, 600, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(70, 2, 69, 'LEXMARK AMARILLO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(71, 2, 70, 'LEXMARK CYAN', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(72, 2, 71, 'LEXMARK NEGRO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(73, 14, 72, 'LIBRO ACTA 1/2 OFICIO 80H  100 FOLIOS (BITACORA)', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(74, 1, 73, 'LIMPIAVIDRIOS (AMONIACO-DESENGRASANTE SECADO RAPIDO)', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(75, 1, 74, 'LIMPION', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(76, 1, 75, 'LIQUIDO ESPECIAL PARA PISOS (BRILLO)', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(77, 10, 76, 'MARCADOR BORRABLE', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(78, 10, 77, 'MARCADOR PERMANENTE NEGRO PUNTA FINA  (SHARPIE)', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(79, 1, 78, 'MARCADORES PERMANENTES SURTIDOS (ROJO/AZUL/NEGRO)', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(80, 15, 79, 'MASCARILLA DESECHABLE (TAPABOCAS)', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(81, 12, 80, 'MEZCLADORES DESECHABLES PARA CAFÉ', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(82, 7, 81, 'MOUSE USB', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(83, 8, 82, 'PAPEL HIGIENIENICO INSTITUCIONAL ROLLOS, DOBLE HOJA, PRECORTADO, BLANCO', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(84, 3, 83, 'PAPEL RESMA DOBLE CARTA 11*17 75GRS', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(85, 3, 84, 'PAPEL RESMA FOTOCOPIA 75GR CARTA ', NULL, NULL, 14, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(86, 3, 85, 'PAPEL RESMA FOTOCOPIA 75GR OFICIO ', NULL, NULL, 23, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(87, 13, 86, 'PAPELERA (CANECA)', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(88, 15, 87, 'PASTA CATALOGO 0.5R HERRAJE BLANCA', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(89, 15, 88, 'PASTA CATALOGO 1.0R HERRAJE BLANCA', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(90, 15, 89, 'PASTA CATALOGO 1.5R HERRAJE BLANCA', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(91, 15, 90, 'PASTA CATALOGO 2.0R HERRAJE BLANCA', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(92, 15, 91, 'PASTA CATALOGO 2.5R HERRAJE BLANCA', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(93, 15, 92, 'PASTA CATALOGO 3.0D HERRAJE BLANCA', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(94, 14, 93, 'PEGANTE  EN BARRA 40GRS ', NULL, NULL, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(95, 13, 94, 'PERFORADORA 3 HUECOS', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(96, 13, 95, 'PERFORADORA RANK 1050 DOS HUECOS SEMI INDUSTRIAL (40 HOJAS)', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(97, 13, 96, 'PERFORADORA SENCILLA 1038 RANK', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(98, 12, 97, 'PLATO DESECHABLE MEDIANO *20 ESPUMADO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(99, 15, 98, 'PROTECTOR DE TRANSPARENCIA (BOLSILLOS)', NULL, NULL, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(100, 14, 99, 'RECIBO DE CAJA MENOR X 200 HOJAS', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(101, 1, 100, 'RECOGEDOR DE BASURA', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(102, 13, 101, 'REGLA DE 30 CM', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(103, 10, 102, 'RESALTADORES SURTIDOS ', NULL, NULL, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(104, 3, 103, 'ROLLO PLOTER BOND 75 GR 28 PULGADAS', NULL, NULL, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(105, 12, 104, 'ROLLO TOALLA COCINA LAVABLE', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(106, 14, 105, 'SACAGRAPA', NULL, NULL, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(107, 14, 106, 'SACAPUNTA', NULL, NULL, 16, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(108, 9, 107, 'SELLO NUMERADOR FOLIADOR AUTOMATICO CONSECUTIVO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(109, 12, 108, 'SERVILLETA 27-5*17', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(110, 14, 109, 'SOBRE MANILA CARTA  22*29 ', NULL, NULL, 190, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(111, 14, 110, 'SOBRE MANILA GIGANTE 37*27 ', NULL, NULL, 80, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(112, 14, 111, 'SOBRE MANILA OFICIO 25*35 ', NULL, NULL, 100, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(113, 12, 112, 'SOBRES NESCAFE TRADICION ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(114, 12, 113, 'TE HELADO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(115, 7, 114, 'TECLADO KB-110X USB ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(116, 14, 115, 'TIJERA', NULL, NULL, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(117, 2, 116, 'TINTA EPSON 664 COLOR AMARILLO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(118, 2, 117, 'TINTA EPSON 664 COLOR CYAN', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(119, 2, 118, 'TINTA EPSON 664 COLOR MAGENTA', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(120, 2, 119, 'TINTA EPSON 664 COLOR NEGRO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(121, 9, 120, 'TINTA PARA SELLO DE CAUCHO', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(122, 14, 121, 'TIRA NEGRA (CAPACIDAD DE 300 HOJAS)', NULL, NULL, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(123, 14, 122, 'TIRA NEGRA 11MM*42 AROS (CAPACIDAD DE 70 HOJAS)', NULL, NULL, 79, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(124, 14, 123, 'TIRA NEGRA 12 MM (CAPACIDAD DE 80 HOJAS)', NULL, NULL, 109, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(125, 14, 124, 'TIRA NEGRA 15 MM (CAPACIDAD DE 120 HOJAS)', NULL, NULL, 31, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(126, 14, 125, 'TIRA NEGRA 18 MM (CAPACIDAD DE 140 HOJAS)', NULL, NULL, 34, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(127, 14, 126, 'TIRA NEGRA 22 MM (CAPACIDAD DE 170 HOJAS)', NULL, NULL, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(128, 14, 127, 'TIRA NEGRA 25 MM (CAPACIDAD DE 200 HOJAS)', NULL, NULL, 36, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(129, 14, 128, 'TIRA NEGRA 9MM  (CAPACIDAD DE 50 HOJAS)', NULL, NULL, 208, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(130, 2, 129, 'TK 512 AMARILLO', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(131, 2, 130, 'TK 512 MAGENTA', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(132, 2, 131, 'TK512 CYAN', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(133, 8, 132, 'TOALLA DE MANOS BLANCA 24X21CM HOJA TRIPLE DOBLADA EN Z', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(134, 2, 133, 'TONER NEGRO TK-1147 (2035)', NULL, NULL, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(135, 2, 134, 'TONER NEGRO TK-137 (2810)', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(136, 2, 135, 'TONER NEGRO TK-3122 (4200)', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(137, 2, 136, 'TONER NEGRO TK-3132 (4300)', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(138, 2, 137, 'TONER NEGRO TK-342 (2020)', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(139, 1, 138, 'TRAPERO TIPO INDUSTRIAL', NULL, NULL, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(140, 1, 139, 'VARSOL SIN OLOR ', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(141, 12, 140, 'VASO 11 ONZAS TRANSPARENTE', NULL, NULL, 10, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(142, 12, 141, 'VASO CAFETERO TERMICO ESPUMADO (4 ONZAS)', NULL, NULL, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(143, 10, 142, 'LAPIZ ROJO', NULL, NULL, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(144, 13, 143, 'NOTAS ADHESIVAS', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(145, 15, 144, 'PLANILLERO ACRILICO CON GANCHO', NULL, NULL, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(146, 14, 145, 'BLOCK ANOTACIÒN ', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(147, 14, 146, 'CAJA ARCHIVO INACTIVO # 20', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(148, 6, 147, 'CALCULADORA CASIO 12 DIGITOS', NULL, NULL, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(149, 2, 148, 'TONER TK-1175 (M2040dn)', NULL, NULL, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(150, 2, 149, 'TONER TK-3160/3162', NULL, NULL, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(151, 14, 150, 'CHINCHE TRITON NIQUELADO', NULL, NULL, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(152, 14, 151, 'EXACTO PLÀSTICO GRANDE', NULL, NULL, 20, 2000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(153, 2, 152, 'TONER NEGRO HP 85A(P1102W)', NULL, NULL, 5, 10, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(154, 12, 153, 'SERVILLETA DE LUJO 33*32CM ', NULL, NULL, 68, 28, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(155, 15, 154, 'FUNDA PARA CD', NULL, NULL, 73, 20, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1),
-	(156, 2, 155, '&quotohla&quot', '', 'vistas/img/productos/default/anonymous.png', 0, 0, '2021-09-16 12:22:04', 0, 2, 1, 1, 3, 1, 1),
-	(157, 13, 1, 'Celular', '', 'vistas/img/productos/default/anonymous.png', 0, 455000, '2022-02-21 11:29:17', 0, 2, 1, 5, 3, 1, 1);
+INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`) VALUES
+	(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', 'vistas/img/productos/default/anonymous.png', 115, 0, 0, '0000-00-00 00:00:00', 1, 5, 4, 0, 2, 1, 1, 1, 0),
+	(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 96, 0, 89999, '0000-00-00 00:00:00', 0, 7, 7, 7, 2, 1, 1, 1, 0),
+	(4, 1, 3, 'ATOMIZADOR AMBIENTADOR LAVANDA', '', 'vistas/img/productos/default/anonymous.png', 123, 0, 500, '0000-00-00 00:00:00', 0, 5, 4, 4, 2, 1, 1, 1, 1),
+	(5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', 'vistas/img/productos/default/anonymous.png', 72, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(6, 12, 5, 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', NULL, 'vistas/img/productos/default/anonymous.png', 183, 0, 18000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(7, 13, 6, 'BANDEJA PORTA DOCUMENTOS', NULL, 'vistas/img/productos/default/anonymous.png', 81, 0, 4000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(8, 1, 7, 'BLANQUEADOR (LIMPIDO)', NULL, 'vistas/img/productos/default/anonymous.png', 84, 0, 8800, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(9, 10, 8, 'BOLIGRAFO  ROJO ', NULL, 'vistas/img/productos/default/anonymous.png', 28, 0, 587, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(10, 10, 9, 'BOLIGRAFO NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 100, 0, 1500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(11, 1, 10, 'BOLSA BASURA NEGRA X 90*110 ', NULL, 'vistas/img/productos/default/anonymous.png', 25, 0, 12234, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(12, 1, 11, 'BOLSA BASURA VERDE 42*47CMS ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(13, 14, 12, 'BORRADOR DE NATA', NULL, 'vistas/img/productos/default/anonymous.png', 17, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(14, 10, 13, 'BORRADOR DE TABLERO', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(15, 12, 14, 'CAFÉ TOSTADO Y MOLIDO, FUERTE', NULL, 'vistas/img/productos/default/anonymous.png', 15, 0, 850, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(16, 14, 15, 'CARATULA POLY COVER CARTA ', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(17, 14, 16, 'CARTULINA BRISTOL 1/8 X 8 SURTIDAS', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 2456, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(18, 14, 17, 'CARTULINA BRISTOL 70*100 BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 7, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(19, 14, 18, 'CD-R ', NULL, 'vistas/img/productos/default/anonymous.png', 39, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(20, 1, 19, 'CERA NATURAL SÓLIDA PARA MADERA AUTOBRILLO', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(21, 14, 20, 'CINTA EMP TRANSP 48X100 REF.301 3M ', NULL, 'vistas/img/productos/default/anonymous.png', 20, 0, 700, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(22, 14, 21, 'CINTA EMP TRANSP DELGADA 12 MM X40M ', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(23, 2, 22, 'CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(24, 14, 23, 'CINTA INVISIBLE 33M:19MM PARA CHEQUES', '', 'vistas/img/productos/default/anonymous.png', 7, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(25, 14, 24, 'CLIP MARIPOSA GIGANTE', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(26, 14, 25, 'CLIP MARIPOSA X 50 EMP*50 ', NULL, 'vistas/img/productos/default/anonymous.png', 6, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(27, 14, 26, 'CLIP SENCILLO X 100 EMP*100', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(28, 14, 27, 'COLBON (PEGANTE UNIVERSAL) 480GR', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(29, 12, 28, 'COLCAFE COFFE CREAM 100 SOBRES DE 3 GR', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 8000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(30, 10, 29, 'CORRECTOR LIQUIDO LAPIZ *7 ML', NULL, 'vistas/img/productos/default/anonymous.png', 8, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(31, 12, 30, 'CREMA INSTANTANEA NO LACTEA PARA CAFÉ ', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 1200, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(32, 11, 31, 'CREMA LAVALOZA ', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(33, 9, 32, 'CUENTA FACIL', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(34, 5, 33, 'DECAMETRO STANPROF 10 MTS', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 14000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(35, 5, 34, 'DECAMETRO STANPROF 30 MTS', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(36, 5, 35, 'DECAMETRO STANPROF 50 MTS', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(37, 1, 36, 'DESENGRASANTE', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(38, 1, 37, 'DESINFECTANTE MULTIUSOS ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(39, 1, 38, 'DETERGENTE EN POLVO ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(40, 15, 39, 'DVD +R ', NULL, 'vistas/img/productos/default/anonymous.png', 31, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(41, 1, 40, 'ESCOBA SUAVE MANGO MADERA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 4500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(42, 11, 41, 'ESPONJA LAVAPLATOS DOBLE USO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(43, 5, 42, 'FLEXOMETRO LUFKIN 26/8METROS', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(44, 9, 43, 'FOLIADOR (NUMERADOR CONSECUTIVO)', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(45, 15, 44, 'FORMAS CONTINUAS 1/2 11 1/2 TROQUELADA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(46, 15, 45, 'FORMAS CONTINUAS 9 1/2 *11 1P BLANCA 901', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(47, 15, 46, 'FORMAS CONTINUAS 9 1/2 *11 3P BLANCA 903 ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(48, 15, 47, 'GANCHO LEGAJADOR PLASTICO ', NULL, 'vistas/img/productos/default/anonymous.png', 38, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(49, 14, 48, 'GRAPA COBRIZADA STANDARD *5000 ', NULL, 'vistas/img/productos/default/anonymous.png', 55, 0, 1000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(50, 14, 49, 'GRAPA GALVANIZADA INDUSTRIAL *1000', NULL, 'vistas/img/productos/default/anonymous.png', 35, 0, 700, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(51, 13, 50, 'GRAPADORA 340 RANK (SENCILLA)', NULL, 'vistas/img/productos/default/anonymous.png', 50, 0, 500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(52, 13, 51, 'GRAPADORA INDUSTRIAL HASTA 100 HOJAS', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(53, 1, 52, 'GUANTES DE LATEX DE  EXAMEN ', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(54, 1, 53, 'GUANTES SEMI-INDUSTRIALES T9-9 ½*CALIBRE 25*LATEX NATURAL*COLOR NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 6, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(55, 15, 54, 'GUIA CLASIFICADORA  CARTULINA REF. 105 AMARILLA ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(56, 15, 55, 'GUIAS CELUGUIA', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(57, 2, 56, 'HP 10 NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(58, 2, 57, 'HP 711 AMARILLO', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(59, 2, 58, 'HP 711 CYAN', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(60, 2, 59, 'HP 711 MAGENTA', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(61, 2, 60, 'HP 711 NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 3, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(62, 2, 61, 'HP 82 AMARILLO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(63, 2, 62, 'HP 82 NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(64, 9, 63, 'HUELLERO COLOR NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 6, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(65, 8, 64, 'JABON LÍQUIDO PARA MANOS, ANTIBACTERIAL, BIODEGRADABLE AROMA MANZANA', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(66, 15, 65, 'LAMPARAS FLUORESCENTES SILVANIA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(67, 10, 66, 'LAPIZ NEGRO Nº2 ORIG. 482 ', NULL, 'vistas/img/productos/default/anonymous.png', 13, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(68, 14, 67, 'LEGAJADOR AZ OFICIO AZUL ', NULL, 'vistas/img/productos/default/anonymous.png', 3, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(69, 14, 68, 'LEGAJOS (CARPETAS DE EDUBAR)', NULL, 'vistas/img/productos/default/anonymous.png', 600, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(70, 2, 69, 'LEXMARK AMARILLO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(71, 2, 70, 'LEXMARK CYAN', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(72, 2, 71, 'LEXMARK NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(73, 14, 72, 'LIBRO ACTA 1/2 OFICIO 80H  100 FOLIOS (BITACORA)', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(74, 1, 73, 'LIMPIAVIDRIOS (AMONIACO-DESENGRASANTE SECADO RAPIDO)', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(75, 1, 74, 'LIMPION', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(76, 1, 75, 'LIQUIDO ESPECIAL PARA PISOS (BRILLO)', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(77, 10, 76, 'MARCADOR BORRABLE', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(78, 10, 77, 'MARCADOR PERMANENTE NEGRO PUNTA FINA  (SHARPIE)', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(79, 1, 78, 'MARCADORES PERMANENTES SURTIDOS (ROJO/AZUL/NEGRO)', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(80, 15, 79, 'MASCARILLA DESECHABLE (TAPABOCAS)', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(81, 12, 80, 'MEZCLADORES DESECHABLES PARA CAFÉ', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(82, 7, 81, 'MOUSE USB', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(83, 8, 82, 'PAPEL HIGIENIENICO INSTITUCIONAL ROLLOS, DOBLE HOJA, PRECORTADO, BLANCO', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(84, 3, 83, 'PAPEL RESMA DOBLE CARTA 11*17 75GRS', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(85, 3, 84, 'PAPEL RESMA FOTOCOPIA 75GR CARTA ', NULL, 'vistas/img/productos/default/anonymous.png', 14, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(86, 3, 85, 'PAPEL RESMA FOTOCOPIA 75GR OFICIO ', NULL, 'vistas/img/productos/default/anonymous.png', 23, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(87, 13, 86, 'PAPELERA (CANECA)', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(88, 15, 87, 'PASTA CATALOGO 0.5R HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(89, 15, 88, 'PASTA CATALOGO 1.0R HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(90, 15, 89, 'PASTA CATALOGO 1.5R HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(91, 15, 90, 'PASTA CATALOGO 2.0R HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(92, 15, 91, 'PASTA CATALOGO 2.5R HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(93, 15, 92, 'PASTA CATALOGO 3.0D HERRAJE BLANCA', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(94, 14, 93, 'PEGANTE  EN BARRA 40GRS ', NULL, 'vistas/img/productos/default/anonymous.png', 9, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(95, 13, 94, 'PERFORADORA 3 HUECOS', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(96, 13, 95, 'PERFORADORA RANK 1050 DOS HUECOS SEMI INDUSTRIAL (40 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(97, 13, 96, 'PERFORADORA SENCILLA 1038 RANK', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(98, 12, 97, 'PLATO DESECHABLE MEDIANO *20 ESPUMADO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(99, 15, 98, 'PROTECTOR DE TRANSPARENCIA (BOLSILLOS)', NULL, 'vistas/img/productos/default/anonymous.png', 13, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(100, 14, 99, 'RECIBO DE CAJA MENOR X 200 HOJAS', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(101, 1, 100, 'RECOGEDOR DE BASURA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(102, 13, 101, 'REGLA DE 30 CM', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(103, 10, 102, 'RESALTADORES SURTIDOS ', NULL, 'vistas/img/productos/default/anonymous.png', 7, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(104, 3, 103, 'ROLLO PLOTER BOND 75 GR 28 PULGADAS', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(105, 12, 104, 'ROLLO TOALLA COCINA LAVABLE', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(106, 14, 105, 'SACAGRAPA', NULL, 'vistas/img/productos/default/anonymous.png', 7, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(107, 14, 106, 'SACAPUNTA', NULL, 'vistas/img/productos/default/anonymous.png', 16, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(108, 9, 107, 'SELLO NUMERADOR FOLIADOR AUTOMATICO CONSECUTIVO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(109, 12, 108, 'SERVILLETA 27-5*17', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(110, 14, 109, 'SOBRE MANILA CARTA  22*29 ', NULL, 'vistas/img/productos/default/anonymous.png', 190, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(111, 14, 110, 'SOBRE MANILA GIGANTE 37*27 ', NULL, 'vistas/img/productos/default/anonymous.png', 80, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(112, 14, 111, 'SOBRE MANILA OFICIO 25*35 ', NULL, 'vistas/img/productos/default/anonymous.png', 100, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(113, 12, 112, 'SOBRES NESCAFE TRADICION ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(114, 12, 113, 'TE HELADO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(115, 7, 114, 'TECLADO KB-110X USB ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(116, 14, 115, 'TIJERA', NULL, 'vistas/img/productos/default/anonymous.png', 3, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(117, 2, 116, 'TINTA EPSON 664 COLOR AMARILLO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(118, 2, 117, 'TINTA EPSON 664 COLOR CYAN', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(119, 2, 118, 'TINTA EPSON 664 COLOR MAGENTA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(120, 2, 119, 'TINTA EPSON 664 COLOR NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(121, 9, 120, 'TINTA PARA SELLO DE CAUCHO', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(122, 14, 121, 'TIRA NEGRA (CAPACIDAD DE 300 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(123, 14, 122, 'TIRA NEGRA 11MM*42 AROS (CAPACIDAD DE 70 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 79, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(124, 14, 123, 'TIRA NEGRA 12 MM (CAPACIDAD DE 80 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 109, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(125, 14, 124, 'TIRA NEGRA 15 MM (CAPACIDAD DE 120 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 31, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(126, 14, 125, 'TIRA NEGRA 18 MM (CAPACIDAD DE 140 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 34, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(127, 14, 126, 'TIRA NEGRA 22 MM (CAPACIDAD DE 170 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 11, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(128, 14, 127, 'TIRA NEGRA 25 MM (CAPACIDAD DE 200 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 36, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(129, 14, 128, 'TIRA NEGRA 9MM  (CAPACIDAD DE 50 HOJAS)', NULL, 'vistas/img/productos/default/anonymous.png', 208, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(130, 2, 129, 'TK 512 AMARILLO', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(131, 2, 130, 'TK 512 MAGENTA', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(132, 2, 131, 'TK512 CYAN', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(133, 8, 132, 'TOALLA DE MANOS BLANCA 24X21CM HOJA TRIPLE DOBLADA EN Z', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(134, 2, 133, 'TONER NEGRO TK-1147 (2035)', NULL, 'vistas/img/productos/default/anonymous.png', 6, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(135, 2, 134, 'TONER NEGRO TK-137 (2810)', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(136, 2, 135, 'TONER NEGRO TK-3122 (4200)', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(137, 2, 136, 'TONER NEGRO TK-3132 (4300)', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(138, 2, 137, 'TONER NEGRO TK-342 (2020)', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(139, 1, 138, 'TRAPERO TIPO INDUSTRIAL', NULL, 'vistas/img/productos/default/anonymous.png', 2, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(140, 1, 139, 'VARSOL SIN OLOR ', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(141, 12, 140, 'VASO 11 ONZAS TRANSPARENTE', NULL, 'vistas/img/productos/default/anonymous.png', 10, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(142, 12, 141, 'VASO CAFETERO TERMICO ESPUMADO (4 ONZAS)', NULL, 'vistas/img/productos/default/anonymous.png', 3, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(143, 10, 142, 'LAPIZ ROJO', NULL, 'vistas/img/productos/default/anonymous.png', 6, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(144, 13, 143, 'NOTAS ADHESIVAS', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(145, 15, 144, 'PLANILLERO ACRILICO CON GANCHO', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(146, 14, 145, 'BLOCK ANOTACIÒN ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(147, 14, 146, 'CAJA ARCHIVO INACTIVO # 20', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(148, 6, 147, 'CALCULADORA CASIO 12 DIGITOS', NULL, 'vistas/img/productos/default/anonymous.png', 4, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(149, 2, 148, 'TONER TK-1175 (M2040dn)', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(150, 2, 149, 'TONER TK-3160/3162', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(151, 14, 150, 'CHINCHE TRITON NIQUELADO', NULL, 'vistas/img/productos/default/anonymous.png', 3, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(152, 14, 151, 'EXACTO PLÀSTICO GRANDE', NULL, 'vistas/img/productos/default/anonymous.png', 20, 0, 2000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(153, 2, 152, 'TONER NEGRO HP 85A(P1102W)', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 10, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(154, 12, 153, 'SERVILLETA DE LUJO 33*32CM ', NULL, 'vistas/img/productos/default/anonymous.png', 68, 0, 28, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(155, 15, 154, 'FUNDA PARA CD', NULL, 'vistas/img/productos/default/anonymous.png', 73, 0, 20, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(156, 2, 155, '&quotohla&quot', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '2021-09-16 12:22:04', 0, 2, 1, 1, 3, 1, 1, 1, 1),
+	(157, 13, 1, 'Celular', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 455000, '2022-02-21 11:29:17', 0, 2, 1, 5, 3, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosunidad
@@ -400,12 +403,21 @@ CREATE TABLE IF NOT EXISTS `insumosunidad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `unidad` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.insumosunidad: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumosunidad: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumosunidad` DISABLE KEYS */;
 INSERT INTO `insumosunidad` (`id`, `unidad`) VALUES
-	(1, 'Bolsa');
+	(1, 'Bolsa'),
+	(2, 'Unidad'),
+	(3, 'Resma'),
+	(4, 'Paquete'),
+	(5, 'Galón'),
+	(6, 'Litro'),
+	(7, 'Rollo'),
+	(8, 'Envase'),
+	(9, 'Porción'),
+	(10, 'Caja');
 /*!40000 ALTER TABLE `insumosunidad` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.inversiones
@@ -418,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.inversiones: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.inversiones: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `inversiones` DISABLE KEYS */;
 INSERT INTO `inversiones` (`id`, `id_prov`, `invertido`, `anio`, `mes`) VALUES
 	(1, 0, 456290, 2021, 7),
@@ -439,9 +451,9 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `pTres` int(1) NOT NULL DEFAULT 3,
   `pCuatro` int(1) NOT NULL DEFAULT 4,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~40 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~36 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
 INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) VALUES
 	(1, 'categorias', 1, 1, 2, 3, 0),
@@ -451,7 +463,7 @@ INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) 
 	(5, 'facturas', 5, 1, 2, 3, 0),
 	(6, 'requisiciones', 8, 1, 2, 3, 0),
 	(7, 'nuevaFactura', 10, 1, 2, 3, 0),
-	(8, 'editarFactura', 11, 1, 2, 3, 0),
+	(8, 'editarFactura', 10, 1, 2, 3, 0),
 	(9, 'requisicion', 11, 1, 2, 3, 0),
 	(10, 'requisicionImportada', 11, 1, 2, 3, 0),
 	(11, 'editarRq', 11, 1, 2, 3, 0),
@@ -481,10 +493,13 @@ INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) 
 	(35, 'generaciones', 0, 1, 2, 3, 4),
 	(36, 'salir', 0, 1, 2, 3, 4),
 	(37, 'perfil', 0, 1, 2, 3, 4),
-	(38, 'genRequisicion', 0, 0, 0, 0, 4),
+	(38, 'genRequisicion', 29, 0, 0, 0, 4),
 	(39, 'hisRequisicion', 0, 0, 0, 0, 4),
 	(40, 'verProyecto', 28, 1, 2, 3, 0),
-	(41, 'verRequisicion', 0, 1, 2, 3, 0);
+	(41, 'verRequisicion', 0, 1, 2, 3, 0),
+	(42, 'borrador', 0, 1, 2, 3, 0),
+	(43, 'verFactura', 0, 1, 2, 3, 0),
+	(44, 'verRequisicionS', 11, 1, 2, 3, 0);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files
@@ -493,9 +508,9 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `habilitado` varchar(30) COLLATE utf8_spanish_ci NOT NULL DEFAULT '''all''',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_files: ~34 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_files: ~28 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
 INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(1, 'plantilla', 'all'),
@@ -531,7 +546,8 @@ INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(32, 'proyectos', 'proyectos'),
 	(33, 'genRequisicion', 'genRequisicion'),
 	(34, 'hisRequicion', 'hisRequicion'),
-	(35, 'verProyecto', 'verProyecto');
+	(35, 'verProyecto', 'verProyecto'),
+	(36, 'verRequisicionS', 'verRequisicionS');
 /*!40000 ALTER TABLE `js_files` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.movimientos
@@ -571,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `ordencompra` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.ordencompra: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.ordencompra: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `ordencompra` DISABLE KEYS */;
 INSERT INTO `ordencompra` (`id`, `codigoInt`, `id_proveedor`, `id_usr`, `id_cotizacion`, `insumos`, `fecha`, `inversion`, `iva`, `fac_asociada`, `formaPago`, `responsable`, `fechaEntrega`, `observacion`) VALUES
 	(2, '2', 1, 1, 0, '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","pre":"5000","sub":"5000"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"}]', '2021-08-18', 156425, 29721, 9, 'Chan con chan', 'Kevin', '0000-00-00', ''),
@@ -612,10 +628,10 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.parametros: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`) VALUES
-	(1, 10, 15, 30, 4, 2, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 2, NULL, NULL, NULL, 0, 0);
+	(1, 10, 15, 30, 6, 2, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 2, NULL, NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -644,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
   KEY `FK_personas_areas` (`id_area`),
   CONSTRAINT `FK_personas_areas` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_personas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.personas: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
@@ -654,7 +670,7 @@ INSERT INTO `personas` (`id`, `id_usuario`, `id_area`) VALUES
 	(3, 4, 3),
 	(4, 3, 1),
 	(5, 5, 2),
-	(8, 6, 6);
+	(9, 6, 6);
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proveedores
@@ -688,16 +704,15 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
   PRIMARY KEY (`id`),
   KEY `FK_proyectoarea_proyectos` (`id_proyecto`),
   CONSTRAINT `FK_proyectoarea_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.proyectoarea: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.proyectoarea: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectoarea` DISABLE KEYS */;
 INSERT INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
-	(1, NULL, 1),
-	(2, NULL, 2),
-	(3, NULL, 2),
-	(4, NULL, 3),
-	(5, NULL, 4);
+	(6, '[{"id":"6"},{"id":"4"},{"id":"1"},{"id":"2"},{"id":"3"},{"id":"5"}]', 1),
+	(7, NULL, 2),
+	(8, '[{"id":"6"},{"id":"2"},{"id":"1"}]', 3),
+	(9, NULL, 4);
 /*!40000 ALTER TABLE `proyectoarea` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proyectos
@@ -707,16 +722,17 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
   `descripcion` text NOT NULL,
+  `elim` int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.proyectos: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
-INSERT INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripcion`) VALUES
-	(1, 'Administrativo', '2022-02-18', '2025-02-18', 'Todo lo relacionado a la parte administrativa de la empresa'),
-	(2, 'Hospitales', '2022-02-21', '2022-03-10', 'Diseño y construcción de hospitales en el Distrito de Barranquilla'),
-	(3, 'La Loma', '2022-02-22', '2022-03-11', 'Interventoría en la loma'),
-	(4, 'Parques para la gente', '2022-02-22', '2022-02-24', 'Diseño y construcción de parques en barranquilla');
+INSERT INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripcion`, `elim`) VALUES
+	(1, 'Administrativo', '2022-02-18', '2025-02-18', 'Todo lo relacionado a la parte administrativa de la empresa', 0),
+	(2, 'Hospitales', '2022-02-21', '2022-03-10', 'Diseño y construcción de hospitales en el Distrito de Barranquilla', 0),
+	(3, 'La Loma', '2022-02-22', '2022-03-11', 'Interventoría en la loma', 0),
+	(4, 'Parques para la gente', '2022-02-22', '2022-02-24', 'Diseño y construcción de parques en barranquilla', 0);
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.requisiciones
@@ -733,6 +749,7 @@ CREATE TABLE IF NOT EXISTS `requisiciones` (
   `id_proyecto` int(3) NOT NULL DEFAULT 1,
   `aprobado` int(1) NOT NULL DEFAULT 0,
   `observacionE` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `registro` text COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_requisiciones_areas` (`id_area`),
   KEY `FK_requisiciones_usuarios` (`id_usr`),
@@ -740,19 +757,20 @@ CREATE TABLE IF NOT EXISTS `requisiciones` (
   KEY `FK_requisiciones_proyectos` (`id_proyecto`),
   CONSTRAINT `FK_requisiciones_areas` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_requisiciones_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_requisiciones_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_requisiciones_usuarios_2` FOREIGN KEY (`id_persona`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  CONSTRAINT `FK_requisiciones_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.requisiciones: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `requisiciones` DISABLE KEYS */;
-INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt`, `insumos`, `fecha`, `fecha_sol`, `observacion`, `id_proyecto`, `aprobado`, `observacionE`) VALUES
-	(3, 1, 1, 1, 'RQ-003-2021', '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"1","ent":"5"}]', '2021-09-22', '2021-09-23', '', 1, 0, NULL),
-	(4, 2, 2, 1, 'RQ-004-2021', '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"1","ent":"1"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","ped":"1","ent":"10"}]', '2021-09-20', '2021-08-10', '', 1, 0, NULL),
-	(5, 2, 2, 1, 'RQ-005-2021', '[{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA","ped":"1","ent":"1"}]', '2021-08-20', '2021-08-17', '', 1, 0, NULL),
-	(6, 1, 1, 1, 'RQ-001-2022', '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","ped":"1","ent":"1"},{"id":"7","des":"BANDEJA PORTA DOCUMENTOS","ped":"10","ent":"10"}]', '2022-01-10', '2022-02-14', '', 1, 0, NULL),
-	(7, 1, 1, 1, 'RQ-002-2022', '[{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","ped":"1","ent":"1"}]', '2022-02-15', '2022-02-15', '', 1, 0, NULL),
-	(8, 2, 2, 1, 'RQ-003-2022', '[{"id":"9","des":"BOLIGRAFO  ROJO ","ped":"1","ent":"1"}]', '2022-02-15', '2022-02-15', '', 1, 0, NULL);
+INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt`, `insumos`, `fecha`, `fecha_sol`, `observacion`, `id_proyecto`, `aprobado`, `observacionE`, `registro`) VALUES
+	(3, 1, 1, 1, 'RQ-003-2021', '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"1","ent":"5"}]', '2021-09-22', '2021-09-23', '', 1, 1, NULL, NULL),
+	(4, 2, 2, 1, 'RQ-004-2021', '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"1","ent":"1"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","ped":"1","ent":"10"}]', '2021-09-20', '2021-08-10', '', 1, 1, NULL, NULL),
+	(5, 2, 2, 1, 'RQ-005-2021', '[{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA","ped":"1","ent":"1"}]', '2021-08-20', '2021-08-17', '', 1, 1, NULL, NULL),
+	(6, 1, 1, 1, 'RQ-001-2022', '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","ped":"1","ent":"1"},{"id":"7","des":"BANDEJA PORTA DOCUMENTOS","ped":"10","ent":"10"}]', '2022-01-10', '2022-02-14', '', 1, 1, NULL, NULL),
+	(7, 1, 1, 1, 'RQ-002-2022', '[{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","ped":"1","ent":"1"}]', '2022-02-15', '2022-02-15', '', 1, 1, NULL, NULL),
+	(8, 1, 2, 1, 'RQ-003-2022', '[{"id":"9","des":"BOLIGRAFO  ROJO ","ped":"1","ent":"1"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","ped":"10","ent":"10"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA","ped":"12","ent":"5"}]', '2022-02-15', '2022-02-15', '', 1, 1, NULL, NULL),
+	(9, 2, 5, 1, 'RQ-004-2022', '[{"id":"12","des":"BOLSA BASURA VERDE 42*47CMS ","ped":"1","ent":"1"},{"id":"7","des":"BANDEJA PORTA DOCUMENTOS","ped":"1","ent":"10"}]', '2022-02-25', '2022-02-25', '', 1, 1, NULL, NULL),
+	(10, 1, 3, 4, 'RQ-005-2022', '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","ped":"15","ent":0},{"id":"8","des":"BLANQUEADOR (LIMPIDO)","ped":"10","ent":0},{"id":"10","des":"BOLIGRAFO NEGRO","ped":"15","ent":0},{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","ped":"50","ent":0}]', '2022-02-28', '2022-02-28', '', 1, 1, NULL, NULL);
 /*!40000 ALTER TABLE `requisiciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.tempdatosrq
@@ -764,7 +782,7 @@ CREATE TABLE IF NOT EXISTS `tempdatosrq` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.tempdatosrq: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.tempdatosrq: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `tempdatosrq` DISABLE KEYS */;
 INSERT INTO `tempdatosrq` (`id`, `nombre`, `fecha`, `observacion`) VALUES
 	(1, 'KEVIN BOLAÑO', '2021-05-20', NULL);
@@ -793,10 +811,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-02-22 20:19:41', '2021-02-11 10:06:49', 'jmjpvh3k4thbde6gp3afm10vjg', 0, 0, 1),
+	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-02-28 01:02:17', '2021-02-11 10:06:49', 'g2ldtm6bk06684mb36sne0e9ig', 0, 0, 1),
 	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 11:12:33', '', 0, 0, 1),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 11:12:39', '', 0, 0, 1),
-	(4, 'Fernando Barcelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 4, '', 1, '2022-02-19 22:32:25', '2022-02-18 16:29:41', 'i2nv8r770p51jkhpou8a3q26u6', 0, 0, 1),
+	(4, 'Fernando Barcelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 4, '', 1, '2022-02-28 00:32:26', '2022-02-18 16:29:41', 'g2ldtm6bk06684mb36sne0e9ig', 0, 0, 1),
 	(5, 'Selena Reyes', 'sreyes', '2a52HUr6WfShk', 4, NULL, 1, '0000-00-00 00:00:00', '2022-02-21 11:44:30', NULL, 0, 0, 1),
 	(6, 'Andrea Espitia', 'aespitia', '2a52HUr6WfShk', 4, NULL, 1, '0000-00-00 00:00:00', '2022-02-21 16:43:57', NULL, 0, 0, 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
