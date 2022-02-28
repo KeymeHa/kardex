@@ -219,7 +219,7 @@
           </div>
           <div class="box-body">
             <ul class="todo-list ui-sortable">
-            '.$requisicion["registro"].'
+            <li><small class="label label-warning">Adv</small><span class="text">'.$requisicion["registro"].'</span></li>
             </ul>
           </div>
         </div>

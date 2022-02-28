@@ -110,7 +110,7 @@
 
                 <br>
 
-                <a href="requisiciones">
+                <a href="javascript:history.back()">
                   <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
                 </a>
                 <button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarRq">Guardar</button>
