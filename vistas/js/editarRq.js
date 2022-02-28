@@ -197,12 +197,32 @@ function listarProductosRq(){
 
 function quitarAgregarInsumo(){
 	var idInsumo = $(".quitarInsumo");
+	var idInsumo2 = $(".genInsumo");
 	var botonesTabla = $(".tablaInsumosNRq tbody button.agregarInsumo");
+
 	if(idInsumo.length == 0)
 	{
 		$("button.btnGuardarRq").removeClass("btn-success");
     	$("button.btnGuardarRq").addClass("btn-default");
     	$('button.btnGuardarRq').attr("disabled", true);
+	}
+
+	if(idInsumo2.length > 0)
+	{
+		$("button.btnGuardarRq").removeClass("btn-default");
+    	$("button.btnGuardarRq").addClass("btn-success");
+    	$('button.btnGuardarRq').attr("disabled", false);
+	}
+
+	
+	for(var i = 0; i < idInsumo2.length; i++){
+		var boton = $(idInsumo2[i]).attr("idInsumo");
+		for(var j = 0; j < botonesTabla.length; j ++){
+			if($(botonesTabla[j]).attr("idInsumo") == boton){
+				$(botonesTabla[j]).removeClass("btn-success agregarInsumo");
+				$(botonesTabla[j]).addClass("btn-default");
+			}
+		}
 	}
 
 	for(var i = 0; i < idInsumo.length; i++){

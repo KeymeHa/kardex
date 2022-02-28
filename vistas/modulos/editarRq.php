@@ -75,18 +75,21 @@
                         $item = null;
                         $valor = null;
                         $personas = ControladorPersonas::ctrMostrarPersonas($item, $valor);
-                        
-                       foreach ($personas as $key => $value)
-                       { 
-                          $item1 = "id";
-                          $valor1 = $value["id_area"];
-                          $areas = ControladorAreas::ctrMostrarAreas($item1, $valor1);
 
-                          if ($requisicion["id_persona"] != $value["id"]) 
-                          {
-                            echo '<option value="'.$value["id"].'">'.$value["nombre"].', '.$areas["nombre"].'</option>';
-                          }
+                        if ($requisicion["gen"] != 1) 
+                        {
+                          foreach ($personas as $key => $value)
+                           { 
+                              $item1 = "id";
+                              $valor1 = $value["id_area"];
+                              $areas = ControladorAreas::ctrMostrarAreas($item1, $valor1);
 
+                              if ($requisicion["id_persona"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].', '.$areas["nombre"].'</option>';
+                              }
+
+                            }
                         }
                       ?> 
                     </select>
@@ -100,11 +103,11 @@
                   <div class="form-group">
                     <div class="input-group">
                       <?php if ($requisicion["fecha_sol"] != null) { 
-                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$requisicion["fecha_sol"].'" required>';
+                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$requisicion["fecha_sol"].'" required readonly>';
                       }
                       else
                       {
-                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required>';
+                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>';
                       }
                       ?>
                     </div>              
@@ -135,6 +138,7 @@
                 <?php
 
                   $listaInsumos = json_decode($requisicion["insumos"], true);
+                  $matchError = "";
 
                   if(!$listaInsumos == null)
                   {
@@ -142,20 +146,58 @@
                     {
 
                        $insumo = ControladorInsumos::ctrMostrarInsumos("id", $value["id"]);
+
+                       if ($insumo["stock"] == 0) 
+                       {
+                        $matchError = $insumo["descripcion"]." con Codigo ".$insumo["codigo"].", no tiene stock.:";
+                       }
+                       elseif($insumo["stock"] < $value["ped"]) 
+                       {
+                         $matchError = $insumo["descripcion"]."con codigo ".$insumo["codigo"].", tiene menor stock al solicitado.:";
+                       }
+
                        $stock = intval($value["ent"]) + $insumo["stock"];
 
                         echo '<div class="row" style="padding:5px 15px">
                           <div class="col-xs-6" style="padding-right:0px">
                             <div class="input-group">
-                              <span class="input-group-addon">
-                                <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-times"></i></button>
-                              </span>
+                              <span class="input-group-addon">';
+                              if ($requisicion["gen"] == 1 && $requisicion['aprobado'] == 1) 
+                              {
+
+                                echo '<button type="button" class="btn btn-success btn-xs genInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-asterisk"></i></button>';
+                                
+                              }
+                              else
+                              {
+
+                                if ($requisicion['aprobado'] == 0) {
+                                  
+                                echo '<button type="button" class="btn btn-success btn-xs genInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-asterisk"></i></button>';
+                                }
+                                else
+                                {
+                                  echo '<button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+                                }
+                                
+                              }
+                        echo '</span>
                             <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$value["id"].'" value="'.$value["des"].'" title="'.$value["des"].'" readonly>
                             </div>
                           </div>
-                          <div class="col-xs-3 ingresoCantidad">
-                            <input type="number" class="form-control nuevaCantidadPedida" stock="'.$value["ped"].'" name="nuevaCantidadPedida" min="1" value="'.$value["ped"].'" required>
-                          </div>
+                          <div class="col-xs-3 ingresoCantidad">';
+
+                           if ($requisicion['gen'] != 1) 
+                              {
+                                echo ' <input type="number" class="form-control nuevaCantidadPedida" stock="'.$value["ped"].'" name="nuevaCantidadPedida" min="1" value="'.$value["ped"].'" required>';
+                              }
+                              else
+                              {
+                               echo ' <input type="number" class="form-control nuevaCantidadPedida" stock="'.$value["ped"].'" name="nuevaCantidadPedida" min="1" value="'.$value["ped"].'" required readonly>';
+                              }
+
+                           
+                         echo' </div>
                           <div class="col-xs-3 ingresoCantidad">
                             <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="1" value="'.$value["ent"].'" required>
                           </div>
@@ -167,6 +209,7 @@
               </div>
 
               <input type="hidden" name="listadoInsumosRq" id="listadoInsumosRq" value>
+              <input type="hidden" name="editarRegistro" value="<?php echo $matchError?>">
               <input type="hidden" name="editarRq" value="<?php echo $requisicion['id']?>">
                 <br>
                 <a href="requisiciones">
@@ -181,6 +224,32 @@
             </form>
           </div>
         </div>
+
+        <?php 
+          if ($requisicion['aprobado'] == 0) 
+          {
+            if (!empty($matchError)) 
+            {
+              echo '<div class="col-lg-12 col-md-5 col-sm-12">
+                  <div class="box box-warning" style="overflow:scroll; height: 200px">
+                      <div class="box-header with-border">
+                        Consola de Validación
+                      </div>
+                      <div class="box-body">
+                      <ul class="todo-list ui-sortable">';
+              $listado = explode(":", $matchError);
+
+              for ($i=0; $i < count($listado)-1 ; $i++) 
+              { 
+                 echo '<li><small class="label label-warning">Adv</small><span class="text">'.$listado[$i].'</span></li>';
+              }
+
+              echo '</ul></div>
+                    </div>
+                </div>';
+            }
+          }
+        ?>
       </div>
 
       <div class="col-lg-7">
@@ -189,7 +258,15 @@
             Seleccionar Insumos
           </div>
           <div class="box-body">
-             <table class="table table-bordered table-striped dt-responsive tablaInsumosNRq" width="100%" data-page-length='14'>
+            <?php 
+
+              if ($requisicion["gen"] == 1 && $requisicion['aprobado'] == 1) 
+              {
+               echo "Se ha deshabilitado la lista de insumos para esta requisición generada por un encargado.";
+              }
+              else
+              {
+                 echo '<table class="table table-bordered table-striped dt-responsive tablaInsumosNRq" width="100%" data-page-length="14">
               <thead>
                <tr>
                 <th style="width:10px">#</th>
@@ -199,11 +276,15 @@
                  <th style="width:15px">Acciones</th>
                </tr> 
               </thead>
-             </table>
+             </table>';
+              }
+            ?>
           </div>
         </div><!--box box-success-->
       </div>
     </div><!--div-->
+
+
   </section>
 </div>
 

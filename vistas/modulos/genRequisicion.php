@@ -41,12 +41,11 @@
                      $val = 4;
                      $parametro = ControladorParametros::ctrMostrarParametros($val);
                       echo ' <input type="text" class="form-control" name="codigoInterno" required value="'.$parametro["codigo"].'" readonly>';
-                      echo ' <input type="hidden" class="form-control" name="idUsuario" required value="'.$_SESSION["id"].'" readonly required>';
+                      echo ' <input type="hidden" class="form-control" name="idUsuario" required value="1" readonly required>';
                     ?>
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-xs-7">
                   <div class="form-group">
@@ -57,7 +56,7 @@
                         $personasN = ControladorPersonas::ctrMostrarPersonas("id_usuario", $_SESSION["id"]);
                         $area = ControladorAreas::ctrMostrarAreas("id", $personas["id_area"]);
 
-                          echo '<option value="'.$personas["id"].'" name="idPersona">'.$personasN["nombre"].', '.$area["nombre"].'</option>';
+                          echo '<option value="'.$_SESSION["id"].'" name="idPersona">'.$personasN["nombre"].', '.$area["nombre"].'</option>';
                         ?> 
                     </select>
                   </div>   

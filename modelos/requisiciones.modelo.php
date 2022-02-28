@@ -8,7 +8,7 @@ class ModeloRequisiciones
 
 	static public function mdlRegistrarRequisicion($tabla, $datos, $tipoob)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr,	codigoInt, insumos, fecha_sol, $tipoob, id_proyecto, fecha, aprobado) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :$tipoob, :id_proyecto, :fecha, :aprobado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_area, id_persona, id_usr, codigoInt, insumos, fecha_sol, $tipoob, id_proyecto, fecha, aprobado, gen) VALUES (:id_area, :id_persona, :id_usr, :codigoInt, :insumos, :fecha_sol, :$tipoob, :id_proyecto, :fecha, :aprobado, :gen)");
 
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
@@ -20,6 +20,7 @@ class ModeloRequisiciones
 		$stmt->bindParam(":id_proyecto", $datos["id_proyecto"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_INT);
+		$stmt->bindParam(":gen", $datos["gen"], PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
 		{
@@ -514,16 +515,35 @@ class ModeloRequisiciones
 
 	static public function mdlEditarRq($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha_sol = :fecha_sol, observacion = :observacion, aprobado = :aprobado WHERE id = :id");
+		if (isset($datos["registro"])) 
+		{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, observacion = :observacion, registro = :registro, aprobado = :aprobado WHERE id = :id");
 
-		$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
-		$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
-		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
-		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
+			$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+			$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+			$stmt->bindParam(":registro", $datos["registro"], PDO::PARAM_STR);
+			$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
+			$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, observacion = :observacion, aprobado = :aprobado WHERE id = :id");
+
+			$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
+			$stmt->bindParam(":insumos", $datos["insumos"], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+			$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+			$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
+			$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		}
+
+		
 
 		if ($stmt->execute()) 
 		{

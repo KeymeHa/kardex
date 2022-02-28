@@ -284,12 +284,14 @@ class ControladorRequisiciones
 				$aprobado = 1;
 				$fechaAp = date("Y-m-d");
 				$tipoob = "observacion";
+				$gen = 0;
 			}
 			else
 			{
 				$fechaAp = "0000-00-00";
 				$aprobado = 0;
 				$tipoob = "observacionE";
+				$gen = 1;
 			}
 
 			
@@ -304,7 +306,8 @@ class ControladorRequisiciones
 							'observacion' => $_POST["observacionRq"],
 							'id_proyecto' => $_POST["id_proyecto"],
 							'fecha' => $fechaAp,
-							'aprobado' => $aprobado);
+							'aprobado' => $aprobado,
+							'gen' => $gen);
 
 			$respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos, $tipoob);
 
@@ -456,8 +459,6 @@ class ControladorRequisiciones
 
 	static public function ctrEditarRequisicion()
 	{
-		
-
 		if ( isset($_POST["editarRq"]) ) 
 		{
 			if ($_POST["editarRq"] != null) 
@@ -558,12 +559,26 @@ class ControladorRequisiciones
 					}
 				}
 
-	            $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
+				 $perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
+				 $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
+				 date_default_timezone_set('America/Bogota');
+					$fechaAp = date("Y-m-d");
 
-	            date_default_timezone_set('America/Bogota');
-				$fechaAp = date("Y-m-d");
-				#ACTUALIZAR REQUISICION
-				$datos = array( 'id_persona' => $_POST["id_persona"],
+				if ($requisicion["aprobado"] == 0) 
+				{
+					$datos = array( 'id_persona' => $_POST["id_persona"],
+								'id_area' => $persona["id_area"],
+								'id_usr' => $_POST["idUsuario"],
+								'insumos' => $_POST["listadoInsumosRq"],
+								'fecha' => $fechaAp,
+								'observacion' => $_POST["observacionRq"],
+								'registro' => $_POST["editarRegistro"],
+								'aprobado' => 1,
+								'id' => $_POST["editarRq"]);
+				}
+				else
+				{
+					$datos = array( 'id_persona' => $_POST["id_persona"],
 								'id_area' => $persona["id_area"],
 								'id_usr' => $_POST["idUsuario"],
 								'insumos' => $_POST["listadoInsumosRq"],
@@ -572,6 +587,14 @@ class ControladorRequisiciones
 								'aprobado' => 1,
 								'id' => $_POST["editarRq"]);
 
+				}
+
+	           
+
+	            date_default_timezone_set('America/Bogota');
+				$fechaAp = date("Y-m-d");
+				#ACTUALIZAR REQUISICION
+				
 				$tabla = "requisiciones";
 				$editado = ModeloRequisiciones::mdlEditarRq($tabla, $datos);
 

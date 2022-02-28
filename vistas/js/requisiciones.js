@@ -24,7 +24,7 @@ $(".tablaRqs").on("click", "button.btnVerRq", function(){
 
 $(".tablaRqsAppr").on("click", "button.btnVerSoli", function(){
 	var idRq = $(this).attr("idRq");
-	window.location = "index.php?ruta=verRequisicionS&idRq="+idRq;
+	window.location = "index.php?ruta=editarRq&idRq="+idRq;
 })
 
 
