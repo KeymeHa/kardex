@@ -28,9 +28,6 @@ class ModeloProyectos
 		$stmt = null;
 	}
 
-	static public function ctrMostrarNombreProyectos($tabla, $item, $valor)
-	{
-	}
 
 	static public function mdlMostrarProyectosArea($tabla, $item, $valor)
 	{
@@ -75,7 +72,7 @@ class ModeloProyectos
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 1");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0");
 
 			$stmt -> execute();
 

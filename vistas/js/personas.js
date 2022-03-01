@@ -2,49 +2,40 @@
 $(".tablaPersonas").on("click", ".btnEditarPer", function(){
 	$('#editarAreaP').children().remove();
 	var idper = $(this).attr("idper");
-	var datos = new FormData();
-	datos.append("idper", idper);
+	var idAr = $(this).attr("idAr");
+	var datosD = new FormData();
+	datosD.append("traer", 0);
+
+	$('#editarId').val(idper);
 
 	$.ajax({
 
-		url:"ajax/personas.ajax.php",
+		url:"ajax/areas.ajax.php",
 		method: "POST",
-		data: datos,
+		data: datosD,
 		cache: false,
 		contentType: false,
 		processData: false,
 		dataType: "json",
-		success: function(respuesta){
+		success: function(respuestaD){	
 			
-			$('#editarId').val(respuesta["id"]);
-			$('#titulo-editar-persona').html(respuesta["nombre"]);
-
-			var datosD = new FormData();
-			datosD.append("traer", 0);
-
-			$.ajax({
-
-				url:"ajax/areas.ajax.php",
-				method: "POST",
-				data: datosD,
-				cache: false,
-				contentType: false,
-				processData: false,
-				dataType: "json",
-				success: function(respuestaD){	
-					$('#editarAreaP').append('<option value="'+respuesta["id_area"]+'">'+respuesta["area"]+'</option>');
-
-					for (var i = 0; i < respuestaD.length; i++) 
-					{
-						if (respuestaD[i]['id'] != respuesta["id_area"]) 
-						{
-							$('#editarAreaP').append('<option value="'+respuestaD[i]['id']+'">'+respuestaD[i]['nombre']+'</option>');
-						}
-
-					}
+			for (var i = 0; i < respuestaD.length; i++) 
+			{
+				if (respuestaD[i]['id'] == idAr) 
+				{
+					$('#editarAreaP').append('<option value="'+respuestaD[i]['id']+'">'+respuestaD[i]['nombre']+'</option>');
 				}
 
-			});
+			}
+
+			for (var i = 0; i < respuestaD.length; i++) 
+			{
+				if (respuestaD[i]['id'] != idAr) 
+				{
+					$('#editarAreaP').append('<option value="'+respuestaD[i]['id']+'">'+respuestaD[i]['nombre']+'</option>');
+				}
+
+			}
 		}
 
 	});

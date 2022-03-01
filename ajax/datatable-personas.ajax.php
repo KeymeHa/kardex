@@ -46,7 +46,7 @@ class Tablapersonas
 		{	
            $areas = ControladorAreas::ctrMostrarAreas("id", $personas[$i]["id_area"]);
            $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
-		   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarPer'  title='Editar persona' data-toggle='modal' data-target='#modalEditarPersona' idper='".$personas[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarPer' title='Eliminar' idper='".$personas[$i]["id"]."' nomper='".$usuario["nombre"]."'><i class='fa fa-times'></i></button></div></div>";
+		   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarPer'  title='Editar persona' data-toggle='modal' data-target='#modalEditarPersona' idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarPer' title='Eliminar' idper='".$personas[$i]["id"]."' nomper='".$usuario["nombre"]."'><i class='fa fa-times'></i></button></div></div>";
 
 		   $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"]);
 
