@@ -82,7 +82,14 @@ class ControladorInsumos
 
 				
 
-
+				if (isset($_POST["nuevaHabilitado"])) 
+				{
+					$habilitado = 0;
+				}
+				else
+				{
+					$habilitado = 1;
+				}
 
 				$datos = array("id_categoria" => $_POST["nuevaCategoria"],
 							   "codigo" => $_POST["nuevoCodigo"],
@@ -97,7 +104,8 @@ class ControladorInsumos
 							   "prioridad" => $_POST["nuevaPrioridad"],
 							   "unidad" => $_POST["nuevaUnidadEnt"],
 							   "unidadSal" => $_POST["nuevaUnidadSal"],
-							   "contenido" => $_POST["nuevoContenido"]);
+							   "contenido" => $_POST["nuevoContenido"],
+								"habilitado" => $habilitado);
 
 				$respuesta = ModeloInsumos::mdlIngresarInsumo($tabla, $datos);
 
@@ -237,6 +245,16 @@ class ControladorInsumos
 				}
 
 				
+
+				if (isset($_POST["editarHabilitado"])) 
+				{
+					$habilitado = 0;
+				}
+				else
+				{
+					$habilitado = 1;
+				}
+				
 				$datos = array( "id_categoria" => $_POST["EsCategoria"],
 								"codigo" => $_POST["eCodigoP"],
 								"descripcion" => $desValidada,
@@ -246,6 +264,7 @@ class ControladorInsumos
 								"seccion" => $eSeccionP,
 								"prioridad" => $_POST["ePrioridadP"],
 								"precio_compra" => $ePrecioCompra,
+								"habilitado" => $habilitado,
 								"id" => $_POST["eIdP"]);
 
 				$respuesta = ModeloInsumos::mdlEditarInsumo($tabla, $datos);

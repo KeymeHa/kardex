@@ -194,7 +194,7 @@ class ModeloInsumos
 	=============================================*/
 	static public function mdlIngresarInsumo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad, unidad, unidadSal, contenido) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad, :unidad, :unidadSal, :contenido)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, imagen, precio_compra, estante, nivel, seccion, fecha, prioridad, unidad, unidadSal, contenido, habilitado) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :imagen, :precio_compra, :estante, :nivel, :seccion, :fecha, :prioridad, :unidad, :unidadSal, :contenido, :habilitado)");
 
 		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
@@ -210,6 +210,7 @@ class ModeloInsumos
 		$stmt->bindParam(":unidad", $datos["unidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":unidadSal", $datos["unidadSal"], PDO::PARAM_INT);
 		$stmt->bindParam(":contenido", $datos["contenido"], PDO::PARAM_INT);
+		$stmt->bindParam(":habilitado", $datos["habilitado"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -231,7 +232,7 @@ class ModeloInsumos
 	=============================================*/
 	static public function mdlEditarInsumo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_categoria = :id_categoria, codigo = :codigo, descripcion = :descripcion, observacion = :observacion, estante = :estante, nivel = :nivel, seccion = :seccion, prioridad = :prioridad, precio_compra = :precio_compra WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_categoria = :id_categoria, codigo = :codigo, descripcion = :descripcion, observacion = :observacion, estante = :estante, nivel = :nivel, seccion = :seccion, prioridad = :prioridad, precio_compra = :precio_compra, habilitado = :habilitado WHERE id = :id");
 		$stmt -> bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_STR);
 		$stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
@@ -241,7 +242,8 @@ class ModeloInsumos
 		$stmt -> bindParam(":seccion", $datos["seccion"], PDO::PARAM_STR);
 		$stmt -> bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_STR);
 		$stmt -> bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
+		$stmt -> bindParam(":habilitado", $datos["habilitado"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 

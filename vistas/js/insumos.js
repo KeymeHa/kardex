@@ -101,7 +101,16 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 				$("#eSeccionP").val(respuesta["seccion"]);
 			}
 
-			var datosDos = new FormData();
+			if(respuesta["habilitado"] == 0)
+			{
+				$("#editarHabilitado").prop("checked", true);
+			}
+			else
+			{
+				$("#editarHabilitado").prop("checked", false);
+			}
+
+		var datosDos = new FormData();
 		datosDos.append("traerCat", 1);
 		$.ajax({
 			url:"ajax/categorias.ajax.php",

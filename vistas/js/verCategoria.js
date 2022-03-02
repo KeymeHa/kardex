@@ -82,30 +82,29 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 		}
 	});
 
-	
-			
-
 	var datosDos = new FormData();
 	datosDos.append("traerCat", 1);
-	$.ajax({
-		url:"ajax/categorias.ajax.php",
-		method: "POST",
-		data: datosDos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(respuesta)
-		{	
-			for (var i = 0; i < respuesta.length; i++) 
-			{
-				if (idCat != respuesta[i]['id']) 
+		$.ajax({
+			url:"ajax/categorias.ajax.php",
+			method: "POST",
+			data: datosDos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success: function(respuesta)
+			{	
+				for (var i = 0; i < respuesta.length; i++) 
 				{
-					$('#EsCategoria').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['categoria']+'</option>');
+					if (idCat != respuesta[i]['id']) 
+					{
+						$('#EsCategoria').append('<option value="'+respuesta[i]['id']+'">'+respuesta[i]['categoria']+'</option>');
+					}
+
 				}
 			}
-		}
 	});
+			
 })
 
 

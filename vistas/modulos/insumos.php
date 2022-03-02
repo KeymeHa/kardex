@@ -219,8 +219,8 @@
               <div class="form-group">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox">
-                      Mostrar en Requisición
+                      <input type="checkbox" value="0" name="nuevaHabilitado">
+                      Marque para no mostrar el insumo en requisición
                     </label>
                   </div>
               </div>
