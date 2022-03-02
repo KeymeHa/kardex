@@ -189,6 +189,11 @@ $(".formularioNuevaFactura").on("change", "input.nuevaCantidadInsumo", function(
 	listarInsumosNF();
 })
 
+$(".formularioNuevaFactura").on("change", "input.nuevoContenido", function(){
+	sumarPreciosNF();
+	listarInsumosNF();
+})
+
 
 $(".formularioNuevaFactura").on("change", "input.nuevoPrecioInsumo", function(){
 

@@ -639,16 +639,12 @@ class ControladorFacturas
 
 								if($edit["can"] != $ant["can"])
 								{
-									if ($edit["can"] > $ant["can"]) 
-									{
-										$nuevoStock = $insumo["stock"] + ($edit["can"] - $ant["can"]);
-									}
-									else
-									{
-										$nuevoStock = $insumo["stock"] - ($ant["can"] - $edit["can"]);
-									}
+									$temp = $insumo["stock"] - ($ant["can"] * $ant["con"]);
+									$nuevoStock = $temp + ($edit["can"] * $edit["con"]);
+									//$nuevoStock = $temp + ($edit["can"] - $ant["can"]);
+									
 
-									$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
+									$datos = array( 'stock' => $nuevoStock, 'contenido' => $edit["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 								}
 								$sw = true;							
@@ -657,8 +653,8 @@ class ControladorFacturas
 							
 						if($sw != true)
 						{
-							$nuevoStock = $insumo["stock"] + ( intval($edit["can"]) * intval($edit["con"]));
-							$datos = array( 'stock' => $nuevoStock, 'contenido' => $edit["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
+							$nuevoStock = $insumo["stock"] + $edit["can"];
+							$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 							$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 						}
 					}//foreach
@@ -679,7 +675,7 @@ class ControladorFacturas
 										$item = "id";
 										$valor = $value["id"];
 										$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
-										$nuevoStock = intval($insumo["stock"]) - (intval($value["can"]) * intval($value["con"]) );
+										$nuevoStock = $insumo["stock"] - ($value["can"] * $value["con"]);
 										$precioCompra = $insumo["precio_compra"];
 										$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 										$respuesta = ControladorInsumos::ctrActualizarStock($datos);

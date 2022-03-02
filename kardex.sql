@@ -155,9 +155,9 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `iva` float NOT NULL,
   `observacion` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.facturas: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.facturas: ~13 rows (aproximadamente)
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
 INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, `id_usr`, `insumos`, `fecha`, `inversion`, `iva`, `observacion`) VALUES
 	(1, 'FAC-001-2021', 'GFD-231', 2, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"15","con":"6","pre":"5501","sub":"82515"},', '2021-07-19', 1084600, 206074, ''),
@@ -168,7 +168,12 @@ INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, 
 	(6, 'FAC-006-2021', 'ONLY-2012', 1, '', 1, '[{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","con":"6","pre":"5501","sub":"5501"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","con":"6","pre":"7425","sub":"7425"},{"id":"4","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","can":"1","con":"6","pre":"8596","sub":"8596"}]', '2021-08-21', 21522, 4089, ''),
 	(7, 'FAC-007-2021', 'GFD-232', 1, '', 1, '[{"id":"15","des":"CAFÉ TOSTADO Y MOLIDO, FUERTE","can":"15","con":"6","pre":"850","sub":"12750"},{"id":"21","des":"CINTA EMP TRANSP 48X100 REF.301 3M ","can":"20","con":"6","pre":"700","sub":"14000"},{"id":"29","des":"COLCAFE COFFE CREAM 100 SOBRES DE 3 GR","can":"5","con":"6","pre":"8000","sub":"40000"},{"id":"34","des":"DECAMETRO STANPROF 10 MTS","can":"5","con":"6","pre":"14000","sub":"70000"},{"id":"31","des":"CREMA INSTANTANEA NO LACTEA PARA CAFÉ ","can":"5","con":"6","pre":"1200","sub":"6000"}]', '2021-08-22', 142750, 27122, ''),
 	(8, 'FAC-008-2021', 'frv-98', 2, '', 1, '[{"id":"51","des":"GRAPADORA 340 RANK (SENCILLA)","can":"50","con":"6","pre":"500","sub":"25000"},{"id":"50","des":"GRAPA GALVANIZADA INDUSTRIAL *1000","can":"25","con":"6","pre":"700","sub":"17500"},{"id":"49","des":"GRAPA COBRIZADA STANDARD *5000 ","can":"49","con":"6","pre":"1000","sub":"49000"}]', '2021-12-15', 91500, 17385, ''),
-	(9, 'NF-001-2022', 'CAR-213-2022', 1, '', 1, '[{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"15","con":"6","pre":"12234","sub":"183510"},{"id":"17","des":"CARTULINA BRISTOL 1/8 X 8 SURTIDAS","can":"1","con":"6","pre":"2456","sub":"2456"}]', '2022-12-19', 185966, 35333, '');
+	(9, 'NF-001-2022', 'CAR-213-2022', 1, '', 1, '[{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"15","con":"6","pre":"12234","sub":"183510"},{"id":"17","des":"CARTULINA BRISTOL 1/8 X 8 SURTIDAS","can":"1","con":"6","pre":"2456","sub":"2456"}]', '2022-12-19', 185966, 35333, ''),
+	(10, 'FAC-002-2022', 'DFE-879', 2, '', 1, '[{"id":"11","des":"BOLSA BASURA NEGRA X 90*110 ","can":"15","con":"6","pre":"12234","sub":"183510"},{"id":"17","des":"CARTULINA BRISTOL 1/8 X 8 SURTIDAS","can":"1","con":"6","pre":"2456","sub":"2456"}]', '2022-03-02', 1400030, 266005, ''),
+	(11, 'FAC-003-2022', 'def-078', 1, '', 1, '[{"id":"157","des":"Celular","can":"1","con":"1","pre":"455000","sub":"455000"}]', '2022-03-02', 455000, 86450, ''),
+	(12, 'FAC-004-2022', 'FRG-87', 1, '', 1, '', '2022-03-02', 10000, 1900, ''),
+	(13, 'FAC-005-2022', 'AQS-2022', 1, '', 1, '[{"id":"155","des":"FUNDA PARA CD","can":"1","con":"1","pre":"20","sub":"20"}]', '2022-03-02', 20, 3, ''),
+	(14, 'FAC-006-2022', 'BHY-98', 1, '', 1, '[{"id":"156","des":"&quotohla","can":"5","con":"7","pre":"1500","sub":"7500"}]', '2022-03-02', 7500, 1425, '');
 /*!40000 ALTER TABLE `facturas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.historial
@@ -243,15 +248,15 @@ INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observaci
 	(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', 'vistas/img/productos/default/anonymous.png', 115, 0, 0, '0000-00-00 00:00:00', 1, 5, 4, 0, 2, 1, 1, 1, 0),
 	(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 96, 0, 89999, '0000-00-00 00:00:00', 0, 7, 7, 7, 2, 1, 1, 1, 0),
 	(4, 1, 3, 'ATOMIZADOR AMBIENTADOR LAVANDA', '', 'vistas/img/productos/default/anonymous.png', 93, 0, 500, '0000-00-00 00:00:00', 0, 5, 4, 4, 2, 1, 1, 1, 1),
-	(5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', 'vistas/img/productos/default/anonymous.png', 30, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', 'vistas/img/productos/default/anonymous.png', 32, 0, 5000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(6, 12, 5, 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', NULL, 'vistas/img/productos/default/anonymous.png', 137, 0, 18000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(7, 13, 6, 'BANDEJA PORTA DOCUMENTOS', NULL, 'vistas/img/productos/default/anonymous.png', 64, 0, 4000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(8, 1, 7, 'BLANQUEADOR (LIMPIDO)', NULL, 'vistas/img/productos/default/anonymous.png', 84, 0, 8800, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(9, 10, 8, 'BOLIGRAFO  ROJO ', NULL, 'vistas/img/productos/default/anonymous.png', 13, 0, 587, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(9, 10, 8, 'BOLIGRAFO  ROJO ', NULL, 'vistas/img/productos/default/anonymous.png', 50, 0, 7900, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 10, 1),
 	(10, 10, 9, 'BOLIGRAFO NEGRO', NULL, 'vistas/img/productos/default/anonymous.png', 89, 0, 1500, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(11, 1, 10, 'BOLSA BASURA NEGRA X 90*110 ', NULL, 'vistas/img/productos/default/anonymous.png', 11, 0, 12234, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(12, 1, 11, 'BOLSA BASURA VERDE 42*47CMS ', NULL, 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(13, 14, 12, 'BORRADOR DE NATA', NULL, 'vistas/img/productos/default/anonymous.png', 7, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(11, 1, 10, 'BOLSA BASURA NEGRA X 90*110 ', NULL, 'vistas/img/productos/default/anonymous.png', 13, 0, 12234, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(12, 1, 11, 'BOLSA BASURA VERDE 42*47CMS ', NULL, 'vistas/img/productos/default/anonymous.png', 33, 0, 2000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 11, 1),
+	(13, 14, 12, 'BORRADOR DE NATA', NULL, 'vistas/img/productos/default/anonymous.png', 47, 0, 700, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 10, 1),
 	(14, 10, 13, 'BORRADOR DE TABLERO', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(15, 12, 14, 'CAFÉ TOSTADO Y MOLIDO, FUERTE', NULL, 'vistas/img/productos/default/anonymous.png', 15, 0, 850, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(16, 14, 15, 'CARATULA POLY COVER CARTA ', NULL, 'vistas/img/productos/default/anonymous.png', 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
@@ -393,9 +398,9 @@ INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observaci
 	(152, 14, 151, 'EXACTO PLÀSTICO GRANDE', NULL, 'vistas/img/productos/default/anonymous.png', 20, 0, 2000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(153, 2, 152, 'TONER NEGRO HP 85A(P1102W)', NULL, 'vistas/img/productos/default/anonymous.png', 5, 0, 10, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(154, 12, 153, 'SERVILLETA DE LUJO 33*32CM ', NULL, 'vistas/img/productos/default/anonymous.png', 68, 0, 28, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(155, 15, 154, 'FUNDA PARA CD', NULL, 'vistas/img/productos/default/anonymous.png', 73, 0, 20, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
-	(156, 2, 155, '&quotohla&quot', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 0, '2021-09-16 12:22:04', 0, 2, 1, 1, 3, 1, 1, 1, 1),
-	(157, 13, 1, 'Celular', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 455000, '2022-02-21 11:29:17', 0, 2, 1, 5, 3, 1, 1, 1, 1);
+	(155, 15, 154, 'FUNDA PARA CD', NULL, 'vistas/img/productos/default/anonymous.png', 74, 0, 20, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
+	(156, 2, 155, '&quotohla&quot', '', 'vistas/img/productos/default/anonymous.png', 170, 0, 1500, '2021-09-16 12:22:04', 0, 2, 1, 1, 3, 1, 1, 10, 1),
+	(157, 13, 1, 'Celular', '', 'vistas/img/productos/default/anonymous.png', 5, 0, 455000, '2022-02-21 11:29:17', 0, 2, 1, 5, 3, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosunidad
@@ -632,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`) VALUES
-	(1, 10, 15, 30, 10, 2, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 2, NULL, NULL, NULL, 0, 0);
+	(1, 10, 15, 30, 10, 7, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 2, NULL, NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -817,7 +822,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-03-01 16:06:24', '2021-02-11 10:06:49', 'glk2vcmgilgl22fvsbfdiutr31', 0, 0, 1),
+	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-03-02 10:50:49', '2021-02-11 10:06:49', '9qhqd0mf652akn5apin87sdtsh', 0, 0, 1),
 	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 11:12:33', '', 0, 0, 1),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 11:12:39', '', 0, 0, 1),
 	(4, 'Fernando Barcelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 4, '', 1, '2022-02-28 12:04:24', '2022-02-18 16:29:41', 'mitr0m71v4fl32623rtkgp70sa', 0, 0, 1),
