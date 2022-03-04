@@ -183,6 +183,8 @@ function paginaCargada(pagina){
 		var tablaElegida = "";
 		var tablaAjax = "";
 		var variable = "";
+		var orden = "asc";
+		var columna = 0;
 		if(pagina == 1)
 		{
 			tablaElegida =  $('.tablaCategorias');
@@ -258,10 +260,10 @@ function paginaCargada(pagina){
 			{
 			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 			}
-			tablaDatatable(tablaElegida, tablaAjax, variable);
+			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 			variable+= "&appr=0";
 			tablaElegida =  $('.tablaRqsAppr');
-			tablaDatatable(tablaElegida, tablaAjax, variable);
+			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 
 
 		}
@@ -323,6 +325,8 @@ function paginaCargada(pagina){
 			var fechaFinal = urlParams.get('fechaFinal');
 			tablaElegida =  $('.tablaInsuRQReporte');
 			tablaAjax = 'reporteRqInsu';
+			columna = 4;
+			orden = "desc";
 			
 			if(fechaInicial == null)
 			{
@@ -463,17 +467,17 @@ function paginaCargada(pagina){
 				{variableD = "&fechaInicial=0&fechaFinal=0";}
 
 				variable = "?idInsumo="+idInsumo+variableD+"&tipoStock=in";
-				tablaDatatable(tablaElegida, tablaAjax, variable);
-				validarTabla(tablaElegida, tablaAjax, variable);
+				tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
+				validarTabla(tablaElegida, tablaAjax, variable, columna, orden);
 				tablaElegida =  $('.tablaSalidas');
 				variable = "?idInsumo="+idInsumo+variableD+"&tipoStock=out";
-				tablaDatatable(tablaElegida, tablaAjax, variable);
-				validarTabla(tablaElegida, tablaAjax, variable);
+				tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
+				validarTabla(tablaElegida, tablaAjax, variable, columna, orden);
 			}
 			else
 			{
 				variable = "?tipoStock=0";
-				validarTabla(tablaElegida, tablaAjax, variable);
+				validarTabla(tablaElegida, tablaAjax, variable, columna, orden);
 			}
 		}
 		else if(pagina == 27)
@@ -519,15 +523,15 @@ function paginaCargada(pagina){
 			{
 			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 			}
-			tablaDatatable(tablaElegida, tablaAjax, variable);
+			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 
 
 		}
 		
 
 		if (pagina != 26 && pagina != 8) {
-			tablaDatatable(tablaElegida, tablaAjax, variable);
-			validarTabla(tablaElegida, tablaAjax, variable);
+			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
+			validarTabla(tablaElegida, tablaAjax, variable ,columna, orden);
 		}
 
 			
@@ -537,7 +541,7 @@ function paginaCargada(pagina){
 
 }
 
-function validarTabla(tablaElegida, tablaAjax, variable)
+function validarTabla(tablaElegida, tablaAjax, variable ,columna, orden)
 {
 	 $.ajax({
 			 	url: "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
@@ -600,13 +604,14 @@ function validarTabla(tablaElegida, tablaAjax, variable)
 			});
 }
 
-function tablaDatatable(tablaElegida, tablaAjax, variable)
+function tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden)
 {
 	$(tablaElegida).DataTable( {
 		    "ajax": "ajax/datatable-"+tablaAjax+".ajax.php"+variable,
 		    "deferRender": true,
 			"retrieve": true,
 			"processing": true,
+			"order": [[ columna, orden ]],
 			 "language": {
 
 					"sProcessing":     "Procesando...",
