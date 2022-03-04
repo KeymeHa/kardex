@@ -28,7 +28,7 @@ class tablaStock
 		}
 		elseif($tipoS == "out")
 		{
-			$respuesta = ControladorRequisiciones::ctrMostrarRequisiciones($fechaIn, $fechaOut);
+			$respuesta = ControladorRequisiciones::ctrMostrarRequisicionesRango($fechaIn, $fechaOut);
 		}
 
 	    if ( count($respuesta) == 0) 
@@ -109,13 +109,16 @@ class tablaStock
 	}
 }
 
+$stockTipo = new tablaStock();
+
 if( isset($_GET["tipoStock"]) )
 {
+
 	if ($_GET["tipoStock"] == "in" || $_GET["tipoStock"] == "out") 
 	{
-		if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
+		if( isset($_GET["fechaInicial"]) )
 		{
-			if($_GET["fechaInicial"] == "undefined" || $_GET["fechaInicial"] == null)
+			if($_GET["fechaInicial"] == 0)
 			{
 				$stockTipo-> fechaInicial = null;
 				$stockTipo-> fechaFinal = null;
@@ -126,21 +129,32 @@ if( isset($_GET["tipoStock"]) )
 				$stockTipo-> fechaFinal = $_GET["fechaFinal"];
 			}
 		}
+
+		if (isset($_GET["idInsumo"]))
+		{
+			if ( $_GET["idInsumo"] != 0  ) 
+			{
+				$stockTipo-> idInsumo = $_GET["idInsumo"];
+				$stockTipo-> tipo = $_GET["tipoStock"];
+				$stockTipo-> mostrarTablaSotck();
+			}
+			else
+			{
+				echo'{"data": [id_inusmo 0]}';
+			}
+		}
 		else
 		{
-			$stockTipo = new tablaStock();
-			$stockTipo-> idInsumo = $_GET["idInsumo"];
-			$stockTipo-> tipo = $_GET["tipoStock"];
-			$stockTipo-> mostrarTablaSotck();
+			echo'{"data": [id_inusmo nulo]}';
 		}
 		
 	}
 	else
 	{
-		echo'{"data": []}';
+		echo'{"data": [stock nulo]}';
 	}
 
-
+	
 }
 
 //-------------------------------------

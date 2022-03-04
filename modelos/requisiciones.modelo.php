@@ -97,9 +97,9 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol like '%$fechaFinal%' ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol = :fecha_sol ORDER BY id DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt -> bindParam(":fecha_sol", $fechaInicial, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -147,9 +147,9 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 0 AND fecha_sol like '%$fechaFinal%'  ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 0 AND fecha_sol = :fecha_sol  ORDER BY id DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
 			$stmt -> execute();
 

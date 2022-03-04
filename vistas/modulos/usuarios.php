@@ -183,7 +183,6 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
                 <input type="password" class="form-control input-lg" name="nuevoPassword" placeholder="Ingresar contraseña" required>
               </div>
             </div>
-
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
             <div class="form-group">            
@@ -209,7 +208,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
                    }
                   }
                   else
-                  {echo '<option value="">Selecionar perfil</option>';}
+                  {echo '<option value="">Sin información</option>';}
 
                   ?>
                 </select>

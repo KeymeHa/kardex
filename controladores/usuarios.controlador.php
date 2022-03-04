@@ -236,22 +236,8 @@ class ControladorUsuarios
 				preg_match('/^[a-zA-Z-0-9]+$/', $_POST["nuevoUsuario"]) &&
 				preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoPassword"])) 
 			{
-
-				/*
-
-				nuevoNombre
-				idUsr
-				nuevoUsuario
-				nuevoPassword
-				nuevoPerfil
-				nuevaFoto
-
-				*/
-
 				$tabla = "usuarios";
-
-				$encriptar = crypt($_POST["nuevoPassword"],'2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-
+				$encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 				$datos = array('nombre' => $_POST["nuevoNombre"],
 								'usuario' => $_POST["nuevoUsuario"],
 								'password' => $encriptar,
@@ -351,8 +337,6 @@ class ControladorUsuarios
 		{
 			if(preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarNombre"]))
 			{
-
-
 				if($_POST["editarPassword"] == "")
 				{
 					$encriptar = $_POST["ActualPassword"];
@@ -371,10 +355,6 @@ class ControladorUsuarios
 								"foto" => $_POST["editarFoto"],
 								"usuario" => $_POST["editarUsuario"]
 								 );
-
-
-				//$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
-
 				try {
 
 					$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);

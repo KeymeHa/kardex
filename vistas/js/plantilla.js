@@ -380,8 +380,6 @@ function paginaCargada(pagina){
 			{
 				variable = "?idInsumo=0&tipoStock=in";
 			}
-
-			
 		}
 		else if(pagina == 22)
 		{
@@ -430,7 +428,7 @@ function paginaCargada(pagina){
 
 			if(localStorage.getItem("idInver") != null)
 			{
-				variable  = "?idInsumo="+localStorage.getItem("idInver");
+				variable = "?idInsumo="+localStorage.getItem("idInver");
 			}
 			else
 			{
@@ -448,56 +446,35 @@ function paginaCargada(pagina){
 		}
 		else if(pagina == 26)
 		{
-
-			tablaElegida =  $('.tablaEntradas');
-			tablaAjax = 'stock';
 			var queryString = window.location.search;
 			var urlParams = new URLSearchParams(queryString);
+			var idInsumo = urlParams.get('idInsumo');
 			var fechaInicial = urlParams.get('fechaInicial');
 			var fechaFinal = urlParams.get('fechaFinal');
-			
-			if(localStorage.getItem("idStock") != null)
-			{
-				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=in";
-			}
-			else
-			{
-				variable = "?idInsumo=0&tipoStock=in";
-			}
-
-			if(fechaInicial == null)
-			{
-			  variable+="&fechaInicial=null";
-			} 
-			else 
-			{
-			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
-			}	
-			validarTabla(tablaElegida, tablaAjax, variable);
-			tablaDatatable(tablaElegida, tablaAjax, variable);
-
-			tablaElegida =  $('.tablaSalidas');
+			var variableD = "";
+			tablaElegida =  $('.tablaEntradas');
 			tablaAjax = 'stock';
 
-			if(localStorage.getItem("idStock") != null)
+			if (idInsumo != null) 
 			{
-				variable  = "?idInsumo="+localStorage.getItem("idStock")+"&tipoStock=out";
+				if (fechaInicial != null) 
+				{variableD = "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;}
+				else
+				{variableD = "&fechaInicial=0&fechaFinal=0";}
+
+				variable = "?idInsumo="+idInsumo+variableD+"&tipoStock=in";
+				tablaDatatable(tablaElegida, tablaAjax, variable);
+				validarTabla(tablaElegida, tablaAjax, variable);
+				tablaElegida =  $('.tablaSalidas');
+				variable = "?idInsumo="+idInsumo+variableD+"&tipoStock=out";
+				tablaDatatable(tablaElegida, tablaAjax, variable);
+				validarTabla(tablaElegida, tablaAjax, variable);
 			}
 			else
 			{
-				variable = "?idInsumo=0&tipoStock=out";
+				variable = "?tipoStock=0";
+				validarTabla(tablaElegida, tablaAjax, variable);
 			}
-
-			if(fechaInicial == null)
-			{
-			  variable+="&fechaInicial=null";
-			} 
-			else 
-			{
-			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
-			}	
-
-			tablaDatatable(tablaElegida, tablaAjax, variable);
 		}
 		else if(pagina == 27)
 		{

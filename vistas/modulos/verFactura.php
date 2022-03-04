@@ -146,6 +146,7 @@
            <th>Descripción</th>
            <th>Categoría</th>
            <th title="Nueva Cantidad añadida al stock">Cantidad</th>
+           <th title="Cantidad añadida al stock">Stock</th>
            <th>Precion U/N</th>
            <th>SubTotal</th>
          </tr> 
@@ -168,6 +169,10 @@
               {
                  $imagen = "vistas/img/productos/default/anonymous.png";
               }
+
+              $unidad = ControladorParametros::ctrMostrarUnidad($insumos["unidad"]);
+              $unidadSal = ControladorParametros::ctrMostrarUnidad($insumos["unidadSal"]);
+
               $categoria = ControladorCategorias::ctrMostrarCategorias($item, $insumos["id_categoria"]);
                echo '<tr>
                       <td>'.($key+1).'</td>
@@ -175,7 +180,8 @@
                       <td>'.$insumos["codigo"].'</td>
                       <td>'.$value["des"].'</td>
                       <td>'.$categoria["categoria"].'</td>
-                      <td>'.$value["can"].'</td>
+                      <td>'.$value["can"].' '.$unidad.'(s)</td>
+                      <td>'.($value["can"]*$value["con"]).' '.$unidadSal.'(s)</td>
                       <td>$<span class="cantidadEfectivo">'.$value["pre"].'</span></td>
                       <td>$<span class="cantidadEfectivo">'.$value["sub"].'</span></td>
                     </tr>';

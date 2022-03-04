@@ -17,9 +17,9 @@ class ModeloFacturas
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha = :fecha ORDER BY id DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
 			$stmt -> execute();
 

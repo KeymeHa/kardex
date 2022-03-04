@@ -6,17 +6,10 @@ class ControladorFacturas
 	function anioActual()
 	{
 	    $anio = ControladorParametros::ctrVerAnio(true);
-
 	    if ($anio["anio"] == 0) 
-	    {
-	    	$respuesta = '';
-	    }
+	    {$respuesta = '';}
 	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
-	    }
-
-
+	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
 		return $respuesta;
 	}
 
