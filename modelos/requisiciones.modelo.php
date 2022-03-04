@@ -189,8 +189,7 @@ class ModeloRequisiciones
 
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id $anio GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
-
+			$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id $anio GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
@@ -198,11 +197,8 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			#SELECT personas.nombre, COUNT(personas.nombre) FROM requisiciones INNER JOIN personas ON requisiciones.id_persona = personas.id WHERE fecha_sol like '%2021-09-22%' GROUP BY(personas.nombre);
-			$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol like '%$fechaFinal%' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
-			#$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id GROUP BY(personas.nombre) WHERE fecha_sol like '%$fechaFinal%'");
-
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol = :fecha_sol GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+			$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -220,12 +216,12 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT personas.nombre, COUNT(personas.nombre) FROM $tabla INNER JOIN personas ON $tabla.id_persona = personas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(personas.nombre) ORDER BY COUNT(personas.nombre) DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
 
 			}
 		
@@ -277,26 +273,45 @@ class ModeloRequisiciones
 		$stmt = null;
 	}
 
-	static public function MdlContarRqdeArea($tabla, $item, $valor)
+	static public function MdlContarRqdeArea($tabla, $item, $valor, $anio)
 	{
 		if($item != null)
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
-
-			return $stmt -> fetch();
-
+			if ($anio == "") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND aprobado = 1");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio AND $item = :$item AND aprobado = 1");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();
+			}
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla");
 
-			$stmt -> execute();
+			if ( $anio == "") 
+			{
+				# code...
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla");
+				$stmt -> execute();
+				return $stmt -> fetchAll();
 
-			return $stmt -> fetchAll();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio AND aprobado = 1 ");
+				$stmt -> execute();
+				return $stmt -> fetchAll();
+			}
+
 
 		}
 
@@ -314,7 +329,7 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha_sol like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT insumos FROM $tabla WHERE fecha_sol = :fecha_sol");
 
 			$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 

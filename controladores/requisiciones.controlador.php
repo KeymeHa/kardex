@@ -189,9 +189,9 @@ class ControladorRequisiciones
 	static public function ctrContarRqdeArea($item, $valor)
 	{
 		$tabla = "requisiciones";
-
-		$respuesta = ModeloRequisiciones::MdlContarRqdeArea($tabla, $item, $valor);
-
+		$r = new ControladorRequisiciones;
+		$anio = $r->anioActualArea();
+		$respuesta = ModeloRequisiciones::MdlContarRqdeArea($tabla, $item, $valor, $anio);
 		return $respuesta;
 
 	}

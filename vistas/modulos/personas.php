@@ -34,6 +34,13 @@
             include "anios.php";
           ?>
 
+          <!--<button type="button" class="btn btn-success pull-right" id="btn-RangoPersonas">    
+            <span>
+              <i class="fa fa-calendar"></i> Rango de fecha
+            </span>
+            <i class="fa fa-caret-down"></i>
+        </button>-->
+
       </div>
 
       <div class="box-body">
