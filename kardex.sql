@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `insumos` (
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
 INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`) VALUES
 	(2, 1, 1, 'AMBIENTADOR DE BAÑO AIR WICK', '', 'vistas/img/productos/default/anonymous.png', 115, 0, 0, '0000-00-00 00:00:00', 1, 5, 4, 0, 2, 1, 1, 1, 0),
-	(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 171, 0, 5000, '0000-00-00 00:00:00', 0, 7, 7, 7, 2, 1, 1, 15, 0),
+	(3, 12, 2, 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 171, 0, 7425, '0000-00-00 00:00:00', 0, 7, 7, 7, 2, 1, 1, 15, 0),
 	(4, 1, 3, 'ATOMIZADOR AMBIENTADOR LAVANDA', '', 'vistas/img/productos/default/anonymous.png', 93, 0, 500, '0000-00-00 00:00:00', 0, 5, 4, 4, 2, 1, 1, 1, 1),
 	(5, 12, 4, 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', '', 'vistas/img/productos/default/anonymous.png', 32, 0, 5000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
 	(6, 12, 5, 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', NULL, 'vistas/img/productos/default/anonymous.png', 137, 0, 18000, '0000-00-00 00:00:00', 0, 0, 0, 0, 2, 1, 1, 1, 1),
@@ -500,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `habilitado` varchar(30) COLLATE utf8_spanish_ci NOT NULL DEFAULT '''all''',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.js_files: ~28 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
@@ -539,7 +539,8 @@ INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(33, 'genRequisicion', 'genRequisicion'),
 	(34, 'hisRequisicion', 'hisRequisicion'),
 	(35, 'verProyecto', 'verProyecto'),
-	(36, 'verRequisicionS', 'verRequisicionS');
+	(36, 'verRequisicionS', 'verRequisicionS'),
+	(37, 'verFactura', 'verFactura');
 /*!40000 ALTER TABLE `js_files` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.movimientos
@@ -582,7 +583,7 @@ CREATE TABLE IF NOT EXISTS `ordencompra` (
 -- Volcando datos para la tabla kardex.ordencompra: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `ordencompra` DISABLE KEYS */;
 INSERT INTO `ordencompra` (`id`, `codigoInt`, `id_proveedor`, `id_usr`, `id_cotizacion`, `insumos`, `fecha`, `inversion`, `iva`, `fac_asociada`, `formaPago`, `responsable`, `fechaEntrega`, `observacion`) VALUES
-	(2, '2', 1, 1, 0, '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"2","des":"AMBIENTADOR DE BAÑO AIR WICK","can":"1","pre":"5000","sub":"5000"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"}]', '2021-08-18', 156425, 29721, 9, 'Chan con chan', 'Kevin', '0000-00-00', ''),
+	(2, '2', 1, 1, 0, '[{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"8","pre":"18000","sub":"144000"},{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"1","pre":"7425","sub":"7425"}]', '2021-08-18', 151425, 28771, 9, 'Chan con chan', 'Kevin', '0000-00-00', ''),
 	(3, '1', 2, 1, 0, '[{"id":"9","des":"BOLIGRAFO  ROJO ","can":"20","pre":"587","sub":"11740"}]', '2021-08-18', 11740, 2231, 8, 'para la quincena', 'Kevin', '0000-00-00', 'None'),
 	(4, '1', 1, 1, 0, '[{"id":"3","des":"AROMATICA SURTIDA EN BOLSA","can":"6","pre":"89999","sub":"539994"},{"id":"6","des":"AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL","can":"5","pre":"18000","sub":"90000"},{"id":"8","des":"BLANQUEADOR (LIMPIDO)","can":"2","pre":"8800","sub":"17600"}]', '2021-08-18', 647594, 123043, 0, 'De Contado', 'Carmen Rebolledo', '0000-00-00', ''),
 	(5, '3', 2, 1, 0, '[{"id":"9","des":"BOLIGRAFO  ROJO ","can":"1","pre":"587","sub":"587"}]', '2022-01-31', 587, 112, 0, 'De Contado', 'Kevin Bolaño', '0000-00-00', ''),
@@ -808,7 +809,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-03-04 09:06:57', '2021-02-11 10:06:49', '9gpvca7r6aogt0f1eofru5msp5', 0, 0, 1),
+	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-04-09 08:32:51', '2021-02-11 10:06:49', '9rti3obmggo8p3vpss6sitrvrc', 0, 0, 1),
 	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 11:12:33', '', 0, 0, 1),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 11:12:39', '', 0, 0, 1),
 	(4, 'Fernando Barcelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 4, '', 1, '2022-02-28 12:04:24', '2022-02-18 16:29:41', 'mitr0m71v4fl32623rtkgp70sa', 0, 0, 1),

@@ -203,7 +203,7 @@ $("#modalGeneracionInsumos").on("click", "#genPDFInsumos", function(){
 
 	var nombreR = $("#nombreResp").val();
 
-	window.open("extensiones/tcpdf/pdf/ActaInventario.php?responsable="+nombreR, "_blank");
+	window.open("extensiones/TCPDF-main/examples/ActaInventario.php?responsable="+nombreR, "_blank");
 
 })
 

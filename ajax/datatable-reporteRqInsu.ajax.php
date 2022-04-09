@@ -84,7 +84,7 @@ class TablaRequisiciones
            }             
          }
 
-          for ($i=0; $i < count($array_id); $i++) 
+          for ($i=0; $i < count($array_id); $i++)
           {
 
             $imagenInsumo = ControladorInsumos::ctrVerImagen($array_id[$i]);

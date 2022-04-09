@@ -28,7 +28,7 @@ else{
 
 $(".tablaOrdenes").on("click", "button.btnOrdenPDF", function(){
 	var idOC = $(this).attr("idOC");
-	window.open("extensiones/tcpdf/pdf/ordendeCompra.php?idOC="+idOC, "_blank");
+	window.open("extensiones/TCPDF-main/exampless/ordendeCompra.php?idOC="+idOC, "_blank");
 })
 
 
