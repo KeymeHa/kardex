@@ -20,9 +20,12 @@ if ( isset($_GET["otro"]) )
 			$nivel = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
 			$seccion = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
 			$prioridad = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+			$unidad_ent = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+			$unidad_sal = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+			$cantidad = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
 			$stmt = Conexion::conectar()->prepare("INSERT INTO insumos(id_categoria, codigo, descripcion, observacion, stock, precio_compra, estante, nivel, seccion, prioridad) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :stock, :precio_compra, :estante, :nivel, :seccion, :prioridad)");
 			$stmt->bindParam(":id_categoria", $id_categoria, PDO::PARAM_INT);
-			$stmt->bindParam(":codigo", $codigo, PDO::PARAM_INT);
+			$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
 			$stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
 			$stmt->bindParam(":observacion", $observacion, PDO::PARAM_STR);
 			$stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
@@ -31,6 +34,9 @@ if ( isset($_GET["otro"]) )
 			$stmt->bindParam(":nivel", $nivel, PDO::PARAM_INT);
 			$stmt->bindParam(":seccion", $seccion, PDO::PARAM_INT);
 			$stmt->bindParam(":prioridad", $prioridad, PDO::PARAM_INT);
+			$stmt->bindParam(":unidad", $unidad_ent, PDO::PARAM_INT);
+			$stmt->bindParam(":unidadSal", $unidad_sal, PDO::PARAM_INT);
+			$stmt->bindParam(":contenido", $cantidad, PDO::PARAM_INT);
 			if($stmt->execute()){
 				echo "<script languaje='javascript' type='text/javascript'>
 					console.log('ok');

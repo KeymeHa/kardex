@@ -151,21 +151,21 @@
                     <p class="help-block">Estante</p>               
                     <div class="input-group">                 
                       <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span> 
-                      <input type="number" class="form-control input-lg" id="nuevoEstante" name="nuevoEstante" placeholder="1" autocomplete="off" title="Estante" autocomplete="off">
+                      <input type="text" class="form-control input-lg" id="nuevoEstante" name="nuevoEstante" placeholder="1" autocomplete="off" title="Estante" autocomplete="off">
                     </div>
                   </div>
                   <div class="col-xs-4">
                     <p class="help-block">Nivel</p>               
                     <div class="input-group">               
                       <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span> 
-                      <input type="number" class="form-control input-lg" title="Nivel" id="nuevoNivel" name="nuevoNivel" placeholder="4" autocomplete="off" autocomplete="off">
+                      <input type="text" class="form-control input-lg" title="Nivel" id="nuevoNivel" name="nuevoNivel" placeholder="4" autocomplete="off" autocomplete="off">
                     </div>
                   </div>
                   <div class="col-xs-4">
                     <p class="help-block">Sección</p>           
                     <div class="input-group">          
                       <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span> 
-                      <input type="number" class="form-control input-lg" title="sección" id="nuevaSeccion" name="nuevaSeccion" placeholder="3"  autocomplete="off">
+                      <input type="text" class="form-control input-lg" title="sección" id="nuevaSeccion" name="nuevaSeccion" placeholder="3"  autocomplete="off">
                     </div>
                   </div>
                </div>
