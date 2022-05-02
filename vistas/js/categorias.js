@@ -102,6 +102,12 @@ $("#categoriaOrigen").change(function(){
 
 })
 
+$("#expCategorias").click(function()
+{
+	window.location = "index.php?ruta=categorias&ext=true";		
+					
+})
+
 $("#categoriaDestino").change(function(){
 	 var selOrg = $( "#categoriaOrigen option:selected" ).val();
 	 var selDes = $( "#categoriaDestino option:selected" ).val();

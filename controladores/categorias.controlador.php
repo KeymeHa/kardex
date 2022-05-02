@@ -349,4 +349,55 @@ class ControladorCategorias
 		}
 	}
 
+	static public function ctrExportarCategorias()
+	{
+		if (isset($_GET["ext"])) 
+		{
+			$filename = 'categorias.xls';
+
+			$mostrarCat = new ControladorCategorias();
+			$categorias = $mostrarCat -> ctrMostrarCategorias(null, null);
+
+			if (count($categorias)!= 0) 
+			{
+				header('Expires: 0');
+				header('Cache-control: private');
+				header("Content-type: application/vnd.ms-excel"); // Archivo de Excel
+				header("Cache-Control: cache, must-revalidate"); 
+				header('Content-Description: File Transfer');
+				header('Last-Modified: '.date('D, d M Y H:i:s'));
+				header("Pragma: public"); 
+				header('Content-Disposition:; filename="'.$filename.'"');
+				header("Content-Transfer-Encoding: binary");
+				
+
+				echo utf8_decode("<table border='0'> 
+				<tr> 
+					<td style='font-weight:bold; border:1px solid #000;'>id</td>
+					<td style='font-weight:bold; border:1px solid #000;'>Categoria</td>	
+					<td style='font-weight:bold; border:1px solid #000;'>Descripción</td>	
+				</tr>");
+
+				foreach ($categorias as $row => $item){
+
+					if ($item["id"] == 0) 
+					{
+						 echo utf8_decode("<tr>
+				 			<td style='border:1px solid #eee;'>".$item["id"]."</td>
+				 			<td style='border:1px solid #eee;'>".$item["categoria"]."</td> 
+				 			<td style='border:1px solid #eee;'>".$item["descripcion"]."</td> 	
+			 			</tr>");
+					}
+
+					
+				}
+				echo "</table>";
+			}
+
+			
+		}
+
+	}
+
+
 }

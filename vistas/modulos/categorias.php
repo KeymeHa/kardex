@@ -22,6 +22,20 @@
          <button class="btn btn-success" data-toggle="modal" data-target="#modalMigrarInsumos"><i class="fa fa-circle-o-notch"></i>
           Migrar
         </button>
+
+        <?php
+
+          $canCategorias = ControladorCategorias::ctrContarCategorias(null, null);
+
+          if ($canCategorias != 0) 
+          {
+            echo '<button class="btn btn-success" id="expCategorias"><i class="fa  fa-download"></i>
+            Exportar</button>';
+          }
+
+
+        ?>
+        
       </div>
 
       <div class="box-body">   
