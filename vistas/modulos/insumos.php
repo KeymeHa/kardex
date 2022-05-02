@@ -57,23 +57,44 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" id="btn-AddInsumo" data-toggle="modal" data-target="#modalAgregarInsumo"><i class="fa fa-plus"></i>      
-          Nuevo Insumo
-        </button>
+        
         <?php
-         $parametro = ControladorParametros::ctrVerificarIns();
 
-         if($parametro == 0)
-         {
-            echo'<button class="btn btn-success" data-toggle="modal" data-target="#modalimportarIns">
-                <i class="fa fa-download"></i> Importar Insumos
-                </button>
-                <a href="vistas/doc/plantillaInsumos.xlsx">
-                <button class="btn btn-success">
-                <i class="fa fa-download"></i> Descargar Plantilla
-                </button>
-                </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
-         }
+        $canCategorias = ControladorCategorias::ctrContarCategorias(null, null);
+        $parametro = ControladorParametros::ctrVerificarIns();
+
+        if ($canCategorias != 0 ) 
+        {
+          echo '<button class="btn btn-success" id="btn-AddInsumo" data-toggle="modal" data-target="#modalAgregarInsumo"><i class="fa fa-plus"></i>      
+          Nuevo Insumo
+        </button>';
+
+           if($parametro == 0)
+           {
+              echo'<button class="btn btn-success" data-toggle="modal" data-target="#modalimportarIns">
+                  <i class="fa fa-download"></i> Importar Insumos
+                  </button>
+                  <a href="vistas/doc/plantillaInsumos.xlsx">
+                  <button class="btn btn-success">
+                  <i class="fa fa-download"></i> Descargar Plantilla
+                  </button>
+                  </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
+           }
+        }
+        else
+        {
+           if($parametro == 0)
+           {
+              echo'
+                  <a href="vistas/doc/plantillaInsumos.xlsx">
+                  <button class="btn btn-success">
+                  <i class="fa fa-download"></i> Descargar Plantilla
+                  </button>
+                  </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
+           }
+        }
+
+        
         ?>   
         <div class="btn-group pull-right">
           <button class="btn btn-success" id="btnGenIns" data-toggle="modal" data-target="#modalGeneracionInsumos"><i class="fa fa-file-text-o"></i>

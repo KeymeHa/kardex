@@ -12,11 +12,30 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <a href="nuevaFactura">          
+        <?php
+
+         $canProveedores = ControladorProveedores::ctrContarProveedores(null, null);
+
+         if ($canProveedores == 0) 
+         {
+            echo '         
+          <button class="btn btn-success" disabled data-toggle="modal" title="Debe existir al menos 1 (un) Proveedor"><i class="fa fa-plus"></i>  
+            Agregar Factura
+          </button>';
+         }
+         else
+         {
+            echo '<a href="nuevaFactura">          
           <button class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"></i>  
             Agregar Factura
           </button>
-        </a>
+        </a>';
+
+        
+
+         }
+
+        ?>
 
         <?php
             if ( isset($_GET["fechaInicial"]) ) 

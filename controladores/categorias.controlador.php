@@ -114,11 +114,8 @@ class ControladorCategorias
 	static public function ctrContarCategorias($item, $valor)
 	{
 		$tabla = "categorias";
-
 		$consulta = ModeloCategorias::mdlContarCat($tabla, $item, $valor);
-
 		$respuesta = $consulta[0];
-
 		return $respuesta;
 	}
 

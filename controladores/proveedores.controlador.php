@@ -17,6 +17,14 @@ class ControladorProveedores
 		return $respuesta;
 	}
 
+	static public function ctrContarProveedores($item, $valor)
+	{
+		$tabla = "proveedores";
+		$consulta = ModeloProveedores::mdlContarProveedores($tabla, $item, $valor);
+		$respuesta = $consulta[0];
+		return $respuesta;
+	}
+
 	static public function ctrCrearProveedor()
 	{
 		if (isset($_POST["nuevoProveedor"])) {
