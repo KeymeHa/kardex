@@ -653,14 +653,14 @@ class ControladorParametros
 		return $respuesta["unidad"];
 	}
 
-	public function ctrVerPerfil($valor)
+	public static function ctrVerPerfil($valor)
 	{
 		$tabla = "perfiles";
 		$respuesta = ModeloParametros::mdlVerPerfil($tabla, $valor);
 		return $respuesta;
 	}
 
-	public function ctrValidarPermiso($perfil, $jdata)
+	public static function ctrValidarPermiso($perfil, $jdata)
 	{
 		$sw = 0;
 		$permiso = array(1 => "pUno",
