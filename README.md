@@ -1,4 +1,4 @@
-# PRUEBAS
+# KARDEX
 Aplicativo para manejar inventario
 
 Esta aplicación la aprendi a programar basandome en un curso multimedia que se trataba de un sistema POS, en mi caso decidi personalizarlo y diseñar un sistema de inventario y manejo de bodega.
