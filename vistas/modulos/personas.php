@@ -45,8 +45,6 @@
 
       <div class="box-body">
 
-
-        
       <?php
       include "tablas/tablaPersonas.php";
 

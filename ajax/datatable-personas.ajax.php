@@ -39,7 +39,7 @@ class Tablapersonas
 	      
 	      $dJson = '{"data": [';
 
-	    if ($personas == 0) 
+	    if (count($personas) == 0 || count($personas[0]) == 0) 
 	    {  	echo'{"data": []}';	return; }
 
 		for( $i = 0; $i < count($personas); $i++)
@@ -54,7 +54,7 @@ class Tablapersonas
 		   if ($sw == 0) 
 		   {
 		   		$dJson .='[
-	    		"'.($i + 1).'",
+	    		"'.count($personas).'",
 	    		"'.$usuario["nombre"].'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$rq[0].'",

@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `pCuatro` int(1) NOT NULL DEFAULT 4,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.js_data: ~34 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
@@ -288,7 +288,14 @@ INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) 
 	(42, 'borrador', 0, 1, 2, 3, 0),
 	(43, 'verFactura', 0, 1, 2, 3, 0),
 	(44, 'verRequisicionS', 11, 1, 2, 3, 0),
-	(45, 'miRequisicion', 0, 0, 0, 0, 4);
+	(45, 'miRequisicion', 0, 0, 0, 0, 4),
+	(47, 'historialUsuarios', 0, 1, 2, 3, 0),
+	(48, 'historialInsumos', 0, 1, 2, 3, 0),
+	(49, 'historialCategorias', 0, 1, 2, 3, 0),
+	(50, 'historialAreas', 0, 1, 2, 3, 0),
+	(51, 'historialPersonas', 0, 1, 2, 3, 0),
+	(52, 'historialOrdenes', 0, 1, 2, 3, 0),
+	(53, 'historialRq', 0, 1, 2, 3, 0);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files

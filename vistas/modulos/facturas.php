@@ -30,9 +30,6 @@
             Agregar Factura
           </button>
         </a>';
-
-        
-
          }
 
         ?>
