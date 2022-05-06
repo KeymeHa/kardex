@@ -98,6 +98,22 @@ class ModeloInsumos
 		$stmt = null;
 	}#mdlMostrarInsumos
 
+	static public function mdlBuscarInsumo($tabla, $item, $valor)
+	{
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT $item FROM $tabla WHERE $item = $valor");
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT $item FROM $tabla WHERE $item LIKE '%$valor%'");
+		}
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlAgruparInsumos($tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT categorias.categoria, COUNT(categorias.categoria) FROM $tabla INNER JOIN categorias ON $tabla.id_categoria = categorias.id GROUP BY(categorias.categoria) ORDER BY COUNT(categorias.categoria)");
@@ -206,6 +222,43 @@ class ModeloInsumos
 		$stmt->bindParam(":nivel", $datos["nivel"], PDO::PARAM_STR);
 		$stmt->bindParam(":seccion", $datos["seccion"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_INT);
+		$stmt->bindParam(":unidad", $datos["unidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":unidadSal", $datos["unidadSal"], PDO::PARAM_INT);
+		$stmt->bindParam(":contenido", $datos["contenido"], PDO::PARAM_INT);
+		$stmt->bindParam(":habilitado", $datos["habilitado"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+
+	}#mdlIngresarInsumo
+
+	static public function mdlImportarInsumo($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, stock, stockIn, precio_compra, precio_unidad, precio_por_mayor, estante, nivel, seccion, prioridad, unidad, unidadSal, contenido, habilitado) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :stock, :stockIn, :precio_compra, :precio_unidad, :precio_por_mayor, :estante, :nivel, :seccion, :prioridad, :unidad, :unidadSal, :contenido, :habilitado)");
+
+		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_INT);
+		$stmt->bindParam(":stockIn", $datos["stockIn"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_unidad", $datos["precio_unidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_por_mayor", $datos["precio_por_mayor"], PDO::PARAM_STR);
+		$stmt->bindParam(":estante", $datos["estante"], PDO::PARAM_STR);
+		$stmt->bindParam(":nivel", $datos["nivel"], PDO::PARAM_STR);
+		$stmt->bindParam(":seccion", $datos["seccion"], PDO::PARAM_STR);
 		$stmt->bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_INT);
 		$stmt->bindParam(":unidad", $datos["unidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":unidadSal", $datos["unidadSal"], PDO::PARAM_INT);

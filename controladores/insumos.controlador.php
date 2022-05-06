@@ -343,6 +343,21 @@ class ControladorInsumos
 	BORRAR INSUMO
 	=============================================*/
 
+	static public function ctrBuscarInsumo($item, $valor)
+	{
+		$tabla = "insumos";
+		$respuesta = ModeloInsumos::mdlBuscarInsumo($tabla, $item, $valor);
+
+		if (isset($respuesta[0])) 
+        {
+        	return true;
+        }
+        else
+        {
+          	return false;
+        }	
+	}
+
 
 	static public function ctrVerDescripcion($id)
 	{

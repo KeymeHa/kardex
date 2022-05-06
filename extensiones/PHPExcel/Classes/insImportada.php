@@ -1,6 +1,13 @@
 <?php
 require 'PHPExcel/IOFactory.php';
 require_once "../../../modelos/conexion.php";
+require_once "../../../modelos/insumos.modelo.php";
+require_once "../../../modelos/parametros.modelo.php";
+require_once "../../../modelos/categorias.modelo.php";
+require_once "../../../controladores/categorias.controlador.php";
+require_once "../../../controladores/insumos.controlador.php";
+require_once "../../../controladores/parametros.controlador.php";
+
 if ( isset($_GET["otro"]) ) 
 {
 	if ( file_exists("importarIns.xlsx") ) 
@@ -9,47 +16,157 @@ if ( isset($_GET["otro"]) )
 		$objPHPExcel = PHPExcel_IOFactory::load($nombreArchivo);
 		$objPHPExcel->setActiveSheetIndex(0);
 		$numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-		for ($i = 4; $i <= $numRows; $i++) {
-			$id_categoria = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-			$codigo = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-			$descripcion = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-			$observacion = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-			$stock = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+		for ($i = 4; $i <= $numRows; $i++) 
+		{
+
+			$id_categoria = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+			$codigo = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+			$descripcion = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+			$observacion = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+			$stock  = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+			$stockIn  = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
 			$precio_compra = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-			$estante = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-			$nivel = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-			$seccion = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-			$prioridad = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-			$unidad_ent = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-			$unidad_sal = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-			$cantidad = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-			$stmt = Conexion::conectar()->prepare("INSERT INTO insumos(id_categoria, codigo, descripcion, observacion, stock, precio_compra, estante, nivel, seccion, prioridad) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :stock, :precio_compra, :estante, :nivel, :seccion, :prioridad)");
-			$stmt->bindParam(":id_categoria", $id_categoria, PDO::PARAM_INT);
-			$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
-			$stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
-			$stmt->bindParam(":observacion", $observacion, PDO::PARAM_STR);
-			$stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
-			$stmt->bindParam(":precio_compra", $precio_compra, PDO::PARAM_INT);
-			$stmt->bindParam(":estante", $estante, PDO::PARAM_INT);
-			$stmt->bindParam(":nivel", $nivel, PDO::PARAM_INT);
-			$stmt->bindParam(":seccion", $seccion, PDO::PARAM_INT);
-			$stmt->bindParam(":prioridad", $prioridad, PDO::PARAM_INT);
-			$stmt->bindParam(":unidad", $unidad_ent, PDO::PARAM_INT);
-			$stmt->bindParam(":unidadSal", $unidad_sal, PDO::PARAM_INT);
-			$stmt->bindParam(":contenido", $cantidad, PDO::PARAM_INT);
-			if($stmt->execute()){
-				echo "<script languaje='javascript' type='text/javascript'>
-					console.log('ok');
-					</script>";
-				$respuesta = "ok";
-			}else{
-				echo "<script languaje='javascript' type='text/javascript'>
-					console.log('Error');
-					</script>";
-				$respuesta = "error";
+			$precio_unidad  = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+			$precio_por_mayor  = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+			$estante = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+			$nivel = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+			$seccion = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+			$prioridad = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+			$unidad = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+			$unidadSal = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+			$contenido = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+			$habilitado  = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+
+			
+
+			if (ControladorParametros::ctrValidarTipoDato($id_categoria)) 
+			{
+				if(!ControladorParametros::ctrBuscarCategoria("id", $id_categoria))
+				{
+					$id_categoria = ControladorCategorias::ctrValidarOtros();
+				}
 			}
-			$stmt = null;
-		}
+			else
+			{
+				$id_categoria = ControladorCategorias::ctrValidarOtros();
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($stock)) 
+			{
+				$stock = 0;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($stockIn)) 
+			{
+				$stockIn = 0;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($precio_compra)) 
+			{
+				$precio_compra = 0;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($precio_unidad)) 
+			{
+				$precio_unidad = 0;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($precio_por_mayor)) 
+			{
+				$precio_por_mayor = 0;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($prioridad)) 
+			{
+				$prioridad = 3;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($unidad)) 
+			{
+				$unidad = 1;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($unidadSal)) 
+			{
+				$unidadSal = 3;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($contenido)) 
+			{
+				$contenido = 1;
+			}
+
+			if (!ControladorParametros::ctrValidarTipoDato($habilitado)) 
+			{
+				$habilitado = 3;
+			}
+
+			$datos = array("id_categoria" => $id_categoria,
+						   "codigo" => $codigo,
+						   "descripcion" => $descripcion,
+						   "observacion" => $$observacion,
+						   "stock" => $stock,
+						   "stockIn" => $stockIn,
+						   "precio_compra"	=> $precio_compra,
+						   "precio_unidad"	=> $precio_unidad,
+						   "precio_por_mayor"	=> $precio_por_mayor,
+						   "estante"	=> $estante,
+						   "nivel"	=> $nivel,
+						   "seccion"	=> $seccion,
+						   "prioridad"	=> $prioridad, 
+						   "unidad"	=> $unidad,
+						   "unidadSal"	=> $unidadSal, 
+						   "contenido"	=> $contenido,
+						   "habilitado"	=> $habilitado);
+
+			//validar que no exista un insumo con el mismo codigo
+
+			//validar que no exista un insumo con la misma descripcion
+
+			//validar que exista la categoria
+
+			//validar que exista la unidad de entrada
+
+			//validar que exista la unidad de salida
+
+			//validar Numeros
+
+
+
+			
+
+			$tabla = "insumos";
+
+			
+
+			$respuesta = ModeloInsumos::mdlImportarInsumo($tabla, $datos);
+
+/*
+			id(INT)	
+			id_categoria(INT)
+			codigo(VARCHAR)
+			descripcion(TEXT)
+			observacion(TEXT)
+			imagen(TEXT)
+			stock(INT)
+			stockIn(INT)
+			precio_compra(FLOAT)	
+			precio_unidad(FLOAT)
+			precio_por_mayor(FLOAT)	
+			fecha(DATETIME)
+			elim(INT)
+			estante(CHAR)
+			nivel(CHAR)
+			seccion(CHAR)
+			prioridad(INT)
+			unidad(INT)
+			unidadSal(INT)	
+			contenido(INT)	
+			habilitado(INT)	
+*/
+
+		}//for
+
 		if($respuesta == "ok")
 		{
 			$stmt = Conexion::conectar()->prepare("UPDATE parametros SET validarIns = 1 WHERE id = 1");

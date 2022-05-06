@@ -57,6 +57,25 @@ class ModeloCategorias
 			$stmt = null;
 	}
 
+
+	static public function mdlBuscarCategoria($tabla, $item, $valor)
+	{
+
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT $item FROM $tabla WHERE $item = $valor");
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT id, $item FROM $tabla WHERE $item LIKE '%$valor%'");
+		}
+
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlContarCat($tabla, $item, $valor)
 	{
 		if (!$item == null) 

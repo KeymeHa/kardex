@@ -82,11 +82,67 @@ class ControladorCategorias
 		}//iseet
 	}
 
+	static public function ctrCatOtros()
+	{
+		$tabla = "categorias";
+		$datos = array('categoria' => "Otros",
+						'descripcion' => "Insumos no categorizados");
+		$respuesta = ModeloCategorias::mdlRegistrarCategoria($tabla, $datos);
+	}
+
+	static public function ctrValidarOtros()
+	{
+		$cadena = array("Otros","otros");
+		$ejecutar = new ControladorCategorias();
+		$sw = 0;
+		for ($i=0; $i < count($cadena); $i++) { 
+
+			if($sw == 0)
+			{
+				$categoria = $ejecutar -> mdlMostrarCategoriasConFiltro("categorias", "categoria", $cadena[$i]);
+
+				if (isset($categoria["id"])) 
+				{
+					if ($categoria["id"] != "" || $categoria["id"] != null) {
+						$id = $categoria["id"];
+						$sw = 1;
+					}
+				}
+			}
+		}
+
+		if ($sw == 0) 
+		{
+			$categoria = $ejecutar -> ctrCatOtros();
+			$categoria = $ejecutar -> mdlMostrarCategoriasConFiltro("categorias", "categoria", "Otros");
+			$id = $categoria["id"];
+		}
+
+		return $id;
+
+	}
+
 	static public function ctrMostrarCategorias($item, $valor)
 	{
 		$tabla = "categorias";
 		$respuesta = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
 		return $respuesta;
+	}
+
+
+	static public function ctrBuscarCategoria($item, $valor)
+	{
+		$tabla = "categorias";
+		$respuesta = ModeloCategorias::mdlBuscarCategoria($tabla, $item, $valor);
+
+		if (isset($respuesta["id"])) 
+        {
+        	return true;
+        }
+        else
+        {
+          	return false;
+        }
 	}
 
 	static public function ctrMostrarNombreCategoria($item, $valor)
@@ -127,6 +183,7 @@ class ControladorCategorias
 			{
 
 				$tabla = "categorias";
+
 
 				if($_POST["editarDescripcion"] == "")
 				{

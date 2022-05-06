@@ -187,7 +187,7 @@
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="editarCategoria" id="editarCategoria" required>
-                <input type="hidden" class="form-control input-lg" name="editarIdCategoria" id="editarIdCategoria" readonly>
+                <input type="hidden" class="form-control input-lg" name="editarIdCategoria" id="editarIdCategoria" required value="">
 
               </div>
 
@@ -362,4 +362,8 @@
 <?php
   $borrarCategoria = new ControladorCategorias();
   $borrarCategoria -> ctrBorrarCategoria($_SESSION["id"]);
+
+  $expCategorias = new ControladorCategorias();
+  $expCategorias -> ctrExportarCategorias();
 ?>
+

@@ -138,6 +138,16 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrValidarTipoDato($dato)
+	{
+		if (is_integer($dato) || is_float($dato) ) 
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	static public function ctrSumatoria($valor1, $valor2)
 	{
 		if($valor2 != null)

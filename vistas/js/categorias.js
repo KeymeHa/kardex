@@ -18,7 +18,7 @@ $(".tablaCategorias").on("click", ".btnEditarCategoria", function(){
 			
 			$("#editarCategoria").val(respuesta["categoria"].replace(/&quot/gi,'"'));
 			$("#editarDescripcion").val(respuesta["descripcion"].replace(/&quot/gi,'"'));
-			$("#editarIdCategoria").val(respuesta["id"].replace(/&quot/gi,'"'));
+			$("#editarIdCategoria").val(respuesta["id"]);
 
 		}
 

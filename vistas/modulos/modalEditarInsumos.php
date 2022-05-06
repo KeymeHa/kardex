@@ -28,7 +28,7 @@
               <div class="form-group">               
                 <div class="input-group">               
                   <span class="input-group-addon"><i class="fa fa-code"></i></span> 
-                  <input type="number" class="form-control input-lg" id="eCodigoP" name="eCodigoP"  readonly>
+                  <input type="text" class="form-control input-lg" id="eCodigoP" name="eCodigoP"  readonly>
                 </div>
               </div>
               <!-- ENTRADA PARA LA DESCRIPCIÓN -->

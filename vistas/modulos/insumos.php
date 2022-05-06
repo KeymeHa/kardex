@@ -155,7 +155,7 @@
               <div class="form-group">              
                 <div class="input-group">               
                   <span class="input-group-addon"><i class="fa fa-code"></i></span> 
-                  <input type="number" class="form-control input-lg" id="nuevoCodigo" name="nuevoCodigo" placeholder="Ingresar código" autocomplete="off" title="Codigo del Insumo" required>
+                  <input type="text" class="form-control input-lg" id="nuevoCodigo" name="nuevoCodigo" placeholder="Ingresar código" autocomplete="off" title="Codigo del Insumo" required>
                 </div>
               </div>
               <!-- ENTRADA PARA LA DESCRIPCIÓN -->

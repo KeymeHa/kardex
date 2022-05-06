@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if (isset($_GET["ruta"])) 
+    {
+       $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
+    }
+    else
+    {
+      
+    }
     /*
     $area = ControladorParametros::ctrValidarCaracteres($_POST["editarArea"]);
   .replace(/&quot/gi,'"')     convertir de quot a comillas
@@ -11,7 +19,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SITMI | <?php if(isset($_GET["ruta"])){echo $_GET["ruta"];}else{echo 'Inicio';}?></title>
+  <title>SITMI | <?php if(isset($js_data["title"])){echo $js_data["title"];}else{echo 'Dashboard';}?></title>
 
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="icon" href="vistas/img/plantilla/icono-blanco.png">
@@ -59,7 +67,7 @@
 
         if(file_exists($documento)){
 
-           $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
+          
            $gatillo = ControladorParametros::ctrValidarPermiso($_SESSION["perfil"], $js_data);
 
           if ($gatillo == 1) 
@@ -92,7 +100,9 @@
       {
         include "modulos/inicio.php";
       }  
+
       include "modulos/footer.php";
+      
       echo '</div>';    
 
       $js_files = ControladorParametros::ctrJs_Files();

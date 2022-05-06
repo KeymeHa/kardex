@@ -143,12 +143,26 @@
 				</ul>
 			</li>';
 
-			}
-			else
-			{
+
+			echo '
+			<li ';
+
+			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "parametros"){ echo'class="active"'; } }
+
+
+			if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
+					{
+						echo'><a href="parametros">
+								<i class="fa fa-cogs"></i>
+								<span>Parametros</span>
+							</a>';
+					}
+
+			echo '</li>';
+
+
 
 			}
-
 
 			?>
 
