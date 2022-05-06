@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.4.22-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.4.24-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
 -- HeidiSQL Versión:             11.3.0.6295
 -- --------------------------------------------------------
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `anios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.anios: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.anios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `anios` DISABLE KEYS */;
 INSERT INTO `anios` (`id`, `anio`) VALUES
 	(1, 0),
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.areas: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.areas: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
 INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
 	(1, 'Sistemas', 'Encargados del área de Sistemas', 0, ''),
@@ -111,10 +111,15 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `descripcion` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `elim` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.categorias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.categorias: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
+	(1, 'Papelería', 'Sin Informacion.', 0),
+	(2, 'Sistemas', 'Sin Informacion.', 0),
+	(3, 'Aseo', 'Sin Informacion.', 0),
+	(4, 'otros', 'Almacena Insumos que no manejan categoría especifica', 0);
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -147,10 +152,12 @@ CREATE TABLE IF NOT EXISTS `historial` (
   `fecha` date NOT NULL,
   `id_usr` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.historial: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `historial` DISABLE KEYS */;
+INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`) VALUES
+	(1, 1, 2, 'AROMATICA SURTIDA EN BOLSA', '', '0000-00-00', 1);
 /*!40000 ALTER TABLE `historial` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.impustoagregado
@@ -170,13 +177,15 @@ CREATE TABLE IF NOT EXISTS `impustoagregado` (
 CREATE TABLE IF NOT EXISTS `insumos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_categoria` int(11) NOT NULL,
-  `codigo` varchar(7) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
+  `codigo` varchar(7) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `observacion` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `imagen` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `stock` int(11) NOT NULL DEFAULT 0,
   `stockIn` int(11) NOT NULL DEFAULT 0,
   `precio_compra` float NOT NULL DEFAULT 0,
+  `precio_unidad` float NOT NULL DEFAULT 0,
+  `precio_por_mayor` float NOT NULL DEFAULT 0,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `elim` int(11) NOT NULL DEFAULT 0,
   `estante` char(5) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -188,11 +197,27 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   `contenido` int(2) NOT NULL DEFAULT 1,
   `habilitado` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.insumos: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
+INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`) VALUES
+	(158, 3, '1', 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 500, 0, 0, '2022-05-05 10:04:54', 0, '2', '4', '2', 2, 10, 1, 12, 1);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.insumosnombre
+CREATE TABLE IF NOT EXISTS `insumosnombre` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_insumo` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK__insumosnombre` (`id_insumo`),
+  CONSTRAINT `FK__insumosnombre` FOREIGN KEY (`id_insumo`) REFERENCES `insumos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.insumosnombre: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `insumosnombre` DISABLE KEYS */;
+/*!40000 ALTER TABLE `insumosnombre` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosunidad
 CREATE TABLE IF NOT EXISTS `insumosunidad` (
@@ -201,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `insumosunidad` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.insumosunidad: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumosunidad: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumosunidad` DISABLE KEYS */;
 INSERT INTO `insumosunidad` (`id`, `unidad`) VALUES
 	(1, 'Bolsa'),
@@ -234,6 +259,7 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
 CREATE TABLE IF NOT EXISTS `js_data` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
   `page` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `title` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `num` int(2) NOT NULL DEFAULT 0,
   `pUno` int(1) NOT NULL DEFAULT 1,
   `pDos` int(1) NOT NULL DEFAULT 2,
@@ -241,61 +267,62 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `pCuatro` int(1) NOT NULL DEFAULT 4,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~34 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~50 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
-INSERT INTO `js_data` (`id`, `page`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) VALUES
-	(1, 'categorias', 1, 1, 2, 3, 0),
-	(2, 'verCategoria', 2, 1, 2, 3, 0),
-	(3, 'insumos', 3, 1, 2, 3, 0),
-	(4, 'ordendecompras', 4, 1, 2, 3, 0),
-	(5, 'facturas', 5, 1, 2, 3, 0),
-	(6, 'requisiciones', 8, 1, 2, 3, 0),
-	(7, 'nuevaFactura', 10, 1, 2, 3, 0),
-	(8, 'editarFactura', 10, 1, 2, 3, 0),
-	(9, 'requisicion', 11, 1, 2, 3, 0),
-	(10, 'requisicionImportada', 11, 1, 2, 3, 0),
-	(11, 'editarRq', 11, 1, 2, 3, 0),
-	(12, 'actas', 14, 1, 2, 3, 0),
-	(13, 'areas', 15, 1, 2, 3, 0),
-	(14, 'personas', 16, 1, 2, 3, 0),
-	(15, 'inicio', 17, 1, 2, 3, 4),
-	(16, 'reportesRq', 17, 1, 2, 3, 0),
-	(17, 'verArea', 18, 1, 2, 3, 0),
-	(18, 'proveedor', 19, 1, 2, 3, 0),
-	(19, 'inversionInsumos', 23, 1, 2, 3, 0),
-	(20, 'cotizaciones', 25, 1, 2, 3, 0),
-	(21, 'verInsumo', 26, 1, 2, 3, 0),
-	(22, 'proyectos', 27, 1, 2, 3, 0),
-	(23, 'usuarios', 0, 1, 2, 0, 0),
-	(24, 'plantilla', 0, 1, 2, 3, 0),
-	(25, 'nuevaActa', 0, 1, 2, 3, 0),
-	(28, 'parametros', 0, 1, 2, 3, 0),
-	(29, 'nuevaOrdendeCompras', 0, 1, 2, 3, 0),
-	(30, 'proveedores', 0, 1, 2, 3, 0),
-	(31, 'editarOrden', 0, 1, 2, 3, 0),
-	(32, 'editarActa', 0, 1, 2, 3, 0),
-	(33, 'verOrden', 0, 1, 2, 3, 0),
-	(34, 'inventario', 0, 1, 2, 3, 0),
-	(35, 'generaciones', 0, 1, 2, 3, 4),
-	(36, 'salir', 0, 1, 2, 3, 4),
-	(37, 'perfil', 0, 1, 2, 3, 4),
-	(38, 'genRequisicion', 29, 0, 0, 0, 4),
-	(39, 'hisRequisicion', 30, 0, 0, 0, 4),
-	(40, 'verProyecto', 28, 1, 2, 3, 0),
-	(41, 'verRequisicion', 0, 1, 2, 3, 0),
-	(42, 'borrador', 0, 1, 2, 3, 0),
-	(43, 'verFactura', 0, 1, 2, 3, 0),
-	(44, 'verRequisicionS', 11, 1, 2, 3, 0),
-	(45, 'miRequisicion', 0, 0, 0, 0, 4),
-	(47, 'historialUsuarios', 0, 1, 2, 3, 0),
-	(48, 'historialInsumos', 0, 1, 2, 3, 0),
-	(49, 'historialCategorias', 0, 1, 2, 3, 0),
-	(50, 'historialAreas', 0, 1, 2, 3, 0),
-	(51, 'historialPersonas', 0, 1, 2, 3, 0),
-	(52, 'historialOrdenes', 0, 1, 2, 3, 0),
-	(53, 'historialRq', 0, 1, 2, 3, 0);
+INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) VALUES
+	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0),
+	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0),
+	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0),
+	(4, 'ordendecompras', 'Orden de Compras', 4, 1, 2, 3, 0),
+	(5, 'facturas', 'Facturas', 5, 1, 2, 3, 0),
+	(6, 'requisiciones', 'Requisiciones', 8, 1, 2, 3, 0),
+	(7, 'nuevaFactura', 'Nueva Factura', 10, 1, 2, 3, 0),
+	(8, 'editarFactura', 'Editar Factura', 10, 1, 2, 3, 0),
+	(9, 'requisicion', 'Requisción', 11, 1, 2, 3, 0),
+	(10, 'requisicionImportada', 'Importar Requisición', 11, 1, 2, 3, 0),
+	(11, 'editarRq', 'Editar Requisición', 11, 1, 2, 3, 0),
+	(12, 'actas', 'Actas', 14, 1, 2, 3, 0),
+	(13, 'areas', 'Areas', 15, 1, 2, 3, 0),
+	(14, 'personas', 'Personas', 16, 1, 2, 3, 0),
+	(15, 'inicio', 'Dashboard', 17, 1, 2, 3, 4),
+	(16, 'reportesRq', 'Reportes de Requisiciones', 17, 1, 2, 3, 0),
+	(17, 'verArea', 'Ver Área', 18, 1, 2, 3, 0),
+	(18, 'proveedor', 'Proveedor', 19, 1, 2, 3, 0),
+	(19, 'inversionInsumos', 'Inversión en Insumos', 23, 1, 2, 3, 0),
+	(20, 'cotizaciones', 'Cotizaciones', 25, 1, 2, 3, 0),
+	(21, 'verInsumo', 'Ver Insumo', 26, 1, 2, 3, 0),
+	(22, 'proyectos', 'Proyectos', 27, 1, 2, 3, 0),
+	(23, 'usuarios', 'Usuarios', 0, 1, 2, 0, 0),
+	(24, 'plantilla', 'Plantilla', 0, 1, 2, 3, 0),
+	(25, 'nuevaActa', 'Nueva Acta', 0, 1, 2, 3, 0),
+	(28, 'parametros', 'Parametros', 0, 1, 2, 0, 0),
+	(29, 'nuevaOrdendeCompras', 'Nuevar Orden', 0, 1, 2, 3, 0),
+	(30, 'proveedores', 'Proveedores', 0, 1, 2, 3, 0),
+	(31, 'editarOrden', 'Editar Orden', 0, 1, 2, 3, 0),
+	(32, 'editarActa', 'Editar Acta', 0, 1, 2, 3, 0),
+	(33, 'verOrden', 'Ver Orden', 0, 1, 2, 3, 0),
+	(34, 'inventario', 'Inventario', 0, 1, 2, 3, 0),
+	(35, 'generaciones', 'Generaciones', 0, 1, 2, 3, 4),
+	(36, 'salir', 'LogOut', 0, 1, 2, 3, 4),
+	(37, 'perfil', 'Mi Perfil', 0, 1, 2, 3, 4),
+	(38, 'genRequisicion', 'Generar Requisición', 29, 0, 0, 0, 4),
+	(39, 'hisRequisicion', 'Historial de Requisición', 30, 0, 0, 0, 4),
+	(40, 'verProyecto', 'Proyecto', 28, 1, 2, 3, 0),
+	(41, 'verRequisicion', 'Ver Requisición', 0, 1, 2, 3, 0),
+	(42, 'borrador', 'Borrador', 0, 1, 2, 3, 0),
+	(43, 'verFactura', 'Ver Factura', 0, 1, 2, 3, 0),
+	(44, 'verRequisicionS', 'ver Requisición', 11, 1, 2, 3, 0),
+	(45, 'miRequisicion', 'Requisición', 0, 0, 0, 0, 4),
+	(47, 'historialUsuarios', 'Historial de Usuarios', 0, 1, 2, 3, 0),
+	(48, 'historialInsumos', 'Historial Insumos', 0, 1, 2, 3, 0),
+	(49, 'historialCategorias', 'Historial Categorias', 0, 1, 2, 3, 0),
+	(50, 'historialAreas', 'Historial Areas', 0, 1, 2, 3, 0),
+	(51, 'historialPersonas', 'Historial Personas', 0, 1, 2, 3, 0),
+	(52, 'historialOrdenes', 'Historial Ordenes', 0, 1, 2, 3, 0),
+	(53, 'historialRq', 'Historial Requisiciones', 0, 1, 2, 3, 0),
+	(54, 'Creditos', 'Creditos', 0, 1, 2, 3, 4);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files
@@ -303,10 +330,11 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `habilitado` varchar(30) COLLATE utf8_spanish_ci NOT NULL DEFAULT '''all''',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`) USING HASH
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_files: ~28 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_files: ~36 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
 INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(1, 'plantilla', 'all'),
@@ -418,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`) VALUES
-	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 0, 0, 1, NULL, NULL, NULL, 0, 0);
+	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -570,9 +598,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, '', 1, '2022-04-26 08:09:28', '2021-02-11 10:06:49', '9rti3obmggo8p3vpss6sitrvrc', 0, 0, 0),
-	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 11:12:33', '', 0, 0, 0),
-	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 11:12:39', '', 0, 0, 0);
+	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-05-06 11:35:20', '2021-02-11 05:06:49', 'p5vkbq7p7eqnbnl22p15kfecl4', 0, 0, 0),
+	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
+	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 06:12:39', '', 0, 0, 0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.valores
