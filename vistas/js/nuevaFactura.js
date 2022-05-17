@@ -61,30 +61,39 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 			$(".nuevoInsumoAgregado").append(
 
 				'<div class="row" style="padding:5px 15px">'+
-                  '<div class="col-xs-3" style="padding-right:0px">'+
-                   ' <div class="input-group">'+
-                    '  <span class="input-group-addon">'+
-                     '   <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'+idInsumo+'"><i class="fa fa-times"></i></button>'+
-                     ' </span>'+
-                    '<input type="text" class="form-control nuevaDescripcionInsumo" title="'+descripcion+'" idInsumo="'+idInsumo+'" value="'+descripcion+'" readonly>'+
-                  	'</div>'+
-                  '</div>'+
-                  '<div class="col-xs-2 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadInsumo"  stock="'+stock+'" autocomplete="off" min="1" value="1" required>'+
-                  '</div>'+
-                  '<div class="col-xs-2 ingresoContenido">'+
-                   ' <input type="number" class="form-control nuevoContenido" autocomplete="off" min="1" value="'+contenido+'" required>'+
-                  '</div>'+
-                  '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
-                   ' <div class="input-group">'+
-                     ' <input type="text" class="form-control nuevoPrecioInsumo" min="1" value="'+precio+'" autocomplete="off" required>'+
-                    '</div>'+
-                  '</div>'+
-                  '<div class="col-xs-3 ingresoSubT" style="padding-left:0px">'+
-                   ' <div class="input-group">'+
-                     ' <input type="text" class="form-control subTotalInsumo" min="1" name="subTotalInsumo" readonly value="'+precio+'" required>'+
-                    '</div>'+
-                  '</div>'+
+                  '<div class="col-xs-1">'+
+				   ' <div class="input-group-btn">'+
+				        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Mas Opciones"><i class="fa fa-plus"></i></button>'+
+				        '<ul class="dropdown-menu">'+
+				          '<li><a href="#"><input type="number" class="form-control nuevoImpuesto" value="0" min="0" title="impuesto personalizado"></a>'+
+				          '</li>'+
+				         ' <li >'+
+				            '<a href="#" idInsumo="'+idInsumo+'" class="quitarInsumo"><i class="fa fa-times"></i> Eliminar</a>'+
+				          '</li>'+
+				        '</ul>'+
+				      '</div>'+
+				  '</div>'+
+				  '<div class="col-xs-2" style="padding-right:0px">'+
+				   ' <div class="input-group">'+
+				    '<input type="text" class="form-control nuevaDescripcionInsumo" title="'+descripcion+'" idInsumo="'+idInsumo+'" value="'+descripcion+'" readonly>'+
+				    '</div>'+
+				  '</div>'+
+				  '<div class="col-xs-2 ingresoCantidad">'+
+				   ' <input type="number" class="form-control nuevaCantidadInsumo"  stock="'+stock+'" autocomplete="off" min="1" value="1" required>'+
+				  '</div>'+
+				  '<div class="col-xs-2 ingresoContenido">'+
+				   ' <input type="number" class="form-control nuevoContenido" autocomplete="off" min="1" value="'+contenido+'" required>'+
+				  '</div>'+
+				  '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
+				   ' <div class="input-group">'+
+				     ' <input type="text" class="form-control nuevoPrecioInsumo" min="1" value="'+precio+'" autocomplete="off" required>'+
+				    '</div>'+
+				  '</div>'+
+				  '<div class="col-xs-3 ingresoSubT" style="padding-left:0px">'+
+				   ' <div class="input-group">'+
+				     ' <input type="text" class="form-control subTotalInsumo" min="1" name="subTotalInsumo" readonly value="'+precio+'" required>'+
+				    '</div>'+
+				  '</div>'+
 
                 '</div>'
 				)
@@ -161,9 +170,9 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 var idQuitarInsumo = [];
 localStorage.removeItem("quitarInsumo");
 
-$(".formularioNuevaFactura").on("click", "button.quitarInsumo", function(){
+$(".formularioNuevaFactura").on("click", "a.quitarInsumo", function(){
 
-	$(this).parent().parent().parent().parent().remove();
+	$(this).parent().parent().parent().parent().parent().remove();
 
 	var idInsumo = $(this).attr("idInsumo");
 
@@ -227,6 +236,11 @@ $(".formularioNuevaFactura").on("change", "input.nuevoContenido", function(){
 	listarInsumosNF();
 })
 
+$(".formularioNuevaFactura").on("change", "input.nuevoImpuesto", function(){
+	sumarPreciosNF();
+	listarInsumosNF();
+})
+
 
 $(".formularioNuevaFactura").on("change", "input.nuevoPrecioInsumo", function(){
 
@@ -246,14 +260,41 @@ $(".formularioNuevaFactura").on("change", "input.nuevoPrecioInsumo", function(){
 function sumarPreciosNF(){
 
 	var precioItem = $(".subTotalInsumo");
+	var impItem = $(".nuevoImpuesto");
 	
-	var sumINF = [];  
+	var sumaSubT = 0;
+
+	var sumaSubTo = 0;  
 
 	for(var i = 0; i < precioItem.length; i++){
 
-		 sumINF.push(Number($(precioItem[i]).val())); 
-	}
+		if( Number($(impItem[i]).val()) == 0 ) 
+		{
+			sumaSubT+= Number($(precioItem[i]).val());
+		}
+		else
+		{
+			sumaSubTo+= Number($(precioItem[i]).val())+(Number($(precioItem[i]).val())*(Number($(impItem[i]).val()))/100) ;
+		}
 
+		
+  
+	}
+/*
+	for(var i = 0; i < precioItem.length; i++){
+
+		if ( $(impItem[i]).val() == 0 ) 
+		{
+			sumINF.push(Number($(precioItem[i]).val()));
+		}
+		else
+		{
+			sumINF.push(Number($(impItem[i]).val()));
+		}
+
+		  
+	}*/
+/*
 
 	var sumaSubT = sumINF.reduce(sumaArrayPreciosNF);
 	
@@ -262,11 +303,12 @@ function sumarPreciosNF(){
 		return total + num;
 
 	}
-
+*/
 	var iva = Number($("#iva").val());
 
 	var valorIva = ( iva / 100 ) * sumaSubT;
- 	var totalconIVA = valorIva + sumaSubT;
+	var sub = sumaSubT + sumaSubTo;
+ 	var totalconIVA = valorIva + sub;
 
 
 	$("#totalSinIVA").val(sumaSubT);
@@ -307,14 +349,29 @@ function listarInsumosNF(){
 
 	var subTItem = $(".subTotalInsumo");
 
+	var impTItem = $(".nuevoImpuesto");
+
 	for(var i = 0; i < descripcion.length; i++){
 
-		listaInsumos.push({ "id" : $(descripcion[i]).attr("idInsumo"), 
+		if ( $(impTItem[i]).val() != 0 ) 
+		{
+			listaInsumos.push({ "id" : $(descripcion[i]).attr("idInsumo"), 
+							  "des" : $(descripcion[i]).val().replace(/"/gi,'&quot'),
+							  "can" : $(cantidad[i]).val(),
+							  "con" : $(contenido[i]).val(),
+							  "pre" : $(precio[i]).val(),
+							  "sub" : $(subTItem[i]).val(),
+							  "imp" : $(impTItem[i]).val()})
+		}
+		else
+		{
+			listaInsumos.push({ "id" : $(descripcion[i]).attr("idInsumo"), 
 							  "des" : $(descripcion[i]).val().replace(/"/gi,'&quot'),
 							  "can" : $(cantidad[i]).val(),
 							  "con" : $(contenido[i]).val(),
 							  "pre" : $(precio[i]).val(),
 							  "sub" : $(subTItem[i]).val()})
+		}
 
 	}
 

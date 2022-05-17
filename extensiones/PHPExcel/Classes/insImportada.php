@@ -37,11 +37,11 @@ if ( isset($_GET["otro"]) )
 			$contenido = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 			$habilitado  = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-			
+			$item = "id";
 
 			if (ControladorParametros::ctrValidarTipoDato($id_categoria)) 
 			{
-				if(!ControladorParametros::ctrBuscarCategoria("id", $id_categoria))
+				if(!ControladorParametros::ctrBuscarCategoria($item, $id_categoria))
 				{
 					$id_categoria = ControladorCategorias::ctrValidarOtros();
 				}
@@ -80,15 +80,36 @@ if ( isset($_GET["otro"]) )
 			{
 				$prioridad = 3;
 			}
-
-			if (!ControladorParametros::ctrValidarTipoDato($unidad)) 
+			else
 			{
-				$unidad = 1;
+				if (!ControladorInsumos::ctrBuscarInsumoUnidad($item, $valor)) 
+				{
+					$prioridad = 3;
+				}
 			}
 
-			if (!ControladorParametros::ctrValidarTipoDato($unidadSal)) 
+			if (ControladorParametros::ctrValidarTipoDato($unidad)) 
 			{
-				$unidadSal = 3;
+				if(!ControladorInsumos::ctrBuscarInsumoUnidad($item, $unidad))
+				{
+					$unidad = ControladorInsumos::ctrValidarSinDefinir();
+				}
+			}
+			else
+			{
+				$unidad = ControladorInsumos::ctrValidarSinDefinir();
+			}
+
+			if (ControladorParametros::ctrValidarTipoDato($unidadSal)) 
+			{
+				if(!ControladorInsumos::ctrBuscarInsumoUnidad($item, $unidadSal))
+				{
+					$unidadSal = ControladorInsumos::ctrValidarSinDefinir();
+				}
+			}
+			else
+			{
+				$unidadSal = ControladorInsumos::ctrValidarSinDefinir();
 			}
 
 			if (!ControladorParametros::ctrValidarTipoDato($contenido)) 
@@ -98,9 +119,21 @@ if ( isset($_GET["otro"]) )
 
 			if (!ControladorParametros::ctrValidarTipoDato($habilitado)) 
 			{
-				$habilitado = 3;
+				if ($habilitado != 1 AND !$habilitado != 0) 
+				{
+					$habilitado = 1;
+				}
+			}
+			else
+			{
+				$habilitado = 1;
 			}
 
+			//buscar si no esta repetido el codigo
+
+			//Buscar si no esta repetido la descripcion
+
+			$tabla = "insumos";
 			$datos = array("id_categoria" => $id_categoria,
 						   "codigo" => $codigo,
 						   "descripcion" => $descripcion,
@@ -118,27 +151,6 @@ if ( isset($_GET["otro"]) )
 						   "unidadSal"	=> $unidadSal, 
 						   "contenido"	=> $contenido,
 						   "habilitado"	=> $habilitado);
-
-			//validar que no exista un insumo con el mismo codigo
-
-			//validar que no exista un insumo con la misma descripcion
-
-			//validar que exista la categoria
-
-			//validar que exista la unidad de entrada
-
-			//validar que exista la unidad de salida
-
-			//validar Numeros
-
-
-
-			
-
-			$tabla = "insumos";
-
-			
-
 			$respuesta = ModeloInsumos::mdlImportarInsumo($tabla, $datos);
 
 /*

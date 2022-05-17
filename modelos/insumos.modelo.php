@@ -98,6 +98,26 @@ class ModeloInsumos
 		$stmt = null;
 	}#mdlMostrarInsumos
 
+	static public function mdlCrearSinDefinir($tabla, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(unidad) VALUES (:unidad)");
+
+		$stmt->bindParam(":unidad", $valor, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlBuscarInsumo($tabla, $item, $valor)
 	{
 		if ($item == "id") 

@@ -24,13 +24,9 @@ $("#nuevoUsuario").change(function(){
 					$("#nuevoUsuario").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe ese Usuario.</div>');
 		    		$("#nuevoUsuario").val("");
 		    		ocultarAlert();
-	    		}
-	    	
+	    		}	
 		}
-
 	});
-
-
 })
 
 /*=============================================

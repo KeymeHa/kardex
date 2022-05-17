@@ -896,7 +896,7 @@ class ControladorFacturas
 	}
 
 
-	public function ctrTraerInsumosFacRango($fechaInicial, $fechaFinal)
+	static public function ctrTraerInsumosFacRango($fechaInicial, $fechaFinal)
 	{
 		$tabla = "facturas";
 

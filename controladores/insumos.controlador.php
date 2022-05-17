@@ -358,6 +358,51 @@ class ControladorInsumos
         }	
 	}
 
+	static public function ctrBuscarInsumoUnidad($item, $valor)
+	{
+		$tabla = "insumosunidad";
+		$respuesta = ModeloInsumos::mdlBuscarInsumo($tabla, $item, $valor);
+
+		if (isset($respuesta[0])) 
+        {
+        	return true;
+        }
+        else
+        {
+          	return false;
+        }	
+	}
+
+	static public function ctrUnidadSinDefinir()
+	{
+		$respuesta = ModeloInsumos::mdlCrearSinDefinir("insumosunidad", "Sin Definir");
+		return $respuesta;
+	}
+
+	static public function ctrValidarSinDefinir()
+	{
+		$valor = "Sin Definir";
+		$ejecutar = new ControladorInsumos();
+		$unidad = $ejecutar -> ctrBuscarInsumoUnidad("unidad", $valor);
+
+		if (isset($unidad["id"])) 
+		{
+			if ($unidad["id"] != "" || $unidad["id"] != null) {
+				$id = $unidad["id"];
+				$sw = 1;
+			}
+		}
+
+		if ($sw == 0) 
+		{
+			$unidad = $ejecutar -> ctrUnidadSinDefinir();
+			$unidad = $ejecutar -> ctrBuscarInsumoUnidad("unidad", $valor);
+			$id = $unidad["id"];
+		}
+
+		return $id;
+	}
+
 
 	static public function ctrVerDescripcion($id)
 	{
