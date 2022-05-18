@@ -118,19 +118,19 @@
 
               
               <div class="row">
-                <div class="col-sm-3" style="padding-right:0px">
+                <div class="col-sm-3 col-md-2 col-lg-3" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 col-md-2 col-lg-2">
                   <p class="help-block">Cantidad</p> 
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 col-md-2 col-lg-2">
                   <p class="help-block">Contenido</p> 
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 col-md-2 col-lg-2">
                   <p class="help-block">Precio</p> 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 col-md-3 col-lg-3">
                   <p class="help-block">SubTotal Item</p> 
                 </div>
                 <br>

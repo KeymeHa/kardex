@@ -151,19 +151,19 @@
               </div>
               
               <div class="row">
-                <div class="col-xs-3" style="padding-right:0px">
+                <div class="col-xs-3 col-md-3 col-lg-3" style="padding-right:0px">
                   <p class="help-block">Insumo</p> 
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-2 col-md-2 col-lg-2">
                   <p class="help-block">Cantidad</p> 
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-2 col-md-2 col-lg-2">
                   <p class="help-block">Contenido</p> 
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-2 col-md-2 col-lg-2">
                   <p class="help-block">Precio</p> 
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3 col-md-3 col-lg-3">
                   <p class="help-block">SubTotal Item</p> 
                 </div>
                 <br>
@@ -171,21 +171,41 @@
               <div class="form-group nuevoInsumoAgregado">
                  <?php
 
+                  $ttOtros = 0;
+
                     $listaInsumos = json_decode($facturas["insumos"], true);
 
                   if(!$listaInsumos == null)
                   {
                     foreach ($listaInsumos as $key => $value) 
                     {
+                      if ( isset($value["imp"]) ) 
+                      {
+                        $impe = $value["imp"];
+                        $ttOtros+= $value["imp"] * $value["sub"];
+                      }
+                      else
+                      {
+                        $impe = 0;
+                      }
                         echo '<div class="row" style="padding:5px 15px">
-                        <div class="col-xs-3" style="padding-right:0px">
-                          <div class="input-group">
-                            <span class="input-group-addon">
-                              <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-times"></i></button>
-                            </span>
-                          <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$value["id"].'"  value="'.$value["des"].'" title="'.$value["des"].'" readonly>
-                          </div>
-                        </div>
+                              <div class="col-xs-1">
+                               <div class="input-group-btn">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Mas Opciones"><i class="fa fa-plus"></i></button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="#"><input type="number" class="form-control nuevoImpuesto" value="'.$impe.'" min="0" title="impuesto personalizado"></a>
+                                    </li>
+                                    <li >
+                                      <a href="#" idInsumo="'.$value["id"].'" class="quitarInsumo"><i class="fa fa-times"></i> Eliminar</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="col-xs-2" style="padding-right:0px">
+                               <div class="input-group">
+                              <input type="text" class="form-control nuevaDescripcionInsumo" title="'.$value["des"].'" idInsumo="'.$value["id"].'" value="'.$value["des"].'" readonly>
+                              </div>
+                              </div>
                         <div class="col-xs-2 ingresoCantidad">
                           <input type="number" class="form-control nuevaCantidadInsumo"  autocomplete="off" min="1" value="'.$value["can"].'" required>
                         </div>
@@ -233,16 +253,39 @@
                   </div>
                   </div>
                   <div class="row" style="padding:5px 15px">
-                  <div class="col-xs-7" style="padding-right:0px">
-                    <div class="input-group" title="TotalIVA">
-                      <span class="input-group-addon">
-                      <p>Total
-                      </p>
-                      </span>
-                      <?php $total= intval($facturas['inversion']) + intval($facturas['iva']) ?>
-                      <input type="text" class="form-control input-lg" id="totalMasIVA" value="<?php echo $total;?>" disabled  readonly required>
+                    <div class="col-xs-7" style="padding-right:0px">
+                      <div class="input-group" title="TotalIVA">
+                        <span class="input-group-addon">
+                        <p>Total IVA
+                        </p>
+                        </span>
+                        <?php $total= intval($facturas['inversion']) + intval($facturas['iva']) ?>
+                        <input type="text" class="form-control input-lg" id="totalIVA" value="<?php echo $facturas['iva'];?>" disabled  readonly required>
+                      </div>
                     </div>
-                  </div>
+                </div>
+                <div class="row" style="padding:5px 15px">
+                    <div class="col-xs-7" style="padding-right:0px">
+                      <div class="input-group" title="TotalIVA">
+                        <span class="input-group-addon">
+                        <p>Total Otros
+                        </p>
+                        </span>
+                        <input type="text" class="form-control input-lg" id="totaIMP" value="<?php echo $ttOtros;?>" disabled  readonly required>
+                      </div>
+                    </div>
+                </div>
+                  <div class="row" style="padding:5px 15px">
+                    <div class="col-xs-7" style="padding-right:0px">
+                      <div class="input-group" title="TotalIVA">
+                        <span class="input-group-addon">
+                        <p>Total
+                        </p>
+                        </span>
+                        <?php $total= intval($facturas['inversion']) + intval($facturas['iva']) ?>
+                        <input type="text" class="form-control input-lg" id="totalMasIVA" value="<?php echo $total;?>" disabled  readonly required>
+                      </div>
+                    </div>
                 </div>
               </div>
                 <br>

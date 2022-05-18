@@ -94,7 +94,6 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 				     ' <input type="text" class="form-control subTotalInsumo" min="1" name="subTotalInsumo" readonly value="'+precio+'" required>'+
 				    '</div>'+
 				  '</div>'+
-
                 '</div>'
 				)
 
@@ -121,6 +120,28 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 		              	'</div>'+
 		              '</div>'+
 		            '</div>'+
+		            '<div class="row" style="padding:5px 15px">'+
+		              '<div class="col-xs-7" style="padding-right:0px">'+
+		               	'<div class="input-group" title="IVA">'+
+		                	'<span class="input-group-addon">'+
+		                	'<p>Total IVA'+
+		                	'</p>'+
+		                 	'</span>'+
+		                	'<input type="text" class="form-control input-lg" id="totalIVA" value="0"  readonly required>'+
+		              	'</div>'+
+		              '</div>'+
+                  	'</div>'+
+                  	'<div class="row" style="padding:5px 15px">'+
+		              '<div class="col-xs-7" style="padding-right:0px">'+
+		               	'<div class="input-group" title="Otros impuestos">'+
+		                	'<span class="input-group-addon">'+
+		                	'<p>Total Otros'+
+		                	'</p>'+
+		                 	'</span>'+
+		                	'<input type="text" class="form-control input-lg" id="totaIMP" value="0"  readonly required>'+
+		              	'</div>'+
+		              '</div>'+
+                  	'</div>'+
 		            '<div class="row" style="padding:5px 15px">'+
 		              '<div class="col-xs-7" style="padding-right:0px">'+
 		               	'<div class="input-group" title="Total+IVA">'+
@@ -276,9 +297,6 @@ function sumarPreciosNF(){
 		{
 			sumaSubTo+= Number($(precioItem[i]).val())+(Number($(precioItem[i]).val())*(Number($(impItem[i]).val()))/100) ;
 		}
-
-		
-  
 	}
 /*
 	for(var i = 0; i < precioItem.length; i++){
@@ -311,13 +329,19 @@ function sumarPreciosNF(){
  	var totalconIVA = valorIva + sub;
 
 
+
+ 	$("#totaIMP").val(sumaSubTo);
 	$("#totalSinIVA").val(sumaSubT);
 	$("#totalMasIVA").val(totalconIVA);
+	$("#totalIVA").val(valorIva);
+	
 	$("#valorIva").val(valorIva);
 	$("#valorSub").val(sumaSubT);
 
+	$("#totaIMP").number(true, 0);
 	$("#totalSinIVA").number(true, 0);
 	$("#totalMasIVA").number(true, 0);
+	$("#totalIVA").number(true, 0);
 
 
 }

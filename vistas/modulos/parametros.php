@@ -12,13 +12,59 @@
     </ol>
   </section>
   <section class="content">
-    <div class="box">
-      <div class="box-header with-border">
-       
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Listado de parametros del Sistema</h3>
+          </div>
+          <div class="box-body">       
+          
+            <div class="table-responsive">
+             <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Nombre de unidades de Insumos</th>
+                    <td>Pertenece al nombre de las unidades para identificar la cantidad de unidades entrantes de las salientes.</td>
+                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <th>Datos Generales de la empresa</th>
+                    <td>Esta información es util para generar actas, Ordenes de compra, Facturas, permite identificar datos basicos como, Representante, Nit, Encargados, direcciones y teléfono.</td>
+                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <th>Margenes de Stock</th>
+                    <td>Establece limites minimos, moderados y altos, permitiendo generar un aviso para solicitar stock.</td>
+                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <th>Impuestos</th>
+                    <td>Permite Agregar, modificar y eliminar impuestos del sistema, para tener estandarizado estos valores y evitar errores de facturación y ordenes de compras.</td>
+                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div class="box-body">       
-      
-      </div>
-    </div>
+
+      <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="box box-success">
+          <div class="box-header">
+            
+          </div><!--box-header-->
+          <div class="box-body">
+
+          </div><!--box-body-->
+        </div><!--box box-success-->
+      </div><!--col-xs-12 col-md-6 col-lg-6-->
+    </div><!--row-->
+
+
+ 
   </section>
 </div>
