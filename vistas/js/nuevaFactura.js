@@ -319,7 +319,7 @@ function sumarPreciosNF(){
 	$("#totalIVA").val(valorIva);//ok
 	
 	$("#valorIva").val(valorIva);//ok
-	$("#valorSub").val(sumaSubT);//ok
+	$("#valorSub").val(sumaSubT+IMPSubTo);//ok
 
 	$("#totaIMP").number(true, 0);
 	$("#totalSinIVA").number(true, 0);//ok

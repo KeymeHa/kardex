@@ -161,6 +161,20 @@
               $item = "id";
               $valor = $value["id"];
               $insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+
+              if (isset($value["imp"])) 
+              {
+                $imp1 = " (imp :".$value["imp"]."%)";
+                $imp2 = " ($ ".(($value["imp"]/100)*$value["sub"]).", = ".(($value["imp"]/100)*$value["sub"])+$value["sub"].")";
+              }
+              else
+              {
+                $imp1 = "";
+                $imp2 = "";
+              }
+
+              
+
               if($insumos["imagen"] != null)
               {
                 $imagen = $insumos["imagen"];
@@ -182,8 +196,8 @@
                       <td>'.$categoria["categoria"].'</td>
                       <td>'.$value["can"].' '.$unidad.'(s)</td>
                       <td>'.($value["can"]*$value["con"]).' '.$unidadSal.'(s)</td>
-                      <td>$<span class="cantidadEfectivo">'.$value["pre"].'</span></td>
-                      <td>$<span class="cantidadEfectivo">'.$value["sub"].'</span></td>
+                      <td>$<span class="cantidadEfectivo">'.$value["pre"].'</span>'.$imp1.'</td>
+                      <td>$<span class="cantidadEfectivo">'.$value["sub"].'</span>'.$imp2.'</td>
                     </tr>';
             }
           }
