@@ -282,10 +282,11 @@ function sumarPreciosNF(){
 
 	var precioItem = $(".subTotalInsumo");
 	var impItem = $(".nuevoImpuesto");
-	
-	var sumaSubT = 0;
+	var sumaSubT = 0;//sub total para contabilizar iva
 
-	var sumaSubTo = 0;  
+	var sumaSubTo = 0; //sub total para contabilizar otros
+
+	var IMPSubTo = 0;//valor contabilizado por otros
 
 	for(var i = 0; i < precioItem.length; i++){
 
@@ -295,54 +296,35 @@ function sumarPreciosNF(){
 		}
 		else
 		{
-			sumaSubTo+= Number($(precioItem[i]).val())+(Number($(precioItem[i]).val())*(Number($(impItem[i]).val()))/100) ;
+			sumaSubTo+= Number($(precioItem[i]).val());
+			IMPSubTo+= Number($(precioItem[i]).val())*(Number($(impItem[i]).val()))/100 ;
+			
 		}
 	}
-/*
-	for(var i = 0; i < precioItem.length; i++){
-
-		if ( $(impItem[i]).val() == 0 ) 
-		{
-			sumINF.push(Number($(precioItem[i]).val()));
-		}
-		else
-		{
-			sumINF.push(Number($(impItem[i]).val()));
-		}
-
-		  
-	}*/
-/*
-
-	var sumaSubT = sumINF.reduce(sumaArrayPreciosNF);
-	
-	function sumaArrayPreciosNF(total, num){
-
-		return total + num;
-
-	}
-*/
 	var iva = Number($("#iva").val());
 
 	var valorIva = ( iva / 100 ) * sumaSubT;
-	var sub = sumaSubT + sumaSubTo;
- 	var totalconIVA = valorIva + sub;
+	sumaSubT+= sumaSubTo;
+ 	var totalconIVA = valorIva + sumaSubTo + IMPSubTo;
 
+ 	//Valor sub total
+ 	//valor iva del subtotal
+ 	//valor otros impuestos
+ 	//Valor con iva
+ 	//Total = iva + sub + otros
 
-
- 	$("#totaIMP").val(sumaSubTo);
-	$("#totalSinIVA").val(sumaSubT);
+ 	$("#totaIMP").val(IMPSubTo);//ok
+	$("#totalSinIVA").val(sumaSubT);//ok
 	$("#totalMasIVA").val(totalconIVA);
-	$("#totalIVA").val(valorIva);
+	$("#totalIVA").val(valorIva);//ok
 	
-	$("#valorIva").val(valorIva);
-	$("#valorSub").val(sumaSubT);
+	$("#valorIva").val(valorIva);//ok
+	$("#valorSub").val(sumaSubT);//ok
 
 	$("#totaIMP").number(true, 0);
-	$("#totalSinIVA").number(true, 0);
+	$("#totalSinIVA").number(true, 0);//ok
 	$("#totalMasIVA").number(true, 0);
-	$("#totalIVA").number(true, 0);
-
+	$("#totalIVA").number(true, 0);//ok
 
 }
 
