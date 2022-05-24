@@ -11,7 +11,7 @@ class ControladorRequisiciones
 
 	    if ($anio["anio"] == 0) 
 	    {
-	    	$respuesta = '';
+	    	$respuesta = 'WHERE aprobado = 1';
 	    }
 	    else
 	    {

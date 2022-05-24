@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.categorias: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.categorias: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
 INSERT INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
 	(1, 'Papelería', 'Sin Informacion.', 0),
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `iva` float NOT NULL,
   `observacion` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.facturas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
@@ -157,21 +157,22 @@ CREATE TABLE IF NOT EXISTS `historial` (
 -- Volcando datos para la tabla kardex.historial: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `historial` DISABLE KEYS */;
 INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`) VALUES
-	(1, 1, 2, 'AROMATICA SURTIDA EN BOLSA', '', '0000-00-00', 1);
+	(1, 1, 2, 'AROMATICA SURTIDA EN BOLSA', '', '2022-05-05', 1);
 /*!40000 ALTER TABLE `historial` ENABLE KEYS */;
 
--- Volcando estructura para tabla kardex.impustoagregado
-CREATE TABLE IF NOT EXISTS `impustoagregado` (
+-- Volcando estructura para tabla kardex.impuestos
+CREATE TABLE IF NOT EXISTS `impuestos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sumatoria` int(11) NOT NULL,
-  `anio` int(11) NOT NULL,
-  `mes` int(11) NOT NULL,
+  `descripcion` varchar(50) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
+  `valor` int(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.impustoagregado: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `impustoagregado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `impustoagregado` ENABLE KEYS */;
+-- Volcando datos para la tabla kardex.impuestos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `impuestos` DISABLE KEYS */;
+INSERT INTO `impuestos` (`id`, `descripcion`, `valor`) VALUES
+	(1, 'IVA', 19);
+/*!40000 ALTER TABLE `impuestos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumos
 CREATE TABLE IF NOT EXISTS `insumos` (
@@ -196,13 +197,15 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   `unidadSal` int(2) NOT NULL DEFAULT 1,
   `contenido` int(2) NOT NULL DEFAULT 1,
   `habilitado` int(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  PRIMARY KEY (`id`),
+  KEY `FK_insumos_insumosunidad` (`unidadSal`),
+  KEY `FK_insumos_insumosunidad_2` (`unidad`),
+  CONSTRAINT `FK_insumos_insumosunidad` FOREIGN KEY (`unidadSal`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_insumos_insumosunidad_2` FOREIGN KEY (`unidad`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.insumos: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
-INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`) VALUES
-	(158, 3, '1', 'AROMATICA SURTIDA EN BOLSA', '', 'vistas/img/productos/default/anonymous.png', 0, 0, 500, 0, 0, '2022-05-05 10:04:54', 0, '2', '4', '2', 2, 10, 1, 12, 1);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosnombre
@@ -224,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `insumosunidad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `unidad` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.insumosunidad: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumosunidad` DISABLE KEYS */;
@@ -238,7 +241,8 @@ INSERT INTO `insumosunidad` (`id`, `unidad`) VALUES
 	(7, 'Rollo'),
 	(8, 'Envase'),
 	(9, 'Porción'),
-	(10, 'Caja');
+	(10, 'Caja'),
+	(11, 'Sin Definir');
 /*!40000 ALTER TABLE `insumosunidad` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.inversiones
@@ -269,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   UNIQUE KEY `page` (`page`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~50 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~51 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
 INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`) VALUES
 	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0),
@@ -446,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`) VALUES
-	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0);
+	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 0, 0, 1, NULL, NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -495,10 +499,12 @@ CREATE TABLE IF NOT EXISTS `proveedores` (
   `fecha` date NOT NULL,
   `correo` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.proveedores: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
+INSERT INTO `proveedores` (`id`, `razonSocial`, `nombreComercial`, `nit`, `digitoNit`, `descripcion`, `direccion`, `telefono`, `contacto`, `fecha`, `correo`) VALUES
+	(1, 'PARMENCO', 'PARMEZANOS PIZZA HOT', '900236525', '5', 'VENTA DE ESPAGUETTI', 'CLL 12 B 55 PISO 1000', '302356985', 'FERNANDITO BARCELITO', '0000-00-00', 'NINGUN@HOLA.COM');
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proyectoarea
@@ -509,7 +515,7 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
   PRIMARY KEY (`id`),
   KEY `FK_proyectoarea_proyectos` (`id_proyecto`),
   CONSTRAINT `FK_proyectoarea_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.proyectoarea: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectoarea` DISABLE KEYS */;
@@ -598,7 +604,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-05-06 11:35:20', '2021-02-11 05:06:49', 'p5vkbq7p7eqnbnl22p15kfecl4', 0, 0, 0),
+	(1, 'Kevin Bolaño', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-05-18 07:51:16', '2021-02-11 05:06:49', 'n02nmj2bvtsk34hcal1q45mm5k', 0, 0, 0),
 	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 06:12:39', '', 0, 0, 0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;

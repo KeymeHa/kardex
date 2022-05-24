@@ -38,6 +38,8 @@
 
 			echo '</li>
 
+			<li class="header">Inventario y Bodega</li>
+
 			<li class="treeview ';
 
 			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'inventario' || $_GET['ruta'] == 'insumos' || $_GET['ruta'] == 'categorias' || $_GET['ruta'] == 'verCategoria' ){ echo 'active';} }
@@ -107,6 +109,24 @@
 
 			<li class="treeview ';
 
+			 if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'actas' || $_GET['ruta'] == 'VerActa' || $_GET['ruta'] == 'editarActa'){ echo 'active';} }
+
+			 echo '"><a href="actas">
+					<i class="fa fa-file"></i>
+					<span>Actas</span>
+					<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-tight"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="actas"><i class="fa fa-file-o"></i>Listado de Actas</a></li>
+				</ul>
+			</li>
+
+			<li class="header">Configuraciones</li>
+
+			<li class="treeview ';
+
 			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'historialUsuarios' || $_GET['ruta'] == 'historialInsumos' || $_GET['ruta'] == 'historialCategorias' || $_GET['ruta'] == 'historialAreas' || $_GET['ruta'] == 'historialPersonas' || $_GET['ruta'] == 'historialOrdenes' || $_GET['ruta'] == 'historialRq'){ echo 'active';} }
 
 			echo '"><a href="#">
@@ -127,24 +147,6 @@
 				</ul>
 			</li>
 
-			<li class="treeview ';
-
-			 if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'actas' || $_GET['ruta'] == 'VerActa' || $_GET['ruta'] == 'editarActa'){ echo 'active';} }
-
-			 echo '"><a href="actas">
-					<i class="fa fa-file"></i>
-					<span>Actas</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-tight"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="actas"><i class="fa fa-file-o"></i>Listado de Actas</a></li>
-				</ul>
-			</li>';
-
-
-			echo '
 			<li ';
 
 			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "parametros"){ echo'class="active"'; } }
@@ -159,9 +161,34 @@
 					}
 
 			echo '</li>';
+			}
+
+			if ( $_SESSION["perfil"] != "3" || $_SESSION["perfil"] != "4" ) 
+			{
+
+				echo '
+				<li class="header">Modulo Ventas</li>
+				<li ';
+
+				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "clientes"){ echo'class="active"'; }	}
+
+				echo'><a href="clientes">
+						<i class="fa fa-users"></i>
+						<span>Clientes</span>
+					</a>
+				</li>';
 
 
+				echo '
+				<li ';
 
+				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "ventas"){ echo'class="active"'; }	}
+
+						echo'><a href="ventas">
+								<i class="fa fa-cart-plus"></i>
+								<span>Ventas</span>
+							</a>
+						</li>';
 			}
 
 			?>

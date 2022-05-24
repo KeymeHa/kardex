@@ -313,18 +313,18 @@ function sumarPreciosNF(){
  	//Valor con iva
  	//Total = iva + sub + otros
 
- 	$("#totaIMP").val(IMPSubTo);//ok
-	$("#totalSinIVA").val(sumaSubT);//ok
+ 	$("#totaIMP").val(IMPSubTo);
+	$("#totalSinIVA").val(sumaSubT);
 	$("#totalMasIVA").val(totalconIVA);
-	$("#totalIVA").val(valorIva);//ok
+	$("#totalIVA").val(valorIva);
 	
-	$("#valorIva").val(valorIva);//ok
-	$("#valorSub").val(sumaSubT+IMPSubTo);//ok
+	$("#valorIva").val(valorIva);
+	$("#valorSub").val(sumaSubT+IMPSubTo);
 
 	$("#totaIMP").number(true, 0);
-	$("#totalSinIVA").number(true, 0);//ok
+	$("#totalSinIVA").number(true, 0);
 	$("#totalMasIVA").number(true, 0);
-	$("#totalIVA").number(true, 0);//ok
+	$("#totalIVA").number(true, 0);
 
 }
 

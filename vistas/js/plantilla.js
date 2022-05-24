@@ -527,6 +527,30 @@ function paginaCargada(pagina){
 
 
 		}
+		else if(pagina == 31)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaVentas');
+			tablaAjax = 'ventas';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+
+
+		}
+		else if(pagina == 32)
+		{
+			tablaElegida =  $('.tablaClientes');
+			tablaAjax = 'clientes';
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {
