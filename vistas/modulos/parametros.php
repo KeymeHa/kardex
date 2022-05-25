@@ -27,22 +27,27 @@
                   <tr>
                     <th>Nombre de unidades de Insumos</th>
                     <td>Pertenece al nombre de las unidades para identificar la cantidad de unidades entrantes de las salientes.</td>
-                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="1">Editar</button></td>
                   </tr>
                   <tr>
                     <th>Datos Generales de la empresa</th>
                     <td>Esta información es util para generar actas, Ordenes de compra, Facturas, permite identificar datos basicos como, Representante, Nit, Encargados, direcciones y teléfono.</td>
-                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="2">Editar</button></td>
                   </tr>
                   <tr>
                     <th>Margenes de Stock</th>
                     <td>Establece limites minimos, moderados y altos, permitiendo generar un aviso para solicitar stock.</td>
-                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="3">Editar</button></td>
                   </tr>
                   <tr>
                     <th>Impuestos</th>
                     <td>Permite Agregar, modificar y eliminar impuestos del sistema, para tener estandarizado estos valores y evitar errores de facturación y ordenes de compras.</td>
-                    <td><button type="button" class="btn btn-block btn-success">Editar</button></td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="4">Editar</button></td>
+                  </tr>
+                   <tr>
+                    <th>Modulos</th>
+                    <td>Usted puede habilitar los modulos del sistema.</td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="5">Administrar</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -55,9 +60,9 @@
       <div class="col-xs-12 col-md-6 col-lg-6">
         <div class="box box-success">
           <div class="box-header">
-            
+           <span class="titulo-box"></span> 
           </div><!--box-header-->
-          <div class="box-body">
+          <div class="box-body contenido-box">
 
           </div><!--box-body-->
         </div><!--box box-success-->

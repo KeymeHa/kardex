@@ -551,6 +551,17 @@ function paginaCargada(pagina){
 			tablaElegida =  $('.tablaClientes');
 			tablaAjax = 'clientes';
 		}
+		else if(pagina == 33)
+		{
+			tablaElegida =  $('.tablaInsumosNVenta');
+			tablaAjax = 'nuevaFactura';
+		}
+		else if(pagina == 34)
+		{
+			tablaElegida =  $('.tablaModulos');
+			tablaAjax = 'parametros';
+			 variable = "?verMod=1";
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {

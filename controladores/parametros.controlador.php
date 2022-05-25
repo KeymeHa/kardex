@@ -52,6 +52,14 @@ class ControladorParametros
 					return $parametro;
 				}
 
+				if($val == 26)
+				{
+					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
+					$r = "VNT".$r;
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+
 				if($val == 20)
 				{
 					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
@@ -69,6 +77,7 @@ class ControladorParametros
 								"codPed"=> $i,
 								"codOrdC"=> $i,
 								"codActa"=> $i,
+								"codVen"=> $i,
 							   "id"=> $i );
 
 
@@ -103,6 +112,14 @@ class ControladorParametros
 				{
 					$r = $radicar->radicarNuevaFac($i, $ActualY);
 					$r = "OC".$r;
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+
+				if($val == 26)
+				{
+					$r = $radicar->radicarNuevaFac($i, $ActualY);
+					$r = "VNT".$r;
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
@@ -689,5 +706,21 @@ class ControladorParametros
         
 		return $sw;
 	}
+
+	static public function ctrVerImpuestos($valor)
+	{
+		$tabla = "impuestos";
+		$respuesta = ModeloParametros::mdlMostrarImpuestos($tabla);
+		return $respuesta;
+	}
+
+	static public function ctrVerModulos()
+	{
+		$tabla = "js_data";
+		$respuesta = ModeloParametros::mdlMostrarModulos($tabla);
+		return $respuesta;
+	}
+
+	
 
 }//class

@@ -55,7 +55,7 @@
 </head>
 <body class="hold-transition skin-green sidebar-collapse sidebar-mini login-page">
    <?php
-    if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok" ) 
+    if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
     {
       echo '<div class="wrapper">';
       include "modulos/cabezote.php";
@@ -71,7 +71,8 @@
            $gatillo = ControladorParametros::ctrValidarPermiso($_SESSION["perfil"], $js_data);
 
           if ($gatillo == 1) 
-          {        
+          {  
+
             if ( $js_data != null ) 
             {
                 $paginaCargada = '<script type="text/javascript">
@@ -81,9 +82,17 @@
                 $paginaCargada .= 'paginaCargada(pagina);});</script>';
 
                 echo $paginaCargada;
-              }
+            }
 
-            include "modulos/".$_GET["ruta"].".php";
+            if ($js_data["sw"] == 1) 
+            {
+              include "modulos/".$_GET["ruta"].".php";
+            }
+            else
+            {
+              include "modulos/404.php";
+            }
+
             include "modulos/notificaciones-modal.php";
             include "modulos/li.php";
           }
@@ -135,6 +144,11 @@
     }
     else
     {
+      if (isset($_SESSION["iniciarSesion"])) 
+      {
+        session_destroy();
+      }
+      
       include "modulos/login.php";
     }  
   ?>

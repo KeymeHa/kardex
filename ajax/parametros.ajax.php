@@ -28,6 +28,16 @@ class AjaxParametros
 		$respuesta = ControladorParametros::ctrVerPerfil(null);
 		echo json_encode($respuesta);
 	}
+
+	public function ajaxImp(){
+		$respuesta = ControladorParametros::ctrVerImpuestos(null);
+		echo json_encode($respuesta);
+	}
+
+	public function ajaxModulos(){
+		$respuesta = ControladorParametros::ctrVerModulos();
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["paramIns"]))
@@ -47,4 +57,13 @@ if(isset($_POST["unidad"]))
 if(isset($_POST["perfil"]))
 {	$limIns = new AjaxParametros();
 	$limIns -> ajaxPerfil();}
+
+if(isset($_POST["traerIMP"]))
+{	$traerIMP = new AjaxParametros();
+	$traerIMP -> ajaxImp();}
+
+if(isset($_POST["verMod"]))
+{	$verMod = new AjaxParametros();
+	$verMod -> ajaxModulos();}
+
 

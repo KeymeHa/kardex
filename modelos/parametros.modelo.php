@@ -381,4 +381,29 @@ class ModeloParametros
 		$stmt = null;
 	}
 
+
+	static public function mdlMostrarImpuestos($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarModulos($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE ver = 1 ORDER BY title ASC");
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	
+
 }

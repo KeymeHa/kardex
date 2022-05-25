@@ -56,7 +56,7 @@ class ControladorUsuarios
 
 
 						$_SESSION['sid'] = session_id();
-						$_SESSION["iniciarSesion"] = "ok";
+						$_SESSION["iniciarSesion"] = "p3ddmfgqi4j0410jfqukfvv82j";
 						$_SESSION["id"] = $respuesta["id"];
 						$_SESSION["nombre"] = $respuesta["nombre"];
 						$_SESSION["usuario"] = $respuesta["usuario"];
