@@ -17,6 +17,17 @@
 CREATE DATABASE IF NOT EXISTS `kardex` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `kardex`;
 
+-- Volcando estructura para tabla kardex.accion
+CREATE TABLE IF NOT EXISTS `accion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.accion: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `accion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `accion` ENABLE KEYS */;
+
 -- Volcando estructura para tabla kardex.actas
 CREATE TABLE IF NOT EXISTS `actas` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
@@ -90,6 +101,17 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VAL
 	(6, 'Area Tecnica', '', 0, '');
 /*!40000 ALTER TABLE `areas` ENABLE KEYS */;
 
+-- Volcando estructura para tabla kardex.articulo
+CREATE TABLE IF NOT EXISTS `articulo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.articulo: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
+
 -- Volcando estructura para tabla kardex.carpetasprov
 CREATE TABLE IF NOT EXISTS `carpetasprov` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -138,6 +160,17 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 INSERT INTO `clientes` (`id`, `nombre`, `sid`, `correo`, `telefono`, `elim`) VALUES
 	(1, 'Susana Amador', 123456789, 'susanaamador@hotmail.com', '2147483647', 0);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.cortes
+CREATE TABLE IF NOT EXISTS `cortes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `corte` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.cortes: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `cortes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cortes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
 CREATE TABLE IF NOT EXISTS `facturas` (
@@ -288,70 +321,75 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `pTres` int(1) NOT NULL DEFAULT 3 COMMENT 'permiso para user auxiliar',
   `pCuatro` int(1) NOT NULL DEFAULT 4 COMMENT 'permiso para user encargado',
   `pCinco` int(1) NOT NULL DEFAULT 5 COMMENT 'permiso para user vendedor',
+  `pSeis` int(1) NOT NULL DEFAULT 0,
   `sw` int(1) NOT NULL DEFAULT 1 COMMENT 'Gatillo para mostrar o no una pagina',
   `ver` int(1) NOT NULL DEFAULT 1 COMMENT 'gatillo para consultar este registro',
   `descripcion` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~54 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
-INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `sw`, `ver`, `descripcion`) VALUES
-	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 1, 1, 'Muestra las categorias de las que seran asociados '),
-	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 1, 1, 'Permite Ver los insumos pertenecientes a una categ'),
-	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 1, 1, 'Mustras todos los insumos ingresados en el sistema'),
-	(4, 'ordendecompras', 'Orden de Compras', 4, 1, 2, 3, 0, 0, 1, 1, 'Lista las ordenes de compra, contiene graficas.'),
-	(5, 'facturas', 'Facturas', 5, 1, 2, 3, 0, 0, 1, 1, 'Lista las facturas ingresadas en el sistema.'),
-	(6, 'requisiciones', 'Requisiciones', 8, 1, 2, 3, 0, 0, 1, 1, 'Muestra las requisiciones aprobadas, pendientes, l'),
-	(7, 'nuevaFactura', 'Nueva Factura', 10, 1, 2, 3, 0, 0, 1, 1, 'Permite crear nueva factura, lista los insumos en '),
-	(8, 'editarFactura', 'Editar Factura', 10, 1, 2, 3, 0, 0, 1, 1, 'Permite editar una factura realizada en sistema.'),
-	(9, 'requisicion', 'Requisción', 11, 1, 2, 3, 0, 0, 1, 1, 'Realiza la requisición de insumos para una área po'),
-	(10, 'requisicionImportada', 'Importar Requisición', 11, 1, 2, 3, 0, 0, 1, 0, 'Puede importar una requisicón por medio de una pla'),
-	(11, 'editarRq', 'Editar Requisición', 11, 1, 2, 3, 0, 0, 1, 1, 'Permite editar requisiciones almacenadas en sistem'),
-	(12, 'actas', 'Actas', 14, 1, 2, 3, 0, 0, 1, 1, 'Lista las actas de salida y entrada.'),
-	(13, 'areas', 'Areas', 15, 1, 2, 3, 0, 0, 1, 1, 'Lista las areas pertenecientes a la organización'),
-	(14, 'personas', 'Personas', 16, 1, 2, 3, 0, 0, 1, 1, 'Muestra las personas encargadas para cada area, pa'),
-	(15, 'inicio', 'Dashboard', 17, 1, 2, 3, 4, 5, 1, 0, 'Presenta los modulos del sistema.'),
-	(16, 'reportesRq', 'Reportes de Requisiciones', 17, 1, 2, 3, 0, 0, 1, 1, NULL),
-	(17, 'verArea', 'Ver Área', 18, 1, 2, 3, 0, 0, 1, 1, 'Muestra las personas asignadas a esa área y presen'),
-	(18, 'proveedor', 'Proveedor', 19, 1, 2, 3, 0, 0, 1, 1, 'Lista los proveedores, para realizar tramites de o'),
-	(19, 'inversionInsumos', 'Inversión en Insumos', 23, 1, 2, 3, 0, 0, 1, 1, 'Lista los los valores invertidos en cada insumo'),
-	(20, 'cotizaciones', 'Cotizaciones', 25, 1, 2, 3, 0, 0, 1, 1, NULL),
-	(21, 'verInsumo', 'Ver Insumo', 26, 1, 2, 3, 0, 0, 1, 1, 'Muestra un resumen perteneciente a dicho insumo, l'),
-	(22, 'proyectos', 'Proyectos', 27, 1, 2, 3, 0, 0, 1, 1, 'Lista los proyectos de la organización, para así c'),
-	(23, 'usuarios', 'Usuarios', 0, 1, 2, 0, 0, 0, 1, 1, 'Lista los usuarios del sistema y permite realizar '),
-	(24, 'plantilla', 'Plantilla', 0, 1, 2, 3, 0, 0, 1, 0, NULL),
-	(25, 'nuevaActa', 'Nueva Acta', 0, 1, 2, 3, 0, 0, 1, 1, 'Permite crear una nueva acta de entrada, salida o prestamo.'),
-	(28, 'parametros', 'Parametros', 0, 1, 2, 0, 0, 0, 1, 1, NULL),
-	(29, 'nuevaOrdendeCompras', 'Nuevar Orden', 0, 1, 2, 3, 0, 0, 1, 1, 'Permite generar ordenes de compra basado en los requerimientos del sistema.'),
-	(30, 'proveedores', 'Proveedores', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista los proveedores ingresados en el sistema, tambien permite administrarlos.'),
-	(31, 'editarOrden', 'Editar Orden', 0, 1, 2, 3, 0, 0, 1, 1, 'Permite editar las ordenes de compras alamacenadas en sistemas.'),
-	(32, 'editarActa', 'Editar Acta', 0, 1, 2, 3, 0, 0, 1, 1, 'Permite editar las actas alamancenadas en sistema.'),
-	(33, 'verOrden', 'Ver Orden', 0, 1, 2, 3, 0, 0, 1, 1, 'Visualiza una orden de compra, discriminando los insumos registrados.'),
-	(34, 'inventario', 'Inventario', 0, 1, 2, 3, 0, 5, 1, 1, 'Pagina donde visualiza los modulos pertenecientes a ella.'),
-	(35, 'generaciones', 'Generaciones', 0, 1, 2, 3, 4, 0, 1, 1, 'Pagina donde visualiza los modulos Factura, Ordenes y cotizaciones.'),
-	(36, 'salir', 'LogOut', 0, 1, 2, 3, 4, 5, 1, 0, NULL),
-	(37, 'perfil', 'Mi Perfil', 0, 1, 2, 3, 4, 5, 1, 1, 'Pagina del perfil del usuario logeado.'),
-	(38, 'genRequisicion', 'Generar Requisición', 29, 0, 0, 0, 4, 0, 1, 1, NULL),
-	(39, 'hisRequisicion', 'Historial de Requisición', 30, 0, 0, 0, 4, 0, 1, 1, NULL),
-	(40, 'verProyecto', 'Proyecto', 28, 1, 2, 3, 0, 0, 1, 1, NULL),
-	(41, 'verRequisicion', 'Ver Requisición', 0, 1, 2, 3, 0, 0, 1, 1, NULL),
-	(42, 'borrador', 'Borrador', 0, 1, 2, 3, 0, 0, 1, 0, NULL),
-	(43, 'verFactura', 'Ver Factura', 0, 1, 2, 3, 0, 0, 1, 1, 'Permite visualizar una factura seleccionada, discriminando valores e insumos agregados al stock.'),
-	(44, 'verRequisicionS', 'ver Requisición', 11, 1, 2, 3, 0, 0, 1, 1, NULL),
-	(45, 'miRequisicion', 'Requisición', 0, 0, 0, 0, 4, 0, 1, 1, NULL),
-	(47, 'historialUsuarios', 'Historial de Usuarios', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de usuarios'),
-	(48, 'historialInsumos', 'Historial Insumos', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de insumos'),
-	(49, 'historialCategorias', 'Historial Categorias', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de categorias'),
-	(50, 'historialAreas', 'Historial Areas', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de áreas'),
-	(51, 'historialPersonas', 'Historial Personas', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de personas'),
-	(52, 'historialOrdenes', 'Historial Ordenes', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Ordenes de compra'),
-	(53, 'historialRq', 'Historial Requisiciones', 0, 1, 2, 3, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Requisiciones'),
-	(54, 'Creditos', 'Creditos', 0, 1, 2, 3, 4, 5, 1, 0, NULL),
-	(55, 'ventas', 'Ventas', 31, 1, 2, 0, 0, 5, 1, 1, 'Lista las ventas generadas.'),
-	(56, 'clientes', 'Clientes', 32, 1, 2, 0, 0, 5, 1, 1, 'Lista los clientes ingresados en el sistema, con esto pueden generarse nuevas ventas.'),
-	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 1, 1, 'Permite generar una nueva venta a un cliente.');
+INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `sw`, `ver`, `descripcion`) VALUES
+	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 1, 1, 'Muestra las categorias de las que seran asociados '),
+	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 1, 1, 'Permite Ver los insumos pertenecientes a una categ'),
+	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 0, 1, 1, 'Mustras todos los insumos ingresados en el sistema'),
+	(4, 'ordendecompras', 'Orden de Compras', 4, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las ordenes de compra, contiene graficas.'),
+	(5, 'facturas', 'Facturas', 5, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las facturas ingresadas en el sistema.'),
+	(6, 'requisiciones', 'Requisiciones', 8, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las requisiciones aprobadas, pendientes, l'),
+	(7, 'nuevaFactura', 'Nueva Factura', 10, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite crear nueva factura, lista los insumos en '),
+	(8, 'editarFactura', 'Editar Factura', 10, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar una factura realizada en sistema.'),
+	(9, 'requisicion', 'Requisción', 11, 1, 2, 3, 0, 0, 0, 1, 1, 'Realiza la requisición de insumos para una área po'),
+	(10, 'requisicionImportada', 'Importar Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 0, 'Puede importar una requisicón por medio de una pla'),
+	(11, 'editarRq', 'Editar Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar requisiciones almacenadas en sistem'),
+	(12, 'actas', 'Actas', 14, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las actas de salida y entrada.'),
+	(13, 'areas', 'Areas', 15, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las areas pertenecientes a la organización'),
+	(14, 'personas', 'Personas', 16, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las personas encargadas para cada area, pa'),
+	(15, 'inicio', 'Dashboard', 17, 1, 2, 3, 4, 5, 0, 1, 0, 'Presenta los modulos del sistema.'),
+	(16, 'reportesRq', 'Reportes de Requisiciones', 17, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
+	(17, 'verArea', 'Ver Área', 18, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las personas asignadas a esa área y presen'),
+	(18, 'proveedor', 'Proveedor', 19, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proveedores, para realizar tramites de o'),
+	(19, 'inversionInsumos', 'Inversión en Insumos', 23, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los los valores invertidos en cada insumo'),
+	(20, 'cotizaciones', 'Cotizaciones', 25, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
+	(21, 'verInsumo', 'Ver Insumo', 26, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra un resumen perteneciente a dicho insumo, l'),
+	(22, 'proyectos', 'Proyectos', 27, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proyectos de la organización, para así c'),
+	(23, 'usuarios', 'Usuarios', 0, 1, 2, 0, 0, 0, 0, 1, 1, 'Lista los usuarios del sistema y permite realizar '),
+	(24, 'plantilla', 'Plantilla', 0, 1, 2, 3, 0, 0, 0, 1, 0, NULL),
+	(25, 'nuevaActa', 'Nueva Acta', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite crear una nueva acta de entrada, salida o prestamo.'),
+	(28, 'parametros', 'Parametros', 0, 1, 2, 0, 0, 0, 0, 1, 1, NULL),
+	(29, 'nuevaOrdendeCompras', 'Nuevar Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite generar ordenes de compra basado en los requerimientos del sistema.'),
+	(30, 'proveedores', 'Proveedores', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proveedores ingresados en el sistema, tambien permite administrarlos.'),
+	(31, 'editarOrden', 'Editar Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar las ordenes de compras alamacenadas en sistemas.'),
+	(32, 'editarActa', 'Editar Acta', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar las actas alamancenadas en sistema.'),
+	(33, 'verOrden', 'Ver Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Visualiza una orden de compra, discriminando los insumos registrados.'),
+	(34, 'inventario', 'Inventario', 0, 1, 2, 3, 0, 5, 0, 1, 1, 'Pagina donde visualiza los modulos pertenecientes a ella.'),
+	(35, 'generaciones', 'Generaciones', 0, 1, 2, 3, 4, 0, 0, 1, 1, 'Pagina donde visualiza los modulos Factura, Ordenes y cotizaciones.'),
+	(36, 'salir', 'LogOut', 0, 1, 2, 3, 4, 5, 0, 1, 0, NULL),
+	(37, 'perfil', 'Mi Perfil', 0, 1, 2, 3, 4, 5, 0, 1, 1, 'Pagina del perfil del usuario logeado.'),
+	(38, 'genRequisicion', 'Generar Requisición', 29, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
+	(39, 'hisRequisicion', 'Historial de Requisición', 30, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
+	(40, 'verProyecto', 'Proyecto', 28, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
+	(41, 'verRequisicion', 'Ver Requisición', 0, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
+	(42, 'borrador', 'Borrador', 0, 1, 2, 3, 0, 0, 0, 1, 0, NULL),
+	(43, 'verFactura', 'Ver Factura', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite visualizar una factura seleccionada, discriminando valores e insumos agregados al stock.'),
+	(44, 'verRequisicionS', 'ver Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
+	(45, 'miRequisicion', 'Requisición', 0, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
+	(47, 'historialUsuarios', 'Historial de Usuarios', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de usuarios'),
+	(48, 'historialInsumos', 'Historial Insumos', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de insumos'),
+	(49, 'historialCategorias', 'Historial Categorias', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de categorias'),
+	(50, 'historialAreas', 'Historial Areas', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de áreas'),
+	(51, 'historialPersonas', 'Historial Personas', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de personas'),
+	(52, 'historialOrdenes', 'Historial Ordenes', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Ordenes de compra'),
+	(53, 'historialRq', 'Historial Requisiciones', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Requisiciones'),
+	(54, 'Creditos', 'Creditos', 0, 1, 2, 3, 4, 5, 0, 1, 0, NULL),
+	(55, 'ventas', 'Ventas', 31, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista las ventas generadas.'),
+	(56, 'clientes', 'Clientes', 32, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista los clientes ingresados en el sistema, con esto pueden generarse nuevas ventas.'),
+	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 0, 1, 1, 'Permite generar una nueva venta a un cliente.'),
+	(58, 'cortes', 'Lista de Cortes', 0, 1, 2, 0, 0, 0, 6, 1, 1, 'Lista los Cortes generados'),
+	(59, 'radicado', 'Radicados', 0, 1, 2, 0, 0, 0, 6, 1, 1, 'Presenta los radicados almacenados en sistema'),
+	(60, 'verCorte', 'Visualizar Corte', 0, 1, 2, 3, 0, 0, 6, 1, 1, NULL),
+	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files
@@ -421,6 +459,18 @@ CREATE TABLE IF NOT EXISTS `movimientos` (
 /*!40000 ALTER TABLE `movimientos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `movimientos` ENABLE KEYS */;
 
+-- Volcando estructura para tabla kardex.objeto
+CREATE TABLE IF NOT EXISTS `objeto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `termino` int(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.objeto: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `objeto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `objeto` ENABLE KEYS */;
+
 -- Volcando estructura para tabla kardex.ordencompra
 CREATE TABLE IF NOT EXISTS `ordencompra` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -473,13 +523,15 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   `dia` int(11) NOT NULL,
   `count` int(11) NOT NULL,
   `codVen` int(11) NOT NULL DEFAULT 0,
+  `codCorte` int(11) NOT NULL DEFAULT 0,
+  `codRad` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
-INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`) VALUES
-	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 0, 0, 1, NULL, NULL, NULL, 0, 0, 0);
+INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`) VALUES
+	(1, 10, 15, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 0, 0, 1, NULL, NULL, NULL, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -489,14 +541,15 @@ CREATE TABLE IF NOT EXISTS `perfiles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.perfiles: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.perfiles: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `perfiles` DISABLE KEYS */;
 INSERT INTO `perfiles` (`id`, `perfil`) VALUES
 	(1, 'root'),
 	(2, 'Administrador'),
 	(3, 'Auxiliar'),
 	(4, 'Encargado'),
-	(5, 'Vendedor');
+	(5, 'Vendedor'),
+	(6, 'Recepción');
 /*!40000 ALTER TABLE `perfiles` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.personas
@@ -514,6 +567,17 @@ CREATE TABLE IF NOT EXISTS `personas` (
 -- Volcando datos para la tabla kardex.personas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.pqr
+CREATE TABLE IF NOT EXISTS `pqr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.pqr: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `pqr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pqr` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proveedores
 CREATE TABLE IF NOT EXISTS `proveedores` (
@@ -565,6 +629,43 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
 -- Volcando datos para la tabla kardex.proyectos: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.radicados
+CREATE TABLE IF NOT EXISTS `radicados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_corte` int(11) NOT NULL,
+  `fecha` int(11) NOT NULL,
+  `radicado` int(11) NOT NULL,
+  `id_accion` int(11) NOT NULL,
+  `id_tipo` int(11) NOT NULL,
+  `id_objeto` int(11) NOT NULL,
+  `id_recepcion` int(11) NOT NULL,
+  `asunto` int(11) NOT NULL,
+  `id_remitente` int(11) NOT NULL,
+  `id_area` int(11) NOT NULL,
+  `observaciones` int(11) DEFAULT NULL,
+  `id_articulo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `recibido` int(11) NOT NULL,
+  `dias` int(11) NOT NULL,
+  `fecha_vencimiento` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.radicados: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `radicados` DISABLE KEYS */;
+/*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.remitente
+CREATE TABLE IF NOT EXISTS `remitente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.remitente: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `remitente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `remitente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.requisiciones
 CREATE TABLE IF NOT EXISTS `requisiciones` (
