@@ -15,6 +15,7 @@ class ControladorParametros
 			} catch (Exception $e){	}
 
 			$ActualY = date("Y");
+			$ActualRad = date("Ymd");
 			$radicar = new ControladorParametros;
 
 			if( $respuesta[8] == $ActualY)
@@ -64,6 +65,19 @@ class ControladorParametros
 				{
 					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
 					$r = "ACT".$r;
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+
+				if($val == 28)
+				{
+					$r = $radicar->radicar($respuesta[$val], $ActualRad);
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+				if($val == 29)
+				{
+					$r = $radicar->corte($respuesta[$val], $ActualRad);
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
@@ -128,6 +142,19 @@ class ControladorParametros
 				{
 					$r = $radicar->radicarNuevaFac($i, $ActualY);
 					$r = "ACT".$r;
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+
+				if($val == 28)
+				{
+					$r = $radicar->radicar($i, $ActualY);
+					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+					return $parametro;
+				}
+				if($val == 29)
+				{
+					$r = $radicar->corte($i, $ActualY);
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
@@ -327,6 +354,67 @@ class ControladorParametros
 		$respuesta = ModeloParametros::mdlJs_Terms($tabla);
 	}
 
+	function radicar($val, $ActualY)
+	{
+		if($val == 0)
+		{
+			return $r = $ActualY."00001";
+		}
+		else
+		{
+			if ($val < 10) 
+			{
+				return $r = $ActualY."0000".$val;
+			}
+			elseif($val > 10 && $val < 100)
+			{
+				return $r = $ActualY."000".$val;
+			}
+			elseif($val >= 100 && $val < 1000)
+			{
+				return $r = $ActualY."00".$val;
+			}
+			elseif($val >= 1000 && $val < 10000)
+			{
+				return $r = $ActualY."0".$val;
+			}
+			elseif($val >= 10000)
+			{
+				return $r = $ActualY.$val;
+			}
+		}
+	}
+
+	function corte($val, $ActualY)
+	{
+
+		$ActualY = substr($ActualY, 2, 0);
+
+		if($val == 0)
+		{
+			return $r = $ActualY."0001";
+		}
+		else
+		{
+			if ($val < 10) 
+			{
+				return $r = $ActualY."000".$val;
+			}
+			elseif($val > 10 && $val < 100)
+			{
+				return $r = $ActualY."00".$val;
+			}
+			elseif($val >= 100 && $val < 1000)
+			{
+				return $r = $ActualY."0".$val;
+			}
+			elseif($val >= 1000)
+			{
+				return $r = $ActualY.$val;
+			}
+		}
+	}
+
 	function radicarNuevaFac($val, $ActualY)
 	{
 		if($val == 0)
@@ -378,8 +466,8 @@ class ControladorParametros
 		$respuesta = ModeloParametros::mdlMostrarParamentros($tabla, $item);
 
 		$valor = $respuesta[$indice] + 1;
-		$respuesta = ModeloParametros::mdlIncrementarCodigo($tabla, $indice, $valor);
-		return $respuesta;
+		$respuestas = ModeloParametros::mdlIncrementarCodigo($tabla, $indice, $valor);
+		return $respuestas;
 	}
 
 	static public function ctrMostrarLimInsumos($item, $valor)
@@ -721,6 +809,88 @@ class ControladorParametros
 		return $respuesta;
 	}
 
-	
+	//Radicados
+	static public function ctrmostrarRegistros($tabla, $item, $valor)
+	{
+		$respuesta = ModeloParametros::mdlmostrarRegistros($tabla, $item, $valor);
+		return $respuesta;
+	}
+
+	static public function ctrValidarTermino($fecha, $id)
+	{
+	  $response = ModeloParametros::mdlmostrarRegistros("objeto","id", $id);
+	  $festivo = ModeloParametros::mdlmostrarFestivos();
+
+	  $count = $response["termino"];
+	  $fecha_v = new DateTime($fecha);
+	  $fecha_v->add(new DateInterval('P1D'));
+	  $sw = false;
+	  $sws = false;
+
+	  do{
+
+	  	foreach ($festivo as $key => $value) 
+  		{
+  			if ($value["fecha"] == $fecha_v) 
+  			{
+  				$sws = true;
+  			}
+  		}
+
+  		if ($sws == true) 
+  		{
+  			$fecha_v->add(new DateInterval('P1D'));
+  			$sws = false;
+  		}
+  		elseif ($fecha_v->format('l') == "Saturday") 
+  		{
+  			$fecha_v->add(new DateInterval('P1D'));
+  		}
+  		elseif ($fecha_v->format('l') == "Sunday") 
+  		{
+  			$fecha_v->add(new DateInterval('P1D'));
+  		}
+  		else
+  		{
+  			if ($count != 0) 
+      		{
+      			$count--;
+      			$fecha_v->add(new DateInterval('P1D'));
+      		}
+      		else
+      		{
+      			$sw = true;
+      		}
+  		}
+
+	  }while($sw != true && $count != 0);
+
+	  $respuesta = ["dias" => $response["termino"],
+					 "fecha_vencimiento" => $fecha_v->format('Y-m-d')];
+		return $respuesta;
+
+	}//ctrValidarTermino($fecha, $id)
+
+	static public function ctrImportarFestivos()
+	{
+		if ( isset($_POST["festivosxlsx"]) ) 
+		{
+			if ($_FILES['festivosxlsx']['name'][0] != "")
+			{
+				if($_FILES["festivosxlsx"]["type"] == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+				{
+					$directorio = "extensiones/PHPExcel/Classes/importarIns.xlsx";
+			        $tmp_name = $_FILES["festivosxlsx"]["tmp_name"];
+
+			        
+
+			        move_uploaded_file($tmp_name, $directorio);
+
+			        echo'<script>window.open("extensiones/PHPExcel/Classes/importarFestivos.php?otro=1", "_self");</script>';
+				}
+			}//festivosxlsx
+		}//isset
+	}
+
 
 }//class

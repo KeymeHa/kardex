@@ -562,6 +562,19 @@ function paginaCargada(pagina){
 			tablaAjax = 'parametros';
 			 variable = "?verMod=1";
 		}
+		else if(pagina == 35)
+		{
+			tablaElegida =  $('.tablaRadicados');
+			tablaAjax = 'radicados';
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idc = urlParams.get('idc');
+
+			if(idc != null)
+			{
+			  variable = "?idc="+idc;
+			}
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {

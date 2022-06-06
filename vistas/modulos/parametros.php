@@ -49,6 +49,11 @@
                     <td>Usted puede habilitar los modulos del sistema.</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="5">Administrar</button></td>
                   </tr>
+                  <tr>
+                    <th>Festivos</th>
+                    <td>Permite importar por medio de un archivo en excel los festivos de un año</td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="6">Administrar</button></td>
+                  </tr>
                 </tbody>
               </table>
             </div>

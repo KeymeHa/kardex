@@ -18,6 +18,10 @@ $("button.btn-param").click(function(){
 	{
 		verModulos();
 	}
+	else if(sw == 6)
+	{
+		verImportarFestivos();
+	}
 
 
 })
@@ -45,6 +49,23 @@ function verModulos()
 	paginaCargada(34);
 }
 
+function verImportarFestivos()
+{
+	$("span.titulo-box").html("Administrar Modulos y Paginas");
+
+	if ( $("div.contenido-box").children().length != 0 ) 
+	{
+		$("div.contenido-box").children().remove();
+	}
+
+	$("div.contenido-box").append('<form role="form" method="post" enctype="multipart/form-data">'+
+	'<div class="col-lg-6">'+
+	'<label for="exampleInputFile">Importe un archivo en formato excel con ingresando las fechas desde la Columna A1 de manera horizontal, no debe contener titulos.</label>'+
+    '<input type="file" name="festivosxlsx">'+
+	'<button type="submit" class="btn btn-block btn-success">importar</button></div>'+
+	'</form>')
+
+}
 
 
 /*

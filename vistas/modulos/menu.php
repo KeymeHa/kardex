@@ -176,10 +176,8 @@
 						<i class="fa fa-users"></i>
 						<span>Clientes</span>
 					</a>
-				</li>';
+				</li>
 
-
-				echo '
 				<li ';
 
 				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "ventas"){ echo'class="active"'; }	}
@@ -189,6 +187,29 @@
 								<span>Ventas</span>
 							</a>
 						</li>';
+			}
+
+			if ( $_SESSION["perfil"] == "1" || $_SESSION["perfil"] != "2" || $_SESSION["perfil"] != "6") {
+
+			echo '<li class="header">Correspondencia y Mensajería</li>
+
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'radicado' || $_GET['ruta'] == 'cortes' || $_GET['ruta'] == 'verCorte' || $_GET['ruta'] == 'verRadicado' || $_GET['ruta'] == 'correspondencia'){ echo 'active';} }
+
+			echo '"><a href="correspondencia">
+					<i class="fa fa-envelope-o"></i>
+					<span>Correspondencia</span>
+					<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-tight"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="radicado"><i class="fa fa-envelope-square"></i>Panel de Radicados</a></li>
+					<li><a href="cortes"><i class="fa fa-clone"></i>Cortes y planillas</a></li>
+				</ul>
+			</li>';
+				
 			}
 
 			?>
