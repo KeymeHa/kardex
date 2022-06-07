@@ -184,16 +184,16 @@ INSERT INTO `clientes` (`id`, `nombre`, `sid`, `correo`, `telefono`, `elim`) VAL
 -- Volcando estructura para tabla kardex.cortes
 CREATE TABLE IF NOT EXISTS `cortes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `corte` int(11) NOT NULL,
+  `corte` varchar(50) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `corte` (`corte`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.cortes: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.cortes: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `cortes` DISABLE KEYS */;
 INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
-	(1, 1753, '2022-06-06 15:04:19');
+	(1, '2206061753', '2022-06-06 15:54:22');
 /*!40000 ALTER TABLE `cortes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -210,12 +210,10 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `iva` float NOT NULL,
   `observacion` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.facturas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
-INSERT INTO `facturas` (`id`, `codigoInt`, `codigo`, `id_proveedor`, `soporte`, `id_usr`, `insumos`, `fecha`, `inversion`, `iva`, `observacion`) VALUES
-	(2, 'FAC-001-2022', '25-98', 1, '', 1, '[{"id":"1","des":"TK-1175","can":"1","con":"5","pre":"25000","sub":"25000"}]', '2022-06-03', 25000, 4750, '');
 /*!40000 ALTER TABLE `facturas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.festivos
@@ -312,12 +310,131 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   KEY `FK_insumos_insumosunidad_2` (`unidad`),
   CONSTRAINT `FK_insumos_insumosunidad` FOREIGN KEY (`unidadSal`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_insumos_insumosunidad_2` FOREIGN KEY (`unidad`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.insumos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumos: ~120 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
 INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`, `imp`) VALUES
-	(1, 2, '1', 'TK-1175', '', 'vistas/img/productos/default/anonymous.png', 51, 0, 25000, 0, 0, '2022-06-03 11:26:36', 0, '2', '5', '4', 3, 4, 8, 5, 1, 0);
+	(1, 3, 'A1', 'AROMATICA SURTIDA EN BOLSA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(2, 3, 'A2', 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(3, 1, 'P1', 'BANDEJA PORTA DOCUMENTOS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(4, 1, 'P2', 'BANDERITAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(5, 3, 'A3', 'BLANQUEADOR (LIMPIDO)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(6, 1, 'P3', 'BLOCK ANOTACIÒN ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(7, 1, 'P4', 'BOLIGRAFO DE COLORES SURTIDOS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(8, 1, 'P5', 'BOLIGRAFO NEGRO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(9, 1, 'P6', 'BOLIGRAFO ROJO ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(10, 3, 'A4', 'BOLSA BASURA NEGRA X 90*110 t  ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(11, 3, 'A5', 'BOLSA BASURA VERDE 42*47CMS ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(12, 3, 'A6', 'BOLSA DE BASURA BLANCA  90 * 60', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(13, 3, 'A7', 'BOLSA DE BASURA BLANCA 40 * 50 (CANECA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(14, 1, 'P7', 'BORRADOR DE NATA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(15, 1, 'P8', 'BORRADOR DE TABLERO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(16, 3, 'A8', 'CAFÉ TOSTADO Y MOLIDO, FUERTE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(17, 1, 'P9', 'CAJA ARCHIVO INACTIVO # 12', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(18, 1, 'P10', 'CAJA ARCHIVO INACTIVO # 20', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(19, 1, 'P11', 'CALCULADORA CASIO 12 DIGITOS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(20, 1, 'P12', 'CARATULA POLY COVER CARTA ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(21, 1, 'P13', 'CARTULINA BRISTOL 1/8 X 8 SURTIDAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(22, 1, 'P14', 'CARTULINA BRISTOL 70*100 BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(23, 1, ' P15', 'CARTULINA LEGAJADORA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(24, 1, 'P16', 'CD-R ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(25, 2, 'S1', 'CINTA EMP TRANSP 48X100 REF.301 3M ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(26, 1, 'P17', 'CINTA EMP TRANSP DELGADA 12 MM X40M ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(27, 1, 'P18', 'CINTA INVISIBLE 33M:19MM PARA CHEQUES', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(28, 1, 'P19', 'CLIP MARIPOSA GIGANTE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(29, 1, 'P20', 'CLIP MARIPOSA X 50 EMP*50 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(30, 1, 'P21', 'CLIP SENCILLO X 100 EMP*100', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(31, 1, 'P22', 'COLBON (PEGANTE UNIVERSAL) 480GR', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(32, 1, 'P23', 'CORRECTOR LIQUIDO LAPIZ *7 ML', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(33, 3, 'A9', 'CREMA LAVALOZA ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(34, 1, 'P24', 'CUENTA FACIL', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(35, 1, 'P25', 'DECAMETRO 10, 30 Y 50 MTS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(36, 3, 'A10', 'DESINFECTANTE MULTIUSOS ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(37, 3, 'A11', 'DETERGENTE EN POLVO ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(38, 1, 'P26', 'DVD +R ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(39, 3, 'A12', 'ESCOBA SUAVE MANGO MADERA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(40, 3, 'A13', 'ESPONJA LAVAPLATOS DOBLE USO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(41, 1, 'P26', 'EXACTO PLÀSTICO GRANDE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(42, 1, 'P27', 'FLEXOMETRO LUFKIN 26/8METROS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(43, 1, 'P28', 'FOLIADOR (NUMERADOR CONSECUTIVO)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(44, 1, 'P29', 'FORMAS CONTINUAS 9 1/2 *11 3P BLANCA 903 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(45, 1, 'P30', 'FUNDA PARA CD', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(46, 1, 'P31', 'GANCHO LEGAJADOR PLASTICO ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(47, 1, 'P32', 'GRAPA COBRIZADA STANDARD *5000 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(48, 1, 'P33', 'GRAPA GALVANIZADA INDUSTRIAL *1000', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(49, 1, 'P34', 'GRAPADORA 340 RANK (SENCILLA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(50, 1, 'P35', 'GRAPADORA INDUSTRIAL HASTA 100 HOJAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(51, 1, 'P36', 'GUANTES DE LATEX DE EXAMEN ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(52, 1, 'P37', 'GUIA CLASIFICADORA CARTULINA REF. 105 AMARILLA ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(53, 1, 'P38', 'GUIAS CELUGUIA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(54, 2, 'S2', 'HP 711 AMARILLO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(55, 2, 'S3', 'HP 711 CYAN', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(56, 2, 'S4', 'HP 711 MAGENTA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(57, 2, 'S5', 'HP 711 NEGRO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(58, 1, 'P39', 'HUELLERO COLOR NEGRO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(59, 3, 'A14', 'JABON LÍQUIDO PARA MANOS, ANTIBACTERIAL, BIODEGRADABLE AROMA MANZANA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(60, 1, 'P40', 'LAPIZ NEGRO Nº2 ORIG. 482 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(61, 1, 'P41', 'LAPIZ ROJO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(62, 1, 'P42', 'LEGAJADOR AZ OFICIO AZUL ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(63, 1, 'P43', 'LEGAJOS (CARPETAS DE EDUBAR)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(64, 1, ' P44', 'LIBRO ACTA 1/2 CARTA 80H  100 FOLIOS (BITACORA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(65, 1, 'P45', 'LIBRO ACTA 1/2 OFICIO 80H  100 FOLIOS (BITACORA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(66, 1, ' P46', 'LIBRO DE ACTA 1/2 CARTA 80H - 100 FOLIOS (BITACORA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(67, 3, 'A15', 'LIMPIAVIDRIOS (AMONIACO-DESENGRASANTE SECADO RAPIDO)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(68, 3, 'A16', 'LIMPION', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(69, 1, 'P47', 'MARCADOR BORRABLE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(70, 1, 'P48', 'MARCADOR PERMANENTE NEGRO PUNTA FINA  (SHARPIE)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(71, 1, 'P49', 'MARCADORES PERMANENTES SURTIDOS (ROJO/AZUL/NEGRO)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(72, 1, 'P50', 'MASCARILLA DESECHABLE (TAPABOCAS)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(73, 3, 'A17', 'MEZCLADORES DESECHABLES PARA CAFÉ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(74, 2, 'S6', 'MOUSE USB', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(75, 1, 'P51', 'NOTAS ADHESIVAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(76, 3, 'A18', 'PAPEL HIGIENIENICO INSTITUCIONAL ROLLOS, DOBLE HOJA, PRECORTADO, BLANCO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(77, 1, 'P52', 'PAPEL RESMA FOTOCOPIA 75GR CARTA ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(78, 1, 'P53', 'PAPEL RESMA FOTOCOPIA 75GR OFICIO ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(79, 1, 'P54', 'PAPELERA (CANECA)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(80, 1, 'P55', 'PASTA CATALOGO 0.5R HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(81, 1, 'P56', 'PASTA CATALOGO 1.0R HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(82, 1, 'P57', 'PASTA CATALOGO 1.5R HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(83, 1, 'P58', 'PASTA CATALOGO 2.0R HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(84, 1, 'P59', 'PASTA CATALOGO 2.5R HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(85, 1, 'P60', 'PASTA CATALOGO 3.0D HERRAJE BLANCA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(86, 1, 'P61', 'PEGANTE EN BARRA 40GRS ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(87, 1, 'P62', 'PERFORADORA 3 HUECOS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(88, 1, 'P63', 'PERFORADORA RANK 1050 DOS HUECOS SEMI INDUSTRIAL (40 HOJAS)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(89, 1, 'P64', 'PERFORADORA SENCILLA 1038 RANK', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(90, 1, 'P65', 'PLANILLERO ACRILICO CON GANCHO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(91, 1, 'P66 ', 'PORTAMINAS 0.7', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(92, 1, 'P67', 'PROTECTOR DE TRANSPARENCIA (BOLSILLOS)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(93, 1, 'P68', 'RECIBO DE CAJA MENOR X 200 HOJAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(94, 3, 'A19', 'RECOGEDOR DE BASURA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(95, 1, 'P69', 'REGLA DE 30 CM', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(96, 1, 'P70', 'REPUESTO DE MINA 0.7', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(97, 1, 'P71', 'RESALTADORES SURTIDOS ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(98, 1, 'P72', 'ROLLO PLOTER BOND 75 GR 28 PULGADAS', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(99, 3, 'A20', 'ROLLO TOALLA COCINA LAVABLE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(100, 1, 'P73', 'SACAGRAPA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(101, 1, 'P74', 'SACAPUNTA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(102, 1, 'P75', 'SELLO NUMERADOR FOLIADOR AUTOMATICO CONSECUTIVO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(103, 3, 'A21', 'SERVILLETA 27-5*17', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(104, 1, 'P76', 'SOBRE MANILA CARTA  22*29 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(105, 1, 'P77', 'SOBRE MANILA GIGANTE 37*27 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(106, 1, 'P78', 'SOBRE MANILA OFICIO 25*35 ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(107, 2, 'S7', 'TECLADO KB-110X USB ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(108, 1, 'P79', 'TIJERA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(109, 2, 'S8', 'TINTA EPSON 664 COLOR AMARILLO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(110, 2, 'S9', 'TINTA EPSON 664 COLOR CYAN', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(111, 2, 'S10', 'TINTA EPSON 664 COLOR MAGENTA', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(112, 2, 'S11', 'TINTA EPSON 664 COLOR NEGRO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(113, 2, 'S12', 'TINTA PARA SELLO DE CAUCHO', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(114, 3, 'A22', 'TOALLA DE MANOS BLANCA 24X21CM HOJA TRIPLE DOBLADA EN Z', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:05', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(115, 2, 'S13', 'TONER TK-1175 (M2040dn)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(116, 2, 'S14', 'TONER TK-3160/3162', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(117, 3, 'A23', 'TRAPERO TIPO INDUSTRIAL', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(118, 3, 'A24', 'VARSOL SIN OLOR ', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(119, 3, 'A25', 'VASO 11 ONZAS TRANSPARENTE', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(120, 3, 'A26', 'VASO CAFETERO TERMICO ESPUMADO (4 ONZAS)', 'NO APLICA', NULL, 1, 1, 0, 0, 0, '2022-06-07 15:13:06', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosnombre
@@ -388,7 +505,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `descripcion` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.js_data: ~58 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
@@ -447,7 +564,7 @@ INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `p
 	(55, 'ventas', 'Ventas', 31, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista las ventas generadas.'),
 	(56, 'clientes', 'Clientes', 32, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista los clientes ingresados en el sistema, con esto pueden generarse nuevas ventas.'),
 	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 0, 1, 1, 'Permite generar una nueva venta a un cliente.'),
-	(58, 'cortes', 'Lista de Cortes', 0, 1, 2, 0, 0, 0, 6, 1, 1, 'Lista los Cortes generados'),
+	(58, 'cortes', 'Lista de Cortes', 36, 1, 2, 0, 0, 0, 6, 1, 1, 'Lista los Cortes generados'),
 	(59, 'radicado', 'Radicados', 35, 1, 2, 0, 0, 0, 6, 1, 1, 'Presenta los radicados almacenados en sistema'),
 	(60, 'verCorte', 'Visualizar Corte', 0, 1, 2, 3, 0, 0, 6, 1, 1, NULL),
 	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL),
@@ -461,9 +578,9 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   `habilitado` varchar(30) COLLATE utf8_spanish_ci NOT NULL DEFAULT '''all''',
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_files: ~37 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_files: ~36 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
 INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(1, 'plantilla', 'all'),
@@ -505,7 +622,8 @@ INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(38, 'ventas', 'ventas'),
 	(39, 'clientes', 'clientes'),
 	(40, 'nuevaVenta', 'nuevaVenta'),
-	(41, 'radicado', 'radicado');
+	(41, 'radicado', 'radicado'),
+	(42, 'cortes', 'cortes');
 /*!40000 ALTER TABLE `js_files` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.movimientos
@@ -626,7 +744,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`) VALUES
-	(1, 10, 15, 30, 1, 2, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3252, 1754, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
+	(1, 10, 20, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3253, 1754, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -641,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `perfiles` (
 INSERT INTO `perfiles` (`id`, `perfil`) VALUES
 	(1, 'root'),
 	(2, 'Administrador'),
-	(3, 'Auxiliar'),
+	(3, 'Compras'),
 	(4, 'Encargado'),
 	(5, 'Vendedor'),
 	(6, 'Recepción');
@@ -769,9 +887,9 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   CONSTRAINT `FK_radicados_objeto` FOREIGN KEY (`id_objeto`) REFERENCES `objeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.radicados: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.radicados: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `radicados` DISABLE KEYS */;
 INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`) VALUES
 	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, '0', '0', 4, '0', 2, 1, '0', 5, '0000-00-00', 0, ''),
@@ -779,7 +897,8 @@ INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id
 	(5, 1, '2022-06-06 14:44:12', '2022060603248', 2, 2, 1, 1, 'LIQUIDACION PERSONAL', 'JOHANA DE LA ROSA', 3, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(6, 1, '2022-06-06 14:46:55', '2022060603249', 1, 7, 6, 1, 'INFORME DE GESTION', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(7, 1, '2022-06-06 14:48:39', '2022060603250', 6, 3, 26, 1, 'FACTURA MUNDO AVENTURA', 'ITJAK', 1, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(8, 1, '2022-06-06 14:56:20', '2022060603251', 10, 8, 29, 1, 'que sera', 'BELKYS', 6, '', 8, 1, 'KBA', 5, '2022-06-14', 0, '');
+	(8, 1, '2022-06-06 14:56:20', '2022060603251', 10, 8, 29, 1, 'que sera', 'BELKYS', 6, '', 8, 1, 'KBA', 5, '2022-06-14', 0, ''),
+	(9, 0, '2022-06-06 16:40:07', '2022060603252', 1, 1, 1, 1, 'PETICION DE MATRIMONIO', 'KEILA JIMENEZ', 4, '', 1, 1, 'KBA', 5, '2022-06-14', 0, '');
 /*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.remitente
@@ -913,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
 	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-05-31 09:54:06', '2021-02-11 05:06:49', 'p3ddmfgqi4j0410jfqukfvv82j', 0, 0, 0),
 	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
-	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, '', 1, '2021-06-10 09:47:31', '2021-08-19 06:12:39', '', 0, 0, 0);
+	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, NULL, 1, '2022-06-07 14:45:25', '2021-08-19 06:12:39', 'k8hnc4v664jqe1fplprlo4as7g', 0, 0, 0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.valores

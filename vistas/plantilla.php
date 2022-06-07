@@ -25,6 +25,7 @@
   <link rel="icon" href="vistas/img/plantilla/icono-blanco.png">
   <link rel="stylesheet" href="vistas/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="vistas/bower_components/font-awesome/css/font-awesome.min.css">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="vistas/bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="vistas/dist/css/AdminLTE.css">
   <link rel="stylesheet" href="vistas/dist/css/skins/_all-skins.min.css">

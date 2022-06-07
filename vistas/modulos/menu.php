@@ -163,7 +163,7 @@
 			echo '</li>';
 			}
 
-			if ( $_SESSION["perfil"] != "3" || $_SESSION["perfil"] != "4" ) 
+			if ( $_SESSION["perfil"] != "1" || $_SESSION["perfil"] != "5" ) 
 			{
 
 				echo '

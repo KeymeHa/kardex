@@ -575,6 +575,26 @@ function paginaCargada(pagina){
 			  variable = "?idc="+idc;
 			}
 		}
+		else if(pagina == 36)
+		{
+
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			tablaElegida =  $('.tablaCortes');
+			tablaAjax = 'cortes';
+			
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null";
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+
+			
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {

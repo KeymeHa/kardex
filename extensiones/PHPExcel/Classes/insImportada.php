@@ -16,7 +16,7 @@ if ( isset($_GET["otro"]) )
 		$objPHPExcel = PHPExcel_IOFactory::load($nombreArchivo);
 		$objPHPExcel->setActiveSheetIndex(0);
 		$numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-		for ($i = 4; $i <= $numRows; $i++) 
+		for ($i = 2; $i <= 121; $i++) 
 		{
 
 			$id_categoria = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
@@ -37,7 +37,7 @@ if ( isset($_GET["otro"]) )
 			$contenido = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 			$habilitado  = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-			$item = "id";
+			$item = "id";/*
 
 			if (ControladorParametros::ctrValidarTipoDato($id_categoria)) 
 			{
@@ -127,7 +127,7 @@ if ( isset($_GET["otro"]) )
 			else
 			{
 				$habilitado = 1;
-			}
+			}*/
 
 			//buscar si no esta repetido el codigo
 
