@@ -29,6 +29,14 @@ class ControladorRadicados
 	
 	}//ctrMostrarCortesRango
 
+	static public function ctrMostrarCortes($item, $valor)
+	{
+		$tabla = "cortes";
+		$respuesta = ModeloRadicados::mdlMostrarCortes($tabla, $item, $valor);
+		return $respuesta;
+	
+	}//ctrMostrarCortesRango
+
 
 	static public function ctrContarRadicados($item, $valor)
 	{
@@ -182,9 +190,6 @@ class ControladorRadicados
 				$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitente"]);
 
 
-				//date_default_timezone_set('America/Bogota');
-				//$hoy = date("Y-m-d");
-
 				$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaRad"],$_POST["id_objeto"]);
 
 				
@@ -325,168 +330,146 @@ class ControladorRadicados
 	}//ctrRadicar
 
 
-	/*static public function ctrEditarRad()
+	static public function ctrEditarRad()
 	{
+		if ( isset($_POST["obsEdit"]) ) {
+			$tabla = "radicados";
 
-		if ( isset($_FILES["soporteRad"]["tmp_name"]) ) 
+			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["obsEdit"]);
+			$asunto = ControladorParametros::ctrValidarCaracteres($_POST["asuntoEdit"]);
+			$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitEdit"]);
+			$recibido = ControladorParametros::ctrValidarCaracteres($_POST["recEdit"]);
+
+
+			$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaEdit"], $_POST["objetoEdit"]);
+
+			/*
+
+				soporteEdit traido de la bd
+
+				soporteRadicadoEdit files
+
+			*/
+
+			try {
+
+				$datos = array(	'id_usr' => $_POST["id_usrEdit"],
+							'id_accion' => $_POST["accionEdit"],
+							'id_pqr' => $_POST["pqrEdit"],
+							'id_objeto' => $_POST["objetoEdit"],
+							'id_articulo' => $_POST["articuloEdit"],
+							'id_remitente' => $remitente,
+							'asunto' => $asunto,
+							'id_area' => $_POST["areaEdit"],
+							'cantidad' => $_POST["cantEdit"],
+							'recibido' => $recibido,
+							'dias' => $objeto["dias"],
+							'fecha_vencimiento' => $objeto["fecha_vencimiento"],
+							'soporte' => "",
+							'observaciones' => $observacion,
+							'id' => $_POST["id_radEdit"]);
+
+
+			$respuesta = ModeloRadicados::mdlEditarRad($tabla, $datos);
+
+			if ($respuesta == "ok") 
 			{
+				$titulo = "¡Radicado #".$_POST["numRadEdit"]." se ha editado!";
+				$tipo = "success";
 
-				$verRadicado = new ControladorRadicados;
-				$response = $verRadicado->ctrMostrarRadicados("radicado",$datos["codigoInterno"]);	
-
-				$directorio = $response[""];
-
-				if ( !$_FILES["soporteRad"]["tmp_name"] == null )
+				if (isset($_GET["idCorte"]) && isset($_GET["verCorte"])) 
 				{
-					
-					if (!file_exists($directorio)) 
-					{
-					    mkdir($directorio, 0755, true);
-					}
-
-					if($_FILES["soporteRad"]["type"] == "application/pdf")
-					{
-						
-						$error = $_FILES['soporteRad']['error'];
-
-							if($error)
-							{
-								echo '<script>
-
-								swal({
-
-									type: "error",
-									title: "¡Error con el soporte Radicado!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "radicado";
-
-									}
-
-								});
-							
-
-								</script>';
-
-								return ;	
-							}
-							else
-							{
-									if(!file_exists($directorio))
-									{
-										copy($tmp_name,$directorio);
-									}
-							}
-					}
-				}//si exite algo
-
-					
+					$url = "radicado";
+					#index.php?ruta=verCorte&idCorte=7
+				}
+				else
+				{
+					$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
+				}
+			}
+			else
+			{
+				$titulo = "¡Ha ocurrido un error al editar!";
+				$tipo = "error";
 			}
 
-		$tabla = "radicados";
+					echo '<script>
 
-		$observacion = ControladorParametros::ctrValidarCaracteres($datos["observaciones"]);
-		$asunto = ControladorParametros::ctrValidarCaracteres($datos["asunto"]);
-		$remitente = ControladorParametros::ctrValidarCaracteres($datos["remitente"]);
+					swal({
 
+						type: "'.$tipo.'",
+						title: "'.$titulo.'",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
 
-		//date_default_timezone_set('America/Bogota');
-		//$hoy = date("Y-m-d");
+					}).then(function(result){
 
-		$objeto = ControladorParametros::ctrValidarTermino($datos["fechaRad"],$datos["id_objeto"]);
+						if(result.value){
+						
+							window.location = "'.$url.'";
 
-		
-		$datos = array( 'id_usr' => $datos["idUsuario"],
-						#'fecha' => $datos["fechaRad"],
-						'id_accion' => $datos["id_accion"],
-						'id_pqr' => $datos["id_pqr"],
-						'id_objeto' => $datos["id_objeto"],
-						'id_articulo' => $datos["id_articulo"],
-						'id_remitente' => $remitente,
-						'asunto' => $asunto,
-						'id_area' => $datos["id_area"],
-						'cantidad' => $datos["cantidad"],
-						'recibido' => $datos["recibido"],
-						'dias' => $objeto["dias"],
-						'fecha_vencimiento' => $objeto["fecha_vencimiento"],
-						'soporte' => $directorio,
-						'observaciones' => $observacion,
-						'radicado' => $datos["codigoInterno"]);
+						}
 
-
-		$respuesta = ModeloRadicados::mdlRadicar($tabla, $datos);
-
-		if ($respuesta == "ok") 
-		{
-			$titulo = "¡Registro Editado!";
-			$tipo = "success";
-		}
-		else
-		{
-			$titulo = "¡Ha ocurrido un error!";
-			$tipo = "error";
-		}
-
-
-		echo '<script>
-
-			swal({
-
-				type: "'.$tipo.'",
-				title: "'.$titulo.'",
-				showConfirmButton: true,
-				confirmButtonText: "Cerrar"
-
-			}).then(function(result){
-
-				if(result.value){
+					});
 				
-					window.location = "radicado";
 
-				}
+					</script>';
 
-			});
-		
 
-			</script>';
-	}//ctrEditarRad*/
+				
+			} catch (Exception $e) {
+
+				echo '<script> alert('.$e.');<script>';
+				
+			}
+
+		}
+	}//ctrEditarRad
 
 	static public function ctrGenerarCorte()
 	{
 		//traer el ultimo numero de corte
-		$corte = ControladorParametros::ctrMostrarParametros(29);
 
-		//actualizar todos los radicados con id_corte 0 a el numero de corte
-		$tabla = "cortes";
-		$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
-		$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
-
-		$tabla = "radicados";
-		$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
-
-
-		if ($genCorte == "ok" && $respuesta == "ok")
+		$countRad = new ControladorRadicados;
+		$count = $countRad->ctrContarRadicados("id_corte", 0);	
+		
+		if ($count > 0) 
 		{
-			//subir numero de corte
-			$indiceCodigo = "nameRad";
-			$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
-			return "ok";
-		}
-		else
-		{
-			if ($genCorte != "ok") 
+			$corte = ControladorParametros::ctrMostrarParametros(29);
+
+			//actualizar todos los radicados con id_corte 0 a el numero de corte
+			$tabla = "cortes";
+			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
+			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
+
+			$tabla = "radicados";
+			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
+
+
+			if ($genCorte == "ok" && $respuesta == "ok")
 			{
-				return "e1";
+				//subir numero de corte
+				$indiceCodigo = "nameRad";
+				$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
+				return "ok";
 			}
 			else
 			{
-				return "e2";
+				if ($genCorte != "ok") 
+				{
+					return "e1";
+				}
+				else
+				{
+					return "e2";
+				}
 			}
+
 		}
+		else
+		{
+			return "e3";
+		}
+
 	}//ctrGenerarCorte()
 }

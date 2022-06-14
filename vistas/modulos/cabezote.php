@@ -18,7 +18,7 @@
 		              <i class="fa fa-bell-o"></i>
 		              <?php 
 		              	$noti = 0;
-		              if ($_SESSION["perfil"] != 4) {
+		              if ($_SESSION["perfil"] != 4 && $_SESSION["perfil"] != 5 && $_SESSION["perfil"] != 6) {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
 		              	$escasos = ControladorInsumos::ctrVerificarInsEscasos(null, null);
 		              	$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr();

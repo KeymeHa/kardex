@@ -1,90 +1,4 @@
 
-
-$(".btn-corte").click(function(){
-
-	swal({
-		type: "warning",
-		title: "¡Desea realizar el corte y generar una planilla!",
-		showCancelButton: true,
-		showConfirmButton: true,
-		confirmButtonText: "Aceptar",
-		cancelButtonText: "Cancelar",
-		confirmButtonColor: '#149243',
-		cancelButtonColor: '#d33',
-	}).then((result)=>{
-
-		if (result.value) 
-		{
-			
-			var datos = new FormData();
-			datos.append("corte", 1);
-
-			$.ajax({
-
-				url:"ajax/radicados.ajax.php",
-				method: "POST",
-				data: datos,
-				cache: false,
-				contentType: false,
-				processData: false,
-				dataType: "json",
-				success: function(respuesta){
-
-					var titulo = ""; 
-					var tipo = ""; 
-					var url = "";
-
-					if (respuesta == "ok") 
-					{
-						titulo = "¡Se ha generado un nuevo corte!"; 
-						tipo = "success"; 
-						url = "cortes";
-					}
-					else
-					{
-						if (respuesta != "e1" && respuesta != "e2") 
-						{
-							titulo = "¡No hay correspondencias pendientes!"; 
-							tipo = "error"; 
-							url = "radicado";
-						}
-						else
-						{
-							titulo = "¡Ha ocurrido un error!"; 
-							tipo = "error"; 
-							url = "radicado";
-						}
-					}
-
-					swal({
-					      title: titulo,
-					      type: tipo,
-					      confirmButtonText: "¡Cerrar!"
-					    }).then(function(result2) {
-					        if (result2.value) {
-					        	window.location = url;
-					        }
-						});
-				 }
-
-			});
-		}
-	})
-})
-
-
-
-$(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
-
-	var id_rad = $(this).attr("id_rad");
-
-	window.location = "index.php?ruta=verRadicado&id_rad="+id_rad;
-
-
-})
-
-
-
 $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 
 	var id_rad = $(this).attr("id_rad");
@@ -114,6 +28,14 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 		})
 })
 
+$(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
+
+	var id_rad = $(this).attr("id_rad");
+
+	window.location = "index.php?ruta=verRadicado&id_rad="+id_rad;
+
+
+})
 
 $(".tablaRadicados").on("click", "button.btnEditarRadicado", function(){
 
@@ -165,12 +87,6 @@ $(".tablaRadicados").on("click", "button.btnEditarRadicado", function(){
 })//click
 
 
-$("#objetoEdit").change(function(){
-	var selOrg = $( "#objetoEdit option:selected" ).val();
-	var fecha = $("#fechaEdit").val();
-	//objeto_id(selOrg, fecha);
-})
-
 function mostrarCampos(idhtml, tabla, id, fecha)
 {
 	var datos = new FormData();
@@ -214,31 +130,6 @@ function mostrarCampos(idhtml, tabla, id, fecha)
 
 			}
 
-
-		}//respuesta
-	});
-}
-
-function objeto_id(id, fecha)
-{
-	var datos = new FormData();
-	datos.append("objt", 1);
-	datos.append("id", id);
-	datos.append("fecha", fecha);
-
-	$.ajax({
-
-		url:"ajax/radicados.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(respuesta){
-
-			$("#terminosEdit").val(respuesta["dias"]+" días Habiles");
-			$("#fecha_vEdit").val(respuesta["fecha_vencimiento"]);
 
 		}//respuesta
 	});

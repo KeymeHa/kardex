@@ -45,6 +45,14 @@ $(".col-xs-2").on("click", "#generarPdfFAc", function(){
 
 })
 
+$(".tablaCortes").on("click", "button.btnImpCorte", function(){
+
+	var idC = $(this).attr("idCorte");
+
+	window.open("extensiones/TCPDF-main/examples/planillaImp.php?idC="+idC, "_blank");
+
+})
+
 
 $('#btn-RangoCortes').daterangepicker(
   {

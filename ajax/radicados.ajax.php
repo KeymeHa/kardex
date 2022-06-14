@@ -15,9 +15,22 @@ class AjaxRadicados
 		echo json_encode($respuesta);
 	}
 
-	static public function mostrarRadicado()
+	static public function mostrarRadicado($valor)
 	{
-		$respuesta = ControladorRadicados::ctrMostrarRadicados("id", $valor);
+		$item = "id";
+		$respuesta = ControladorRadicados::ctrMostrarRadicados($item, $valor);
+		echo json_encode($respuesta);
+	}
+
+	static public function mostrarTerminos($valor, $fecha)
+	{
+		$respuesta = ControladorParametros::ctrValidarTermino($fecha,$valor);
+		echo json_encode($respuesta);
+	}
+
+	static public function mostrarRegistros($tabla)
+	{
+		$respuesta = ControladorParametros::ctrmostrarRegistros($tabla, null, null);
 		echo json_encode($respuesta);
 	}
 }
@@ -27,7 +40,14 @@ if(isset($_POST["corte"]))
 {	$generar = new AjaxRadicados();
 	$generar -> generarCorte();}
 
-if(isset($_POST["mostrar"]))
+if(isset($_POST["edit"]))
 {	$generar = new AjaxRadicados();
-	$generar -> id = $_POST["id"];
-	$generar -> mostrarRadicado();}
+	$generar -> mostrarRadicado($_POST["id"]);}
+
+if(isset($_POST["traer"]))
+{	$traer = new AjaxRadicados();
+	$traer -> mostrarRegistros($_POST["campo"]);}
+
+if(isset($_POST["objt"]))
+{	$generar = new AjaxRadicados();
+	$generar -> mostrarTerminos($_POST["id"],$_POST["fecha"]);}

@@ -31,7 +31,7 @@ class TablaCortes
 	    for( $i = 0; $i < count($cortes); $i++)
 			{	
 				
-				$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerCorte' idCorte='".$cortes[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div></div>";
+				$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-info btnImpCorte' title='Imprimir Radicado' idCorte='".$cortes[$i]["id"]."' corte='".$cortes[$i]["corte"]."' ><i class='fa fa-print'></i></button></div><div class='col-md-4'><button class='btn btn-success btnVerCorte' idCorte='".$cortes[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div></div>";
 
 			    $fecha = ControladorParametros::ctrOrdenFecha($cortes[$i]["fecha"], 3);
 

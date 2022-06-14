@@ -568,11 +568,11 @@ function paginaCargada(pagina){
 			tablaAjax = 'radicados';
 			var queryString = window.location.search;
 			var urlParams = new URLSearchParams(queryString);
-			var idc = urlParams.get('idc');
+			var idc = urlParams.get('idCorte');
 
 			if(idc != null)
 			{
-			  variable = "?idc="+idc;
+			  variable = "?idCorte="+idc;
 			}
 		}
 		else if(pagina == 36)

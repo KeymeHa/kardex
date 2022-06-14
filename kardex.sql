@@ -188,12 +188,18 @@ CREATE TABLE IF NOT EXISTS `cortes` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `corte` (`corte`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.cortes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.cortes: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `cortes` DISABLE KEYS */;
 INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
-	(1, '2206061753', '2022-06-06 15:54:22');
+	(1, '2206061753', '2022-06-06 15:54:22'),
+	(2, '2206081754', '2022-06-10 14:26:06'),
+	(3, '2206091755', '2022-06-09 17:08:56'),
+	(4, '2206091756', '2022-06-09 17:11:36'),
+	(5, '2206101757', '2022-06-10 08:57:36'),
+	(6, '2206101758', '2022-06-10 08:58:39'),
+	(7, '2206101759', '2022-06-10 09:22:52');
 /*!40000 ALTER TABLE `cortes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -566,7 +572,7 @@ INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `p
 	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 0, 1, 1, 'Permite generar una nueva venta a un cliente.'),
 	(58, 'cortes', 'Lista de Cortes', 36, 1, 2, 0, 0, 0, 6, 1, 1, 'Lista los Cortes generados'),
 	(59, 'radicado', 'Radicados', 35, 1, 2, 0, 0, 0, 6, 1, 1, 'Presenta los radicados almacenados en sistema'),
-	(60, 'verCorte', 'Visualizar Corte', 0, 1, 2, 3, 0, 0, 6, 1, 1, NULL),
+	(60, 'verCorte', 'Visualizar Corte', 35, 1, 2, 0, 0, 0, 6, 1, 1, NULL),
 	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL),
 	(62, 'correspondencia', 'Correspondencia', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
@@ -578,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `js_files` (
   `habilitado` varchar(30) COLLATE utf8_spanish_ci NOT NULL DEFAULT '''all''',
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.js_files: ~36 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_files` DISABLE KEYS */;
@@ -623,7 +629,8 @@ INSERT INTO `js_files` (`id`, `nombre`, `habilitado`) VALUES
 	(39, 'clientes', 'clientes'),
 	(40, 'nuevaVenta', 'nuevaVenta'),
 	(41, 'radicado', 'radicado'),
-	(42, 'cortes', 'cortes');
+	(42, 'cortes', 'cortes'),
+	(43, 'verCorte', 'verCorte');
 /*!40000 ALTER TABLE `js_files` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.movimientos
@@ -744,7 +751,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`) VALUES
-	(1, 10, 20, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3253, 1754, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
+	(1, 10, 20, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3258, 1760, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -887,18 +894,23 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   CONSTRAINT `FK_radicados_objeto` FOREIGN KEY (`id_objeto`) REFERENCES `objeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.radicados: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.radicados: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `radicados` DISABLE KEYS */;
 INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`) VALUES
-	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, '0', '0', 4, '0', 2, 1, '0', 5, '0000-00-00', 0, ''),
+	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, 'AMPARADO', 'SUSANA', 4, '0', 2, 1, '0', 5, '2022-06-14', 0, ''),
 	(2, 1, '2022-06-06 14:26:59', '2022060603247', 2, 6, 15, 1, 'PELEA POR LA LEA', 'KEVIN BOLAÑO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(5, 1, '2022-06-06 14:44:12', '2022060603248', 2, 2, 1, 1, 'LIQUIDACION PERSONAL', 'JOHANA DE LA ROSA', 3, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(6, 1, '2022-06-06 14:46:55', '2022060603249', 1, 7, 6, 1, 'INFORME DE GESTION', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(7, 1, '2022-06-06 14:48:39', '2022060603250', 6, 3, 26, 1, 'FACTURA MUNDO AVENTURA', 'ITJAK', 1, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
 	(8, 1, '2022-06-06 14:56:20', '2022060603251', 10, 8, 29, 1, 'que sera', 'BELKYS', 6, '', 8, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(9, 0, '2022-06-06 16:40:07', '2022060603252', 1, 1, 1, 1, 'PETICION DE MATRIMONIO', 'KEILA JIMENEZ', 4, '', 1, 1, 'KBA', 5, '2022-06-14', 0, '');
+	(9, 2, '2022-06-06 16:40:07', '2022060603252', 1, 1, 1, 1, 'PETICION DE MATRIMONIO', 'KEILA JIMENEZ', 4, '', 1, 1, 'KBA', 5, '2022-06-14', 0, ''),
+	(10, 3, '2022-06-08 09:33:00', '2022060803253', 9, 7, 28, 1, 'PUBLICACION DE SITIO', 'KENYA ALJHEICK', 5, '', 7, 1, 'KBA', 5, '2022-06-16', 0, ''),
+	(11, 3, '2022-06-08 15:54:51', '2022060803254', 1, 7, 6, 1, 'DEMANDA PARA EL PUEBLO', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-16', 0, ''),
+	(12, 3, '2022-06-09 12:05:49', '2022060903255', 1, 8, 28, 1, 'BACTERIA TERAPIA', 'JOJO', 3, '', 7, 1, 'KBA', 5, '2022-06-17', 0, ''),
+	(13, 7, '2022-06-10 08:59:36', '2022061003256', 1, 6, 27, 1, 'FACTURA CLARO', 'COMCEL', 2, '', 1, 1, 'KBA', 5, '2022-06-18', 0, ''),
+	(14, 0, '2022-06-10 15:45:03', '2022061003257', 4, 2, 3, 1, 'QUEJA SOBRE LA AUSENCIA DE DIVERSIDAD', 'WALIER', 3, '', 1, 1, 'KBA', 5, '2022-06-18', 0, '');
 /*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.remitente
@@ -1030,8 +1042,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-05-31 09:54:06', '2021-02-11 05:06:49', 'p3ddmfgqi4j0410jfqukfvv82j', 0, 0, 0),
-	(2, 'Carmen Rebolledo A', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, '', 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-06-14 10:16:12', '2021-02-11 05:06:49', 'drj730hg0urke7e03pccmpfhn2', 0, 0, 0),
+	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, NULL, 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, NULL, 1, '2022-06-07 14:45:25', '2021-08-19 06:12:39', 'k8hnc4v664jqe1fplprlo4as7g', 0, 0, 0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 

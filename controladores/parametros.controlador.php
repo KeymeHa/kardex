@@ -16,6 +16,7 @@ class ControladorParametros
 
 			$ActualY = date("Y");
 			$ActualRad = date("Ymd");
+			$ActualCor = date("ymd");
 			$radicar = new ControladorParametros;
 
 			if( $respuesta[8] == $ActualY)
@@ -77,7 +78,7 @@ class ControladorParametros
 				}
 				if($val == 29)
 				{
-					$r = $radicar->corte($respuesta[$val], $ActualRad);
+					$r = $radicar->corte($respuesta[$val], $ActualCor);
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
@@ -148,13 +149,13 @@ class ControladorParametros
 
 				if($val == 28)
 				{
-					$r = $radicar->radicar($i, $ActualY);
+					$r = $radicar->radicar($i, $ActualRad);
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
 				if($val == 29)
 				{
-					$r = $radicar->corte($i, $ActualY);
+					$r = $radicar->corte($i, $ActualCor);
 					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
 					return $parametro;
 				}
@@ -304,7 +305,28 @@ class ControladorParametros
 			$fecha = substr($fechaI,8,-9);//dd
 	        $fecha .= "/".substr($fechaI,5,-12);//mm
 	        $fecha .= "/".substr($fechaI,0,-15);//YY
-	        $fecha .= " - ".substr($fechaI,-9,-3);//hh-mm
+	        $hora = substr($fechaI,-9,-6);
+
+	        settype($hora, "integer");
+
+	        if ($hora < 12) 
+	        {
+	        	$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
+	        	$fecha.= " am"; 
+	        }
+	        else
+	        {
+	        	if ($hora == 12) 
+	        	{
+	        		$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
+	        		$fecha.= " pm"; 
+	        	}
+	        	else
+	        	{
+	        		$hora-= 12;
+	        		$fecha.= " - ".$hora.":".substr($fechaI,14,2)." pm";
+	        	}
+	        }
 		}
 		elseif ($sw == 4) 
 		{
@@ -387,30 +409,27 @@ class ControladorParametros
 
 	function corte($val, $ActualY)
 	{
-
-		$ActualY = substr($ActualY, 2, 0);
-
 		if($val == 0)
 		{
-			return $r = $ActualY."0001";
+			return $ActualY."0001";
 		}
 		else
 		{
 			if ($val < 10) 
 			{
-				return $r = $ActualY."000".$val;
+				return $ActualY."000".$val;
 			}
 			elseif($val > 10 && $val < 100)
 			{
-				return $r = $ActualY."00".$val;
+				return $ActualY."00".$val;
 			}
 			elseif($val >= 100 && $val < 1000)
 			{
-				return $r = $ActualY."0".$val;
+				return $ActualY."0".$val;
 			}
 			elseif($val >= 1000)
 			{
-				return $r = $ActualY.$val;
+				return $ActualY.$val;
 			}
 		}
 	}

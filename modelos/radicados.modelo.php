@@ -60,6 +60,34 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
+	static public function mdlMostrarCortes($tabla, $item, $valor)
+	{
+		if($item != null)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY fecha ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlMostrarCortesRango($tabla, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
@@ -234,4 +262,41 @@ class ModeloRadicados
 
 		$stmt = null;
 	}
+
+	static public function mdlEditarRad($tabla, $datos)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usr = :id_usr, id_accion = :id_accion, id_pqr = :id_pqr, id_objeto = :id_objeto, id_remitente = :id_remitente, id_articulo = :id_articulo, asunto = :asunto, id_area = :id_area, cantidad = :cantidad, recibido = :recibido, dias = :dias, fecha_vencimiento = :fecha_vencimiento, soporte = :soporte, observaciones = :observaciones WHERE id = :id");
+
+		
+
+		$stmt -> bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_accion", $datos["id_accion"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_pqr", $datos["id_pqr"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_objeto", $datos["id_objeto"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_remitente", $datos["id_remitente"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_articulo", $datos["id_articulo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":asunto", $datos["asunto"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_area", $datos["id_area"], PDO::PARAM_STR);
+		$stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt -> bindParam(":recibido", $datos["recibido"], PDO::PARAM_STR);
+		$stmt -> bindParam(":dias", $datos["dias"], PDO::PARAM_STR);
+		$stmt -> bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
+		$stmt -> bindParam(":soporte", $datos["soporte"], PDO::PARAM_STR);
+		$stmt -> bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
+
+		if($stmt -> execute())
+		{
+			return "ok";
+		}
+		else
+		{
+
+			return "error";	
+		}
+		$stmt -> close();
+		$stmt = null;
+	}
+
 }
