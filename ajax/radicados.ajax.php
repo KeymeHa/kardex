@@ -33,6 +33,12 @@ class AjaxRadicados
 		$respuesta = ControladorParametros::ctrmostrarRegistros($tabla, null, null);
 		echo json_encode($respuesta);
 	}
+
+	static public function addRemitente($valor)
+	{
+		$respuesta = ControladorRadicados::ctrRegistrarRemitente("remitente", $valor);
+		echo json_encode($respuesta);
+	}
 }
 
 
@@ -51,3 +57,7 @@ if(isset($_POST["traer"]))
 if(isset($_POST["objt"]))
 {	$generar = new AjaxRadicados();
 	$generar -> mostrarTerminos($_POST["id"],$_POST["fecha"]);}
+
+if(isset($_POST["remitente"]))
+{	$generar = new AjaxRadicados();
+	$generar -> addRemitente($_POST["remitente"]);}

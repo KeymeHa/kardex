@@ -1,3 +1,71 @@
+$("#btnRemitente").click(function(){
+		elimTabla();
+		paginaCargada(37);
+})
+
+$("#addRemitente").click(function(){
+
+		var nombre = $("#nuevoRemitente").val();
+		var inputR = $("#inputRemitente");
+		$("#inputRemitente").val(nombre);
+
+
+		if (nombre != "") 
+		{
+			var datos = new FormData();
+			datos.append("remitente", nombre);
+
+				$.ajax({
+
+					url:"ajax/radicados.ajax.php",
+					method: "POST",
+					data: datos,
+					cache: false,
+					contentType: false,
+					processData: false,
+					dataType: "json",
+					success: function(respuesta){
+
+					}
+
+				});
+
+			elimTabla();
+			paginaCargada(37);
+		}
+		else
+		{
+			swal({
+		      title: "Digite el nombre del remitente",
+		      type: "warning",
+		      confirmButtonText: "¡Cerrar!"
+		    })
+		}
+
+		
+})
+
+function elimTabla()
+{
+	var modalRemi = $('#divTablaRem');
+
+	if(modalRemi.has('table'))
+	{
+		modalRemi.children().remove();
+	}
+
+	modalRemi.append(
+		'<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
+		'<thead>'+      
+		 '<tr>'+           
+		  '<th style="width:10px">#</th>'+
+		   '<th>Nombre</th>'+
+		   '<th>Acción</th>'+
+		 '</tr> '+
+		'</thead>'+
+		'</table>'
+	)
+}
 
 
 $(".btn-corte").click(function(){
@@ -73,14 +141,25 @@ $(".btn-corte").click(function(){
 })
 
 
-
 $(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
 
 	var id_rad = $(this).attr("id_rad");
-
 	window.location = "index.php?ruta=verRadicado&id_rad="+id_rad;
 
 
+})
+
+
+$(".tablaRemitentes").click(function(){
+
+	alert("hola");
+
+})
+
+
+
+$(".tablaRemitentes").on("click", "tbody > tr.row > td > div.btn-group > button.btnRemitente", function(){
+	alert("hola");
 })
 
 
@@ -107,9 +186,9 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 		}).then((result) => {
 		  /* Read more about isConfirmed, isDenied below */
 		  if (result.isConfirmed) {
-		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad+"&f=1", "_blank");
+		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad, "_blank");
 		  } else if (result.isDenied) {
-		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad+"&f=2", "_blank");
+		  		window.open("extensiones/TCPDF-main/examples/radicadoImpD.php?id_rad="+id_rad, "_blank");
 		  }
 		})
 })

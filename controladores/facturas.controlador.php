@@ -114,7 +114,7 @@ class ControladorFacturas
 							$datos = array("nameFac"=> $nombre,
 										   "id"=> $i );
 
-							$respuesta = ControladorParametros::ctrNombreFac($datos);
+							$respuesta = ControladorParametros::ctrNombreArchivo("nameFac", $nombre);
 
 							if ( !$respuesta == "ok" )
 							{

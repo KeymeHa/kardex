@@ -241,27 +241,20 @@ class ModeloParametros
 
 	}
 
-	static public function mdlNombreFac($tabla, $datos)
+	static public function mdlNombreArchivo($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nameFac = :nameFac WHERE id = :id");
-
-		$stmt -> bindParam(":nameFac", $datos["nameFac"], PDO::PARAM_INT);
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
-
-		if($stmt -> execute()){
-
-			return "ok";
-		
-		}else{
-
-			return "error";	
-
+		if ($item == "nameRad" || $item == "nameFac") 
+		{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = :$item WHERE id = 1");
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+			if($stmt -> execute()){
+				return "ok";	
+			}else{
+				return "error";	
+			}
+			$stmt -> close();
+			$stmt = null;
 		}
-
-		$stmt -> close();
-
-		$stmt = null;
-
 	}
 
 

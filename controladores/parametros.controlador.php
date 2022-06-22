@@ -15,7 +15,7 @@ class ControladorParametros
 			} catch (Exception $e){	}
 
 			$ActualY = date("Y");
-			$ActualRad = date("Ymd");
+			$ActualRad = date("Ym");
 			$ActualCor = date("ymd");
 			$radicar = new ControladorParametros;
 
@@ -463,10 +463,10 @@ class ControladorParametros
 
 	}
 
-	static public function ctrNombreFac($datos)
+	static public function ctrNombreArchivo($item, $valor)
 	{
 		$tabla = "parametros";
-		$respuesta = ModeloParametros::mdlNombreFac($tabla, $datos);
+		$respuesta = ModeloParametros::mdlNombreArchivo($tabla, $item, $valor);
 		return $respuesta;
 	}
 

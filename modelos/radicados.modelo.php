@@ -60,6 +60,39 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
+
+	static public function mdlRegistrarRemitente($tabla,$remitente)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre) VALUES (:nombre)");
+
+		$stmt->bindParam(":nombre", $remitente, PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarRadicadosCorte($tabla, $item, $valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id_area");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlMostrarCortes($tabla, $item, $valor)
 	{
 		if($item != null)

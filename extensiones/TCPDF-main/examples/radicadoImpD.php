@@ -26,40 +26,46 @@
 
 // Include the main TCPDF library (search for installation path).
 require_once('tcpdf_include.php');
+require_once "../../../controladores/radicados.controlador.php";
+require_once "../../../modelos/radicados.modelo.php";
 
+require_once "../../../controladores/parametros.controlador.php";
+require_once "../../../modelos/parametros.modelo.php";
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
 
-    //Page header
-    public function Header() {
-        // Logo
-        $image_file = K_PATH_IMAGES.'logo_example.jpg';
-        $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        // Set font
-        $this->SetFont('helvetica', 'B', 20);
-        // Title
-        $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }
-
-    // Page footer
-    public function Footer() {
-        // Position at 15 mm from bottom
-        $this->SetY(-15);
-        // Set font
-        $this->SetFont('helvetica', 'I', 8);
-        // Page number
-        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
-    }
+  
+}
+ $item = "id";
+if (isset($_GET["id_rad"])) 
+{
+$valor = $_GET["id_rad"];
 }
 
+$radicado = ControladorRadicados::ctrMostrarRadicados($item, $valor);
+$fecha = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 3);
+
+if ($radicado["id_corte"] != 0) 
+{
+
+$cortes = ControladorRadicados::ctrMostrarCortes($item, $radicado["id_corte"]);
+$corte = $cortes["corte"];
+# code...
+}
+else
+{
+
+$cortes = ControladorParametros::ctrMostrarParametros(29);
+$corte = $cortes["codigo"]; 
+
+}
 // create new PDF document
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('TCPDF Example 003');
+$pdf->SetAuthor('KB');
+$pdf->SetTitle('Planilla N ');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
@@ -74,16 +80,12 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
+$pdf->SetMargins(15, 0, 0);
+//$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetAutoPageBreak(TRUE, 0);
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
 // set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-// set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
 // set some language-dependent strings (optional)
 if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
     require_once(dirname(__FILE__).'/lang/eng.php');
@@ -92,18 +94,42 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 
 // ---------------------------------------------------------
 
-// set font
-$pdf->SetFont('times', 'BI', 12);
+$pdf->setPageOrientation('L');
 
 // add a page
-$pdf->AddPage();
+ $pdf->AddPage();
 
-// set some text to print
-$txt = <<<EOD
-TCPDF Example 003
+ $subtable = '<table cellspacing="1" cellspadding="1" border="0" style="font-size:8px" ><tr><td><img src="images/logoEdubar.png"></td></tr><tr><td><img src="images/FIRMA.jpg"></td></tr></table>';
 
-Custom page header and footer are defined by extending the TCPDF class and overriding the Header() and Footer() methods.
-EOD;
+        $subtableU = '<table  align="center"><tr><td><span style="font-size:11px; line-height:10px;">'.$corte.'</span> <span style="color:white; font-size:2px;">___________</span> <span style="font-size:8px; color:rgb(37, 90, 142);">'.$radicado["radicado"].'</span> <span style="font-size:5px;">Fecha: '.$fecha.'</span></td></tr></table>';
 
-// print a block of text using Write()
-$pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
+        
+
+        $headerText = '<table>
+        <tr><td height="541" width="100%"></td></tr>
+        </table>
+        <table border="0">
+            <tr>
+                <td width="40%"></td>
+                <td width="25%" style="font-size:7px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
+                    <p style="text-align: justify;">
+                        <ul>
+                         <li>Para Cualquier información cite el <b>Número del Radicado.</b></li>
+                         <li>El recibido de la correspondencia <b>NO significa la Aceptación,</b> sino para su revisión.</li>
+                        </ul>
+                    </p></td>
+                <td width="90">'.$subtable.'</td>
+                <td width="70">'.$subtableU.'</td>
+            </tr>  
+        </table>
+        ';
+
+$pdf->writeHTML($headerText, false, true, false, true);
+// ---------------------------------------------------------
+
+//Close and output PDF document
+$pdf->Output('imprimir radicado.pdf', 'I');
+
+//============================================================+
+// END OF FILE
+//============================================================+

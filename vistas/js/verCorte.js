@@ -21,9 +21,9 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 		}).then((result) => {
 		  /* Read more about isConfirmed, isDenied below */
 		  if (result.isConfirmed) {
-		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad+"&f=1", "_blank");
+		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad, "_blank");
 		  } else if (result.isDenied) {
-		  		window.open("extensiones/TCPDF-main/examples/radicadoImp.php?id_rad="+id_rad+"&f=2", "_blank");
+		  		window.open("extensiones/TCPDF-main/examples/radicadoImpD.php?id_rad="+id_rad, "_blank");
 		  }
 		})
 })

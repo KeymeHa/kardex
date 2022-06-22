@@ -9,6 +9,13 @@ class ControladorRadicados
 		return $respuesta;
 	}
 
+	public static function ctrMostrarRadicadosCorte($item, $valor)
+	{
+		$tabla = "radicados";
+		$respuesta = ModeloRadicados::mdlMostrarRadicadosCorte($tabla, $item, $valor);
+		return $respuesta;
+	}
+
 	function anioActual()
 	{
 	    $anio = ControladorParametros::ctrVerAnio(true);
@@ -38,6 +45,17 @@ class ControladorRadicados
 	}//ctrMostrarCortesRango
 
 
+	static public function ctrRegistrarRemitente($tabla, $valor)
+	{
+		if (!empty($valor)) 
+		{
+			$remitente = ControladorParametros::ctrValidarCaracteres($valor);
+			$respuesta = ModeloRadicados::mdlRegistrarRemitente($tabla,$remitente);
+			return 0;
+		}
+		return 0;
+	}
+
 	static public function ctrContarRadicados($item, $valor)
 	{
 		$tabla = "radicados";
@@ -63,9 +81,9 @@ class ControladorRadicados
 
 					$directorio = "";
 				
-					if ( isset($_FILES["soporteRad"]["tmp_name"]) ) 
+					if ( isset($_FILES["soporteRadicado"]["tmp_name"]) ) 
 					{
-						if ( !$_FILES["soporteRad"]["tmp_name"] == null )
+						if ( !$_FILES["soporteRadicado"]["tmp_name"] == null )
 						{
 								
 							$directorio = "vistas/radicados/".strval($actualY)."/".strval($actualM)."/".strval($actualD);
@@ -75,39 +93,19 @@ class ControladorRadicados
 							    mkdir($directorio, 0755, true);
 							}
 
-							if($_FILES["soporteRad"]["type"] == "application/pdf")
+							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
 							{
-								$tmp_name = $_FILES['soporteRad']['tmp_name'];
-								$nombre =  intval($res[29])  + 1;
+								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
+								$nombre =  intval($res[29]) + 1;
 								$nombreArchivo = $nombre.'.pdf';
-								$i = $nombre;
 
-								$datos = array("nameRad"=> $nombre,
-											   "id"=> $i );
-
-								$respuesta = ControladorParametros::ctrNombreFac($datos);
+								$respuesta = ControladorParametros::ctrNombreArchivo("nameRad", $nombre);
 
 								if ( !$respuesta == "ok" )
 								{
 									echo '<script>
 
-									swal({
-
-										type: "error",
-										title: "¡Error al Actualizar Nombre en la tabla!",
-										showConfirmButton: true,
-										confirmButtonText: "Cerrar"
-
-									}).then(function(result){
-
-										if(result.value){
-										
-											window.location = "nuevaFactura";
-
-										}
-
-									});
-								
+										console.log("Error al actualizar nombre en DB");
 
 									</script>';
 
@@ -115,28 +113,13 @@ class ControladorRadicados
 								}
 
 								$directorio.='/'.$nombreArchivo;
-								$error = $_FILES['soporteRad']['error'];
+								$error = $_FILES['soporteRadicado']['error'];
 
 									if($error)
 									{
 										echo '<script>
 
-										swal({
-
-											type: "error",
-											title: "¡Error con el soporte Radicado!",
-											showConfirmButton: true,
-											confirmButtonText: "Cerrar"
-
-										}).then(function(result){
-
-											if(result.value){
-											
-												window.location = "radicado";
-
-											}
-
-										});
+										console.log("Error al copiar el archivo");
 									
 
 										</script>';
@@ -159,22 +142,7 @@ class ControladorRadicados
 				} catch (Exception $e) {
 					echo '<script>
 
-						swal({
-
-							type: "error",
-							title: "¡Error al crear Soporte de Radicado!",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-
-						}).then(function(result){
-
-							if(result.value){
-							
-								window.location = "radicado";
-
-							}
-
-						});
+						console.log("Error Validar formato en el archivo");
 					
 
 						</script>';
@@ -379,12 +347,12 @@ class ControladorRadicados
 
 				if (isset($_GET["idCorte"]) && isset($_GET["verCorte"])) 
 				{
-					$url = "radicado";
+					$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
 					#index.php?ruta=verCorte&idCorte=7
 				}
 				else
 				{
-					$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
+					$url = "radicado";
 				}
 			}
 			else

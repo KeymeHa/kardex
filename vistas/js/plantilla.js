@@ -595,6 +595,13 @@ function paginaCargada(pagina){
 
 			
 		}
+		else if(pagina == 37)
+		{
+
+			tablaElegida =  $('.tablaRemitentes');
+			tablaAjax = 'remitentes';
+			
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {

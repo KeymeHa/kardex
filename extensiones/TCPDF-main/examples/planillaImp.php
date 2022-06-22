@@ -19,7 +19,7 @@ $item = "id";
 $valor = $this->id;
 
 $corte = ControladorRadicados::ctrMostrarCortes($item, $valor);
-$radicados = ControladorRadicados::ctrMostrarRadicados($item."_corte", $corte["id"]);
+$radicados = ControladorRadicados::ctrMostrarRadicadosCorte($item."_corte", $corte["id"]);
 $fecha = ControladorParametros::ctrOrdenFecha($corte["fecha"], 3);
 $numCorte = substr($corte["corte"], 6 , 4);
 //REQUERIMOS LA CLASE TCPDF
@@ -212,7 +212,6 @@ $pdf->Output('factura.pdf');
 }
 
 }
-
 $impCorte = new imprimirCorte();
 
 if ( isset($_GET["idC"]) ) 

@@ -108,7 +108,9 @@ for ($i=0; $i < count($porcion); $i++)
                 <div class="col-lg-2 col-md-2 col-xs-2">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Remitente</label>
-                    <input type="text" name="remitente" class="form-control pull-right" id="datepicker" title="Digite o seleccione un remitente">
+                    <div class="col-lg-3"><button type="button" id="btnRemitente" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button></div>
+                    <div class="col-lg-12"><input type="text" name="remitente" class="form-control pull-right" id="inputRemitente" title="Digite o seleccione un remitente"></div>
+                    
                   </div><!--form-group-->
                 </div><!--col-lg-2 col-md-2 col-xs-2-->
 
@@ -209,6 +211,68 @@ for ($i=0; $i < count($porcion); $i++)
     </div>
 
   </section>
+</div>
+
+<div id="modalRemitentes" class="modal fade" role="dialog"> 
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form role="form" method="post" enctype="multipart/form-data">
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#00A65A; color:white">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Lista de Remitentes</h4>
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+          <div class="box-body">
+            <!-- ENTRADA PARA EL NOMBRE -->   
+
+            <div class="form-group"> 
+              <div class="row">
+                <div class="col-md-6">      
+                  <div class="input-group">          
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control input-lg" id="nuevoRemitente" placeholder="Ingresar nombre">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row"> 
+               <div class="col-md-3">
+                <span type="button" id="addRemitente" class="btn btn-block btn-success"><i class="fa fa-plus"></i>Añadir</span>
+              </div>
+            </div>
+           
+            <br class="style4">
+
+            <div class="row">
+                <h4>Listado de Remitentes</h4>
+            </div>
+
+            <div class="row" id="divTablaRem">
+              
+            </div>
+
+            
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>
 
 

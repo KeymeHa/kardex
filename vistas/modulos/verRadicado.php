@@ -176,9 +176,13 @@
         if ($radicado["soporte"] != "") 
         {
           echo '<div class="box-footer">
-                    <a href="'.$radicado["soporte"].'";>
+                  <div class="col-md-1">
+                  <a href="'.$radicado["soporte"].'"; target="_blank">
                       <button type="button" class="btn btn-block btn-primary">Soporte</button>
                     </a>
+                  </div>
+
+                   
                 </div>';
         }
 
