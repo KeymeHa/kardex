@@ -2,7 +2,13 @@
   
   <div class="login-logo">
 
-    <h1>Kardex</h1><em style="font-size: 12px !important; color: red;">Versión Alpha</em>
+    <div class="login-logo">
+
+    <img src="vistas/img/plantilla/logoEdubar.png" class="img-responsive" style="padding:30px 100px 0px 100px">
+
+  </div>
+
+    <h1>SITMI</h1><em style="font-size: 12px !important; color: red;">Versión Alpha</em>
 
   </div>
 

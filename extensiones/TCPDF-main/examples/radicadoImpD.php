@@ -80,7 +80,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(15, 0, 0);
+$pdf->SetMargins(15, -5, 0);
 //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetAutoPageBreak(TRUE, 0);
 $pdf->setPrintHeader(false);
@@ -101,7 +101,7 @@ $pdf->setPageOrientation('L');
 
  $subtable = '<table cellspacing="1" cellspadding="1" border="0" style="font-size:8px" ><tr><td><img src="images/logoEdubar.png"></td></tr><tr><td><img src="images/FIRMA.jpg"></td></tr></table>';
 
-        $subtableU = '<table  align="center"><tr><td><span style="font-size:11px; line-height:10px;">'.$corte.'</span> <span style="color:white; font-size:2px;">___________</span> <span style="font-size:8px; color:rgb(37, 90, 142);">'.$radicado["radicado"].'</span> <span style="font-size:5px;">Fecha: '.$fecha.'</span></td></tr></table>';
+        $subtableU = '<table  align="center"><tr><td><span style="font-size:11px; line-height:10px;">'.$corte.'</span> <span style="color:white; font-size:2px;">___________</span> <span style="font-size:8px; color:rgb(37, 90, 142);">#'.$radicado["radicado"].'</span> <span style="font-size:5px;">Fecha: '.$fecha.'</span></td></tr></table>';
 
         
 
@@ -110,8 +110,8 @@ $pdf->setPageOrientation('L');
         </table>
         <table border="0">
             <tr>
-                <td width="40%"></td>
-                <td width="25%" style="font-size:7px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
+                <td width="43%"></td>
+                <td width="20%" style="font-size:6px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
                     <p style="text-align: justify;">
                         <ul>
                          <li>Para Cualquier información cite el <b>Número del Radicado.</b></li>

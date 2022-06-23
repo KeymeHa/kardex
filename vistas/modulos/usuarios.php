@@ -180,7 +180,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
              <div class="form-group">              
               <div class="input-group">            
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
-                <input type="password" class="form-control input-lg" name="nuevoPassword" placeholder="Ingresar contraseña" required>
+                <input type="password" class="form-control input-lg" id="nuevoPassword" name="nuevoPassword" placeholder="Ingresar contraseña" required>
               </div>
             </div>
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->

@@ -20,11 +20,12 @@
 
 			<?php
 
-			if ($_SESSION["perfil"] != 4) 
+			///usuarios
+
+			if ($_SESSION["perfil"] == 1 && $_SESSION["perfil"] == 2) 
 			{
 				echo '
 			<li ';
-
 			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "usuarios"){ echo'class="active"'; } }
 
 
@@ -36,7 +37,16 @@
 							</a>';
 					}
 
-			echo '</li>
+			echo '</li>';
+
+			}
+
+
+			///inventario
+
+			if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 3 ) 
+			{
+				echo '
 
 			<li class="header">Inventario y Bodega</li>
 
@@ -88,9 +98,15 @@
 						<i class="fa fa-angle-left pull-tight"></i>
 					</span>
 				</a>
-				<ul class="treeview-menu">
-					<li><a href="areas"><i class="fa fa-users"></i>Areas</a></li>
-					<li><a href="proyectos"><i class="fa fa-user"></i>Proyectos</a></li>
+				<ul class="treeview-menu">';
+
+					if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 ) 
+					{
+						echo '<li><a href="areas"><i class="fa fa-users"></i>Areas</a></li>';
+					}
+
+					
+					echo '<li><a href="proyectos"><i class="fa fa-user"></i>Proyectos</a></li>
 					<li><a href="personas"><i class="fa fa-user"></i>Personas</a></li>
 					<li><a href="requisiciones"><i class="fa fa-file-text"></i>Requisiciones</a></li>
 				</ul>
@@ -121,9 +137,14 @@
 				<ul class="treeview-menu">
 					<li><a href="actas"><i class="fa fa-file-o"></i>Listado de Actas</a></li>
 				</ul>
-			</li>
+			</li>';
+			}
 
-			<li class="header">Configuraciones</li>
+			///configuraciones
+
+			if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 ) 
+			{
+				echo '<li class="header">Configuraciones</li>
 
 			<li class="treeview ';
 
@@ -163,7 +184,12 @@
 			echo '</li>';
 			}
 
-			if ( $_SESSION["perfil"] != "1" || $_SESSION["perfil"] != "5" ) 
+			
+
+			
+			//ventas
+
+			if ( $_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2" || $_SESSION["perfil"] == "5" || $_SESSION["perfil"] == "8") 
 			{
 
 				echo '
@@ -189,7 +215,9 @@
 						</li>';
 			}
 
-			if ( $_SESSION["perfil"] == "1" || $_SESSION["perfil"] != "2" || $_SESSION["perfil"] != "6") {
+			//Correspondencias
+
+			if ( $_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 6 || $_SESSION["perfil"] == 7) {
 
 			echo '<li class="header">Correspondencia y Mensajería</li>
 
@@ -207,6 +235,31 @@
 				<ul class="treeview-menu">
 					<li><a href="radicado"><i class="fa fa-envelope-square"></i>Panel de Radicados</a></li>
 					<li><a href="cortes"><i class="fa fa-clone"></i>Cortes y planillas</a></li>
+				</ul>
+			</li>';
+				
+			}
+
+			//Generar requisicion
+
+			if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 8 || $_SESSION["perfil"] == 4) {
+
+			echo '<li class="header">Mis Requisiciones</li>
+
+			<li class="treeview ';
+
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'genRequisicion' || $_GET['ruta'] == 'hisRequisicion'){ echo 'active';} }
+
+			echo '"><a href="#">
+					<i class="fa fa-envelope-o"></i>
+					<span>Requisiciones</span>
+					<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-tight"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Radicado</a></li>
+					<li><a href="hisRequisicion"><i class="fa fa-clone"></i>Historial</a></li>
 				</ul>
 			</li>';
 				

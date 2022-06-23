@@ -29,6 +29,29 @@ $("#nuevoUsuario").change(function(){
 	});
 })
 
+$("#nuevoPassword").change(function(){
+
+	var pass = $(this).val();
+	validarLargoPass(pass, "#nuevoPassword");
+})
+
+$("#editarPassword").change(function(){
+
+	var pass = $(this).val();
+	validarLargoPass(pass, "#editarPassword");
+})
+
+function validarLargoPass(pass, id)
+{
+	$(".alert").remove();
+
+	if (pass.length < 8)
+	{
+		$(id).parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Debe incluir minimo 8 Caracteres.</div>');
+		$(id).val("");
+		ocultarAlert();
+	}
+}
 /*=============================================
 ELIMINAR USUARIO
 =============================================*/
