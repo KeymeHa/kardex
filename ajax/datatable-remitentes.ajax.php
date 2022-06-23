@@ -19,7 +19,7 @@ class TablaRemitentes
 
 		for( $i = 0; $i < count($remitentes); $i++)
 		{	
-			$acciones = "<div class='btn-group'><button type='button' class='btn btn-success btnRemitente' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-link'></i></button></div>";
+			$acciones = "<div class='btn-group'><button type='button' class='btn btn-success btnRemitente' data-dismiss='modal' onclick='enviarRemitente(".$remitentes[$i]["id"].")' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-link'></i></button></div>";
 
 		    $dJson .='[
 	    		"'.($i + 1).'",

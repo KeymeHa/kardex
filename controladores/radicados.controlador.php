@@ -45,12 +45,43 @@ class ControladorRadicados
 	}//ctrMostrarCortesRango
 
 
+	static public function ctrValidarRemitente($valor)
+	{
+		if ( !is_integer($valor) ) 
+		{
+			$remitente = ControladorParametros::ctrmostrarRegistros("remitente", "id", $valor);
+
+			if (isset($remitente["nombre"])) 
+			{
+				return $remitente["nombre"];
+			}
+			else
+			{
+				return $valor;
+			}
+		}
+		else
+		{
+			return $valor;
+		}
+	}
+
 	static public function ctrRegistrarRemitente($tabla, $valor)
 	{
 		if (!empty($valor)) 
 		{
-			$remitente = ControladorParametros::ctrValidarCaracteres($valor);
-			$respuesta = ModeloRadicados::mdlRegistrarRemitente($tabla,$remitente);
+
+			$remitente = ControladorParametros::ctrmostrarRegistros("remitente", "nombre", $valor);
+
+			if (isset($remitente["nombre"])) 
+			{
+				return 0;
+			}
+			else
+			{
+				$remitente = ControladorParametros::ctrValidarCaracteres($valor);
+				$respuesta = ModeloRadicados::mdlRegistrarRemitente($tabla,$remitente);
+			}
 			return 0;
 		}
 		return 0;
@@ -155,11 +186,30 @@ class ControladorRadicados
 
 				$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observaciones"]);
 				$asunto = ControladorParametros::ctrValidarCaracteres($_POST["asunto"]);
-				$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitente"]);
+				
 
 
 				$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaRad"],$_POST["id_objeto"]);
 
+				if ($_POST["remitenteID"] != 0) 
+				{
+
+					$rem = ControladorParametros::ctrmostrarRegistros("remitente", "id", $_POST["remitenteID"]);
+
+					if (isset($rem["nombre"])) 
+					{
+						$remitente = $_POST["remitenteID"];
+					}
+					else
+					{
+						$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitente"]);
+					}
+	
+				}
+				else
+				{
+					$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitente"]);
+				}
 				
 				$datos = array( 'radicado' => $_POST["codigoInterno"],
 								'id_usr' => $_POST["idUsuario"],

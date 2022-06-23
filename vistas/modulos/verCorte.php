@@ -21,6 +21,9 @@
 
 ?>
 
+
+
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>    
@@ -38,6 +41,10 @@
         <button class="btn btn-success" onclick="history.back()">
           <i class="fa fa-arrow-left" ></i>
           Regresar
+        </button>
+        <button class="btn btn-info btnImpCorte" title='Imprimir Radicado' idCorte="<?php echo $corte['id']; ?>" corte='<?php echo $corte['corte']; ?>'>
+          <i class="fa fa-print "></i>
+          Imprimir Planilla
         </button>
         <h3 class="box-title">Fecha Generación :<?php echo $fechaCorte;?></h3>  
       </div>

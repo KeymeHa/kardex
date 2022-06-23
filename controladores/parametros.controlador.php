@@ -837,56 +837,44 @@ class ControladorParametros
 
 	static public function ctrValidarTermino($fecha, $id)
 	{
-	  $response = ModeloParametros::mdlmostrarRegistros("objeto","id", $id);
-	  $festivo = ModeloParametros::mdlmostrarFestivos();
+		  $response = ModeloParametros::mdlmostrarRegistros("objeto","id", $id);
+          $festivo = ModeloParametros::mdlmostrarFestivos();
+          $fecha_v = new DateTime($fecha);
+          $count = $response["termino"];
+          
+          while ($count != 0 && $count >= 0) 
+          {
+            $sws = false;
+            $fecha_v->add(new DateInterval('P1D'));
 
-	  $count = $response["termino"];
-	  $fecha_v = new DateTime($fecha);
-	  $fecha_v->add(new DateInterval('P1D'));
-	  $sw = false;
-	  $sws = false;
+            if ($fecha_v->format('l') != "Saturday" && $fecha_v->format('l') != "Sunday") 
+            {
+                 foreach ($festivo as $key => $value) 
+                  {
+                    if ($value["fecha"] == $fecha_v->format('Y-m-d')) 
+                    {
+                      $sws = true;
+                    }
+                  }
 
-	  do{
+                  if ($sws != true) 
+                  {
+                    $count--;
+                  }
+            }
+            else
+            {
+              if ( $fecha_v->format('l') == "Saturday" ) 
+              {
+                 $fecha_v->add(new DateInterval('P1D'));
+              }
+            }
+          }//while
 
-	  	foreach ($festivo as $key => $value) 
-  		{
-  			if ($value["fecha"] == $fecha_v) 
-  			{
-  				$sws = true;
-  			}
-  		}
+          $respuesta = ["dias" => $response["termino"],
+                 "fecha_vencimiento" => $fecha_v->format('Y-m-d')];
 
-  		if ($sws == true) 
-  		{
-  			$fecha_v->add(new DateInterval('P1D'));
-  			$sws = false;
-  		}
-  		elseif ($fecha_v->format('l') == "Saturday") 
-  		{
-  			$fecha_v->add(new DateInterval('P1D'));
-  		}
-  		elseif ($fecha_v->format('l') == "Sunday") 
-  		{
-  			$fecha_v->add(new DateInterval('P1D'));
-  		}
-  		else
-  		{
-  			if ($count != 0) 
-      		{
-      			$count--;
-      			$fecha_v->add(new DateInterval('P1D'));
-      		}
-      		else
-      		{
-      			$sw = true;
-      		}
-  		}
-
-	  }while($sw != true && $count != 0);
-
-	  $respuesta = ["dias" => $response["termino"],
-					 "fecha_vencimiento" => $fecha_v->format('Y-m-d')];
-		return $respuesta;
+        return $respuesta;
 
 	}//ctrValidarTermino($fecha, $id)
 

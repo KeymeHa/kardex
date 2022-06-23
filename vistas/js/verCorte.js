@@ -37,6 +37,15 @@ $(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
 
 })
 
+$("button.btnImpCorte").click(
+	function(){
+
+	var idC = $(this).attr("idCorte");
+
+	window.open("extensiones/TCPDF-main/examples/corte.php?idC="+idC, "_blank");
+
+})
+
 $(".tablaRadicados").on("click", "button.btnEditarRadicado", function(){
 
 	var id_rad = $(this).attr("id_rad");

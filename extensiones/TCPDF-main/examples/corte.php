@@ -54,41 +54,41 @@ class MYPDF extends TCPDF {
         $fecha = ControladorParametros::ctrOrdenFecha($corte["fecha"], 3);
         $numCorte = substr($corte["corte"], 6 , 4);
 
-        $headerText = '<table style="font-size:7px;">  
+        $headerText = '<table style="font-size:8px;">  
         <tr>        
             <td style="width:10px;"></td>
             <td style="width:170px;">Archivo N°: '.$corte['corte'].'-EDU-RADICACIÓN</td>
-            <td style="width:820px;"></td>
+            <td style="width:620px;"></td>
             <td style="width:40px;text-align: right;"><strong>Fec.Rep:</strong></td>
-            <td style="width:70px;text-align: right;">'.$fecha.'</td>
-            <td style="width:40px;text-align: right;">Cite: '.$numCorte.'</td>
+            <td style="width:90px;text-align: right;">'.$fecha.'</td>
+            <td style="width:50px;text-align: right;">Cite: '.$numCorte.'</td>
         </tr>
     </table>
     <table align="center"> 
         <tr>        
-            <td rowspan="3" style="width:10px;"></td>
+            <td rowspan="3" style="width:5px;"></td>
             <td rowspan="3" style="width:120px; border: 1px solid black; font-size:5px; line-height: 1;"><img src="images/logoEdubar.png" width="80" height="auto"></td>
-            <td rowspan="3" style="width:920px; border: 1px solid black; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
-            <td style="width:50px; border: 1px solid black; font-size:7px;" >
+            <td rowspan="3" style="width:750px; border: 1px solid black; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
+            <td style="width:58px; border: 1px solid black; font-size:7px;" >
             Código&nbsp;&nbsp;
             </td>
-            <td style="width:50px; border: 1px solid black; font-size:7px;">
+            <td style="width:58px; border: 1px solid black; font-size:7px;">
             GD-FA-17
             </td>
         </tr>
         <tr>
-            <td style="width:50px; border: 1px solid black; font-size:7px;">
+            <td style="width:58px; border: 1px solid black; font-size:7px;">
             Versión:
             </td>
-            <td style="width:50px; border: 1px solid black; font-size:7px;">
+            <td style="width:58px; border: 1px solid black; font-size:7px;">
             1
             </td>   
         </tr>
         <tr>
-            <td style="width:50px; border: 1px solid black; font-size:7px;">
+            <td style="width:58px; border: 1px solid black; font-size:7px;">
             Páginas:&nbsp;&nbsp;
             </td>
-            <td style="width:50px; border: 1px solid black; font-size:7px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$this->getAliasNbPages().'
+            <td style="width:58px; border: 1px solid black; font-size:7px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$this->getAliasNbPages().'
             </td>   
         </tr>
     </table>
@@ -108,7 +108,7 @@ class MYPDF extends TCPDF {
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0, 10, 'Entregado Por:_____________| Recibido Por:___________ Fecha:____/___/________  Hora:___:___[am] - [pm]      Página: '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 0, 'Entregado Por:_____________| Recibido Por:___________ Fecha:____/___/________  Hora:___:___[am] - [pm]      Página: '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
 
@@ -148,7 +148,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, 17, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(4, 22, PDF_MARGIN_RIGHT);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -170,54 +170,64 @@ $pdf->SetFont('dejavusans', '', 10);
 $pdf->setPageOrientation('L');
 
 // add a page
- $pdf->AddPage();
-
-$tablaPDF = '<table border="1" style="font-size:8px;" align="center">
-    <tr>
-        <th width="15">#</th>
-        <th>Número Radicado</th>
-        <th>Fecha Radicado</th>
-        <th>Tipo</th>
-        <th width="150">Remitido A</th>
-        <th width="150">Remitente</th>
-        <th width="150">Asunto</th>
-        <th>Enviado Por</th>
-        <th>Recepcionado Por</th>
-        <th>Fecha Recepcionado</th>
-    </tr>';
-
-$pdf->writeHTML($tablaPDF, false, true, false, true);
+$pdf->AddPage();
 
 // set some text to print
 
-$contador = 1;//cuenta las filas para reiniciarlas y crear nueva pagina
+$contador = 0;//cuenta las filas para reiniciarlas y crear nueva pagina
 
 if (count($radicados) != 0) 
 {
-    foreach ($radicados as $key => $value) 
+    $contenidoPDF = "";
+
+    if (count($radicados) < 12) 
     {
-        $contar = ($key+1);//enumera las filas
-        $areas = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
-        $pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $value["id_pqr"]);
-        $fechaRad = ControladorParametros::ctrOrdenFecha($value["fecha"], 3);
 
-    $pdf->AddPage();
-    $tablaPDF = '<table border="1" style="font-size:8px;" align="center">
-    <tr>
-        <th width="15">#</th>
-        <th>Número Radicado</th>
-        <th>Fecha Radicado</th>
-        <th>Tipo</th>
-        <th width="150">Remitido A</th>
-        <th width="150">Remitente</th>
-        <th width="150">Asunto</th>
-        <th>Enviado Por</th>
-        <th>Recepcionado Por</th>
-        <th>Fecha Recepcionado</th>
-    </tr>';
+         $contenidoPDF.='<table cellpadding="8" style="text-align:center;">
+        <tr style="text-align:center; font-size:7.5px;">
+                <td style="border-color: white !important;" width="25"><b>#</b></td>
+                <td border="1" width="107"><b>Número Radicado</b></td>
+                <td border="1" width="107"><b>Fecha Radicado</b></td>
+                <td border="1" width="107"><b>Tipo</b></td>
+                <td border="1" width="107"><b>Remitido A</b></td>
+                <td border="1" width="107"><b>Remitente</b></td>
+                <td border="1" width="107"><b>Asunto</b></td>
+                <td border="1" width="107"><b>Enviado Por</b></td>
+                <td border="1" width="107"><b>Recepcionado Por</b></td>
+                <td border="1" width="107"><b>Fecha Recepcionado</b></td>
+            </tr>';
 
-     $pdf->writeHTML($tablaPDF, false, true, false, true);
+
+        foreach ($radicados as $key => $value) 
+        {
+            $contar = $key+1;//enumera las filas
+            $remitente = ControladorRadicados::ctrValidarRemitente($value["id_remitente"]);
+            $areas = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
+            $pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $value["id_pqr"]);
+            $fechaRad = ControladorParametros::ctrOrdenFecha($value["fecha"], 3);
+            $contenidoPDF.='<tr style="text-align:center; font-size:7.5px;">
+                    <td style="border-color: white !important;">'.$contar.'</td>
+                    <td border="1">'.$value["radicado"].'</td>
+                    <td border="1">'.$fechaRad.'</td>
+                    <td border="1">'.$pqr["nombre"].'</td>
+                    <td border="1">'.$areas["nombre"].'-GRAL</td>
+                    <td border="1">'.$remitente.'</td>
+                    <td border="1">'.$value["asunto"].'</td>
+                    <td border="1"></td>
+                    <td border="1">'.$value["recibido"].'</td>
+                    <td border="1"></td>
+                </tr>';
+
+        }
+      $contenidoPDF.='</table>';
+
+      $pdf->writeHTML($contenidoPDF, false, true, false, true);
     }
+    else#holaaa
+    {
+
+    }
+   
 }
 
 // ---------------------------------------------------------

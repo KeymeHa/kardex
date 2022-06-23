@@ -49,7 +49,7 @@ $(".tablaCortes").on("click", "button.btnImpCorte", function(){
 
 	var idC = $(this).attr("idCorte");
 
-	window.open("extensiones/TCPDF-main/examples/planillaImp.php?idC="+idC, "_blank");
+	window.open("extensiones/TCPDF-main/examples/corte.php?idC="+idC, "_blank");
 
 })
 

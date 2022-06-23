@@ -58,9 +58,9 @@ function elimTabla()
 		'<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
 		'<thead>'+      
 		 '<tr>'+           
-		  '<th style="width:10px">#</th>'+
+		  '<th style="width:5px">#</th>'+
 		   '<th>Nombre</th>'+
-		   '<th>Acción</th>'+
+		   '<th style="width:10px">Acción</th>'+
 		 '</tr> '+
 		'</thead>'+
 		'</table>'
@@ -141,6 +141,8 @@ $(".btn-corte").click(function(){
 })
 
 
+
+
 $(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
 
 	var id_rad = $(this).attr("id_rad");
@@ -150,11 +152,32 @@ $(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
 })
 
 
-$(".tablaRemitentes").click(function(){
+function enviarRemitente(remitente)
+{
+	$("#inputRemitenteId").val(remitente);
+	//$("#inputRemitente").val(remitente);
 
-	alert("hola");
+	var datos = new FormData();
+	datos.append("verRemitente", 1);
+	datos.append("id", remitente);
 
-})
+	$.ajax({
+
+		url:"ajax/radicados.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){
+
+			$("#inputRemitente").val(respuesta["nombre"]);
+
+		}//respuesta
+	});//ajax
+
+}
 
 
 
@@ -175,7 +198,7 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 		  showCancelButton: true,
 		  cancelButtonText: 'Cancelar',
 		  confirmButtonText: 'Posición 1',
-		  denyButtonText: `Posición 2`,
+		  denyButtonText: `Posición 3`,
 		  confirmButtonColor: '#149243',
 		  denyButtonColor: '#149500',
 		  cancelButtonColor: '#d33',
@@ -247,7 +270,7 @@ $(".tablaRadicados").on("click", "button.btnEditarRadicado", function(){
 $("#objetoEdit").change(function(){
 	var selOrg = $( "#objetoEdit option:selected" ).val();
 	var fecha = $("#fechaEdit").val();
-	//objeto_id(selOrg, fecha);
+	objeto_id(selOrg, fecha);
 })
 
 function mostrarCampos(idhtml, tabla, id, fecha)
@@ -281,12 +304,12 @@ function mostrarCampos(idhtml, tabla, id, fecha)
 
 			for (var j = 0; j < respuesta.length; j++) 
 			{
-				if(idhtml == 'objetoEdit')
+				if(idhtml === 'objetoEdit')
 				{
-					//objeto_id(id, fecha);
+					objeto_id(id, fecha);
 				}
 
-				if (respuesta[j]['id'] != id) 
+				if(respuesta[j]['id'] != id) 
 				{
 					$('#'+idhtml).append('<option value="'+respuesta[j]['id']+'">'+respuesta[j]['nombre']+'</option>');
 				}

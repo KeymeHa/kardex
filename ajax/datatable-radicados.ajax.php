@@ -43,7 +43,8 @@ class TablaRadicados
 		    $accion = ControladorParametros::ctrmostrarRegistros("accion", "id", $radicados[$i]["id_accion"]);
 		    $pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $radicados[$i]["id_pqr"]);
 		    $objeto = ControladorParametros::ctrmostrarRegistros("objeto", "id", $radicados[$i]["id_objeto"]);
-
+		    $remitente = ControladorRadicados::ctrValidarRemitente($radicados[$i]["id_remitente"]);
+		    
 		     $dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$fechaCorregida.'",
@@ -52,7 +53,7 @@ class TablaRadicados
 	    		"'.$pqr["nombre"].'",
 	    		"'.$objeto["nombre"].'",
 	    		"'.$radicados[$i]["asunto"].'",
-	    		"'.$radicados[$i]["id_remitente"].'",
+	    		"'.$remitente.'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$acciones.'"
 	    		],';

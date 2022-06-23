@@ -39,6 +39,12 @@ class AjaxRadicados
 		$respuesta = ControladorRadicados::ctrRegistrarRemitente("remitente", $valor);
 		echo json_encode($respuesta);
 	}
+
+	static public function verRemitente($valor)
+	{
+		$respuesta = ControladorParametros::ctrmostrarRegistros("remitente", "id", $valor);
+		echo json_encode($respuesta);
+	}
 }
 
 
@@ -61,3 +67,7 @@ if(isset($_POST["objt"]))
 if(isset($_POST["remitente"]))
 {	$generar = new AjaxRadicados();
 	$generar -> addRemitente($_POST["remitente"]);}
+
+if(isset($_POST["verRemitente"]))
+{	$verR = new AjaxRadicados();
+	$verR -> verRemitente($_POST["id"]);}
