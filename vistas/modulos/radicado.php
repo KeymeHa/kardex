@@ -108,7 +108,7 @@ for ($i=0; $i < count($porcion); $i++)
                 <div class="col-lg-2 col-md-2 col-xs-2">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Remitente</label>
-                    <div class="col-lg-3 col-md-4 col-xs-4"><button type="button" id="btnRemitente" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button></div>
+                    <div class="col-lg-4 col-md-4 col-xs-4"><button type="button" id="btnRemitente" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button></div>
                     <div class="col-lg-12"><input type="text" name="remitente" class="form-control pull-right" id="inputRemitente" title="Digite o seleccione un remitente" required>
                     <input type="hidden" name="remitenteID" id="inputRemitenteId" value="0" required></div>
                     

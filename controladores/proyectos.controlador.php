@@ -270,6 +270,17 @@ class ControladorProyectos
 				$res = count($lista);
 			}
 		}
+		else
+		{
+			if (is_string($consulta["id_areas"])) 
+			{
+				if (!empty($consulta["id_areas"])) 
+				{
+					$lista = json_decode($consulta["id_areas"], true);
+					$res = count($lista);
+				}
+			}
+		}
 
 		return $res;
 	}

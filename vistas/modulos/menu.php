@@ -18,33 +18,28 @@
 			</li>
 
 
+			
+
 			<?php
 
 			///usuarios
 
-			if ($_SESSION["perfil"] == 1 && $_SESSION["perfil"] == 2) 
+			if ($_SESSION["perfil"] == "1" ||  $_SESSION["perfil"] == "2") 
 			{
-				echo '
-			<li ';
-			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "usuarios"){ echo'class="active"'; } }
+				echo '<li ';
+				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'usuarios' ){ echo 'active';} }
 
-
-			if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
-					{
-						echo'><a href="usuarios">
-								<i class="fa fa-users"></i>
-								<span>Usuarios</span>
-							</a>';
-					}
-
-			echo '</li>';
+				echo '><a href="usuarios">
+						<i class="fa fa-users"></i>
+						<span>Usuarios</span>
+					</a></li>';
 
 			}
 
 
 			///inventario
 
-			if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 3 ) 
+			if ($_SESSION["perfil"] == "1" ||  $_SESSION["perfil"] == "2" || $_SESSION["perfil"] == "3" ) 
 			{
 				echo '
 

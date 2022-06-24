@@ -497,6 +497,21 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrObtenerAi($tabla)
+	{
+		$respuesta = ModeloParametros::mdlConsultarAi($tabla);
+
+		if ( isset($respuesta["AUTO_INCREMENT"]) ) 
+		{
+			return $respuesta["AUTO_INCREMENT"];		
+		}
+		else
+		{
+			return 0;
+		}
+	
+	}
+
 	static public function ctrEditarLimInsumos()
 	{
 
@@ -800,7 +815,11 @@ class ControladorParametros
 		$permiso = array(1 => "pUno",
 						2 => "pDos",
 						3 => "pTres",
-						4 => "pCuatro");
+						4 => "pCuatro",
+						5 => "pCinco",
+						6 => "pSeis",
+						7 => "pSiete",
+						8 => "pOcho");
 
         if ($jdata[$permiso[$perfil]] == $perfil) 
         {

@@ -33,6 +33,27 @@ class ModeloParametros
 		$stmt = null;
 	}
 
+	static function mdlConsultarAi($tabla)
+	{
+		$info = new Conexion();
+		$basededatos = $info ->getDatabase();
+
+		$stmt = Conexion::conectar()->prepare('SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES
+		WHERE TABLE_SCHEMA = "'.$basededatos.'" AND   TABLE_NAME   = "'.$tabla.'"');
+
+		if ($stmt->execute()) 
+		{
+			return $stmt -> fetch();
+		}
+		else
+		{
+			return $stmt->error();
+		}
+
+
+		;
+	}
+
 	static public function mdlmostrarRegistros($tabla, $item, $valor)
 	{
 		if($item != null)

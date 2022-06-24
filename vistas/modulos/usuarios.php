@@ -161,7 +161,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
               <div class="input-group">          
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                 <input type="text" class="form-control input-lg" name="nuevoNombre" placeholder="Ingresar nombre" required>
-                <input type="hidden" name="idUsr" value="<?php echo$_SESSION['id'];?>" required>
+                <input type="hidden" name="idUsr" value="<?php echo $_SESSION['id'];?>" required>
               </div>
             </div>
 
@@ -188,7 +188,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
             <div class="form-group">            
               <div class="input-group">          
                 <span class="input-group-addon"><i class="fa fa-users"></i></span> 
-                 <select class="form-control input-lg" name="nuevoPerfil">
+                 <select class="form-control input-lg" name="nuevoPerfil" required>
 
                   <?php
 
@@ -216,6 +216,13 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
             </div>
 
             <!-- ENTRADA PARA SUBIR FOTO -->
+
+             <div class="form-group">         
+              <div class="input-group">         
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+                <input type="email" class="form-control input-lg" name="nuevoCorreo" placeholder="Ingrese Correo Electronico" id="nuevoCorreo" required>
+              </div>
+            </div>
 
             <div class="form-group">           
               <div class="panel">SUBIR FOTO</div>
@@ -303,6 +310,14 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
               </div>
             </div>
 
+            <div class="form-group">         
+              <div class="input-group">         
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+                <input type="email" class="form-control input-lg" name="editarCorreo" placeholder="Ingrese Correo Electronico" id="editarCorreo" required>
+              </div>
+            </div>
+
+
             <!-- ENTRADA PARA SUBIR FOTO -->
 
             <div class="form-group">           
@@ -320,7 +335,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-          <button type="submit" class="btn btn-success">Guardar usuario</button>
+          <button type="submit" class="btn btn-success">Editar usuario</button>
         </div>
 
         <?php
