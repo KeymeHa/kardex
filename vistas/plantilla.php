@@ -71,8 +71,10 @@
 
           
            $gatillo = ControladorParametros::ctrValidarPermiso($_SESSION["perfil"], $js_data);
+           $gatilloDos = ControladorParametros::ctrValidarPermisoDos($_SESSION["perfil"], $_GET["ruta"]);
 
-          if ($gatillo == 1) 
+          if ($gatillo == 1 || $gatilloDos == 1) 
+          //if ($gatillo == 1) 
           {  
 
             if ( $js_data != null ) 

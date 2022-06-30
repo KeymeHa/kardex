@@ -818,8 +818,7 @@ class ControladorParametros
 						4 => "pCuatro",
 						5 => "pCinco",
 						6 => "pSeis",
-						7 => "pSiete",
-						8 => "pOcho");
+						7 => "pSiete");
 
         if ($jdata[$permiso[$perfil]] == $perfil) 
         {
@@ -830,6 +829,125 @@ class ControladorParametros
           $sw = 0;
         }
         
+		return $sw;
+	}
+
+	static public function ctrActualizaPermiso($id_usuario, $ruta, $sw)
+	{
+		$tabla = "permisos";
+		$permisos = ModeloParametros::mdlBuscarPermiso($tabla, "id_usuario", $id_usuario);
+
+		if (empty($permisos)) 
+		{
+			if ($sw == 1) 
+			{
+				$dJson = '[{"r":"'.$ruta.'"}]';
+				$datos = array( 'id_usuario' => $id_usuario, 
+								'permisos' => $dJson);
+				$respuesta = ModeloParametros::ctrNuevoPermiso($tabla, $datos);
+			}	
+		}
+		else
+		{
+
+			if ($sw == 1) 
+			{
+				if ($permisos["permisos"] != "") 
+				{
+					$dJson = '[{"r":"'.$ruta.'"}]';
+					$datos = array( 'id_usuario' => $id_usuario, 
+									'permisos' => $dJson);
+					$respuesta = ModeloParametros::ctrNuevoPermiso($tabla, $datos);
+				}
+				else
+				{
+					#validar para agregar
+					$permiso = json_decode($permisos["permisos"], true);
+
+					$dJson = '[';
+
+					foreach ($permiso as $key => $value) 
+					{
+						if ($value["r"] != $ruta) 
+						{
+							$dJson .= '{"r":"'.$value["r"].'"},';
+						}
+
+					}
+
+					$dJson .= '{"r":"'.$ruta.'"},';
+					$dJson = substr($dJson, 0 ,-1);
+					$dJson .= ']';
+
+					$datos = array( 'id_usuario' => $id_usuario, 
+									'permisos' => $dJson);
+					$respuesta = ModeloParametros::ctrNuevoPermiso($tabla, $datos);
+					#foreach
+					#añadir
+					#enviar
+				}
+			}
+			else
+			{
+				#validar para agregar
+					$permiso = json_decode($permisos["permisos"], true);
+
+					$dJson = '[';
+
+					if (count($permiso) > 1) 
+					{
+						foreach ($permiso as $key => $value) 
+						{
+							if ($value["r"] != $ruta) 
+							{
+								$dJson .= '{"r":"'.$value["r"].'"},';
+							}
+
+						}
+
+						$dJson = substr($dJson, 0 ,-1);
+						$dJson .= ']';
+					}
+					else
+					{
+						if ($permiso[0]["r"] == $ruta) 
+						{
+							$dJson = "";
+						}
+						else
+						{
+							$dJson = '[{"r":"'.$permiso[0]["r"].'"}]';
+						}
+						
+					}
+
+					$datos = array( 'id_usuario' => $id_usuario, 
+									'permisos' => $dJson);
+
+					$respuesta = ModeloParametros::ctrNuevoPermiso($tabla, $datos);
+			}
+
+			
+
+		}
+
+	}
+
+	public static function ctrValidarPermisoDos($id_usuario, $ruta)
+	{
+		$tabla = "permisos";
+		$permisos = ModeloParametros::mdlBuscarPermiso($tabla, "id_usuario", $id_usuario);
+		$sw = 0;
+
+		if (isset($permisos["permisos"])) 
+		{
+			$permiso = json_decode($permisos["permisos"], true);
+			if (in_array($ruta, $permiso)) 
+			{
+				return 1;
+			}
+		}
+		
 		return $sw;
 	}
 

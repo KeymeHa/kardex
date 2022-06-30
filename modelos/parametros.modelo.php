@@ -420,6 +420,49 @@ class ModeloParametros
 		$stmt->close();
 		$stmt = null;
 	}
+	static public function ctrNuevoPermiso($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_usuario, permisos) VALUES (:id_usuario, :permisos)");
+
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_STR); 
+		$stmt->bindParam(":permisos", $datos["permisos"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlBuscarPermiso($tabla, $item, $valor)
+	{
+		if($valor != null)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT permisos FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 
 	static public function mdlMostrarImpuestos($tabla)

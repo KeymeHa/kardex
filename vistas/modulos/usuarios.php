@@ -340,7 +340,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
 
         <?php
           $editarUsuario = new ControladorUsuarios();
-          $editarUsuario -> ctreditarUsuario();
+          $editarUsuario -> ctreditarUsuario($_SESSION["usuario"]);
         ?>
 
       </form>

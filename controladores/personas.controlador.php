@@ -233,12 +233,11 @@ class ControladorPersonas
 		{
 			$tabla = "personas";
 			$respuesta = ModeloPersonas::mdlBorrarPersona($tabla, $_GET["idPer"]);
-			$tabla = "usuarios";
-			$r2 = ControladorUsuarios::ctrasignacionArea($_GET["idPer"], 0);
+			//$r2 = ControladorUsuarios::ctrasignacionArea($_GET["idPer"], 0);
 
 			if($respuesta == "ok")
 			{
-				$tabla = "historial";
+				/*$tabla = "historial";
 
 				$datos = array( "accion" => 4,
 								"numTabla" => 7,
@@ -247,7 +246,7 @@ class ControladorPersonas
 								"id_usr" => $sessionId
 								 );
 
-				$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+				$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);*/
 
 				echo'<script>
 

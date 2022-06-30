@@ -106,10 +106,10 @@ CREATE TABLE IF NOT EXISTS `areas` (
 INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
 	(1, 'Sistemas', 'Encargados del área de Sistemas', 0, ''),
 	(2, 'Contratación', 'Personal de Contratación', 0, ''),
-	(3, 'Reasentamiento', '', 0, ''),
+	(3, 'Reasentamiento', 'Abogados', 0, ''),
 	(4, 'Jurídica', 'Personal de Juridíca', 0, ''),
 	(5, 'Mercados', 'Personal de Mercados', 0, ''),
-	(6, 'Area Tecnica', '', 0, '');
+	(6, 'Area Tecnica', 'Ingenieros y Arquitectos', 0, '');
 /*!40000 ALTER TABLE `areas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.articulo
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `articulo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.articulo: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
@@ -129,7 +129,8 @@ INSERT INTO `articulo` (`id`, `nombre`) VALUES
 	(5, 'Sobre+Caja'),
 	(6, 'Doc+Caja'),
 	(7, 'Sobre+Doc+Caja'),
-	(8, 'Otro');
+	(8, 'Otro'),
+	(9, 'Correo Electrónico');
 /*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.carpetasprov
@@ -188,9 +189,9 @@ CREATE TABLE IF NOT EXISTS `cortes` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `corte` (`corte`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.cortes: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.cortes: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `cortes` DISABLE KEYS */;
 INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
 	(1, '2206061753', '2022-06-06 15:54:22'),
@@ -201,7 +202,9 @@ INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
 	(6, '2206101758', '2022-06-10 08:58:39'),
 	(7, '2206101759', '2022-06-10 09:22:52'),
 	(8, '2206161760', '2022-06-16 16:51:25'),
-	(9, '2206221762', '2022-06-22 12:11:00');
+	(9, '2206221762', '2022-06-22 12:11:00'),
+	(10, '2206231763', '2022-06-23 15:59:10'),
+	(11, '2206231764', '2022-06-23 17:00:48');
 /*!40000 ALTER TABLE `cortes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -508,6 +511,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `pCuatro` int(1) NOT NULL DEFAULT 4 COMMENT 'permiso para user encargado',
   `pCinco` int(1) NOT NULL DEFAULT 5 COMMENT 'permiso para user vendedor',
   `pSeis` int(1) NOT NULL DEFAULT 0,
+  `pSiete` int(1) NOT NULL DEFAULT 0,
   `sw` int(1) NOT NULL DEFAULT 1 COMMENT 'Gatillo para mostrar o no una pagina',
   `ver` int(1) NOT NULL DEFAULT 1 COMMENT 'gatillo para consultar este registro',
   `descripcion` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -517,66 +521,66 @@ CREATE TABLE IF NOT EXISTS `js_data` (
 
 -- Volcando datos para la tabla kardex.js_data: ~58 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
-INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `sw`, `ver`, `descripcion`) VALUES
-	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 1, 1, 'Muestra las categorias de las que seran asociados '),
-	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 1, 1, 'Permite Ver los insumos pertenecientes a una categ'),
-	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 0, 1, 1, 'Mustras todos los insumos ingresados en el sistema'),
-	(4, 'ordendecompras', 'Orden de Compras', 4, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las ordenes de compra, contiene graficas.'),
-	(5, 'facturas', 'Facturas', 5, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las facturas ingresadas en el sistema.'),
-	(6, 'requisiciones', 'Requisiciones', 8, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las requisiciones aprobadas, pendientes, l'),
-	(7, 'nuevaFactura', 'Nueva Factura', 10, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite crear nueva factura, lista los insumos en '),
-	(8, 'editarFactura', 'Editar Factura', 10, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar una factura realizada en sistema.'),
-	(9, 'requisicion', 'Requisción', 11, 1, 2, 3, 0, 0, 0, 1, 1, 'Realiza la requisición de insumos para una área po'),
-	(10, 'requisicionImportada', 'Importar Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 0, 'Puede importar una requisicón por medio de una pla'),
-	(11, 'editarRq', 'Editar Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar requisiciones almacenadas en sistem'),
-	(12, 'actas', 'Actas', 14, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las actas de salida y entrada.'),
-	(13, 'areas', 'Areas', 15, 1, 2, 0, 0, 0, 0, 1, 1, 'Lista las areas pertenecientes a la organización'),
-	(14, 'personas', 'Personas', 16, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las personas encargadas para cada area, pa'),
-	(15, 'inicio', 'Dashboard', 17, 1, 2, 3, 4, 5, 0, 1, 0, 'Presenta los modulos del sistema.'),
-	(16, 'reportesRq', 'Reportes de Requisiciones', 17, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
-	(17, 'verArea', 'Ver Área', 18, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra las personas asignadas a esa área y presen'),
-	(18, 'proveedor', 'Proveedor', 19, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proveedores, para realizar tramites de o'),
-	(19, 'inversionInsumos', 'Inversión en Insumos', 23, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los los valores invertidos en cada insumo'),
-	(20, 'cotizaciones', 'Cotizaciones', 25, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
-	(21, 'verInsumo', 'Ver Insumo', 26, 1, 2, 3, 0, 0, 0, 1, 1, 'Muestra un resumen perteneciente a dicho insumo, l'),
-	(22, 'proyectos', 'Proyectos', 27, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proyectos de la organización, para así c'),
-	(23, 'usuarios', 'Usuarios', 0, 1, 2, 0, 0, 0, 0, 1, 1, 'Lista los usuarios del sistema y permite realizar '),
-	(24, 'plantilla', 'Plantilla', 0, 1, 2, 3, 0, 0, 0, 1, 0, NULL),
-	(25, 'nuevaActa', 'Nueva Acta', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite crear una nueva acta de entrada, salida o prestamo.'),
-	(28, 'parametros', 'Parametros', 0, 1, 2, 0, 0, 0, 0, 1, 1, NULL),
-	(29, 'nuevaOrdendeCompras', 'Nuevar Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite generar ordenes de compra basado en los requerimientos del sistema.'),
-	(30, 'proveedores', 'Proveedores', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista los proveedores ingresados en el sistema, tambien permite administrarlos.'),
-	(31, 'editarOrden', 'Editar Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar las ordenes de compras alamacenadas en sistemas.'),
-	(32, 'editarActa', 'Editar Acta', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite editar las actas alamancenadas en sistema.'),
-	(33, 'verOrden', 'Ver Orden', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Visualiza una orden de compra, discriminando los insumos registrados.'),
-	(34, 'inventario', 'Inventario', 0, 1, 2, 3, 0, 5, 0, 1, 1, 'Pagina donde visualiza los modulos pertenecientes a ella.'),
-	(35, 'generaciones', 'Generaciones', 0, 1, 2, 3, 4, 0, 0, 1, 1, 'Pagina donde visualiza los modulos Factura, Ordenes y cotizaciones.'),
-	(36, 'salir', 'LogOut', 0, 1, 2, 3, 4, 5, 0, 1, 0, NULL),
-	(37, 'perfil', 'Mi Perfil', 0, 1, 2, 3, 4, 5, 0, 1, 1, 'Pagina del perfil del usuario logeado.'),
-	(38, 'genRequisicion', 'Generar Requisición', 29, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
-	(39, 'hisRequisicion', 'Historial de Requisición', 30, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
-	(40, 'verProyecto', 'Proyecto', 28, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
-	(41, 'verRequisicion', 'Ver Requisición', 0, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
-	(42, 'borrador', 'Borrador', 0, 1, 2, 3, 0, 0, 0, 1, 0, NULL),
-	(43, 'verFactura', 'Ver Factura', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Permite visualizar una factura seleccionada, discriminando valores e insumos agregados al stock.'),
-	(44, 'verRequisicionS', 'ver Requisición', 11, 1, 2, 3, 0, 0, 0, 1, 1, NULL),
-	(45, 'miRequisicion', 'Requisición', 0, 0, 0, 0, 4, 0, 0, 1, 1, NULL),
-	(47, 'historialUsuarios', 'Historial de Usuarios', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de usuarios'),
-	(48, 'historialInsumos', 'Historial Insumos', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de insumos'),
-	(49, 'historialCategorias', 'Historial Categorias', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de categorias'),
-	(50, 'historialAreas', 'Historial Areas', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de áreas'),
-	(51, 'historialPersonas', 'Historial Personas', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de personas'),
-	(52, 'historialOrdenes', 'Historial Ordenes', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Ordenes de compra'),
-	(53, 'historialRq', 'Historial Requisiciones', 0, 1, 2, 3, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Requisiciones'),
-	(54, 'Creditos', 'Creditos', 0, 1, 2, 3, 4, 5, 0, 1, 0, NULL),
-	(55, 'ventas', 'Ventas', 31, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista las ventas generadas.'),
-	(56, 'clientes', 'Clientes', 32, 1, 2, 0, 0, 5, 0, 1, 1, 'Lista los clientes ingresados en el sistema, con esto pueden generarse nuevas ventas.'),
-	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 0, 1, 1, 'Permite generar una nueva venta a un cliente.'),
-	(58, 'cortes', 'Lista de Cortes', 36, 1, 2, 0, 0, 0, 6, 1, 1, 'Lista los Cortes generados'),
-	(59, 'radicado', 'Radicados', 35, 1, 2, 0, 0, 0, 6, 1, 1, 'Presenta los radicados almacenados en sistema'),
-	(60, 'verCorte', 'Visualizar Corte', 35, 1, 2, 0, 0, 0, 6, 1, 1, NULL),
-	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL),
-	(62, 'correspondencia', 'Correspondencia', 0, 1, 2, 0, 0, 0, 6, 1, 1, NULL);
+INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `sw`, `ver`, `descripcion`) VALUES
+	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 0, 1, 1, 'Muestra las categorias de las que seran asociados '),
+	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 0, 1, 1, 'Permite Ver los insumos pertenecientes a una categ'),
+	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 0, 0, 1, 1, 'Mustras todos los insumos ingresados en el sistema'),
+	(4, 'ordendecompras', 'Orden de Compras', 4, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las ordenes de compra, contiene graficas.'),
+	(5, 'facturas', 'Facturas', 5, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las facturas ingresadas en el sistema.'),
+	(6, 'requisiciones', 'Requisiciones', 8, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Muestra las requisiciones aprobadas, pendientes, l'),
+	(7, 'nuevaFactura', 'Nueva Factura', 10, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite crear nueva factura, lista los insumos en '),
+	(8, 'editarFactura', 'Editar Factura', 10, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite editar una factura realizada en sistema.'),
+	(9, 'requisicion', 'Requisción', 11, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Realiza la requisición de insumos para una área po'),
+	(10, 'requisicionImportada', 'Importar Requisición', 11, 1, 2, 3, 0, 0, 0, 0, 1, 0, 'Puede importar una requisicón por medio de una pla'),
+	(11, 'editarRq', 'Editar Requisición', 11, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite editar requisiciones almacenadas en sistem'),
+	(12, 'actas', 'Actas', 14, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las actas de salida y entrada.'),
+	(13, 'areas', 'Areas', 15, 1, 2, 0, 0, 0, 0, 0, 1, 1, 'Lista las areas pertenecientes a la organización'),
+	(14, 'personas', 'Personas', 16, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Muestra las personas encargadas para cada area, pa'),
+	(15, 'inicio', 'Dashboard', 17, 1, 2, 3, 4, 5, 6, 0, 1, 0, 'Presenta los modulos del sistema.'),
+	(16, 'reportesRq', 'Reportes de Requisiciones', 17, 1, 2, 3, 0, 0, 0, 0, 1, 1, NULL),
+	(17, 'verArea', 'Ver Área', 18, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Muestra las personas asignadas a esa área y presen'),
+	(18, 'proveedor', 'Proveedor', 19, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista los proveedores, para realizar tramites de o'),
+	(19, 'inversionInsumos', 'Inversión en Insumos', 23, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista los los valores invertidos en cada insumo'),
+	(20, 'cotizaciones', 'Cotizaciones', 25, 1, 2, 3, 0, 0, 0, 0, 1, 1, NULL),
+	(21, 'verInsumo', 'Ver Insumo', 26, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Muestra un resumen perteneciente a dicho insumo, l'),
+	(22, 'proyectos', 'Proyectos', 27, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista los proyectos de la organización, para así c'),
+	(23, 'usuarios', 'Usuarios', 0, 1, 2, 0, 0, 0, 0, 0, 1, 1, 'Lista los usuarios del sistema y permite realizar '),
+	(24, 'plantilla', 'Plantilla', 0, 1, 2, 3, 0, 0, 0, 0, 1, 0, NULL),
+	(25, 'nuevaActa', 'Nueva Acta', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite crear una nueva acta de entrada, salida o prestamo.'),
+	(28, 'parametros', 'Parametros', 0, 1, 2, 0, 0, 0, 0, 0, 1, 1, NULL),
+	(29, 'nuevaOrdendeCompras', 'Nuevar Orden', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite generar ordenes de compra basado en los requerimientos del sistema.'),
+	(30, 'proveedores', 'Proveedores', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista los proveedores ingresados en el sistema, tambien permite administrarlos.'),
+	(31, 'editarOrden', 'Editar Orden', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite editar las ordenes de compras alamacenadas en sistemas.'),
+	(32, 'editarActa', 'Editar Acta', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite editar las actas alamancenadas en sistema.'),
+	(33, 'verOrden', 'Ver Orden', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Visualiza una orden de compra, discriminando los insumos registrados.'),
+	(34, 'inventario', 'Inventario', 0, 1, 2, 3, 0, 5, 0, 0, 1, 1, 'Pagina donde visualiza los modulos pertenecientes a ella.'),
+	(35, 'generaciones', 'Generaciones', 0, 1, 2, 3, 4, 0, 0, 0, 1, 1, 'Pagina donde visualiza los modulos Factura, Ordenes y cotizaciones.'),
+	(36, 'salir', 'LogOut', 0, 1, 2, 3, 4, 5, 6, 0, 1, 0, NULL),
+	(37, 'perfil', 'Mi Perfil', 0, 1, 2, 3, 4, 5, 0, 0, 1, 1, 'Pagina del perfil del usuario logeado.'),
+	(38, 'genRequisicion', 'Generar Requisición', 29, 0, 0, 0, 4, 0, 0, 0, 1, 1, NULL),
+	(39, 'hisRequisicion', 'Historial de Requisición', 30, 0, 0, 0, 4, 0, 0, 0, 1, 1, NULL),
+	(40, 'verProyecto', 'Proyecto', 28, 1, 2, 3, 0, 0, 0, 0, 1, 1, NULL),
+	(41, 'verRequisicion', 'Ver Requisición', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, NULL),
+	(42, 'borrador', 'Borrador', 0, 1, 2, 3, 0, 0, 0, 0, 1, 0, NULL),
+	(43, 'verFactura', 'Ver Factura', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Permite visualizar una factura seleccionada, discriminando valores e insumos agregados al stock.'),
+	(44, 'verRequisicionS', 'ver Requisición', 11, 1, 2, 3, 0, 0, 0, 0, 1, 1, NULL),
+	(45, 'miRequisicion', 'Requisición', 0, 0, 0, 0, 4, 0, 0, 0, 1, 1, NULL),
+	(47, 'historialUsuarios', 'Historial de Usuarios', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de usuarios'),
+	(48, 'historialInsumos', 'Historial Insumos', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de insumos'),
+	(49, 'historialCategorias', 'Historial Categorias', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de categorias'),
+	(50, 'historialAreas', 'Historial Areas', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de áreas'),
+	(51, 'historialPersonas', 'Historial Personas', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de personas'),
+	(52, 'historialOrdenes', 'Historial Ordenes', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Ordenes de compra'),
+	(53, 'historialRq', 'Historial Requisiciones', 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 'Lista las acciones realizadas del modulo de Requisiciones'),
+	(54, 'Creditos', 'Creditos', 0, 1, 2, 3, 4, 5, 0, 0, 1, 0, NULL),
+	(55, 'ventas', 'Ventas', 31, 1, 2, 0, 0, 5, 0, 0, 1, 1, 'Lista las ventas generadas.'),
+	(56, 'clientes', 'Clientes', 32, 1, 2, 0, 0, 5, 0, 0, 1, 1, 'Lista los clientes ingresados en el sistema, con esto pueden generarse nuevas ventas.'),
+	(57, 'nuevaVenta', 'Nueva Venta', 33, 1, 2, 0, 0, 5, 0, 0, 1, 1, 'Permite generar una nueva venta a un cliente.'),
+	(58, 'cortes', 'Lista de Cortes', 36, 1, 2, 0, 0, 0, 6, 0, 1, 1, 'Lista los Cortes generados'),
+	(59, 'radicado', 'Radicados', 35, 1, 2, 0, 0, 0, 6, 0, 1, 1, 'Presenta los radicados almacenados en sistema'),
+	(60, 'verCorte', 'Visualizar Corte', 35, 1, 2, 0, 0, 0, 6, 0, 1, 1, NULL),
+	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 0, 1, 1, NULL),
+	(62, 'correspondencia', 'Correspondencia', 0, 1, 2, 0, 0, 0, 6, 0, 1, 1, NULL);
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.js_files
@@ -714,6 +718,20 @@ CREATE TABLE IF NOT EXISTS `ordencompra` (
 /*!40000 ALTER TABLE `ordencompra` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ordencompra` ENABLE KEYS */;
 
+-- Volcando estructura para tabla kardex.paginicio
+CREATE TABLE IF NOT EXISTS `paginicio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_perfil` int(11) NOT NULL,
+  `contenido` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK__perfiles` (`id_perfil`),
+  CONSTRAINT `FK__perfiles` FOREIGN KEY (`id_perfil`) REFERENCES `perfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.paginicio: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `paginicio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paginicio` ENABLE KEYS */;
+
 -- Volcando estructura para tabla kardex.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -753,17 +771,17 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`) VALUES
-	(1, 10, 20, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3267, 1763, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
+	(1, 10, 20, 30, 1, 1, 1, 1, 2022, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3269, 1765, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
 CREATE TABLE IF NOT EXISTS `perfiles` (
   `id` int(1) NOT NULL,
-  `perfil` varchar(20) NOT NULL,
+  `perfil` varchar(25) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.perfiles: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.perfiles: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `perfiles` DISABLE KEYS */;
 INSERT INTO `perfiles` (`id`, `perfil`) VALUES
 	(1, 'root'),
@@ -771,8 +789,23 @@ INSERT INTO `perfiles` (`id`, `perfil`) VALUES
 	(3, 'Compras'),
 	(4, 'Encargado'),
 	(5, 'Vendedor'),
-	(6, 'Recepción');
+	(6, 'Recepción'),
+	(7, 'Jurídica');
 /*!40000 ALTER TABLE `perfiles` ENABLE KEYS */;
+
+-- Volcando estructura para tabla kardex.permisos
+CREATE TABLE IF NOT EXISTS `permisos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `permisos` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK__usuarios` (`id_usuario`),
+  CONSTRAINT `FK__usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.permisos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `permisos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permisos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.personas
 CREATE TABLE IF NOT EXISTS `personas` (
@@ -784,7 +817,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
   KEY `FK_personas_areas` (`id_area`),
   CONSTRAINT `FK_personas_areas` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_personas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.personas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
@@ -840,10 +873,15 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
   PRIMARY KEY (`id`),
   KEY `FK_proyectoarea_proyectos` (`id_proyecto`),
   CONSTRAINT `FK_proyectoarea_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.proyectoarea: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.proyectoarea: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectoarea` DISABLE KEYS */;
+INSERT INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
+	(1, '[{"id":"5"}]', 5),
+	(2, '[{"id":"5"}]', 5),
+	(3, '[{"id":"5"},{"id":"2"},{"id":"3"}]', 6),
+	(4, NULL, 7);
 /*!40000 ALTER TABLE `proyectoarea` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.proyectos
@@ -855,10 +893,14 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
   `descripcion` text NOT NULL,
   `elim` int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.proyectos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.proyectos: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
+INSERT INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripcion`, `elim`) VALUES
+	(5, 'Administrativo', '2022-06-23', '2022-06-30', 'parte administrativa', 0),
+	(6, 'HOSPITALES', '2022-06-24', '2022-12-31', 'Nuevos Hospitales para el distrito de barranquilla', 0),
+	(7, 'Arroyo Hospital', '2022-06-24', '2022-09-20', 'Canalización de arroyos en el hospital barranquilla', 0);
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.radicados
@@ -882,6 +924,7 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   `fecha_vencimiento` date NOT NULL,
   `sw` int(1) NOT NULL DEFAULT 0 COMMENT 'Muestra un boton imrpimir luego de haberse radicado radicado',
   `soporte` varchar(250) DEFAULT NULL,
+  `correo` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `radicado` (`radicado`),
   KEY `FK_radicados_usuarios` (`id_usr`),
@@ -896,32 +939,34 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   CONSTRAINT `FK_radicados_objeto` FOREIGN KEY (`id_objeto`) REFERENCES `objeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.radicados: ~20 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.radicados: ~19 rows (aproximadamente)
 /*!40000 ALTER TABLE `radicados` DISABLE KEYS */;
-INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`) VALUES
-	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, 'AMPARADO', 'SUSANA', 4, '0', 2, 1, '0', 5, '2022-06-14', 0, ''),
-	(2, 1, '2022-06-06 14:26:59', '2022060603247', 2, 6, 15, 1, 'PELEA POR LA LEA', 'KEVIN BOLAÑO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(5, 1, '2022-06-06 14:44:12', '2022060603248', 2, 2, 1, 1, 'LIQUIDACION PERSONAL', 'JOHANA DE LA ROSA', 3, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(6, 1, '2022-06-06 14:46:55', '2022060603249', 1, 7, 6, 1, 'INFORME DE GESTION', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(7, 1, '2022-06-06 14:48:39', '2022060603250', 6, 3, 26, 1, 'FACTURA MUNDO AVENTURA', 'ITJAK', 1, '', 2, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(8, 1, '2022-06-06 14:56:20', '2022060603251', 10, 8, 29, 1, 'que sera', 'BELKYS', 6, '', 8, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(9, 2, '2022-06-06 16:40:07', '2022060603252', 1, 1, 1, 1, 'PETICION DE MATRIMONIO', 'KEILA JIMENEZ', 4, '', 1, 1, 'KBA', 5, '2022-06-14', 0, ''),
-	(10, 3, '2022-06-08 09:33:00', '2022060803253', 9, 7, 28, 1, 'PUBLICACION DE SITIO', 'KENYA ALJHEICK', 5, '', 7, 1, 'KBA', 5, '2022-06-16', 0, ''),
-	(11, 3, '2022-06-08 15:54:51', '2022060803254', 1, 7, 6, 1, 'DEMANDA PARA EL PUEBLO', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-16', 0, ''),
-	(12, 3, '2022-06-09 12:05:49', '2022060903255', 1, 8, 28, 1, 'BACTERIA TERAPIA', 'JOJO', 3, '', 7, 1, 'KBA', 5, '2022-06-17', 0, ''),
-	(13, 7, '2022-06-10 08:59:36', '2022061003256', 1, 6, 27, 1, 'FACTURA CLARO', 'COMCEL', 2, '', 1, 1, 'KBA', 5, '2022-06-18', 0, ''),
-	(14, 8, '2022-06-10 15:45:03', '2022061003257', 4, 2, 3, 1, 'QUEJA SOBRE LA AUSENCIA DE DIVERSIDAD', 'WALIER', 3, '', 1, 1, 'KBA', 5, '2022-06-18', 0, ''),
-	(15, 8, '2022-06-14 14:20:59', '20220603258', 2, 1, 6, 1, 'demanda por no contratar rapido a belkys', 'kevin bolaño', 2, '', 1, 1, 'KBA', 5, '2022-06-22', 0, ''),
-	(16, 8, '2022-06-16 16:46:30', '20220603259', 1, 7, 6, 1, 'ya no demandaremos por no contratar a', 'kevin bolaño', 1, '', 2, 1, 'KBA', 5, '2022-06-24', 0, ''),
-	(17, 9, '2022-06-22 08:44:32', '20220603260', 3, 1, 4, 1, 'PATRIARCADO OPRESOR', 'Susana Martinez', 2, '', 1, 1, 'KBA', 7, '2022-07-02', 0, ''),
-	(18, 9, '2022-06-22 09:35:26', '20220603261', 1, 7, 6, 1, 'POLVO EN LAS MESAS', 'Kevin Londoño', 1, '', 2, 4, 'KBA', 5, '2022-06-30', 0, ''),
-	(19, 9, '2022-06-22 09:37:27', '20220603262', 8, 1, 6, 1, 'LAS QUE TIRAN MOUSE', 'KEVIN SALAZAR', 4, '', 2, 6, 'KBA', 5, '2022-06-30', 0, 'vistas/radicados/2022/06/22/1762.pdf'),
-	(20, 9, '2022-06-22 11:59:14', '20220603263', 5, 6, 2, 1, 'seguridad salud', 'AURA LOPEZ', 5, '', 2, 1, 'KBA', 5, '2022-06-30', 0, ''),
-	(21, 9, '2022-06-22 11:59:44', '20220603264', 6, 4, 15, 1, 'añoñi', '5', 6, '', 4, 1, 'KBA', 5, '2022-06-30', 0, ''),
-	(23, 9, '2022-06-22 12:08:31', '20220603265', 7, 1, 7, 1, 'CASI CASI', '9', 5, 'TODO BIEN', 6, 1, 'KBA', 12, '2022-07-09', 0, ''),
-	(24, 0, '2022-06-23 07:54:28', '20220603266', 3, 1, 7, 1, 'PRESTAMO DE TIJERAS PARA EL MATRIMONIO', '8', 4, '', 3, 1, 'KBA', 12, '2022-07-12', 0, '');
+INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`, `correo`) VALUES
+	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, 'AMPARADO', 'SUSANA', 4, '0', 2, 1, '0', 5, '2022-06-14', 0, '', NULL),
+	(2, 1, '2022-06-06 14:26:59', '2022060603247', 2, 6, 15, 1, 'PELEA POR LA LEA', 'KEVIN BOLAÑO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(5, 1, '2022-06-06 14:44:12', '2022060603248', 2, 2, 1, 1, 'LIQUIDACION PERSONAL', 'JOHANA DE LA ROSA', 3, '', 2, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(6, 1, '2022-06-06 14:46:55', '2022060603249', 1, 7, 6, 1, 'INFORME DE GESTION', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(7, 1, '2022-06-06 14:48:39', '2022060603250', 6, 3, 26, 1, 'FACTURA MUNDO AVENTURA', 'ITJAK', 1, '', 2, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(8, 1, '2022-06-06 14:56:20', '2022060603251', 10, 8, 29, 1, 'que sera', 'BELKYS', 6, '', 8, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(9, 2, '2022-06-06 16:40:07', '2022060603252', 1, 1, 1, 1, 'PETICION DE MATRIMONIO', 'KEILA JIMENEZ', 4, '', 1, 1, 'KBA', 5, '2022-06-14', 0, '', NULL),
+	(10, 3, '2022-06-08 09:33:00', '2022060803253', 9, 7, 28, 1, 'PUBLICACION DE SITIO', 'KENYA ALJHEICK', 5, '', 7, 1, 'KBA', 5, '2022-06-16', 0, '', NULL),
+	(11, 3, '2022-06-08 15:54:51', '2022060803254', 1, 7, 6, 1, 'DEMANDA PARA EL PUEBLO', 'FERNANDO BARCELO', 4, '', 2, 1, 'KBA', 5, '2022-06-16', 0, '', NULL),
+	(12, 3, '2022-06-09 12:05:49', '2022060903255', 1, 8, 28, 1, 'BACTERIA TERAPIA', 'JOJO', 3, '', 7, 1, 'KBA', 5, '2022-06-17', 0, '', NULL),
+	(13, 7, '2022-06-10 08:59:36', '2022061003256', 1, 6, 27, 1, 'FACTURA CLARO', 'COMCEL', 2, '', 1, 1, 'KBA', 5, '2022-06-18', 0, '', NULL),
+	(14, 8, '2022-06-10 15:45:03', '2022061003257', 4, 2, 3, 1, 'QUEJA SOBRE LA AUSENCIA DE DIVERSIDAD', 'WALIER', 3, '', 1, 1, 'KBA', 5, '2022-06-18', 0, '', NULL),
+	(15, 8, '2022-06-14 14:20:59', '20220603258', 2, 1, 6, 1, 'demanda por no contratar rapido a belkys', 'kevin bolaño', 2, '', 1, 1, 'KBA', 5, '2022-06-22', 0, '', NULL),
+	(16, 8, '2022-06-16 16:46:30', '20220603259', 1, 7, 6, 1, 'ya no demandaremos por no contratar a', 'kevin bolaño', 1, '', 2, 1, 'KBA', 5, '2022-06-24', 0, '', NULL),
+	(17, 9, '2022-06-22 08:44:32', '20220603260', 3, 1, 4, 1, 'PATRIARCADO OPRESOR', 'Susana Martinez', 2, '', 1, 1, 'KBA', 7, '2022-07-02', 0, '', NULL),
+	(18, 9, '2022-06-22 09:35:26', '20220603261', 1, 7, 6, 1, 'POLVO EN LAS MESAS', 'Kevin Londoño', 1, '', 2, 4, 'KBA', 5, '2022-06-30', 0, '', NULL),
+	(19, 9, '2022-06-22 09:37:27', '20220603262', 8, 1, 6, 1, 'LAS QUE TIRAN MOUSE', 'KEVIN SALAZAR', 4, '', 2, 6, 'KBA', 5, '2022-06-30', 0, 'vistas/radicados/2022/06/22/1762.pdf', NULL),
+	(20, 9, '2022-06-22 11:59:14', '20220603263', 5, 6, 2, 1, 'seguridad salud', 'AURA LOPEZ', 5, '', 2, 1, 'KBA', 5, '2022-06-30', 0, '', NULL),
+	(21, 9, '2022-06-22 11:59:44', '20220603264', 6, 4, 15, 1, 'añoñi', '5', 6, '', 4, 1, 'KBA', 5, '2022-06-30', 0, '', NULL),
+	(23, 9, '2022-06-22 12:08:31', '20220603265', 7, 1, 7, 1, 'CASI CASI', '9', 5, 'TODO BIEN', 6, 1, 'KBA', 12, '2022-07-09', 0, '', NULL),
+	(24, 10, '2022-06-23 07:54:28', '20220603266', 3, 1, 7, 1, 'PRESTAMO DE TIJERAS PARA EL MATRIMONIO', '8', 4, '', 3, 1, 'KBA', 12, '2022-07-12', 0, '', NULL),
+	(25, 11, '2022-06-23 16:57:46', '20220603267', 4, 4, 8, 9, 'ALGUNA COSA', '37', 2, '', 4, 1, 'ES', 12, '2022-07-13', 0, '', NULL),
+	(26, 0, '2022-06-25 20:07:40', '20220603268', 1, 3, 5, 1, 'PICADA PARA LA BOGDI', '6', 3, '', 4, 1, 'KBA', 5, '2022-07-05', 0, '', NULL);
 /*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.remitente
@@ -932,7 +977,7 @@ CREATE TABLE IF NOT EXISTS `remitente` (
   UNIQUE KEY `nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.remitente: ~50 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.remitente: ~49 rows (aproximadamente)
 /*!40000 ALTER TABLE `remitente` DISABLE KEYS */;
 INSERT INTO `remitente` (`id`, `nombre`) VALUES
 	(1, 'A CONSTRUIR'),
@@ -1043,6 +1088,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `password` text COLLATE utf8_spanish_ci NOT NULL,
   `perfil` int(1) NOT NULL DEFAULT 4,
   `foto` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `correo` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
   `estado` int(11) DEFAULT 1,
   `ultimo_login` datetime NOT NULL,
   `fecha` timestamp NULL DEFAULT current_timestamp(),
@@ -1053,14 +1099,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_usuarios_perfiles` (`perfil`),
   CONSTRAINT `FK_usuarios_perfiles` FOREIGN KEY (`perfil`) REFERENCES `perfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.usuarios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 1, '2022-06-23 07:54:24', '2021-02-11 05:06:49', '4448k9mn9emcbr7ni3fvs5smuq', 0, 0, 0),
-	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 2, NULL, 1, '2021-08-18 14:18:38', '2021-08-19 06:12:33', '', 0, 0, 0),
-	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, NULL, 1, '2022-06-07 14:45:25', '2021-08-19 06:12:39', 'k8hnc4v664jqe1fplprlo4as7g', 0, 0, 0);
+INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, '', 1, '2022-06-29 15:35:36', '2021-02-11 05:06:49', 'l7ajcp0fh34lk4286l3gpbjl99', 0, 0, 0),
+	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-23 15:35:33', '2021-08-19 06:12:33', '97pabqieof66locspl0m949r0k', 0, 0, 0),
+	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, NULL, '', 1, '2022-06-07 14:45:25', '2021-08-19 06:12:39', 'k8hnc4v664jqe1fplprlo4as7g', 0, 0, 0),
+	(9, 'Edna Suarez R', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 6, NULL, '', 1, '2022-06-23 16:57:40', '2022-06-23 16:03:37', 'uqbmupg2gossus2pngtgrcbiva', 0, 0, 0),
+	(10, 'Peter Zahn C', 'peterz', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-24 08:01:42', '2022-06-23 17:06:28', 'fd94agrc2l1isi90r49kcjo6k6', 0, 0, 1),
+	(11, 'Fernando Barcelo Bercelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 6, NULL, '', 1, '0000-00-00 00:00:00', '2022-06-24 08:07:00', NULL, 0, 0, 0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.valores

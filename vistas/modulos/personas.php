@@ -182,6 +182,6 @@
 
 include "modalEditarPersona.php";
 
-$borrarPersona = new ControladorPersonas();
-$borrarPersona -> ctrBorrarPersona($_SESSION["id"]);
+  $borrarPersona = new ControladorPersonas();
+  $borrarPersona -> ctrBorrarPersona($_SESSION["id"]);
 ?>

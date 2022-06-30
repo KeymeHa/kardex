@@ -401,7 +401,7 @@ class ControladorUsuarios
 	}
 
 
-	static public function ctreditarUsuario()
+	static public function ctreditarUsuario($usr)
 	{
 		if(isset($_POST["editarUsuario"]))
 		{
@@ -429,7 +429,25 @@ class ControladorUsuarios
 								 );
 				try {
 
-					$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+					if ($_GET["ruta"] != "usuarios") 
+					{
+						if($usr == $_POST["editarUsuario"])
+						{
+							$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+						}
+						else
+						{
+							$respuesta = "error";
+						}
+					}
+					else
+					{
+						$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+					}
+
+					
+
+					
 					
 				} catch (Exception $e) {
 
@@ -443,7 +461,7 @@ class ControladorUsuarios
 						  }).then(function(result) {
 									if (result.value) {
 
-									window.location = "usuarios";
+									window.location = "'.$_GET["ruta"].'";
 
 									}
 								})
@@ -466,7 +484,7 @@ class ControladorUsuarios
 						  }).then(function(result) {
 									if (result.value) {
 
-									window.location = "usuarios";
+									window.location = "'.$_GET["ruta"].'";
 
 									}
 								})
@@ -486,7 +504,7 @@ class ControladorUsuarios
 						  }).then(function(result) {
 									if (result.value) {
 
-									window.location = "usuarios";
+									window.location = "'.$_GET["ruta"].'";
 
 									}
 								})
