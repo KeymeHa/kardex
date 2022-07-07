@@ -188,7 +188,7 @@ class ModeloParametros
 
 	static public function mdlJs_Files($tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE habilitado = 1");
 		$stmt -> execute();
 
 		return $stmt -> fetchAll();

@@ -171,7 +171,7 @@ class ControladorParametros
 
 	static public function ctrJs_Files()
 	{
-		$tabla = "js_files";
+		$tabla = "js_data";
 		$respuesta = ModeloParametros::mdlJs_Files($tabla);
 		return $respuesta;
 	}

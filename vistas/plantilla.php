@@ -118,33 +118,18 @@
       
       echo '</div>';    
 
-      $js_files = ControladorParametros::ctrJs_Files();
+      $js_files = ControladorParametros::ctrJs_Files();#js que aplican en todo el sistema
 
       foreach ($js_files as $key => $value) 
       {
+        echo '<script type="text/javascript" src="vistas/js/'.$value["page"].'.js"></script>';
+      }//foreach
 
-        //Si es tiene all hacer echo sino, if esta definido GEt ruta
-        
-        if ($value["habilitado"] == "all") 
-        {
-         echo '<script type="text/javascript" src="vistas/js/'.$value["nombre"].'.js"></script>';
-        }
-        else
-        {
-          if ( isset($_GET["ruta"]) ) 
-          {
-            if ($value["habilitado"] == $_GET["ruta"]) 
-            {
-              echo '<script type="text/javascript" src="vistas/js/'.$value["nombre"].'.js"></script>';
-            }
-          }
-          else
-          {
-            echo '<script> window.location="inicio"; </script>';
-          }
-        }
-        
-      }//foreach js_files
+      if ($js_data["file"] == 1) 
+      {
+        echo '<script type="text/javascript" src="vistas/js/'.$js_data["page"].'.js"></script>';
+      }
+
     }
     else
     {
