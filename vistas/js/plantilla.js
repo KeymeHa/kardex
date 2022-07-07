@@ -602,6 +602,25 @@ function paginaCargada(pagina){
 			tablaAjax = 'remitentes';
 			
 		}
+		else if(pagina == 38)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idusr = urlParams.get('idusr');
+			var perfil = urlParams.get('p');
+
+			if(idusr == null)
+			{
+			  variable = "?idusr=null";
+			} else 
+			{
+			  variable = "?idusr="+idusr+"&p="+perfil;
+			}
+
+			tablaElegida =  $('.tablaPersonas');
+			tablaAjax = 'asignaciones';
+			
+		}
 		
 
 		if (pagina != 26 && pagina != 8) {
