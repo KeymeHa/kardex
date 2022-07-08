@@ -6,6 +6,14 @@ class ControladorRadicados
 	{
 		$tabla = "radicados";
 		$respuesta = ModeloRadicados::mdlMostrarRadicados($tabla, $item, $valor);
+
+		if (isset($respuesta["id_remitente"])) 
+		{
+			$r = new ControladorRadicados;
+			$remitente = $r -> ctrValidarRemitente($respuesta["id_remitente"]);
+			$respuesta["id_remitente"] = $remitente;
+		}
+
 		return $respuesta;
 	}
 
@@ -210,6 +218,10 @@ class ControladorRadicados
 				{
 					$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitente"]);
 				}
+
+				$correo = ControladorParametros::ctrValidarCaracteres($_POST["correoE"]);
+				$direccion = ControladorParametros::ctrValidarCaracteres($_POST["direccion"]);
+
 				
 				$datos = array( 'radicado' => $_POST["codigoInterno"],
 								'id_usr' => $_POST["idUsuario"],
@@ -226,7 +238,9 @@ class ControladorRadicados
 								'dias' => $objeto["dias"],
 								'fecha_vencimiento' => $objeto["fecha_vencimiento"],
 								'soporte' => $directorio,
-								'observaciones' => $observacion);
+								'observaciones' => $observacion,
+								'correo' => $correo,
+								'direccion' => $direccion);
 
 
 				$respuesta = ModeloRadicados::mdlRadicar($tabla, $datos);
@@ -357,9 +371,18 @@ class ControladorRadicados
 			$asunto = ControladorParametros::ctrValidarCaracteres($_POST["asuntoEdit"]);
 			$remitente = ControladorParametros::ctrValidarCaracteres($_POST["remitEdit"]);
 			$recibido = ControladorParametros::ctrValidarCaracteres($_POST["recEdit"]);
-
+			$correo = ControladorParametros::ctrValidarCaracteres($_POST["correoEe"]);
+			$direccion = ControladorParametros::ctrValidarCaracteres($_POST["direccionE"]);
 
 			$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaEdit"], $_POST["objetoEdit"]);
+
+
+			$remit = ModeloParametros::mdlmostrarRegistros("remitente", "nombre", $remitente);
+
+			if (isset($remit["id"])) 
+			{
+				$remitente = $remit["id"];
+			}
 
 			/*
 
@@ -385,6 +408,8 @@ class ControladorRadicados
 							'fecha_vencimiento' => $objeto["fecha_vencimiento"],
 							'soporte' => "",
 							'observaciones' => $observacion,
+							'correo' => $correo,
+							'direccion' => $direccion,
 							'id' => $_POST["id_radEdit"]);
 
 
@@ -449,7 +474,7 @@ class ControladorRadicados
 		//traer el ultimo numero de corte
 
 		$countRad = new ControladorRadicados;
-		$count = $countRad->ctrContarRadicados("id_corte", 0);	
+		$count = $countRad->ctrContarRadicados("id_corte", 0);#solo pude generar corte si existe al menos un registro o más
 		
 		if ($count > 0) 
 		{
@@ -461,8 +486,40 @@ class ControladorRadicados
 			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
 
 			$tabla = "radicados";
+			
+			$radicados = $countRad->ctrMostrarRadicados("id_corte", 0);
+
+			date_default_timezone_set('America/Bogota');
+			
+
+			foreach ($radicados as $key => $value) 
+			{
+				$fechaActual = date("Y-m-d H:i:s");
+
+				#trae el id_area del usuario origen
+				$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", $value["id_usr"]);
+
+				$datos = array( 'dias' => 0,
+							'id_corte' => $id_corte["id"],
+							'id_radicado' => $value["id"],
+							'id_area_o' => $area_o["id_area"],
+							'id_usuario_o' => $value["id_usr"],
+							'id_area_d' => $value["id_area"],
+							'id_usuario_d' => $countRad->mdlVerUsuarioDeArea("personas", $id_area),
+							'id_accion' => 2,
+							'fecha' => $fechaActual);
+
+
+
+				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
+				$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"]);
+			}
+
+			//Corte generado
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
 
+			//enviar los registros con "id_corte = 0 ", con el id del nuevo corte
+			//tomar cada uno e ir insertantandolo en el nuevo la tabla registros pqr
 
 			if ($genCorte == "ok" && $respuesta == "ok")
 			{
@@ -490,4 +547,15 @@ class ControladorRadicados
 		}
 
 	}//ctrGenerarCorte()
+
+
+	static public function ctrNuevoRegistro()
+	{
+
+	}
+
+
+
 }
+
+

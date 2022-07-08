@@ -7,8 +7,8 @@
    <th style="width:10px">#</th>
    <th>Nombre</th>
    <?php if($_GET["ruta"] != "verArea"){echo '<th>Area</th>';}?>
-   <th>Requisiciones</th>
-   <th>Acciones</th>
+   <?php if($_GET["ruta"] != "asignaciones"){echo '<th>Requisiciones</th><th>Acciones</th>';}else{ echo '<th>Estado</th>';}?>
+   
 
  </tr> 
 

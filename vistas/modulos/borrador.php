@@ -15,35 +15,32 @@
   <section class="content">
 
     <div class="row">
+
       <div class="col-lg-6">
         <div class="box box-success">
           <div class="box-header">
             
           </div>
           <div class="box-body">
-            <div class="row">
+            <?php
 
-              <div class="col-lg-1 col-md-2 col-xs-2">
-                <div class="input-group-btn">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Mas Opciones"><i class="fa fa-plus"></i></button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><input type="number" name="" placeholder="impuesto personalizado"></a>
-                    </li>
-                    <li >
-                      <a href="#" idInsumo="5" class="quitarInsumo"><i class="fa fa-times"></i> Eliminar</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              $permiso = ControladorAsignaciones::ctrVerAsignado("modulo",3);
 
-              <div class="col-xs-3">
-                   <input type="text" class="form-control nuevaDescripcionInsumo" title="" idInsumo="" value="" readonly>
-              </div>
+              if (count($permiso) == 0 || count($permiso[0]) == 0) 
+              {
+                echo 'Vacio ';
+              }
+              else
+              {
+                 echo 'no Vacio';
+              }
 
-            </div>
+
+            ?>
           </div>
         </div>
       </div>
+
     </div>
 
   </section>

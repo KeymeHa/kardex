@@ -134,7 +134,7 @@ class ModeloRadicados
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha = :fecha ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') ORDER BY id DESC");
 
 			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
@@ -173,7 +173,7 @@ class ModeloRadicados
 
 	static public function mdlRadicar($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(radicado,id_usr,fecha,id_accion,id_pqr,id_objeto,id_articulo,id_remitente,asunto,id_area,cantidad,recibido,dias,fecha_vencimiento,soporte,observaciones) VALUES (:radicado,:id_usr,:fecha,:id_accion,:id_pqr,:id_objeto,:id_articulo,:id_remitente,:asunto,:id_area,:cantidad,:recibido,:dias,:fecha_vencimiento,:soporte,:observaciones)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(radicado,id_usr,fecha,id_accion,id_pqr,id_objeto,id_articulo,id_remitente,asunto,id_area,cantidad,recibido,dias,fecha_vencimiento,soporte,observaciones, correo, direccion) VALUES (:radicado,:id_usr,:fecha,:id_accion,:id_pqr,:id_objeto,:id_articulo,:id_remitente,:asunto,:id_area,:cantidad,:recibido,:dias,:fecha_vencimiento,:soporte,:observaciones, :correo, :direccion)");
 
 		$stmt->bindParam(":radicado", $datos["radicado"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
@@ -191,6 +191,8 @@ class ModeloRadicados
 		$stmt->bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
 		$stmt->bindParam(":soporte", $datos["soporte"], PDO::PARAM_STR);
 		$stmt->bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt->bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -299,7 +301,7 @@ class ModeloRadicados
 	static public function mdlEditarRad($tabla, $datos)
 	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usr = :id_usr, id_accion = :id_accion, id_pqr = :id_pqr, id_objeto = :id_objeto, id_remitente = :id_remitente, id_articulo = :id_articulo, asunto = :asunto, id_area = :id_area, cantidad = :cantidad, recibido = :recibido, dias = :dias, fecha_vencimiento = :fecha_vencimiento, soporte = :soporte, observaciones = :observaciones WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usr = :id_usr, id_accion = :id_accion, id_pqr = :id_pqr, id_objeto = :id_objeto, id_remitente = :id_remitente, id_articulo = :id_articulo, asunto = :asunto, id_area = :id_area, cantidad = :cantidad, recibido = :recibido, dias = :dias, fecha_vencimiento = :fecha_vencimiento, soporte = :soporte, observaciones = :observaciones, correo = :correo, direccion = :direccion WHERE id = :id");
 
 		
 
@@ -317,6 +319,8 @@ class ModeloRadicados
 		$stmt -> bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
 		$stmt -> bindParam(":soporte", $datos["soporte"], PDO::PARAM_STR);
 		$stmt -> bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt -> bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 		if($stmt -> execute())
@@ -329,6 +333,65 @@ class ModeloRadicados
 			return "error";	
 		}
 		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlVerUsuarioDeArea($tabla, $id_area)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT asignaciones.id_persona FROM $tabla INNER JOIN asignaciones ON $tabla.id_usuario = asignaciones.id_persona WHERE $tabla.id_area = $id_area LIMIT 1");
+
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlNuevoRegistro($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, id_area_d, id_usuario_d, :id_accion, :fecha)");
+
+		$stmt->bindParam(":dias", $datos["dias"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_corte", $datos["id_corte"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_radicado", $datos["id_radicado"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_area_o", $datos["id_area_o"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario_o", $datos["id_usuario_o"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_area_d", $datos["id_area_d"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario_d", $datos["id_usuario_d"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_accion", $datos["id_accion"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlNuevaTrazabilidad($tabla, $id_radicado)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado) VALUES (:id_radicado)");
+
+		$stmt->bindParam(":id_radicado", $id_radicado, PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
 		$stmt = null;
 	}
 

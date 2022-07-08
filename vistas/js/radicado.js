@@ -246,6 +246,8 @@ $(".tablaRadicados").on("click", "button.btnEditarRadicado", function(){
 			$("#remitEdit").val(respuesta["id_remitente"]);
 			$("#asuntoEdit").val(respuesta["asunto"]);
 			$("#soporteEdit").val(respuesta["soporte"]);
+			$("#correoEdit").val(respuesta["correo"]);
+			$("#direccionEdit").val(respuesta["direccion"]);
 			
 
 			var myIds = [ ['accionEdit','accion', respuesta["id_accion"] ],

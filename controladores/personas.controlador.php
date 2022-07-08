@@ -233,7 +233,7 @@ class ControladorPersonas
 		{
 			$tabla = "personas";
 			$respuesta = ModeloPersonas::mdlBorrarPersona($tabla, $_GET["idPer"]);
-			//$r2 = ControladorUsuarios::ctrasignacionArea($_GET["idPer"], 0);
+			$r2 = ControladorUsuarios::ctrasignacionArea($_GET["idPer"], 0);#libera a un usuario de una area
 
 			if($respuesta == "ok")
 			{

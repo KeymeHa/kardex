@@ -151,6 +151,18 @@
                   <input type="text" class="form-control pull-right" id="obsEdit" name="obsEdit" >
                 </div><!--form-group-->
               </div><!--col-lg-2 col-md-2 col-xs-2-->
+               <div class="col-lg-4 col-md-3 col-xs-3">
+                 <div class="form-group">
+                  <label for="exampleInputEmail1">Correo Electrónico</label>
+                  <input type="email" class="form-control pull-right" id="correoEdit" name="correoEe" >
+                </div><!--form-group-->
+              </div><!--col-lg-2 col-md-2 col-xs-2-->
+               <div class="col-lg-4 col-md-3 col-xs-3">
+                 <div class="form-group">
+                  <label for="exampleInputEmail1">Dirección</label>
+                  <input type="text" class="form-control pull-right" id="direccionEdit" name="direccionE" >
+                </div><!--form-group-->
+              </div><!--col-lg-2 col-md-2 col-xs-2-->
               <!--soporte-->
                <div class="col-lg-2 col-md-2 col-xs-2">
                    <div class="form-group">

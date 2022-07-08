@@ -127,7 +127,11 @@
 
       if ($js_data["file"] == 1) 
       {
-        echo '<script type="text/javascript" src="vistas/js/'.$js_data["page"].'.js"></script>';
+        if ( file_exists('vistas/js/'.$js_data["page"].'.js') ) 
+        {
+           echo '<script type="text/javascript" src="vistas/js/'.$js_data["page"].'.js"></script>';
+        }
+       
       }
 
     }

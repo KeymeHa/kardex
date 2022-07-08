@@ -212,7 +212,7 @@
 
 			//Correspondencias
 
-			if ( $_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 6 || $_SESSION["perfil"] == 7) {
+			if ( $_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 6) {
 
 			echo '<li class="header">Correspondencia y Mensajería</li>
 
@@ -220,7 +220,7 @@
 
 			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'radicado' || $_GET['ruta'] == 'cortes' || $_GET['ruta'] == 'verCorte' || $_GET['ruta'] == 'verRadicado' || $_GET['ruta'] == 'correspondencia'){ echo 'active';} }
 
-			echo '"><a href="correspondencia">
+			echo '"><a href="#">
 					<i class="fa fa-envelope-o"></i>
 					<span>Correspondencia</span>
 					<span class="pull-right-container">
@@ -235,29 +235,85 @@
 				
 			}
 
+			if ( $_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2' || $_SESSION["perfil"] == '7' || $_SESSION["perfil"] == '3') {
+
+			echo '<li class="header">Asignaciones de Correspondencia</li>
+
+				<li ';
+
+				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "asignaciones"){ echo'class="active"'; }	}
+
+				echo'><a href="index.php?ruta=asignaciones&idusr='.$_SESSION["id"].'&p='.$_SESSION["perfil"].'">
+						<i class="fa fa-check-circle"></i>
+						<span>Asignaciones</span>
+					</a>
+				</li>';
+			}
+
+			if ( $_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2' || $_SESSION["perfil"] == '7' ) {
+				echo '<li ';
+
+			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "registroPQR"){ echo'class="active"'; }	}
+
+				echo'><a href="registroPQR">
+						<i class="fa fa-balance-scale"></i>
+						<span>Registros de PQR</span>
+					</a>
+				</li>';
+
+				echo '<li';
+
+			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
+
+				echo'><a href="correspondencia">
+						<i class="fa fa-envelope-square"></i>
+						<span>correspondencia</span>
+					</a>
+				</li>';
+			}
+
 			//Generar requisicion
+			$idmodulo = 3;
+			$verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
 
-			if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 8 || $_SESSION["perfil"] == 4) {
+			if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
+			{
+				echo '<li class="header">Mis Requisiciones</li>
 
-			echo '<li class="header">Mis Requisiciones</li>
+				<li class="treeview ';
 
-			<li class="treeview ';
+				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'genRequisicion' || $_GET['ruta'] == 'hisRequisicion'){ echo 'active';} }
 
-			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'genRequisicion' || $_GET['ruta'] == 'hisRequisicion'){ echo 'active';} }
+				echo '"><a href="#">
+						<i class="fa fa-envelope-o"></i>
+						<span>Requisiciones</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-tight"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Radicado</a></li>
+						<li><a href="hisRequisicion"><i class="fa fa-clone"></i>Historial</a></li>
+					</ul>
+				</li>';
+			}
 
-			echo '"><a href="#">
-					<i class="fa fa-envelope-o"></i>
-					<span>Requisiciones</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-tight"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Radicado</a></li>
-					<li><a href="hisRequisicion"><i class="fa fa-clone"></i>Historial</a></li>
-				</ul>
-			</li>';
-				
+			$idmodulo = 7;
+			$verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+
+			if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
+			{
+
+			echo '<li';
+
+			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
+
+				echo'><a href="correspondencia">
+						<i class="fa fa-envelope-square"></i>
+						<span>correspondencia</span>
+					</a>
+				</li>';
+
 			}
 
 			?>

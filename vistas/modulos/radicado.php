@@ -157,6 +157,21 @@ for ($i=0; $i < count($porcion); $i++)
                        <input type="text" name="observaciones" class="form-control pull-right" id="datepicker" title="Observaciones">
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
+
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Correo Electrónico</label>
+                       <input type="email" name="correoE" class="form-control pull-right" id="datepicker" title="Observaciones">
+                  </div><!--form-group-->
+                </div><!--col-lg-3 col-md-3 col-xs-3-->
+
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Dirección Fisica</label>
+                       <input type="text" name="direccion" class="form-control pull-right" title="Dirección Domicilio">
+                  </div><!--form-group-->
+                </div><!--col-lg-3 col-md-3 col-xs-3-->
+                
           </div><!--box-body-->
           <div class="box-footer">
 
@@ -205,7 +220,10 @@ for ($i=0; $i < count($porcion); $i++)
               </table>
           </div>
           <div class="box-footer">
-            <button style="color: white;" class="btn btn-success pull-right btn-corte"><i class="fa fa-scissors"></i>  Realizar Corte</button>
+            <a href="resumenRadicado">
+            <button style="color: white;" class="btn btn-success pull-left"><i class="fa fa-search"></i>  Buscar Radicado</button>
+            </a>
+             <button style="color: white;" class="btn btn-success pull-right btn-corte"><i class="fa fa-scissors">&nbsp;</i>Realizar Corte  </button>
           </div>
         </div>
       </div>
