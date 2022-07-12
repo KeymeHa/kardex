@@ -70,10 +70,12 @@ CREATE TABLE IF NOT EXISTS `anexosprov` (
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `ruta` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.anexosprov: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `anexosprov` DISABLE KEYS */;
+INSERT INTO `anexosprov` (`id`, `nombre`, `id_carpeta`, `fecha`, `ruta`) VALUES
+	(13, 'Comprobante Banco', 1, '2022-07-07 10:15:19', '1/1.pdf');
 /*!40000 ALTER TABLE `anexosprov` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.anios
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `elim` int(11) NOT NULL DEFAULT 0,
   `cat_asociadas` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.areas: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
@@ -109,7 +111,8 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VAL
 	(3, 'Reasentamiento', 'Abogados', 0, ''),
 	(4, 'Jurídica', 'Personal de Juridíca', 0, ''),
 	(5, 'Mercados', 'Personal de Mercados', 0, ''),
-	(6, 'Area Tecnica', 'Ingenieros y Arquitectos', 0, '');
+	(6, 'Area Tecnica', 'Ingenieros y Arquitectos', 0, ''),
+	(7, 'ADMINISTRATIVO', 'Toda la Parte Administrativa', 0, '');
 /*!40000 ALTER TABLE `areas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.articulo
@@ -141,10 +144,12 @@ CREATE TABLE IF NOT EXISTS `asignaciones` (
   PRIMARY KEY (`id`),
   KEY `FK_asignaciones_usuarios` (`id_persona`),
   CONSTRAINT `FK_asignaciones_usuarios` FOREIGN KEY (`id_persona`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.asignaciones: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignaciones` DISABLE KEYS */;
+INSERT INTO `asignaciones` (`id`, `id_persona`, `modulo`) VALUES
+	(1, 11, 3);
 /*!40000 ALTER TABLE `asignaciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.carpetasprov
@@ -155,10 +160,12 @@ CREATE TABLE IF NOT EXISTS `carpetasprov` (
   `id_prov` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.carpetasprov: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `carpetasprov` DISABLE KEYS */;
+INSERT INTO `carpetasprov` (`id`, `nombre`, `carpeta`, `id_prov`, `fecha`) VALUES
+	(1, 'Contratos', 1, 1, '2022-07-07 10:14:45');
 /*!40000 ALTER TABLE `carpetasprov` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.categorias
@@ -533,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   `descripcion` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.js_data: ~58 rows (aproximadamente)
 /*!40000 ALTER TABLE `js_data` DISABLE KEYS */;
@@ -598,7 +605,8 @@ INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `p
 	(61, 'verRadicado', 'Radicado', 0, 1, 2, 0, 0, 0, 6, 0, 1, 1, 0, 0, NULL),
 	(62, 'correspondencia', 'Correspondencia', 0, 1, 2, 0, 0, 0, 6, 0, 1, 1, 0, 0, NULL),
 	(63, 'resumenRadicado', 'Radicados', 0, 1, 2, 0, 0, 0, 6, 0, 1, 1, 0, 0, NULL),
-	(64, 'asignaciones', 'Asignaciones', 38, 1, 2, 3, 0, 0, 6, 0, 1, 1, 1, 0, 'Muestra los encargados que tienen permitido realizar respuesta a las correspondencias');
+	(64, 'asignaciones', 'Asignaciones', 38, 1, 2, 3, 0, 0, 0, 7, 1, 1, 1, 0, 'Muestra los encargados que tienen permitido realizar respuesta a las correspondencias'),
+	(65, 'registroPQR', 'Registros de PQR', 0, 1, 2, 3, 0, 0, 0, 7, 1, 1, 1, 0, 'Pagina donde relaciona todas las correspondencias tramitadas y que estan en ello');
 /*!40000 ALTER TABLE `js_data` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.movimientos
@@ -779,12 +787,13 @@ CREATE TABLE IF NOT EXISTS `personas` (
   KEY `FK_personas_areas` (`id_area`),
   CONSTRAINT `FK_personas_areas` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_personas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- Volcando datos para la tabla kardex.personas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
 INSERT INTO `personas` (`id`, `id_usuario`, `id_area`) VALUES
-	(4, 11, 1);
+	(4, 11, 1),
+	(5, 9, 7);
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.pqr
@@ -934,31 +943,53 @@ INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id
 	(26, 0, '2022-06-25 20:07:40', '20220603268', 1, 3, 5, 1, 'PICADA PARA LA BOGDI', '6', 3, '', 4, 1, 'KBA', 5, '2022-07-05', 0, '', 'prueba@hotmail.com', 'Calle 10');
 /*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
 
+-- Volcando estructura para tabla kardex.registro
+CREATE TABLE IF NOT EXISTS `registro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_radicado` int(11) NOT NULL,
+  `id_indicativo` int(3) NOT NULL DEFAULT 1,
+  `sw` int(1) NOT NULL DEFAULT 1 COMMENT '1: en proceso, 2 respondido',
+  PRIMARY KEY (`id`),
+  KEY `FK__radicados` (`id_radicado`),
+  CONSTRAINT `FK__radicados` FOREIGN KEY (`id_radicado`) REFERENCES `radicados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla kardex.registro: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `registro` DISABLE KEYS */;
+/*!40000 ALTER TABLE `registro` ENABLE KEYS */;
+
 -- Volcando estructura para tabla kardex.registropqr
 CREATE TABLE IF NOT EXISTS `registropqr` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vigencia` int(1) NOT NULL DEFAULT 1,
+  `vigencia` int(1) NOT NULL DEFAULT 1 COMMENT '1: activo, 0: vencido',
   `dias` int(3) NOT NULL COMMENT 'calcula dias que tardo en generar una accion',
   `id_corte` int(11) NOT NULL,
   `id_radicado` int(11) NOT NULL,
-  `id_area` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
+  `id_area_o` int(11) NOT NULL,
+  `id_area_d` int(11) NOT NULL,
+  `id_usuario_o` int(11) NOT NULL,
+  `id_usuario_d` int(11) NOT NULL,
   `id_accion` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  `observacion` varchar(1000) NOT NULL,
+  `observacion` varchar(1000) DEFAULT NULL,
   `soporte` varchar(250) DEFAULT NULL,
   `sw` int(1) NOT NULL DEFAULT 1,
+  `indicativo` int(1) NOT NULL DEFAULT 1 COMMENT 'almacena un numero que incrementa en cada registro, por cada nueva modificacion realizada a un radicado',
   PRIMARY KEY (`id`),
-  KEY `FK__cortespqr` (`id_corte`),
-  KEY `FK__radicadospqr` (`id_radicado`),
-  KEY `FK__areaspqr` (`id_area`),
-  KEY `FK__usuariospqr` (`id_usuario`),
-  KEY `FK__accionpqr` (`id_accion`),
-  CONSTRAINT `FK__accionpqr` FOREIGN KEY (`id_accion`) REFERENCES `accion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK__areaspqr` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK__cortespqr` FOREIGN KEY (`id_corte`) REFERENCES `cortes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK__radicadospqr` FOREIGN KEY (`id_radicado`) REFERENCES `radicados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK__usuariospqr` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_registropqr_cortes` (`id_corte`),
+  KEY `FK_registropqr_radicados` (`id_radicado`),
+  KEY `FK_registropqr_areas` (`id_area_o`),
+  KEY `FK_registropqr_areas_2` (`id_area_d`),
+  KEY `FK_registropqr_usuarios` (`id_usuario_o`),
+  KEY `FK_registropqr_usuarios_2` (`id_usuario_d`),
+  KEY `FK_registropqr_accion` (`id_accion`),
+  CONSTRAINT `FK_registropqr_accion` FOREIGN KEY (`id_accion`) REFERENCES `accion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_areas` FOREIGN KEY (`id_area_o`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_areas_2` FOREIGN KEY (`id_area_d`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_cortes` FOREIGN KEY (`id_corte`) REFERENCES `cortes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_radicados` FOREIGN KEY (`id_radicado`) REFERENCES `radicados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_usuarios` FOREIGN KEY (`id_usuario_o`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_registropqr_usuarios_2` FOREIGN KEY (`id_usuario_d`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla kardex.registropqr: ~0 rows (aproximadamente)
@@ -1103,7 +1134,7 @@ INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`,
 	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-06-30 08:36:23', '2021-02-11 05:06:49', 'l7ajcp0fh34lk4286l3gpbjl99', 0, 0, 0),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-23 15:35:33', '2021-08-19 06:12:33', '97pabqieof66locspl0m949r0k', 0, 0, 0),
 	(3, 'Karelly Moreno', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5aub5AdYGnDrNPXtjZGt9K5ZSA6JZ42Pci', 3, NULL, '', 1, '2022-06-07 14:45:25', '2021-08-19 06:12:39', 'k8hnc4v664jqe1fplprlo4as7g', 0, 0, 0),
-	(9, 'Edna Suarez R', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 6, NULL, '', 1, '2022-06-23 16:57:40', '2022-06-23 16:03:37', 'uqbmupg2gossus2pngtgrcbiva', 0, 0, 0),
+	(9, 'Edna Suarez R', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 6, NULL, '', 1, '2022-06-23 16:57:40', '2022-06-23 16:03:37', 'uqbmupg2gossus2pngtgrcbiva', 0, 0, 1),
 	(10, 'Peter Zahn C', 'peterz', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-24 08:01:42', '2022-06-23 17:06:28', 'fd94agrc2l1isi90r49kcjo6k6', 0, 0, 1),
 	(11, 'Fernando Barcelo Bercelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, 'fernando.barcelo@edubar.com.co', 1, '0000-00-00 00:00:00', '2022-06-24 08:07:00', NULL, 0, 0, 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;

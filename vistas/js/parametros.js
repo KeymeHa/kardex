@@ -46,7 +46,7 @@ function verModulos()
 	'</thead>'+
 	'</table>')
 
-	paginaCargada(34);
+	paginaCargada(34, 0, 0);
 }
 
 function verImportarFestivos()

@@ -226,15 +226,15 @@ $(".tablaInsumos").on("click", "button.btn-stock", function(){
 	{
 		$("#tab_stock").children().remove();
 		agregarDivStock();
-		paginaCargada(21);
-		paginaCargada(22);
+		paginaCargada(21, 0, 0);
+		paginaCargada(22, 0, 0);
 
 	}
 	else
 	{
 		agregarDivStock();
-		paginaCargada(21);
-		paginaCargada(22);
+		paginaCargada(21, 0, 0);
+		paginaCargada(22, 0, 0);
 	}
 
 

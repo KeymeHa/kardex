@@ -2,6 +2,27 @@
 
 class ControladorRadicados
 {
+	function anioActual()
+	{
+	    $anio = ControladorParametros::ctrVerAnio(true);
+	    if ($anio["anio"] == 0) 
+	    {$respuesta = '';}
+	    else
+	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
+		return $respuesta;
+	}
+
+
+	public static function ctrMostrarRadicadoRango($fechaInicial, $fechaFinal, $id_area, $sw)
+	{
+		$tabla = "radicados";
+		$r = new ControladorFacturas;
+		$anio = $r->anioActual();
+		$respuesta = ModeloRadicados::mdlMostrarRadicadoRango($tabla, $fechaInicial, $fechaFinal, $anio, $id_area, $sw);
+		return $respuesta;
+	}
+
+
 	public static function ctrMostrarRadicados($item, $valor)
 	{
 		$tabla = "radicados";
@@ -17,6 +38,7 @@ class ControladorRadicados
 		return $respuesta;
 	}
 
+
 	public static function ctrMostrarRadicadosCorte($item, $valor)
 	{
 		$tabla = "radicados";
@@ -24,15 +46,6 @@ class ControladorRadicados
 		return $respuesta;
 	}
 
-	function anioActual()
-	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-	    if ($anio["anio"] == 0) 
-	    {$respuesta = '';}
-	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
-		return $respuesta;
-	}
 
 	static public function ctrMostrarCortesRango($fechaInicial, $fechaFinal)
 	{
@@ -472,14 +485,12 @@ class ControladorRadicados
 	static public function ctrGenerarCorte()
 	{
 		//traer el ultimo numero de corte
-
 		$countRad = new ControladorRadicados;
 		$count = $countRad->ctrContarRadicados("id_corte", 0);#solo pude generar corte si existe al menos un registro o más
 		
-		if ($count > 0) 
+		if ($count > 0)//si existe al menos un registro
 		{
 			$corte = ControladorParametros::ctrMostrarParametros(29);
-
 			//actualizar todos los radicados con id_corte 0 a el numero de corte
 			$tabla = "cortes";
 			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
@@ -490,15 +501,20 @@ class ControladorRadicados
 			$radicados = $countRad->ctrMostrarRadicados("id_corte", 0);
 
 			date_default_timezone_set('America/Bogota');
-			
-
+		
 			foreach ($radicados as $key => $value) 
 			{
+				if ($value["id_pqr"] == 5 || $value["id_pqr"] == 6) 
+				{
+					$modulo = 3;//tesoreria
+				}//$value["id_pqr"] != 5 && $value["id_pqr"] != 6
+				else
+				{
+					$modulo = 7;//juridica
+				}
+
 				$fechaActual = date("Y-m-d H:i:s");
-
-				#trae el id_area del usuario origen
 				$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", $value["id_usr"]);
-
 				$datos = array( 'dias' => 0,
 							'id_corte' => $id_corte["id"],
 							'id_radicado' => $value["id"],
@@ -507,19 +523,23 @@ class ControladorRadicados
 							'id_area_d' => $value["id_area"],
 							'id_usuario_d' => $countRad->mdlVerUsuarioDeArea("personas", $id_area),
 							'id_accion' => 2,
-							'fecha' => $fechaActual);
-
+							'fecha' => $fechaActual,
+						 	'vigencia' => 1,
+						 	'observacion' => "",
+						 	'vigencia' => 1,
+						 	'soporte' => "",
+						 	'sw' => 1,
+						 	'indicativo' => 1,
+						 	'modulo' => $modulo);
 
 
 				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
 				$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"]);
-			}
 
-			//Corte generado
+
+			}//foreach ($radicados as $key => $value) 
+
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
-
-			//enviar los registros con "id_corte = 0 ", con el id del nuevo corte
-			//tomar cada uno e ir insertantandolo en el nuevo la tabla registros pqr
 
 			if ($genCorte == "ok" && $respuesta == "ok")
 			{
@@ -539,22 +559,126 @@ class ControladorRadicados
 					return "e2";
 				}
 			}
-
-		}
+		}//if ($count > 0)
 		else
 		{
 			return "e3";
 		}
-
+			
 	}//ctrGenerarCorte()
 
 
 	static public function ctrNuevoRegistro()
+	{#INCOMPLETO
+		if (isset($_POST["actualizacion"])) 
+		{
+			$id_radicado = "";
+		
+			//Trae el ultimo indicativo de un radicado para aumentar y actualizar
+			$registro = ModeloRadicados::mdlVerIndicativo("registro", $id_radicado);
+
+			$id_indicativo = ($registro["id_indicativo"]+1);
+
+			$datosD = array( 'id_indicativo' => $id_indicativo,
+							 'sw' => 1,
+							 'id_radicado' => $id_radicado);
+
+			$actualizar = ModeloRadicados::mdlAcualizarTrazabilidad("registro", $datosD);
+
+			$datos = array( 'dias' => 0,
+							'id_corte' => "",
+							'id_radicado' => 0,
+							'id_area_o' => 0,
+							'id_usuario_o' => 0,
+							'id_area_d' => 0,
+							'id_usuario_d' => 0,
+							'id_accion' => 2,
+							'fecha' => 0,
+						 	'vigencia' => 1,
+						 	'observacion' => "",
+						 	'vigencia' => 1,
+						 	'soporte' => "",
+						 	'sw' => 1,
+						 	'indicativo' => $id_indicativo);
+
+			$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
+		}//if isset
+	}//ctrNuevoRegistro
+
+	static public function ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 	{
 
-	}
+		$query = "";
 
+		if ($fI != null) 
+		{
+			
+			if($fI == $fF)
+			{
+				$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
+				#ORDER BY fecha DESC
+			}
+			else
+			{
 
+				$fechaActual = new DateTime();
+				$fechaActual ->add(new DateInterval("P1D"));
+				$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+				$fechaFinal2 = new DateTime($fF);
+				$fechaFinal2 ->add(new DateInterval("P1D"));
+				$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+				if($fechaFinalMasUno == $fechaActualMasUno){
+
+					$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
+
+				}else{
+
+					$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
+
+				}
+			
+			}
+
+		}//$fI != null
+		else
+		{
+			$r = new ControladorRadicados;
+			$anio = $r->anioActual();
+			$query = $anio;
+		}
+
+		if ($id != 0) 
+		{
+			$query.= " AND id_usuario_o = ".$id."OR id_usuario_d = ".$id;
+		}
+
+		if ($es == 1 || $es == 0) 
+		{
+			$query.= " AND sw = ".$es;
+		}
+		else
+		{
+			$query.= " AND sw = 1";
+		}
+
+		if ($mod == 7 || $mod == 8) 
+		{
+			$query.= " AND modulo = ".$mod;
+		}
+		else
+		{
+			$query.= " AND modulo = 7";
+		}
+
+		$tabla = "registropqr";
+
+		$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query);
+
+		return $respuesta;
+
+	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 
 }
 

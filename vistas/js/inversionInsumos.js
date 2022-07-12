@@ -36,13 +36,13 @@ $(".tablaFacturas").on("click", "button.btn-inver", function(){
 	{
 		$("#tabInversion").children().remove();
 		agregarDivInver();
-		paginaCargada(24);
+		paginaCargada(24, 0, 0);
 
 	}
 	else
 	{
 		agregarDivInver();
-		paginaCargada(24);
+		paginaCargada(24, 0, 0);
 	}
 
 })

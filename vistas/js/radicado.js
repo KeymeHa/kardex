@@ -1,6 +1,6 @@
 $("#btnRemitente").click(function(){
 		elimTabla();
-		paginaCargada(37);
+		paginaCargada(37, 0, 0);
 })
 
 $("#addRemitente").click(function(){
@@ -31,7 +31,7 @@ $("#addRemitente").click(function(){
 				});
 
 			elimTabla();
-			paginaCargada(37);
+			paginaCargada(37, 0, 0);
 		}
 		else
 		{

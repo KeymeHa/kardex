@@ -135,7 +135,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(12);
+		paginaCargada(12, 0, 0);
 	}
 	else if(valor == 2)
 	{
@@ -163,7 +163,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(13);
+		paginaCargada(13, 0, 0);
 		
 	}
 
@@ -176,7 +176,7 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
 });
 
 
-function paginaCargada(pagina){
+function paginaCargada(pagina, id, per){
 
 	if(pagina != 0)
 	{
@@ -604,26 +604,53 @@ function paginaCargada(pagina){
 		}
 		else if(pagina == 38)
 		{
-			var queryString = window.location.search;
-			var urlParams = new URLSearchParams(queryString);
-			var idusr = urlParams.get('idusr');
-			var perfil = urlParams.get('p');
-
-			if(idusr == null)
+			if(id == null)
 			{
 			  variable = "?idusr=null";
 			} else 
 			{
-			  variable = "?idusr="+idusr+"&p="+perfil;
+			  variable = "?idusr="+id+"&p="+per;
 			}
 
 			tablaElegida =  $('.tablaPersonas');
 			tablaAjax = 'asignaciones';
 			
 		}
+		//else if( pagina == 39 && (per == 7 || per == 8) == true )
+		else if( pagina == 39 )
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+			var estado = urlParams.get('es');
+
+			variable = "?idusr="+id+"&p="+per;
+
+			if(estado == null)
+			{
+			  variable+= "&es=1";
+			} else 
+			{
+			  variable+= "&es="+estado;
+			}
+
+			if(fechaInicial == null)
+			{
+			  variable+= "&fechaInicial=null";
+			} else 
+			{
+			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			}
+
+			tablaElegida =  $('.tablaRegistros');
+			tablaAjax = 'registros';
+			
+		}
 		
 
-		if (pagina != 26 && pagina != 8) {
+		//if (pagina != 26 && pagina != 8 && pagina != 39) {
+			if (pagina != 26 && pagina != 8) {
 			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 			validarTabla(tablaElegida, tablaAjax, variable ,columna, orden);
 		}

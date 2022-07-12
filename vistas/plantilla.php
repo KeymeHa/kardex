@@ -80,10 +80,8 @@
             if ( $js_data != null ) 
             {
                 $paginaCargada = '<script type="text/javascript">
-                  $( document ).ready(function() {
-                    var pagina = '.$js_data["num"].';';
-
-                $paginaCargada .= 'paginaCargada(pagina);});</script>';
+                  $( document ).ready(function() {var pagina = '.$js_data["num"].';
+                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].');});</script>';
 
                 echo $paginaCargada;
             }

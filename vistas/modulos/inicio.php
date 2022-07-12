@@ -75,6 +75,24 @@
               </div><!--col-lg-3 col-xs-6-->';
               }
 
+              if($_SESSION["perfil"] == '7')
+              {
+                 echo'<div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h3>Registros</h3>
+                      <p>Contiene la base de datos de todos los PQR registrados en sistema.</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div><!--col-lg-3 col-xs-6-->';
+              }
+
+
               if($_SESSION["perfil"] == '1')
               {
                 echo'<div class="col-lg-3 col-xs-6">
@@ -90,7 +108,7 @@
                   <div class="icon">
                     <i class="fa fa-balance-scale"></i>
                   </div>
-                  <a href="registroPQR" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->';
 

@@ -73,7 +73,7 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 		localStorage.setItem("idCarpeta", idCar);
 	}
 
-	paginaCargada(20);
+	paginaCargada(20, 0, 0);
 
 })
 

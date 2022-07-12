@@ -5,6 +5,18 @@ require_once "conexion.php";
 class ModeloAsignaciones
 {
 
+	static public function mdlVerModulos($tabla, $id)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_persona = :id_persona");
+
+		$stmt->bindParam(":id_persona", $id, PDO::PARAM_STR);
+
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlVerAsignado($tabla, $id, $modulo)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_persona = :id_persona AND modulo = :modulo");
