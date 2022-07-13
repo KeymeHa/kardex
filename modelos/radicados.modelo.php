@@ -358,7 +358,7 @@ class ModeloRadicados
 
 	static public function mdlNuevoRegistro($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha, vigencia, observacion, vigencia, soporte, sw, indicativo, modulo) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, id_area_d, id_usuario_d, :id_accion, :fecha, :vigencia, :observacion, :vigencia, :soporte, :sw, :indicativo, :modulo)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha, vigencia, observacion,soporte, sw, indicativo, modulo) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, id_area_d, id_usuario_d, :id_accion, :fecha, :vigencia, :observacion, :soporte, :sw, :indicativo, :modulo)");
 
 		$stmt->bindParam(":dias", $datos["dias"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_corte", $datos["id_corte"], PDO::PARAM_STR);
@@ -371,7 +371,6 @@ class ModeloRadicados
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":vigencia", $datos["vigencia"], PDO::PARAM_STR);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":vigencia", $datos["vigencia"], PDO::PARAM_STR);
 		$stmt->bindParam(":soporte", $datos["soporte"], PDO::PARAM_STR);
 		$stmt->bindParam(":sw", $datos["sw"], PDO::PARAM_STR);
 		$stmt->bindParam(":indicativo", $datos["indicativo"], PDO::PARAM_STR);

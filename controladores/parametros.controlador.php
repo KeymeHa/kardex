@@ -818,7 +818,9 @@ class ControladorParametros
 						4 => "pCuatro",
 						5 => "pCinco",
 						6 => "pSeis",
-						7 => "pSiete");
+						7 => "pSiete",
+						8 => "pOcho");
+
 
         if ($jdata[$permiso[$perfil]] == $perfil) 
         {

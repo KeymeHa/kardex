@@ -59,12 +59,12 @@ class TablaRegistros
 				}
 				else
 				{
-					echo'{"data": [sinpermiso]}';	return;
+					echo'{"data": []}';	return;
 				}
 			}
 			else
 			{
-				echo'{"data": [permisonoexiste]}';	return;
+				echo'{"data": []}';	return;
 			}
 
 			//

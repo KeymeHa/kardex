@@ -75,6 +75,7 @@
               </div><!--col-lg-3 col-xs-6-->';
               }
 
+
               if($_SESSION["perfil"] == '7')
               {
                  echo'<div class="col-lg-3 col-xs-6">
@@ -93,26 +94,35 @@
               }
 
 
-              if($_SESSION["perfil"] == '1')
+               if($_SESSION["perfil"] == '6')
               {
-                echo'<div class="col-lg-3 col-xs-6">
-
-
-                <!-- small box -->
-                <div class="small-box bg-blue">
-                  <div class="inner">
-                    <h3>Base de Datos</h3>
-
-                    <p>Registros de PQR tramitadas o por tramitar.</p>
+                 echo'<div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h3>Radicados</h3>
+                      <p>Genera Radicados y los registra en sistema.</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="radicado" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
-                  <div class="icon">
-                    <i class="fa fa-balance-scale"></i>
+                </div><!--col-lg-3 col-xs-6-->
+
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-green">
+                    <div class="inner">
+                      <h3>Cortes</h3>
+                      <p>Visualiza Los cortes y planaillas generados.</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="cortes" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
-                  <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div><!--col-lg-3 col-xs-6-->';
-
-
+                </div><!--col-lg-3 col-xs-6-->';
               }
 
 
@@ -207,21 +217,20 @@
 
                 if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
                 {
-                     echo '<div class="col-lg-4 col-xs-6">
+                     echo'<div class="col-lg-3 col-xs-6">
+                          <!-- small box -->
+                          <div class="small-box bg-blue">
+                            <div class="inner">
+                              <h3>Base de Datos</h3>
 
-                      <!-- small box -->
-                      <div class="small-box bg-green">
-                        <div class="inner">
-                          <h3>Correspondencia</h3>
-                          <p>Visualiza la correspondencia asignada a tu área.</p>
-                          
-                        </div>
-                        <div class="icon">
-                          <i class="fa fa-newspaper-o"></i>
-                        </div>
-                        <a href="correspondencia" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
-                      </div>
-                    </div><!--col-lg-3 col-xs-6-->';
+                              <p>Registros de PQR tramitadas o por tramitar.</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fa fa-balance-scale"></i>
+                            </div>
+                            <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div><!--col-lg-3 col-xs-6-->';
                 }
 
                 ?>

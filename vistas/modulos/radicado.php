@@ -42,8 +42,6 @@ for ($i=0; $i < count($porcion); $i++)
           </div>
           <div class="box-body">     
             <form role="form" method="post" enctype="multipart/form-data">
-
-
                 <div class="col-lg-2 col-md-2 col-xs-2">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Num. Radicado</label>
@@ -116,7 +114,6 @@ for ($i=0; $i < count($porcion); $i++)
                 </div><!--col-lg-2 col-md-2 col-xs-2-->
 
                 <div class="col-lg-2 col-md-2 col-xs-2">
-                   <div class="form-group">
                     <label for="exampleInputEmail1">Área</label>
                       <select class="form-control" name="id_area" required>
                         <option value="">Seleccione área</option>
@@ -127,14 +124,13 @@ for ($i=0; $i < count($porcion); $i++)
 
                             $areas = ControladorAreas::ctrMostrarAreas($item, $valor);
 
-                            foreach ($areas as $key => $value) {
-                              
+                            foreach ($areas as $key => $value) 
+                            { 
                               echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                             }
 
                             ?>
                       </select>
-                  </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
                 <div class="col-lg-2 col-md-2 col-xs-2">
@@ -158,19 +154,21 @@ for ($i=0; $i < count($porcion); $i++)
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                  <div class="col-lg-2 col-md-2 col-xs-2">
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Dirección Fisica</label>
+                       <input type="text" name="direccion" class="form-control pull-right" title="Dirección Domicilio">
+                  </div><!--form-group-->
+                </div><!--col-lg-3 col-md-3 col-xs-3-->
+
+                 <div class="col-lg-2 col-md-2 col-xs-2">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Correo Electrónico</label>
                        <input type="email" name="correoE" class="form-control pull-right" id="datepicker" title="Observaciones">
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
-                   <div class="form-group">
-                    <label for="exampleInputEmail1">Dirección Fisica</label>
-                       <input type="text" name="direccion" class="form-control pull-right" title="Dirección Domicilio">
-                  </div><!--form-group-->
-                </div><!--col-lg-3 col-md-3 col-xs-3-->
+              
                 
           </div><!--box-body-->
           <div class="box-footer">
@@ -199,7 +197,8 @@ for ($i=0; $i < count($porcion); $i++)
       <div class="col-lg-12">
          <div class="box box-success">
           <div class="box-header with-border">
-           <h3 class="box-title">Listado de Radicados</h3> 
+           <h3 class="box-title">Listado de Radicados Para Corte: <b># <?php  $val = 29;
+                     $parametro = ControladorParametros::ctrMostrarParametros($val); echo $parametro["codigo"];?></b></h3> 
           </div>
           <div class="box-body">       
              <table class="table table-bordered table-striped dt-responsive tablaRadicados" width="100%">

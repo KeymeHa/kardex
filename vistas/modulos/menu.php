@@ -17,9 +17,6 @@
 
 			</li>
 
-
-			
-
 			<?php
 
 			///usuarios
@@ -253,6 +250,8 @@
 			if ( $_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2' || $_SESSION["perfil"] == '7' ) {
 				echo '<li ';
 
+
+
 			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "registros"){ echo'class="active"'; }	}
 
 				echo'><a href="registros">
@@ -308,9 +307,9 @@
 
 			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
 
-				echo'><a href="correspondencia">
-						<i class="fa fa-envelope-square"></i>
-						<span>correspondencia</span>
+				echo'><a href="registros">
+						<i class="fa fa-balance-scale"></i>
+						<span>Registros de PQR</span>
 					</a>
 				</li>';
 

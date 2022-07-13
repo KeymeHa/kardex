@@ -521,12 +521,11 @@ class ControladorRadicados
 							'id_area_o' => $area_o["id_area"],
 							'id_usuario_o' => $value["id_usr"],
 							'id_area_d' => $value["id_area"],
-							'id_usuario_d' => $countRad->mdlVerUsuarioDeArea("personas", $id_area),
+							'id_usuario_d' => $countRad->mdlVerUsuarioDeArea("personas", $value["id_area"]),
 							'id_accion' => 2,
 							'fecha' => $fechaActual,
 						 	'vigencia' => 1,
 						 	'observacion' => "",
-						 	'vigencia' => 1,
 						 	'soporte' => "",
 						 	'sw' => 1,
 						 	'indicativo' => 1,
@@ -540,12 +539,12 @@ class ControladorRadicados
 			}//foreach ($radicados as $key => $value) 
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
+			$indice = ControladorParametros::ctrIncrementarCodigo("nameRad");
 
 			if ($genCorte == "ok" && $respuesta == "ok")
 			{
 				//subir numero de corte
-				$indiceCodigo = "nameRad";
-				$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
+				
 				return "ok";
 			}
 			else
