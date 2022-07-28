@@ -974,6 +974,12 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrTraerCampo($tabla, $item, $valor, $item2)
+	{
+		$respuesta = ModeloParametros::mdlTraerCampo($tabla, $item, $valor, $item2);
+		return $respuesta["$item2"];
+	}
+
 	static public function ctrValidarTermino($fecha, $id)
 	{
 		  $response = ModeloParametros::mdlmostrarRegistros("objeto","id", $id);

@@ -18,9 +18,6 @@
 
 ?>
 <div class="content-wrapper">
-     <?php
-    include "bannerConstruccion.php";
-  ?>
   <section class="content-header">
     <h1>    
       Asignaciones
@@ -33,9 +30,9 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-          <button class="btn btn-success" id="btn-nuevaPersona" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
+          <!--<button class="btn btn-success" id="btn-nuevaPersona" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
           Asignar Encargado
-        </button>
+        </button>-->
       </div>
       <div class="box-body">
         <input type="hidden" id="idsession" value="<?php echo $_SESSION['id'];?>"> 

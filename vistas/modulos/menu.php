@@ -232,7 +232,7 @@
 				
 			}
 
-			if ( $_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2' || $_SESSION["perfil"] == '7' || $_SESSION["perfil"] == '3') {
+			if ($_SESSION["perfil"] == '7' || $_SESSION["perfil"] == '3') {
 
 			echo '<li class="header">Asignaciones de Correspondencia</li>
 
@@ -247,7 +247,7 @@
 				</li>';
 			}
 
-			if ( $_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2' || $_SESSION["perfil"] == '7' ) {
+			if ($_SESSION["perfil"] == '7' ) {
 				echo '<li ';
 
 
@@ -260,7 +260,7 @@
 					</a>
 				</li>';
 
-				echo '<li';
+				/*echo '<li';
 
 			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
 
@@ -268,7 +268,7 @@
 						<i class="fa fa-envelope-square"></i>
 						<span>correspondencia</span>
 					</a>
-				</li>';
+				</li>';*/
 			}
 
 			//Generar requisicion

@@ -61,7 +61,7 @@ $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 
 	localStorage.removeItem("capturarRango");
 	localStorage.clear();
-	window.location = "registroPQR";
+	window.location = "registros";
 })
 
 $(".daterangepicker.opensleft .ranges li").on("click", function(){

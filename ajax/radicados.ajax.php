@@ -12,11 +12,10 @@ require_once "../controladores/usuarios.controlador.php";
 
 class AjaxRadicados
 {
-	public $id;
-
-	static public function generarCorte()
+	static public function generarCorte($idUsuario)
 	{
-		$respuesta = ControladorRadicados::ctrGenerarCorte();
+		
+		$respuesta = ControladorRadicados::ctrGenerarCorte($idUsuario);
 		echo json_encode($respuesta);
 	}
 
@@ -55,7 +54,7 @@ class AjaxRadicados
 
 if(isset($_POST["corte"]))
 {	$generar = new AjaxRadicados();
-	$generar -> generarCorte();}
+	$generar -> generarCorte($_POST["idUsuario"]);}
 
 if(isset($_POST["edit"]))
 {	$generar = new AjaxRadicados();

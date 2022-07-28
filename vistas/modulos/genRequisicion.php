@@ -1,3 +1,15 @@
+<?php
+
+   $idmodulo = 3;
+  $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+
+  if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
+  {
+    echo'<script> window.location="noAutorizado";</script>';
+  }
+
+?>
+
 <div class="content-wrapper">
 
 

@@ -23,7 +23,19 @@ class ControladorAsignaciones
 	{
 		$tabla = "asignaciones";
 		$respuesta = ModeloAsignaciones::mdlHabilitarUsuario($tabla, $id, $modulo);
-		return $respuesta;
+		if ($respuesta == "ok") 
+		{
+			$tabla = "historial";
+
+			$datos = array( "accion" => 4,
+							"numTabla" => 14,
+							"valorAnt" => 0,
+							"valorNew" => $modulo,
+							"id_usr" => $id,
+							 );
+
+			$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+		}
 
 	}
 
@@ -31,6 +43,20 @@ class ControladorAsignaciones
 	{
 		$tabla = "asignaciones";
 		$respuesta = ModeloAsignaciones::mdlDeshabilitarUsuario($tabla, $id, $modulo);
+
+		if ($respuesta == "ok") 
+		{
+			$tabla = "historial";
+
+			$datos = array( "accion" => 1,
+							"numTabla" => 14,
+							"valorAnt" => 0,
+							"valorNew" => $modulo,
+							"id_usr" => $id,
+							 );
+
+			$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+		}
 		return $respuesta;
 
 	}

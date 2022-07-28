@@ -358,7 +358,7 @@ class ModeloRadicados
 
 	static public function mdlNuevoRegistro($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha, vigencia, observacion,soporte, sw, indicativo, modulo) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, id_area_d, id_usuario_d, :id_accion, :fecha, :vigencia, :observacion, :soporte, :sw, :indicativo, :modulo)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha, vigencia, observacion,soporte, sw, indicativo, modulo) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, :id_area_d, :id_usuario_d, :id_accion, :fecha, :vigencia, :observacion, :soporte, :sw, :indicativo, :modulo)");
 
 		$stmt->bindParam(":dias", $datos["dias"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_corte", $datos["id_corte"], PDO::PARAM_STR);
@@ -390,11 +390,13 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
-	static public function mdlNuevaTrazabilidad($tabla, $id_radicado)
+	static public function mdlNuevaTrazabilidad($tabla, $id_radicado, $fecha, $mod)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado) VALUES (:id_radicado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado, fecha, mod) VALUES (:id_radicado, :fecha, :mod)");
 
 		$stmt->bindParam(":id_radicado", $id_radicado, PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
+		$stmt->bindParam(":mod", $mod, PDO::PARAM_STR);
 
 
 		if($stmt->execute()){

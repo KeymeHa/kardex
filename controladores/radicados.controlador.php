@@ -482,7 +482,7 @@ class ControladorRadicados
 		}
 	}//ctrEditarRad
 
-	static public function ctrGenerarCorte()
+	static public function ctrGenerarCorte($id_usuario_o)
 	{
 		//traer el ultimo numero de corte
 		$countRad = new ControladorRadicados;
@@ -495,56 +495,54 @@ class ControladorRadicados
 			$tabla = "cortes";
 			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
 			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
-
+			$indice = ControladorParametros::ctrIncrementarCodigo("nameRad");
 			$tabla = "radicados";
 			
 			$radicados = $countRad->ctrMostrarRadicados("id_corte", 0);
 
 			date_default_timezone_set('America/Bogota');
+			$fechaActual = date("Y-m-d H:i:s");
+
+			$id_area_o = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $id_usuario_o);
 		
 			foreach ($radicados as $key => $value) 
 			{
+				$modulo = 7;
+
 				if ($value["id_pqr"] == 5 || $value["id_pqr"] == 6) 
 				{
 					$modulo = 3;//tesoreria
 				}//$value["id_pqr"] != 5 && $value["id_pqr"] != 6
-				else
-				{
-					$modulo = 7;//juridica
-				}
 
-				$fechaActual = date("Y-m-d H:i:s");
-				$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", $value["id_usr"]);
 				$datos = array( 'dias' => 0,
-							'id_corte' => $id_corte["id"],
-							'id_radicado' => $value["id"],
-							'id_area_o' => $area_o["id_area"],
-							'id_usuario_o' => $value["id_usr"],
-							'id_area_d' => $value["id_area"],
-							'id_usuario_d' => $countRad->mdlVerUsuarioDeArea("personas", $value["id_area"]),
-							'id_accion' => 2,
-							'fecha' => $fechaActual,
-						 	'vigencia' => 1,
-						 	'observacion' => "",
-						 	'soporte' => "",
-						 	'sw' => 1,
-						 	'indicativo' => 1,
-						 	'modulo' => $modulo);
+								'id_corte' => $id_corte["id"],
+								'id_radicado' => $value["id"],
+								'id_area_o' => $id_area_o["id_area"],
+								'id_usuario_o' => $id_usuario_o,
+								'id_area_d' => $value["id_area"],
+								'id_usuario_d' => 0,
+								'id_accion' => 2,
+								'fecha' => $value["fecha"],
+							 	'vigencia' => 1,
+							 	'observacion' => $value["observaciones"],
+							 	'soporte' => $value["soporte"],
+							 	'sw' => 1,
+							 	'indicativo' => 1,
+							 	'modulo' => $modulo);
 
 
 				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
-				$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"]);
+				//$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"], $value["fecha"], $modulo);
 
 
 			}//foreach ($radicados as $key => $value) 
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
-			$indice = ControladorParametros::ctrIncrementarCodigo("nameRad");
+			
 
 			if ($genCorte == "ok" && $respuesta == "ok")
 			{
 				//subir numero de corte
-				
 				return "ok";
 			}
 			else
@@ -604,40 +602,49 @@ class ControladorRadicados
 		}//if isset
 	}//ctrNuevoRegistro
 
-	static public function ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
+	#							id del usuario 
+	static public function ctrVerRegistrosPQR($id, $per, $mod, $fI, $fF, $es)
 	{
 
 		$query = "";
 
 		if ($fI != null) 
 		{
-			
-			if($fI == $fF)
+
+			if ( validateDate($fI) && validateDate($fF) ) 
 			{
-				$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
-				#ORDER BY fecha DESC
+				if($fI == $fF)
+				{
+					$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
+					#ORDER BY fecha DESC
+				}
+				else
+				{
+					$fechaActual = new DateTime();
+					$fechaActual ->add(new DateInterval("P1D"));
+					$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+					$fechaFinal2 = new DateTime($fF);
+					$fechaFinal2 ->add(new DateInterval("P1D"));
+					$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+					if($fechaFinalMasUno == $fechaActualMasUno){
+
+						$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
+
+					}else{
+
+						$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
+
+					}
+				
+				}
 			}
 			else
 			{
-
-				$fechaActual = new DateTime();
-				$fechaActual ->add(new DateInterval("P1D"));
-				$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-				$fechaFinal2 = new DateTime($fF);
-				$fechaFinal2 ->add(new DateInterval("P1D"));
-				$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-				if($fechaFinalMasUno == $fechaActualMasUno){
-
-					$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
-
-				}else{
-
-					$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
-
-				}
-			
+				$r = new ControladorRadicados;
+				$anio = $r->anioActual();
+				$query = $anio;
 			}
 
 		}//$fI != null
@@ -648,9 +655,12 @@ class ControladorRadicados
 			$query = $anio;
 		}
 
-		if ($id != 0) 
+		if ($per != 7) 
 		{
-			$query.= " AND id_usuario_o = ".$id."OR id_usuario_d = ".$id;
+			if ($id != 0) 
+			{
+				$query.= " AND id_usuario_o = ".$id."OR id_usuario_d = ".$id;
+			}
 		}
 
 		if ($es == 1 || $es == 0) 
@@ -664,11 +674,11 @@ class ControladorRadicados
 
 		if ($mod == 7 || $mod == 8) 
 		{
-			$query.= " AND modulo = ".$mod;
+			$query.= " AND modulo = ".$mod." ORDER BY fecha DESC";
 		}
 		else
 		{
-			$query.= " AND modulo = 7";
+			$query.= " AND modulo = 7 ORDER BY fecha DESC";
 		}
 
 		$tabla = "registropqr";

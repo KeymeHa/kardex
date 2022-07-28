@@ -32,12 +32,15 @@ class TablaRegistros
 
 		if ($usuario["perfil"] == $modulo) 
 		{
-			$registros = ControladorRadicados::ctrVerRegistros(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+
+			#$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
 			
 		}
 		elseif ($usuario["perfil"] == 8) 
 		{
-			$registros = ControladorRadicados::ctrVerRegistros(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+			#$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
 		}
 		else
 		{
@@ -50,9 +53,10 @@ class TablaRegistros
 				{
 					//traer registros que sean del usuario y sigan en proceso
 					//usuario, modulo, estado, fecha, fecha
-					$registros = ControladorRadicados::ctrVerRegistros($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
 
-					 if ( count($registros) == 0) 
+					$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+
+					 if ( count($registrosPQR) == 0) 
 	   				 { echo'{"data": []}';	return; }
 
 	   				
@@ -70,75 +74,147 @@ class TablaRegistros
 			//
 		}
 
-		if (isset($registros)) 
+		if (isset($registrosPQR)) 
 		{
 
-			if (count($registros) > 0) 
+			if (count($registrosPQR) > 0) 
 			{
 				$dJson = '{"data": [';
 
-				for( $i = 0; $i < count($registros); $i++)
+				if ($usuario["perfil"] == $modulo || $usuario["perfil"] == 8) 
 				{
-					$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registros[$i]["id"]."' title='Consultar'><i class='fa fa-file-o'></i></button></div></div>";	
-
-					$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registros[$i]["id_radicado"]);
-
-					if ( $registros["sw"] == 0 ) 
+					for( $i = 0; $i < count($registrosPQR); $i++)
 					{
-						$vigencia = "<td><button class='btn btn-success btn-xs'>Finalizado</button></td>";
-					}
-					else if ( $registros["sw"] == 1 ) 
-					{
-						$vigencia = "<td><button class='btn btn-info btn-xs'>Vigente</button></td>";
-					}
-					else
-					{
-						$vigencia = "<td><button class='btn btn-danger btn-xs'>Vencido</button></td>";
-					}
+						$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Consultar'><i class='fa fa-file-o'></i></button></div></div>";	
 
-					$fechaUno = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 0);
-					$fechaDos = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 0);
-
-
-			           if ($usuario["perfil"] == $modulo || $usuario["perfil"] == 8 ) 
-			           {
-
-			           	$area = ControladorAreas::ctrMostrarAreas("id", $radicado["id_area_o"]);
-
-			           		$dJson .='[
-				    		"'.($i + 1).'",
-				    		"'.$fechaUno.'",
-				    		"'.$vigencia.'",
-				    		"'.$fechaDos.'",
-				    		"'.$radicado["radicado"].'",
-				    		"'.$radicado["asunto"].'",
-				    		"'.$radicado["id_remitente"].'",
-				    		"'.$area["nombre"].'",
-				    		"'.$acciones.'"
-				    		],';
-			           }
-			           else
-			           {
-			           		$dJson .='[
-				    		"'.($i + 1).'",
-				    		"'.$fechaUno.'",
-				    		"'.$vigencia.'",
-				    		"'.$fechaDos.'",
-				    		"'.$radicado["radicado"].'",
-				    		"'.$radicado["asunto"].'",
-				    		"'.$radicado["id_remitente"].'",
-				    		"'.$acciones.'"
-				    		],';
-			           }
-
+						$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR[$i]["id_radicado"]);
 						
-				}//For
+						if ( $registrosPQR[$i]["sw"] == 0 ) 
+						{
+							$vigencia = "<td><button class='btn btn-success btn-xs'>Finalizado</button></td>";
+						}
+						else if ( $registrosPQR[$i]["sw"] == 1 ) 
+						{
+							$vigencia = "<td><button class='btn btn-info btn-xs'>Vigente</button></td>";
+						}
+						else
+						{
+							$vigencia = "<td><button class='btn btn-info btn-xs'>Activa</button></td>";
+						}
 
-				$dJson = substr($dJson, 0 ,-1);
-			    $dJson.= ']
-				}';
+						$fechaUno = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 0);
+						$fechaDos = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 0);
 
-				echo $dJson;
+
+				           if ($usuario["perfil"] == $modulo || $usuario["perfil"] == 8 ) 
+				           {
+				           	$accion = ControladorParametros::ctrmostrarRegistros("accion","id",$registrosPQR[$i]["id_accion"]);
+				           	$area = ControladorAreas::ctrMostrarAreas("id", $registrosPQR[$i]["id_area_d"]);
+
+				           		$dJson .='[
+					    		"'.($i + 1).'",
+					    		"'.$fechaUno.'",
+					    		"'.$vigencia.'",
+					    		"'.$fechaDos.'",
+					    		"'.$radicado["radicado"].'",
+					    		"'.$radicado["asunto"].'",
+					    		"'.$radicado["id_remitente"].'",
+					    		"'.$area["nombre"].'",
+					    		"'.$accion["nombre"].'",
+					    		"'.$acciones.'"
+					    		],';
+				           }
+				           else
+				           {
+				           		$dJson .='[
+					    		"'.($i + 1).'",
+					    		"'.$fechaUno.'",
+					    		"'.$vigencia.'",
+					    		"'.$fechaDos.'",
+					    		"'.$radicado["radicado"].'",
+					    		"'.$radicado["asunto"].'",
+					    		"'.$radicado["id_remitente"].'",
+					    		"'.$acciones.'"
+					    		],';
+				           }
+
+							
+					}//For
+
+					$dJson = substr($dJson, 0 ,-1);
+				    $dJson.= ']
+					}';
+
+					echo $dJson;
+				}
+				else
+				{
+					for( $i = 0; $i < count($registrosPQR); $i++)
+					{
+						$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Consultar'><i class='fa fa-file-o'></i></button></div></div>";	
+
+						$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR[$i]["id_radicado"]);
+						
+						if ( $registrosPQR[$i]["sw"] == 0 ) 
+						{
+							$vigencia = "<td><button class='btn btn-success btn-xs'>Finalizado</button></td>";
+						}
+						else if ( $registrosPQR[$i]["sw"] == 1 ) 
+						{
+							$vigencia = "<td><button class='btn btn-info btn-xs'>Vigente</button></td>";
+						}
+						else
+						{
+							$vigencia = "<td><button class='btn btn-info btn-xs'>Activa</button></td>";
+						}
+
+						$fechaUno = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 0);
+						$fechaDos = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 0);
+
+
+				           if ($usuario["perfil"] == $modulo || $usuario["perfil"] == 8 ) 
+				           {
+				           	$accion = ControladorParametros::ctrmostrarRegistros("accion","id",$registrosPQR[$i]["id_accion"]);
+				           	$area = ControladorAreas::ctrMostrarAreas("id", $registrosPQR[$i]["id_area_d"]);
+
+				           		$dJson .='[
+					    		"'.($i + 1).'",
+					    		"'.$fechaUno.'",
+					    		"'.$vigencia.'",
+					    		"'.$fechaDos.'",
+					    		"'.$radicado["radicado"].'",
+					    		"'.$radicado["asunto"].'",
+					    		"'.$radicado["id_remitente"].'",
+					    		"'.$area["nombre"].'",
+					    		"'.$accion["nombre"].'",
+					    		"'.$acciones.'"
+					    		],';
+				           }
+				           else
+				           {
+				           		$dJson .='[
+					    		"'.($i + 1).'",
+					    		"'.$fechaUno.'",
+					    		"'.$vigencia.'",
+					    		"'.$fechaDos.'",
+					    		"'.$radicado["radicado"].'",
+					    		"'.$radicado["asunto"].'",
+					    		"'.$radicado["id_remitente"].'",
+					    		"'.$acciones.'"
+					    		],';
+				           }
+
+							
+					}//For
+
+					$dJson = substr($dJson, 0 ,-1);
+				    $dJson.= ']
+					}';
+
+					echo $dJson;
+
+
+				}
 			}// es nulo
 			else
 			{
@@ -167,21 +243,9 @@ class TablaRegistros
 
 $mostrar = new TablaRegistros();
 
-/*
-
-	idusr
-	p
-	es
-	fechaInicial
-	fechaFinal
-
-
-*/
-
 if (isset($_GET["idusr"])) 
 {
 	$mostrar -> idUsuario = $_GET["idusr"];
-	
 
 	if (isset($_GET["fechaInicial"]) && $_GET["fechaInicial"] != "null") 
 	{
@@ -194,7 +258,7 @@ if (isset($_GET["idusr"]))
 		$mostrar -> fechaFinal = null;
 	}
 
-	if (isset($_GET["p"]) && $_GET["p"] != "null") 
+	if (isset($_GET["p"]) && $_GET["p"] != "null" && ($_GET["p"] == 3 || $_GET["p"] == 7)) 
 	{
 		$mostrar -> perfil = $_GET["p"];
 	}
@@ -203,7 +267,7 @@ if (isset($_GET["idusr"]))
 		$mostrar -> perfil = null;
 	}
 
-	if (isset($_GET["es"]) && $_GET["es"] != "null") 
+	if (isset($_GET["es"]) && $_GET["es"] != "null" && ($_GET["es"] == 1 || $_GET["es"] == 0) ) 
 	{
 		$mostrar -> estado = $_GET["es"];
 	}

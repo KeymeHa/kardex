@@ -70,6 +70,8 @@ function elimTabla()
 
 $(".btn-corte").click(function(){
 
+	var idUsuario = $(this).attr("idUsr");
+
 	swal({
 		type: "warning",
 		title: "¡Desea realizar el corte y generar una planilla!",
@@ -86,6 +88,7 @@ $(".btn-corte").click(function(){
 			
 			var datos = new FormData();
 			datos.append("corte", 1);
+			datos.append("idUsuario", idUsuario);
 
 			$.ajax({
 

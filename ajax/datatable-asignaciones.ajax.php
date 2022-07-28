@@ -18,6 +18,7 @@ require_once "../modelos/asignaciones.modelo.php";
 class Tablapersonas
 {	
 	public $modulo;
+	public $idUsuario;
 	public function mostrarTablapersonas()
 	{	  
 		$sw = 0;
@@ -45,30 +46,35 @@ class Tablapersonas
 		for( $i = 0; $i < count($personas); $i++)
 		{
 
-			$permiso = ControladorAsignaciones::ctrVerAsignado($personas[$i]["id"], $valor);
-
-			if (isset($permiso["modulo"])) 
+			if ($personas[$i]["id"] != $this->idUsuario) 
 			{
-				$acciones = "<button class='btn btn-success btn-xs btnActivarUsr' estadoUsuario='0' idUsuario='".$personas[$i]["id"]."'>Activado</button>";
-				
+				$permiso = ControladorAsignaciones::ctrVerAsignado($personas[$i]["id"], $valor);
+
+				if (isset($permiso["modulo"])) 
+				{
+					$acciones = "<button class='btn btn-success btn-xs btnActivarUsr' estadoUsuario='0' idUsuario='".$personas[$i]["id"]."'>Activado</button>";
+					
+				}
+				else
+				{
+					$acciones = "<button class='btn btn-danger btn-xs btnActivarUsr' estadoUsuario='1' idUsuario='".$personas[$i]["id"]."'>Desactivado</button>";
+				}
+
+	           $areas = ControladorAreas::ctrMostrarAreas("id", $personas[$i]["id_area"]);
+	           $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
+
+	          
+
+		   		$dJson .='[
+	    		"'.($i+1).'",
+	    		"'.$usuario["nombre"].'",
+	    		"'.$areas["nombre"].'",
+	    		"'.$acciones.'"
+	    		],';
+
 			}
-			else
-			{
-				$acciones = "<button class='btn btn-danger btn-xs btnActivarUsr' estadoUsuario='1' idUsuario='".$personas[$i]["id"]."'>Desactivado</button>";
-			}
 
-           $areas = ControladorAreas::ctrMostrarAreas("id", $personas[$i]["id_area"]);
-           $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
-
-          
-
-	   		$dJson .='[
-    		"'.($i+1).'",
-    		"'.$usuario["nombre"].'",
-    		"'.$areas["nombre"].'",
-    		"'.$acciones.'"
-    		],';
-
+		
 		    
 		}//For
 
@@ -85,5 +91,6 @@ $verpersonas = new Tablapersonas();
 if( isset($_GET["p"]))
 {
 	$verpersonas -> modulo = $_GET["p"];
+	$verpersonas -> idUsuario = $_GET["idusr"];
 	$verpersonas -> mostrarTablapersonas();
 }

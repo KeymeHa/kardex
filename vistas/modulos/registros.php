@@ -1,13 +1,15 @@
 <?php
 
-   $idmodulo = 7;
-  $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
-
-  if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
+  if ($_SESSION["perfil"] != '7') 
   {
-    echo'<script> window.location="noAutorizado";</script>';
-  }
+      $idmodulo = 7;
+      $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
 
+      if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
+      {
+        echo'<script> window.location="noAutorizado";</script>';
+      }
+  }
 
 ?>
 
@@ -70,14 +72,49 @@
            <th>Asunto</th>
            <th>Remitente</th>
             <?php if($_SESSION["perfil"] == 7){echo '<th>Área</th>';}?> 
+           <th>Estado</th>
            <th>Acciones</th>
          </tr> 
         </thead>
         </table>
 
         <?php
+        /*
+        if (isset($_GET["sw"])) 
+        {
+          if ($_GET["sw"] == 1 || $_GET["sw"] == 0) 
+          {
+            $sw = $_GET["sw"];
+          }
+          else
+          {
+             $sw = 0;
+          }
+        }
+        else
+        {
+          $sw = 0;
+        }
 
-        $registros = ControladorRadicados::ctrVerRegistros(0, $_SESSION["perfil"], $_SESSION["perfil"], null, null, 1);
+        if (isset($_GET["fechaInicial"])) 
+        {
+          if (validateDate($_GET["fechaInicial"]) && validateDate($_GET["fechaFinal"])) 
+          {
+            $fechaInicial = $_GET["fechaInicial"];
+            $fechaFinal = $_GET["fechaFinal"];
+          }
+          else
+          {
+            $fechaInicial = $fechaFinal = null;
+          }
+        }
+        else
+        {
+          $fechaInicial = $fechaFinal = null;
+        }
+
+        //static public function ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
+        $registros = ControladorRadicados::ctrVerRegistros(0, $_SESSION["perfil"], 7, $fechaInicial, $fechaFinal, $sw);
 
         if ($registros == null) {
           echo 'nulo';
@@ -85,7 +122,7 @@
         else
         {
           echo 'lleno';
-        }
+        }*/
 
         ?>
       </div>

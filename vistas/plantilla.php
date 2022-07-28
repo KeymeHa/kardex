@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     if (isset($_GET["ruta"])) 
     {
        $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
@@ -123,13 +124,16 @@
         echo '<script type="text/javascript" src="vistas/js/'.$value["page"].'.js"></script>';
       }//foreach
 
-      if ($js_data["file"] == 1) 
+      if (isset($js_data["file"])) 
       {
-        if ( file_exists('vistas/js/'.$js_data["page"].'.js') ) 
-        {
-           echo '<script type="text/javascript" src="vistas/js/'.$js_data["page"].'.js"></script>';
-        }
-       
+         if ($js_data["file"] == 1) 
+          {
+            if ( file_exists('vistas/js/'.$js_data["page"].'.js') ) 
+            {
+               echo '<script type="text/javascript" src="vistas/js/'.$js_data["page"].'.js"></script>';
+            }
+           
+          }
       }
 
     }

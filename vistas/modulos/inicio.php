@@ -38,6 +38,12 @@
        
           <div class="row">
                 <?php 
+
+
+                //$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", 11);
+                //var_dump($area_o);
+
+
                 if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2){ echo'<div class="col-lg-3 col-xs-6">
 
 
@@ -104,7 +110,7 @@
                       <p>Genera Radicados y los registra en sistema.</p>
                     </div>
                     <div class="icon">
-                      <i class="ion ion-person"></i>
+                      <i class="fa fa-envelope"></i>
                     </div>
                     <a href="radicado" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
@@ -118,7 +124,7 @@
                       <p>Visualiza Los cortes y planaillas generados.</p>
                     </div>
                     <div class="icon">
-                      <i class="ion ion-person"></i>
+                      <i class="fa fa-newspaper-o"></i>
                     </div>
                     <a href="cortes" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>

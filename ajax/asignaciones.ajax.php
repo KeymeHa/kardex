@@ -1,6 +1,7 @@
 <?php
 require_once "../controladores/asignaciones.controlador.php";
 require_once "../modelos/asignaciones.modelo.php";
+require_once "../modelos/historial.modelo.php";
 
 class AjaxAsignacion
 {

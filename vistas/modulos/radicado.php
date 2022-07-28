@@ -222,7 +222,7 @@ for ($i=0; $i < count($porcion); $i++)
             <a href="resumenRadicado">
             <button style="color: white;" class="btn btn-success pull-left"><i class="fa fa-search"></i>  Buscar Radicado</button>
             </a>
-             <button style="color: white;" class="btn btn-success pull-right btn-corte"><i class="fa fa-scissors">&nbsp;</i>Realizar Corte  </button>
+             <button style="color: white;" idUsr="<?php echo $_SESSION['id'];?>" class="btn btn-success pull-right btn-corte"><i class="fa fa-scissors" >&nbsp;</i>Realizar Corte  </button>
           </div>
         </div>
       </div>

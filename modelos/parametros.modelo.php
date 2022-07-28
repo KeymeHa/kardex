@@ -185,6 +185,16 @@ class ModeloParametros
 
 	}
 
+	static public function mdlTraerCampo($tabla, $item, $valor, $item2)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT $item2 FROM $tabla WHERE $item = $valor LIMIT 1");
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 
 	static public function mdlJs_Files($tabla)
 	{
