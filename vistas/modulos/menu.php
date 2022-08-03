@@ -165,7 +165,7 @@
 			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "parametros"){ echo'class="active"'; } }
 
 
-			if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2")
+			if($_SESSION["perfil"] == "1" || $_SESSION["perfil"] == "2" || $_SESSION["perfil"] == "7")
 					{
 						echo'><a href="parametros">
 								<i class="fa fa-cogs"></i>
@@ -258,7 +258,23 @@
 						<i class="fa fa-balance-scale"></i>
 						<span>Registros de PQR</span>
 					</a>
-				</li>';
+				</li>
+			
+
+			<li ';
+
+			if(isset($_GET["ruta"])){ if($_GET["ruta"] == "parametros"){ echo'class="active"'; } }
+
+
+			if($_SESSION["perfil"] == "7")
+					{
+						echo'><a href="parametros">
+								<i class="fa fa-cogs"></i>
+								<span>Parametros</span>
+							</a>';
+					}
+
+			echo '</li>';
 
 				/*echo '<li';
 

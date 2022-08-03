@@ -122,6 +122,15 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
+	static public function mdlmostrarRegistroPQR($tabla, $query)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlmostrarRegistrosPQR($tabla, $query)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
@@ -390,28 +399,7 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
-	static public function mdlNuevaTrazabilidad($tabla, $id_radicado, $fecha, $mod)
-	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado, fecha, mod) VALUES (:id_radicado, :fecha, :mod)");
 
-		$stmt->bindParam(":id_radicado", $id_radicado, PDO::PARAM_STR);
-		$stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
-		$stmt->bindParam(":mod", $mod, PDO::PARAM_STR);
-
-
-		if($stmt->execute()){
-
-			return "ok";
-
-		}else{
-
-			return "error";
-		
-		}#$stmt->execute()
-
-		$stmt->close();
-		$stmt = null;
-	}
 
 	static public function mdlVerIndicativo($tabla, $id_radicado)
 	{

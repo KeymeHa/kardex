@@ -19,6 +19,12 @@ class AjaxProyecto
 		$respuesta = ControladorProyectos::ctrAsignarAreaaProyectos($idArea, $idProy, $sw);
 		echo json_encode($respuesta);
 	}
+
+	public function ajaxTraerProyecto($idArea)
+	{
+		$respuesta = ControladorProyectos::ctrMostrarProyectosPorArea($idArea);
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["idProy"]))
@@ -33,3 +39,8 @@ if(isset($_POST["idArea"]))
 	$add -> ajaxAddAreaProyecto($_POST["idArea"], $_POST["idProy"], $_POST["sw"]);
 }
 
+if (isset($_POST["traerProyecto"])) 
+{
+	$add = new AjaxProyecto();
+	$add -> ajaxTraerProyecto($_POST["traerProyecto"]);
+}

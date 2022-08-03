@@ -29,6 +29,12 @@
 
         <div class="col-lg-3 col-md-4 col-xs-12">
 
+          
+
+
+          
+
+          <!--
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
             <div class="info-box-content">
@@ -36,7 +42,7 @@
               <span class="info-box-number">2600</span>
             </div>
           </div>
-
+          -->
         </div><!--col-lg-3 col-md-4 col-xs-12-->
 
 

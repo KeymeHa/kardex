@@ -85,11 +85,17 @@
                   paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].');});</script>';
 
                 echo $paginaCargada;
-            }
 
-            if ($js_data["sw"] == 1) 
-            {
-              include "modulos/".$_GET["ruta"].".php";
+                if ($js_data["sw"] == 1) 
+                {
+                  include "modulos/".$_GET["ruta"].".php";
+
+                  #var_dump($js_data);
+                }
+                else
+                {
+                  include "modulos/404.php";
+                }
             }
             else
             {

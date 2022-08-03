@@ -169,15 +169,61 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
 
 $(document).ready(function() {
 
-	var elemento = $("#fechaGeneracion");
-
-	hoy(elemento);
+	hoy("#fechaGeneracion");
 
     $(".formularioNuevaRq").keypress(function(e) {
         if (e.which == 13) {
             return false;
         }
     });
+});
+
+$('#selectPersona').on('change', function() {
+  
+	$("#selecProyecto").children().remove();
+
+	var id_persona = $(this).val();
+
+	var dates = new FormData();
+	dates.append("traerId_Area", id_persona);
+
+	$.ajax({
+
+		url:"ajax/personas.ajax.php",
+		method: "POST",
+		data: dates,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuestaD)
+		{
+			var datos = new FormData();
+			datos.append("traerProyecto", respuestaD["id_area"]);
+
+			$.ajax({
+
+				url:"ajax/proyectos.ajax.php",
+				method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function(respuesta)
+				{
+					if(respuesta != '')
+					{
+						for (var i = 0; i < respuesta.length; i++) 
+						{
+							$("#selecProyecto").append('<option value="'+respuesta[i]["id"]+'">'+respuesta[i]["nombre"]+'</option>');
+						}
+					}
+				}
+			});
+		}
+	});
+
 });
 
 

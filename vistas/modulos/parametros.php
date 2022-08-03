@@ -1,3 +1,13 @@
+<?php
+
+if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfil"] != '7') 
+{
+   echo'<script> window.location="noAutorizado";</script>';
+}
+
+
+?>
+
 <div class="content-wrapper">
     <?php
     include "bannerConstruccion.php";
@@ -24,7 +34,11 @@
             <div class="table-responsive">
              <table class="table">
                 <tbody>
-                  <tr>
+                  <?php
+
+                  if ($_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2') 
+                  {
+                    echo ' <tr>
                     <th>Nombre de unidades de Insumos</th>
                     <td>Pertenece al nombre de las unidades para identificar la cantidad de unidades entrantes de las salientes.</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="1">Editar</button></td>
@@ -53,7 +67,23 @@
                     <th>Festivos</th>
                     <td>Permite importar por medio de un archivo en excel los festivos de un año</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="6">Administrar</button></td>
-                  </tr>
+                  </tr>';
+                  }
+                  elseif ($_SESSION["perfil"] == '3') {
+                    # code...
+                  }
+                  elseif ($_SESSION["perfil"] == '7') {
+                   echo '<tr>
+                    <th>Ajustar Terminos</th>
+                    <td>Puede Cambiar los terminos y valores de retención de documeentos</td>
+                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="7">Administrar</button></td>
+                  </tr>';
+                  }
+
+                  ?>
+
+
+                 
                 </tbody>
               </table>
             </div>

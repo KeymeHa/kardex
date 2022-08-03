@@ -689,6 +689,17 @@ class ControladorRadicados
 
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 
+
+
+	static public function ctrVerRegistroPQR($id)
+	{
+		$query = "WHERE id = ".$id;
+
+		$tabla = "registropqr";
+		$respuesta = ModeloRadicados::mdlmostrarRegistroPQR($tabla, $query);
+		return $respuesta;
+	}
+
 }
 
 

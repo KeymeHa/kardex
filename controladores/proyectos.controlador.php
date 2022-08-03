@@ -97,6 +97,7 @@ class ControladorProyectos
 		$nombre = [];
 		$ids = [];
 		$areas = ModeloProyectos:: mdlMostrarProyectosArea($tabla, null, null);
+		
 		if (!is_null($areas[0]["id_areas"]))
 		{
 			if (!$areas[0]["id_areas"] == "") 
@@ -105,15 +106,19 @@ class ControladorProyectos
 			 	{
 			 		$lis = json_decode($value["id_areas"], true);
 
-				 	foreach ($lis as $ki => $val)
-				 	{
-				 		if ($val["id"] == $valor) 
-				 		{
-				 			array_push($ids, $value["id_proyecto"]);
-				 			$proyecto = ModeloProyectos::mdlMostrarProyectosConFiltro("proyectos", "id", $value["id_proyecto"]);
-				 			array_push($nombre, $proyecto["nombre"]);
-				 		}
-				 	}
+			 		if ( !is_null($lis) ) 
+			 		{
+			 			foreach ($lis as $ki => $val)
+					 	{
+					 		if ($val["id"] == $valor) 
+					 		{
+					 			array_push($ids, $value["id_proyecto"]);
+					 			$proyecto = ModeloProyectos::mdlMostrarProyectosConFiltro("proyectos", "id", $value["id_proyecto"]);
+					 			array_push($nombre, $proyecto["nombre"]);
+					 		}
+					 	}
+			 		}
+	
 			 	}
 			 }
 		}

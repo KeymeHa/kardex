@@ -105,3 +105,16 @@ $(".daterangepicker.opensleft .ranges li").on("click", function(){
 	}
 
 })
+
+
+$(".tablaRegistros").on("click", "button.btnVerRegistro", function(){
+
+	var idRegistro = $(this).attr("idRegistro");
+
+	window.location = "index.php?ruta=correspondencia&idRegistro="+idRegistro;
+
+
+})
+
+
+

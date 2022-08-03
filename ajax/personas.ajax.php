@@ -27,6 +27,12 @@ class AjaxPersonas
 		$respuesta = ControladorPersonas::ctrMostrarListaPersonas();
 		echo json_encode($respuesta);
 	}#ajaxEditarPersona
+
+	public function ajaxTraerIdArea($id_persona)
+	{	
+		$respuesta = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $id_persona);
+		echo json_encode($respuesta);
+	}#ajaxEditarPersona
 }
 if(isset($_POST["idper"]))
 {	$editar = new AjaxPersonas();
@@ -36,4 +42,8 @@ if(isset($_POST["idper"]))
 if(isset($_POST["llamar"]))
 {	$editar = new AjaxPersonas();
 	$editar -> ajaxLlamarPersonas();}
+
+if(isset($_POST["traerId_Area"]))
+{	$traer = new AjaxPersonas();
+	$traer -> ajaxTraerIdArea($_POST["traerId_Area"]);}
 

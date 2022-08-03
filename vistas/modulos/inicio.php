@@ -182,7 +182,7 @@
 
                 if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
                 {
-                     echo '<div class="col-lg-6 col-lg-12 col-sm-12">
+                     echo '<div class="col-lg-3 col-xs-6">
 
                       <!-- small box -->
                       <div class="small-box bg-red">
@@ -199,7 +199,7 @@
                     </div><!--col-lg-3 col-xs-6-->
 
 
-                    <div class="col-lg-6 col-lg-12 col-sm-12">
+                    <div class="col-lg-3 col-xs-6">
 
                       <!-- small box -->
                       <div class="small-box bg-green">

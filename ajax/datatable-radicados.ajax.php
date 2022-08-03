@@ -36,7 +36,16 @@ class TablaRadicados
             $fechaCorregida = ControladorParametros::ctrOrdenFecha($radicados[$i]["fecha"], 3);
 
 
-		    $acciones = "<div class='btn-group'><button class='btn btn-info btnImpRadicado' title='Imprimir Radicado' id_rad='".$radicados[$i]["id"]."' rad='".$radicados[$i]["radicado"]."' ><i class='fa fa-print'></i></button><button class='btn btn-success btnVerRadicado' title='Ver Radicado' id_rad='".$radicados[$i]["id"]."' ><i class='fa fa-book'></i></button><button class='btn btn-warning btnEditarRadicado' title='Editar Radicado' data-toggle='modal' data-target='#modalEditarRadicado' id_rad='".$radicados[$i]["id"]."'><i class='fa fa-pencil' ></i></button><button class='btn btn-danger btnAnularRadico' title='Anular' id_rad='".$radicados[$i]["id"]."'><i class='fa fa-close'></i></button></div>";
+            if ($id_corte == 0) 
+            {
+            	$acciones = "<div class='btn-group'><button class='btn btn-info btnImpRadicado' title='Imprimir Radicado' id_rad='".$radicados[$i]["id"]."' rad='".$radicados[$i]["radicado"]."' ><i class='fa fa-print'></i></button><button class='btn btn-success btnVerRadicado' title='Ver Radicado' id_rad='".$radicados[$i]["id"]."' ><i class='fa fa-book'></i></button><button class='btn btn-warning btnEditarRadicado' title='Editar Radicado' data-toggle='modal' data-target='#modalEditarRadicado' id_rad='".$radicados[$i]["id"]."'><i class='fa fa-pencil' ></i></button><button class='btn btn-danger btnAnularRadico' title='Anular' id_rad='".$radicados[$i]["id"]."'><i class='fa fa-close'></i></button></div>";
+            }
+            else
+            {
+            	$acciones = "<div class='btn-group'><button class='btn btn-info btnImpRadicado' title='Imprimir Radicado' id_rad='".$radicados[$i]["id"]."' rad='".$radicados[$i]["radicado"]."' ><i class='fa fa-print'></i></button><button class='btn btn-success btnVerRadicado' title='Ver Radicado' id_rad='".$radicados[$i]["id"]."' ><i class='fa fa-book'></i></button></div>";
+            }
+
+		    
 		    $areas = ControladorAreas::ctrMostrarAreas("id", $radicados[$i]["id_area"]);
 
 

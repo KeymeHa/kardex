@@ -82,10 +82,9 @@
                     <select class="form-control" name="id_proyecto">
                       <?php
                         $proyecto = ControladorProyectos::ctrMostrarProyectosPorArea($personas["id_area"]);
-                        var_dump($proyecto);
                         for ($i=0; $i < count($proyecto); $i++) 
                         { 
-                          echo '<option value="'.$proyecto[$i]["id"].'" name="idProyecto">'.$proyecto[$i]["nombre"].'</option>';
+                          echo '<option value="'.$proyecto[$i]["id"].'">'.$proyecto[$i]["nombre"].'</option>';
                         }
                         ?> 
                     </select>

@@ -811,7 +811,7 @@ class ControladorParametros
 
 	public static function ctrValidarPermiso($perfil, $jdata)
 	{
-		$sw = 0;
+
 		$permiso = array(1 => "pUno",
 						2 => "pDos",
 						3 => "pTres",
@@ -821,17 +821,25 @@ class ControladorParametros
 						7 => "pSiete",
 						8 => "pOcho");
 
+		if (isset($jdata[$permiso[$perfil]])) 
+		{
+			if ($jdata[$permiso[$perfil]] == $perfil) 
+	        {
+	          	return 1;
+	        }
+	        else
+	        {
+	         	return 0;
+	        }
+		}
+		else
+		{
+			return 0;
+		}
 
-        if ($jdata[$permiso[$perfil]] == $perfil) 
-        {
-          $sw = 1;
-        }
-        else
-        {
-          $sw = 0;
-        }
         
-		return $sw;
+        
+		
 	}
 
 	static public function ctrActualizaPermiso($id_usuario, $ruta, $sw)

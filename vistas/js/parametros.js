@@ -22,6 +22,10 @@ $("button.btn-param").click(function(){
 	{
 		verImportarFestivos();
 	}
+	else if(sw == 7)
+	{
+		verTerminos();
+	}
 
 
 })
@@ -67,7 +71,51 @@ function verImportarFestivos()
 
 }
 
+function verTerminos()
+{
+	$("span.titulo-box").html("Modificar Terminos y Retenciones");
 
+	if ( $("div.contenido-box").children().length != 0 ) 
+	{
+		$("div.contenido-box").children().remove();
+	}
+
+	var datos = new FormData();
+	datos.append("verMod", 1);
+
+	$.ajax({
+
+		url:"ajax/parametros.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{
+
+			$("div.contenido-box").append('<table class="table">'+
+                '<tbody>'+
+                '</tbody>'+
+                '<table>')
+
+			for (var i = 0; i < respuesta.length; i++) 
+			{
+				if (respuesta[i]["ver"] != 0) 
+				{
+
+				/*	$("div.contenido-box table tbody").append('<tr>'+
+	                    '<th>'+respuesta[i]["title"]+'</th>'+
+	                    '<td>'+respuesta[i]["descripcion"]+'</td>'+
+	                    '<td><button type="button" class="btn btn-block btn-danger btn-param" title="Click Para Modificar" idPag="'+respuesta[i]["id"]+'">Desactivado</button></td>'+
+	                 '</tr>')*/
+				}
+			}	
+		}
+	});
+
+}
 
 function verModulos()
 {

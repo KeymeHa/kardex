@@ -55,7 +55,8 @@
                 <div class="col-xs-7">
                   <div class="form-group">
                     <label>Solicitante RQ</label>
-                    <select class="form-control" name="id_persona">
+                    <select class="form-control" name="id_persona" id="selectPersona">
+                       <option value="">Seleccione Encargado</option>
                         <?php
                         $item = null;
                         $valor = null;
@@ -67,10 +68,20 @@
                           $valor1 = $value["id_area"];
                           $areas = ControladorAreas::ctrMostrarAreas($item1, $valor1);
 
-                          echo '<option value="'.$value["id"].'" name="idPersona">'.$value["nombre"].', '.$areas["nombre"].'</option>';
+                          echo '<option value="'.$value["id"].'" id_area="'.$valor1.'">'.$value["nombre"].', '.$areas["nombre"].'</option>';
                         }
 
                         ?> 
+                    </select>
+                  </div>   
+                </div>
+              </div>
+
+               <div class="row">
+                <div class="col-xs-7">
+                  <div class="form-group">
+                    <label>*Proyecto Asociado</label>
+                    <select class="form-control" name="id_proyecto" id="selecProyecto" required>
                     </select>
                   </div>   
                 </div>
@@ -81,7 +92,7 @@
                   <p class="help-block">*Fecha de Solicitud</p>           
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="date" class="form-control" id="fechaGeneracion" placeholder="dd/mm/AAAA" autocomplete="off" required>
+                      <input type="date" class="form-control input-xs" name="fechaSol" value="" id="fechaGeneracion" required>
                     </div>              
                   </div>
                 </div>

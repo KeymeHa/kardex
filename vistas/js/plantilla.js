@@ -23,19 +23,19 @@ function hoy(elemento)
 
 		if(mes < 10){
 
-			var fecha = anio+"-0"+mes+"-"+dia;
+			var fecha = anio+"/0"+mes+"/"+dia;
 
 		}else if(dia < 10){
 
-			var fecha = anio+"-"+mes+"-0"+dia;
+			var fecha = anio+"/"+mes+"/0"+dia;
 
 		}else if(mes < 10 && dia < 10){
 
-			var fecha = anio+"-0"+mes+"-0"+dia;
+			var fecha = anio+"/0"+mes+"/0"+dia;
 
 		}else{
 
-			var fecha = anio+"-"+mes+"-"+dia;
+			var fecha = anio+"/"+mes+"/"+dia;
 
 		}	
 
