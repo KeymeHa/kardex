@@ -69,16 +69,26 @@
           Nuevo Insumo
         </button>';
 
+          $canCategorias = ControladorCategorias::ctrContarCategorias(null, null);
+
+          if ($canCategorias != 0) 
+          {
+            echo '&nbsp;<a href="vistas/modulos/reportes/excelReportCat.php?r=r"><button class="btn btn-success"><i class="fa  fa-cloud-download"></i>
+            Exportar Categorias</button></a>';
+          }
+
+
            if($parametro == 0)
            {
-              echo'<button class="btn btn-success" data-toggle="modal" data-target="#modalimportarIns">
-                  <i class="fa fa-download"></i> Importar Insumos
-                  </button>
+              echo'&nbsp;<button class="btn btn-success" data-toggle="modal" data-target="#modalimportarIns">
+                  <i class="fa fa-cloud-upload"></i> Importar Insumos
+                  </button>&nbsp;
                   <a href="vistas/doc/plantillaInsumos.xlsx">
-                  <button class="btn btn-success">
-                  <i class="fa fa-download"></i> Descargar Plantilla
-                  </button>
-                  </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
+                    <button class="btn btn-success" id="btn-DesPlantilla">
+                      <i class="fa fa-download"></i> Descargar Plantilla
+                    </button>
+                  </a>
+                  <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
            }
         }
         else

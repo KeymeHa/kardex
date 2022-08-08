@@ -29,7 +29,7 @@ class TablaFacturas
 			$facturas = ControladorFacturas::ctrMostrarFacturas(null, null);
 		}
 
-	    if ( count($facturas) == 0) 
+	    if ( count($facturas) == 0 || count($facturas[0]) == 0) 
 	    {  	echo'{"data": []}';	return; }
 
 	    $dJson = '{"data": [';

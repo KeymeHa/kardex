@@ -240,7 +240,6 @@ $(".tablaInsumos").on("click", "button.btn-stock", function(){
 
 })
 
-
 function agregarDivStock()
 {
 	$("#tab_stock").append('<div class="tab-pane" id="box-entradas" style="position: relative;">'+

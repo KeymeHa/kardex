@@ -1,10 +1,16 @@
 <?php
-require_once "../../../controladores/insumos.controlador.php";
-require_once "../../../controladores/facturas.controlador.php";
-require_once "../../../controladores/proveedores.controlador.php";
-require_once "../../../modelos/facturas.modelo.php";
-require_once "../../../modelos/proveedores.modelo.php";
-require_once "../../../modelos/insumos.modelo.php";
+
+
+$rrta = "../../../";
+
+require_once $rrta."controladores/insumos.controlador.php";
+require_once $rrta."controladores/facturas.controlador.php";
+require_once $rrta."controladores/proveedores.controlador.php";
+require_once $rrta."modelos/facturas.modelo.php";
+require_once $rrta."modelos/proveedores.modelo.php";
+require_once $rrta."modelos/insumos.modelo.php";
+require_once $rrta."controladores/parametros.controlador.php";
+require_once $rrta."modelos/parametros.modelo.php";
 
 if (isset($_GET["r"])) 
 {

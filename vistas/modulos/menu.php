@@ -34,6 +34,21 @@
 			}
 
 
+			if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 ||  $_SESSION["perfil"] == 10) 
+			{
+				echo '<li class="header">Inventario Equipos de Computo</li>';
+
+				echo '<li ';
+				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'usuarios' ){ echo 'active';} }
+
+				echo '><a href="equipos">
+						<i class="fa fa-desktop"></i>
+						<span>Base de Datos PC</span>
+					</a></li>';
+
+			}
+
+
 			///inventario
 
 			if ($_SESSION["perfil"] == "1" ||  $_SESSION["perfil"] == "2" || $_SESSION["perfil"] == "3" ) 

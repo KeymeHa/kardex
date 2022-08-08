@@ -99,11 +99,12 @@ class ControladorCategorias
 
 			if($sw == 0)
 			{
-				$categoria = $ejecutar -> mdlMostrarCategoriasConFiltro("categorias", "categoria", $cadena[$i]);
+				$categoria = ModeloCategorias::mdlMostrarCategoriasConFiltro("categorias", "categoria", $cadena[$i]);
 
 				if (isset($categoria["id"])) 
 				{
-					if ($categoria["id"] != "" || $categoria["id"] != null) {
+					if ($categoria["id"] != "" || $categoria["id"] != null) 
+					{
 						$id = $categoria["id"];
 						$sw = 1;
 					}
@@ -114,7 +115,7 @@ class ControladorCategorias
 		if ($sw == 0) 
 		{
 			$categoria = $ejecutar -> ctrCatOtros();
-			$categoria = $ejecutar -> mdlMostrarCategoriasConFiltro("categorias", "categoria", "Otros");
+			$categoria = ModeloCategorias::mdlMostrarCategoriasConFiltro("categorias", "categoria", "Otros");
 			$id = $categoria["id"];
 		}
 
@@ -405,12 +406,12 @@ class ControladorCategorias
 
 	static public function ctrExportarCategorias()
 	{
-		if (isset($_GET["ext"])) 
+		if (isset($_GET["r"])) 
 		{
 			$filename = 'categorias.xls';
 
 			$mostrarCat = new ControladorCategorias();
-			$categorias = $mostrarCat -> ctrMostrarCategorias(null, null);
+			$categorias = $mostrarCat -> ctrMostrarCategoriasConFiltro(null, null);
 
 			if (count($categorias)!= 0) 
 			{
@@ -434,16 +435,11 @@ class ControladorCategorias
 
 				foreach ($categorias as $row => $item){
 
-					if ($item["id"] == 0) 
-					{
-						 echo utf8_decode("<tr>
-				 			<td style='border:1px solid #eee;'>".$item["id"]."</td>
-				 			<td style='border:1px solid #eee;'>".$item["categoria"]."</td> 
-				 			<td style='border:1px solid #eee;'>".$item["descripcion"]."</td> 	
-			 			</tr>");
-					}
-
-					
+					 echo utf8_decode("<tr>
+			 			<td style='border:1px solid #eee;'>".$item["id"]."</td>
+			 			<td style='border:1px solid #eee;'>".$item["categoria"]."</td> 
+			 			<td style='border:1px solid #eee;'>".$item["descripcion"]."</td> 	
+		 			</tr>");
 				}
 				echo "</table>";
 			}

@@ -263,6 +263,39 @@ class ModeloInsumos
 
 	}#mdlIngresarInsumo
 
+	static public function mdlIngresarInsumoIMP($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, stock, stockIn, precio_compra, precio_unidad, precio_por_mayor, prioridad, estante, nivel, seccion) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :stock, :stockIn, :precio_compra, :precio_unidad, :precio_por_mayor, :prioridad, :estante, :nivel, :seccion)");
+
+		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+		$stmt->bindParam(":stockIn", $datos["stockIn"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_unidad", $datos["precio_unidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_por_mayor", $datos["precio_por_mayor"], PDO::PARAM_STR);
+		$stmt->bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_INT);
+		$stmt->bindParam(":estante", $datos["estante"], PDO::PARAM_STR);
+		$stmt->bindParam(":nivel", $datos["nivel"], PDO::PARAM_STR);
+		$stmt->bindParam(":seccion", $datos["seccion"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+
+	}#mdlIngresarInsumoIMP
+
 	static public function mdlImportarInsumo($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, observacion, stock, stockIn, precio_compra, precio_unidad, precio_por_mayor, estante, nivel, seccion, prioridad, unidad, unidadSal, contenido, habilitado) VALUES (:id_categoria, :codigo, :descripcion, :observacion, :stock, :stockIn, :precio_compra, :precio_unidad, :precio_por_mayor, :estante, :nivel, :seccion, :prioridad, :unidad, :unidadSal, :contenido, :habilitado)");

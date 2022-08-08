@@ -29,8 +29,8 @@
 
           if ($canCategorias != 0) 
           {
-            echo '<button class="btn btn-success" id="expCategorias"><i class="fa  fa-download"></i>
-            Exportar</button>';
+            echo '<a href="vistas/modulos/reportes/excelReport.php?r=r"><button class="btn btn-success"><i class="fa  fa-download"></i>
+            Exportar</button></a>';
           }
 
 

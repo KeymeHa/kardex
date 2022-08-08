@@ -39,10 +39,8 @@
           <div class="row">
                 <?php 
 
-
                 //$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", 11);
                 //var_dump($area_o);
-
 
                 if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2){ echo'<div class="col-lg-3 col-xs-6">
 
@@ -58,6 +56,24 @@
                     <i class="ion ion-person"></i>
                   </div>
                   <a href="usuarios" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+              </div><!--col-lg-3 col-xs-6-->';}
+
+
+               if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 10){ echo'<div class="col-lg-3 col-xs-6">
+
+
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                  <div class="inner">
+                    <h3>Base de Datos PC</h3>
+
+                    <p>Lista El invantario de Equipos de Computo.</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-desktop"></i>
+                  </div>
+                  <a href="equipos" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!--col-lg-3 col-xs-6-->';}
 
