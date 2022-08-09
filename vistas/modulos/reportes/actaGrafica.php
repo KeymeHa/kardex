@@ -23,7 +23,7 @@
         <div class="col-lg-2">
 
           <?php
-            $tipoActa = ControladorActas::ctrContarTipo($fechaInicial, $fechaFinal);
+            $tipoActa = ControladorActas::ctrContarTipo($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
             if($tipoActa != null)
             {

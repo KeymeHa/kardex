@@ -166,11 +166,11 @@ class ControladorActas
 		}
 	}
 
-	static public function ctrMostrarActas($item, $valor)
+	static public function ctrMostrarActas($item, $valor, $anio)
 	{
 		$tabla = "actas";
 		$r = new ControladorActas;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloActas::mdlMostrarActas($tabla, $item, $valor, $anio);
 		return $respuesta;
 	}
@@ -186,11 +186,11 @@ class ControladorActas
 	
 	}//ctrMostrarFacturas
 
-	static public function ctrContarTipo($fechaInicial, $fechaFinal)
+	static public function ctrContarTipo($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "actas";
 		$r = new ControladorActas;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloActas::mdlContarTipo($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
@@ -329,7 +329,7 @@ class ControladorActas
 		}
 	}
 
-	static public function ctrBorrarActa($id_usr)
+	static public function ctrBorrarActa($id_usr, $anio)
 	{
 		if(isset($_GET["idActa"]))
 		{
@@ -337,7 +337,7 @@ class ControladorActas
 			{
 				$idActa = $_GET["idActa"];
 				$verActa = new ControladorActas;
-				$ac = $verActa->ctrMostrarActas("id", $idActa);
+				$ac = $verActa->ctrMostrarActas("id", $idActa, $anio);
 
 				if($ac != null )
 				{			

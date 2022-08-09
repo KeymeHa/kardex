@@ -10,7 +10,7 @@
       {
         $item = "id";
         $valor = $_GET["idActa"];
-        $acta = Controladoractas::ctrMostrarActas($item, $valor);
+        $acta = Controladoractas::ctrMostrarActas($item, $valor, $_SESSION["anioActual"]);
         $listaInsumos = json_decode($acta["listainsumos"],true);
       }
     }

@@ -312,6 +312,7 @@ function paginaCargada(pagina, id, per, anioActual){
 		{
 			tablaElegida =  $('.tablaAreas');
 			tablaAjax = 'areas';
+			variable = "?actual="+anioActual;
 		}
 		else if(pagina == 16)
 		{

@@ -7,12 +7,13 @@ require_once "../../../modelos/actas.modelo.php";
 class generarActaPDF{
 
 public $responsable;
+public $anioActual;
 
 public function actaEnPDF(){
 
 //TRAEMOS LA INFORMACIÓN DE LA VENTA
 
-$acta = ControladorActas::ctrMostrarActas("id", $_GET["idActa"]);
+$acta = ControladorActas::ctrMostrarActas("id", $_GET["idActa"], $this->anioActual);
 date_default_timezone_set('America/Bogota');
 
 require_once('tcpdf_include.php');
@@ -240,6 +241,7 @@ $pdf->Output('ActadeInventario.pdf');
 }
 
 $genActaPDF = new generarActaPDF();
+$genActaPDF -> anioActual = $_GET["anioActual"];
 $genActaPDF -> actaEnPDF();
 
 ?>

@@ -32,17 +32,20 @@ $(".tablaActas").on("click", "button.btnVerActa", function(){
 
 $(".tablaActas").on("click", "button.btnGenerarActaPDF", function(){
 	var idActa = $(this).attr("idActa");
-	window.open("extensiones/tcpdf/pdf/actaPDF.php?idActa="+idActa, "_blank");
+	var anioActual = $(this).attr("anioActual");
+	window.open("extensiones/tcpdf/pdf/actaPDF.php?idActa="+idActa+"&anioActual="+anioActual, "_blank");
 
 })
 
 $(".tablaActas").on("click", "button.btnEditarActa", function(){
 	var idActa = $(this).attr("idActa");
-	window.location = "index.php?ruta=editarActa&idActa="+idActa;
+	var anioActual = $(this).attr("anioActual");
+	window.location = "index.php?ruta=editarActa&idActa="+idActa+"&anioActual="+anioActual;
 })
 
 $(".tablaActas").on("click", "button.btnEliminarActa", function(){
 	var idActa = $(this).attr("idActa");
+	var anioActual = $(this).attr("anioActual");
 	swal({
 		type: "warning",
 		title: "¡Estas Segur@ de Eliminar el Acta!",
@@ -56,7 +59,7 @@ $(".tablaActas").on("click", "button.btnEliminarActa", function(){
 	}).then((result)=>{
 		if (result.value) 
 		{
-			window.location = "index.php?ruta=actas&idActa="+idActa;
+			window.location = "index.php?ruta=actas&idActa="+idActa+"&anioActual="+anioActual;
 		}
 	})
 })

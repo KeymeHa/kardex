@@ -63,5 +63,5 @@
 
 <?php
   $borrarActa = new ControladorActas();
-  $borrarActa -> ctrBorrarActa($_SESSION["id"]);
+  $borrarActa -> ctrBorrarActa($_SESSION["id"], $_SESSION["anioActual"]);
 ?>

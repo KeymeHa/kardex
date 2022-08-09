@@ -43,17 +43,16 @@ class ControladorRequisiciones
 		return $respuesta;
 	}
 
-	function anioActualArea()
+	function anioActualArea($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
 
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio;
 	    }
 
 
@@ -172,7 +171,7 @@ class ControladorRequisiciones
 
 	}
 
-	static public function ctrContarRqdeArea($item, $valor)
+	static public function ctrContarRqdeArea($item, $valor, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
@@ -182,11 +181,11 @@ class ControladorRequisiciones
 
 	}
 
-	static public function ctrContarRqdePersonas($fechaInicial, $fechaFinal)
+	static public function ctrContarRqdePersonas($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualArea();
+		$anio = $r->anioActualArea($anio);
 		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
@@ -194,12 +193,12 @@ class ControladorRequisiciones
 	}
 
 
-	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal)
+	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRequisiciones::MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;

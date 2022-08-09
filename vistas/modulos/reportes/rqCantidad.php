@@ -24,7 +24,7 @@
 
           <?php
 
-            $countAreas = ControladorRequisiciones::ctrCantidadMesAnioRq(0, $fechaInicial, $fechaFinal);
+            $countAreas = ControladorRequisiciones::ctrCantidadMesAnioRq(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
             if( $countAreas != null)
             {

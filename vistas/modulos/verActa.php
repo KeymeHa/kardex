@@ -11,7 +11,7 @@
     {
       $item = "id";
       $valor = $_GET["idActa"];
-      $acta = ControladorActas::ctrMostrarActas($item, $valor);
+      $acta = ControladorActas::ctrMostrarActas($item, $valor, $_SESSION["anioActual"]);
       $listaInsumos = json_decode($acta["listainsumos"], true);
       $cantidadInsumos = 0;
 
