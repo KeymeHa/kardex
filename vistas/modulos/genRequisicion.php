@@ -97,7 +97,7 @@
                   <p class="help-block">*Fecha de Solicitud</p>           
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="date" class="form-control" id="fechaGeneracion" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>
+                      <input type="text" class="form-control" id="fechaGeneracion" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>
                     </div>              
                   </div>
                 </div>

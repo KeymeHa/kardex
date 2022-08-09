@@ -21,17 +21,17 @@ function hoy(elemento)
 		var mes = d.getMonth()+1;
 		var anio = d.getFullYear();
 
-		if(mes < 10){
+		if(mes < 10 && dia < 10){
+
+			var fecha = anio+"/0"+mes+"/0"+dia;
+
+		}else if(mes < 10 && dia > 9){
 
 			var fecha = anio+"/0"+mes+"/"+dia;
 
-		}else if(dia < 10){
+		}else if(mes > 9 && dia < 10){
 
 			var fecha = anio+"/"+mes+"/0"+dia;
-
-		}else if(mes < 10 && dia < 10){
-
-			var fecha = anio+"/0"+mes+"/0"+dia;
 
 		}else{
 

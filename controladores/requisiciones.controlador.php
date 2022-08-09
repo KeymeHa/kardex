@@ -70,11 +70,11 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarFacturas   Mercado$456
 
-	static public function ctrMostrarRequisicionesId($item, $valor, $id)
+	static public function ctrMostrarRequisicionesId($item, $valor, $id, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualSinAppr();
+		$anio = $r->anioActualSinAppr($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesId($tabla, $item, $valor, $anio, $id);
 
 		return $respuesta;

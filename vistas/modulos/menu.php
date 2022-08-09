@@ -322,7 +322,7 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Radicado</a></li>
+						<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Requisición</a></li>
 						<li><a href="hisRequisicion"><i class="fa fa-clone"></i>Historial</a></li>
 					</ul>
 				</li>';

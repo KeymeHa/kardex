@@ -30,7 +30,7 @@ class TablaRequisiciones
 		}
 		else
 		{
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesId(null, null, $sw);
+			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesId(null, null, $sw, $this->anioActual);
 		}
 
 	    $dJson = '{
