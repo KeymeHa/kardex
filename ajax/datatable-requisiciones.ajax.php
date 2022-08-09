@@ -15,33 +15,26 @@ class TablaRequisiciones
 	public $fechaInicial;
 	public $fechaFinal;
 	public $appr;
+	public $anioActual;
 	public function mostrarTablaRq()
 	{
 
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 		$sw = $this->appr;
 
 		if ($sw == 1) 
 		{
-			if($fechaIn != null)
-			{
-				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango($fechaIn, $fechaOut);
-			}
-			else
-			{
-				$requisiciones = ControladorRequisiciones::ctrMostrarRequisiciones(null, null);
-			}
+
+			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		}
 		else
 		{
-			if($fechaIn != null)
+			if($this->fechaInicial != null)
 			{
-				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoAppr($fechaIn, $fechaOut, $sw);
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoAppr($this->fechaInicial, $this->anioActual, $sw, $this->anioActual);
 			}
 			else
 			{
-				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesAppr(null, null, $sw);
+				$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesAppr(null, null, $sw, $this->anioActual);
 			}
 		}
 
@@ -111,6 +104,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$mostrarRq -> fechaInicial = null;
 		$mostrarRq -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+	    {
+	      $mostrarRq -> anioActual = $_GET["actual"];
+	    }
 	}
 	else
 	{
@@ -120,6 +117,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+    {
+      $mostrarRq -> anioActual = $_GET["actual"];
+    }
 	$mostrarRq -> fechaInicial = null;
 	$mostrarRq -> fechaFinal = null;
 	

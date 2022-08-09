@@ -37,11 +37,11 @@
         <?php
             if ( isset($_GET["fechaInicial"]) ) 
             {
-              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'">';
+              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'&anioActual='.$_SESSION["anioActual"].'">';
             }
             else
             {
-              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r">';
+              echo'<a href="vistas/modulos/reportes/excelReport.php?r=r&anioActual='.$_SESSION["anioActual"].'">';
             }
           ?>
           <button type="button" class="btn btn-success" id="excelReport">
@@ -121,7 +121,7 @@
     include "reportes/facturaGrafica.php";
     include "reportes/facturaCantidad.php";
     include "reportes/inversionAnual.php";
-
+    
     ?>
 
   </section>

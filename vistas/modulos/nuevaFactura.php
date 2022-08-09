@@ -56,6 +56,7 @@
                     <label for="exampleInputEmail1">Codigo Factura</label>
 
                     <input type="text" class="form-control" id="codigoFactura" name="codigoFactura" placeholder="ej: COD-02-2021" autocomplete="off" title="Codigo o referencia del proveedor" required>
+                    <input type="hidden" id="inputanioActual" value="<?php echo $_SESSION['anioActual'];?>">
                   </div>
                 </div>
               </div>

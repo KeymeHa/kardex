@@ -150,7 +150,7 @@
 
                 <?php
                   $anexarRq = new ControladorRequisiciones();
-                  $anexarRq -> ctrEditarRequisicion();
+                  $anexarRq -> ctrEditarRequisicion($_SESSION["anioActual"]);
                 ?>
             </form>
           </div>

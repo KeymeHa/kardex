@@ -10,19 +10,12 @@ class TablaActas
 {	
 	public $fechaInicial;
 	public $fechaFinal;
+	public $anioActual;
+
 	public function mostrarTablaActas()
 	{	  
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 
-			if($fechaIn != null)
-			{
-				$actas = Controladoractas::ctrMostrarActasRango($fechaIn, $fechaOut);
-			}
-			else
-			{
-				$actas = Controladoractas::ctrMostrarActas(null, null);
-			}
+		$actas = Controladoractas::ctrMostrarActasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 
 	      $dJson = '{"data": [';
 
@@ -81,6 +74,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$verActas -> fechaInicial = null;
 		$verActas -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+		{
+			$verActas -> anioActual = $_GET["actual"];
+		}
 	}
 	else
 	{
@@ -91,6 +88,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+	{
+		$verActas -> anioActual = $_GET["actual"];
+	}
 	$verActas -> fechaInicial = null;
 	$verActas -> fechaFinal = null;
 	$verActas -> mostrarTablaActas();

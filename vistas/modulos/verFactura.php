@@ -9,7 +9,7 @@
     {
       $item = "id";
       $valor = $_GET["idFactura"];
-      $facturas = ControladorFacturas::ctrMostrarFacturas($item, $valor); 
+      $facturas = ControladorFacturas::ctrMostrarFacturas($item, $valor, $_SESSION["anioActual"]); 
       $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $facturas["id_proveedor"]); 
       $fecha = ControladorParametros::ctrOrdenFecha($facturas["fecha"], 0);
       $listaInsumos = json_decode($facturas["insumos"], true);

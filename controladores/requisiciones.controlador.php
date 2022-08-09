@@ -1,57 +1,44 @@
 <?php
 
-
-
 class ControladorRequisiciones
 {
 
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = 'WHERE aprobado = 1';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"].' AND aprobado = 1';
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1';
 	    }
-
-
 		return $respuesta;
 	}
 
-	function anioActualSinAppr()
+	function anioActualSinAppr($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio;
 	    }
-
-
 		return $respuesta;
 	}
 
-	function anioActualAppr()
+	function anioActualAppr($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = 'WHERE aprobado = 0';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio["anio"].' AND aprobado = 0';
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0';
 	    }
-
 
 		return $respuesta;
 	}
@@ -73,11 +60,11 @@ class ControladorRequisiciones
 		return $respuesta;
 	}
 
-	static public function ctrMostrarRequisiciones($item, $valor)
+	static public function ctrMostrarRequisiciones($item, $valor, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisiciones($tabla, $item, $valor, $anio);
 
 		return $respuesta;
@@ -93,28 +80,28 @@ class ControladorRequisiciones
 
 		return $respuesta;
 	
-	}//ctrMostrarFacturas   Mercado$456
+	}//ctrMostrarRequisicionesId   Mercado$456
 
-	static public function ctrContarRequisicionesAppr()
+	static public function ctrContarRequisicionesAppr($anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualAppr();
+		$anio = $r->anioActualAppr($anio);
 		$respuesta = ModeloRequisiciones::mdlContarRequisicionesAppr($tabla, $anio);
 		return $respuesta[0];
 	
-	}//ctrMostrarFacturas   Mercado$456
+	}//ctrContarRequisicionesAppr   Mercado$456
 
-	static public function ctrMostrarRequisicionesAppr($item, $valor, $sw)
+	static public function ctrMostrarRequisicionesAppr($item, $valor, $sw, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualAppr();
+		$anio = $r->anioActualAppr($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisiciones($tabla, $item, $valor, $anio);
 
 		return $respuesta;
 	
-	}//ctrMostrarFacturas   Mercado$456
+	}//ctrMostrarRequisicionesAppr   Mercado$456
 
 	static public function ctrMostrarRequisicionesRangoId($fechaInicial, $fechaFinal, $id)
 	{
@@ -125,37 +112,36 @@ class ControladorRequisiciones
 
 		return $respuesta;
 	
-	}//ctrMostrarFacturas
+	}//ctrMostrarRequisicionesRangoId
 
-	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
-	}//ctrMostrarFacturas
+	}//ctrMostrarRequisicionesRango
 
-	static public function ctrMostrarRequisicionesRangoAppr($fechaInicial, $fechaFinal,$sw)
+	static public function ctrMostrarRequisicionesRangoAppr($fechaInicial, $fechaFinal, $sw, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualAppr();
+		$anio = $r->anioActualAppr($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoAppr($tabla, $fechaInicial, $fechaFinal, $anio);
-
 		return $respuesta;
 	
-	}//ctrMostrarFacturas
+	}//ctrMostrarRequisicionesRangoAppr
 
 
-	static public function ctrContarRequisicionesFecha($sw)
+	static public function ctrContarRequisicionesFecha($sw, $anio)
 	{
 		date_default_timezone_set('America/Bogota');
 
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$mes = date("m");
 		$tabla = "requisiciones";
 		$respuesta = ModeloRequisiciones::mdlContarRequisicionesFecha($tabla, $sw, $anio, $mes);
@@ -174,12 +160,12 @@ class ControladorRequisiciones
 	}
 
 
-	static public function ctrContarRqArea($sw, $fechaInicial, $fechaFinal)
+	static public function ctrContarRqArea($sw, $fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualArea();
+		$anio = $r->anioActualArea($anio);
 		$respuesta = ModeloRequisiciones::MdlContarRqArea($tabla, $sw, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
@@ -219,12 +205,12 @@ class ControladorRequisiciones
 		return $respuesta;
 	}
 
-	static public function ctrTraerInsumosRq($sw)
+	static public function ctrTraerInsumosRq($sw, $anio)
 	{
 
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRequisiciones::MdlTraerInsumosRq($tabla, $sw, $anio);
 
 		if ($respuesta != null) 
@@ -282,13 +268,13 @@ class ControladorRequisiciones
 		
 	}
 
-	static public function ctrTraerInsumosRqRango($fechaInicial, $fechaFinal)
+	static public function ctrTraerInsumosRqRango($fechaInicial, $fechaFinal, $anio)
 	{
 
 		$tabla = "requisiciones";
 
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRequisiciones::MdlTraerInsumosRqRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
@@ -496,7 +482,7 @@ class ControladorRequisiciones
 		return $respuesta;
 	}//ctrMostrartempRq
 
-	static public function ctrEditarRequisicion()
+	static public function ctrEditarRequisicion($anio)
 	{
 		if ( isset($_POST["editarRq"]) ) 
 		{
@@ -506,7 +492,7 @@ class ControladorRequisiciones
 				//actualizacion de inventario
 
 				$verRq = new ControladorRequisiciones;
-				$requisicion = $verRq->ctrMostrarRequisiciones("id", $_POST["editarRq"]);
+				$requisicion = $verRq->ctrMostrarRequisiciones("id", $_POST["editarRq"], $anio);
 
 				if(!$_POST["listadoInsumosRq"] == "")
 				{
@@ -692,7 +678,7 @@ class ControladorRequisiciones
 		}
 	}
 
-	static public function ctrBorrarRq($id_usr)
+	static public function ctrBorrarRq($id_usr, $anio)
 	{
 		if(isset($_GET["idRq"]))
 		{
@@ -700,7 +686,7 @@ class ControladorRequisiciones
 			{
 				$idRq = $_GET["idRq"];
 				$verRq = new ControladorRequisiciones;
-				$rq = $verRq->ctrMostrarRequisiciones("id", $idRq);
+				$rq = $verRq->ctrMostrarRequisiciones("id", $idRq, $anio);
 
 				if($rq != null )
 				{

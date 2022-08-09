@@ -15,7 +15,7 @@ require_once $rrta."modelos/parametros.modelo.php";
 if (isset($_GET["r"])) 
 {
 	$reporteExcel = new ControladorFacturas();
-	$reporteExcel -> ctrReporteXlsx();
+	$reporteExcel -> ctrReporteXlsx($_GET["anioActual"]);
 }
 else
 {

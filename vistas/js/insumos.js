@@ -211,6 +211,7 @@ $(".tablaInsumos").on("click", "button.btn-stock", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
 	var des = $(this).attr("desInsumo");
+	var anioActual = $('#inputPagCarAnioActual').val();
 	$('#tituloInsumo').html(des);
 
 	if (localStorage.getItem("idStock") != null) 
@@ -226,15 +227,15 @@ $(".tablaInsumos").on("click", "button.btn-stock", function(){
 	{
 		$("#tab_stock").children().remove();
 		agregarDivStock();
-		paginaCargada(21, 0, 0);
-		paginaCargada(22, 0, 0);
+		paginaCargada(21, 0, 0, anioActual);
+		paginaCargada(22, 0, 0, anioActual);
 
 	}
 	else
 	{
 		agregarDivStock();
-		paginaCargada(21, 0, 0);
-		paginaCargada(22, 0, 0);
+		paginaCargada(21, 0, 0, anioActual);
+		paginaCargada(22, 0, 0, anioActual);
 	}
 
 

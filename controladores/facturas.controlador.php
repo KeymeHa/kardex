@@ -3,68 +3,63 @@
 class ControladorFacturas
 {
 
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {$respuesta = '';}
 	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
+	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
 		return $respuesta;
 	}
 
-	function anioActualProv()
+	function anioActualProv($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(facturas.fecha) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(facturas.fecha) = '.$anio;
 	    }
-
-
 		return $respuesta;
 	}
 
-	static public function ctrMostrarFacturasRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarFacturasRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "facturas";
 		$r = new ControladorFacturas;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloFacturas::mdlMostrarFacturasRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	
 	}//ctrMostrarFacturas
 	
-	static public function ctrMostrarFacturas($item, $valor)
+	static public function ctrMostrarFacturas($item, $valor, $anio)
 	{
 		$tabla = "facturas";
 		$r = new ControladorFacturas;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloFacturas::mdlMostrarFacturas($tabla, $item, $valor, $anio);
 		return $respuesta;
 	
 	}//ctrMostrarFacturas
 
-	static public function ctrContarFacturasProv($fechaInicial, $fechaFinal)
+	static public function ctrContarFacturasProv($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "facturas";
 		$r = new ControladorFacturas;
-		$anio = $r->anioActualProv();
+		$anio = $r->anioActualProv($anio);
 		$respuesta = ModeloFacturas::mdlAgruparFacturas($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}
 
-	static public function ctrContarFacProv($fechaInicial, $fechaFinal)
+	static public function ctrContarFacProv($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "facturas";
 		$r = new ControladorFacturas;
-		$anio = $r->anioActualProv();
+		$anio = $r->anioActualProv($anio);
 		$respuesta = ModeloFacturas::mdlAgruparFacturasCan($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}
@@ -478,12 +473,12 @@ class ControladorFacturas
 
 	}//ctrCrearFactura
 
-	static public function ctrEditarFactura()
+	static public function ctrEditarFactura($anio)
 	{
 		if ( isset($_POST["idFactura"]) ) 
 		{
 			$verFactura = new ControladorFacturas;
-			$factura = $verFactura->ctrMostrarFacturas("id", $_POST["idFactura"]);
+			$factura = $verFactura->ctrMostrarFacturas("id", $_POST["idFactura"], $anio);
 			$directorio = "";
 			if( !$factura == null)
 			{
@@ -774,7 +769,7 @@ class ControladorFacturas
 		}
 	}
 
-	static public function ctrReporteXlsx()
+	static public function ctrReporteXlsx($anio)
 	{
 		if(isset($_GET["r"])){
 
@@ -783,15 +778,11 @@ class ControladorFacturas
 
 			if(isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]))
 			{
-
-				
-				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, $_GET["fechaInicial"], $_GET["fechaFinal"]);
-
+				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, $_GET["fechaInicial"], $_GET["fechaFinal"], $anio);
 			}
 			else
 			{
-				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, null, null);
-
+				$facturas = $verFacturas -> ctrMostrarFacturasRango($tabla, null, null, $anio);
 			}
 			
 			date_default_timezone_set('America/Bogota');

@@ -73,7 +73,7 @@
 
           if ($canCategorias != 0) 
           {
-            echo '&nbsp;<a href="vistas/modulos/reportes/excelReportCat.php?r=r"><button class="btn btn-success"><i class="fa  fa-cloud-download"></i>
+            echo '&nbsp;<a href="vistas/modulos/reportes/excelReportCat.php?r=r"><button class="btn btn-success"><i class="fa  fa-cloud-upload"></i>
             Exportar Categorias</button></a>';
           }
 
@@ -81,7 +81,7 @@
            if($parametro == 0)
            {
               echo'&nbsp;<button class="btn btn-success" data-toggle="modal" data-target="#modalimportarIns">
-                  <i class="fa fa-cloud-upload"></i> Importar Insumos
+                  <i class="fa fa-cloud-download"></i> Importar Insumos
                   </button>&nbsp;
                   <a href="vistas/doc/plantillaInsumos.xlsx">
                     <button class="btn btn-success" id="btn-DesPlantilla">
@@ -100,7 +100,7 @@
                   <button class="btn btn-success">
                   <i class="fa fa-download"></i> Descargar Plantilla
                   </button>
-                  </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe haber creado al menos 1 categoria</span>';
+                  </a> <i class="fa fa-warning text-yellow"></i><span> Antes de importar debe estar creada al menos 1 categoria.</span>';
            }
         }
 

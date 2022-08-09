@@ -1,6 +1,6 @@
 <?php 
 
- $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv($fechaInicial, $fechaFinal);
+ $countOrdProv = ControladorOrdenCompra::ctrContarOrdenProv($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 ?>
 
 <div class="box">

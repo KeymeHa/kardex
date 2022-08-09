@@ -9,19 +9,13 @@ class TablaCortes
 {	
 	public $fechaInicial;
 	public $fechaFinal;
+	public $anioActual;
+
 	public function mostrarTablaCortes()
 	{	
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 
-		if($fechaIn != null)
-		{
-			$cortes = ControladorRadicados::ctrMostrarCortesRango($fechaIn, $fechaOut);
-		}
-		else
-		{
-			$cortes = ControladorRadicados::ctrMostrarCortesRango(null, null);
-		}
+		$cortes = ControladorRadicados::ctrMostrarCortesRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
+
 
 	    if ( count($cortes) == 0) 
 	    {  	echo'{"data": []}';	return; }
@@ -62,6 +56,11 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$verCortes -> fechaInicial = null;
 		$verCortes -> fechaFinal = null;
+
+		if ( isset($_GET["actual"]) ) 
+		{
+			$verCortes -> anioActual = $_GET["actual"];
+		}
 	}
 	else
 	{
@@ -72,6 +71,11 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+	{
+		$verCortes -> anioActual = $_GET["actual"];
+	}
+	
 	$verCortes -> fechaInicial = null;
 	$verCortes -> fechaFinal = null;
 	$verCortes -> mostrarTablaCortes();

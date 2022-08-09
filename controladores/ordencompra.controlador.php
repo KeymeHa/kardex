@@ -3,46 +3,40 @@
 class ControladorOrdenCompra
 {
 
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio;
 	    }
 
 
 		return $respuesta;
 	}
 
-	function anioActualProv()
+	function anioActualProv($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(ordenCompra.fecha) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(ordenCompra.fecha) = '.$anio;
 	    }
-
-
 		return $respuesta;
 	}
 
-	static public function ctrMostrarOrdenesdeComprasRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarOrdenesdeComprasRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "ordenCompra";
 
 		$r = new ControladorOrdenCompra;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesCRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
@@ -60,11 +54,11 @@ class ControladorOrdenCompra
 	
 	}//ctrMostrarOrdenesdeCompras
 
-	static public function ctrContarOrdenProv($fechaInicial, $fechaFinal)
+	static public function ctrContarOrdenProv($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "ordenCompra";
 		$r = new ControladorOrdenCompra;
-		$anio = $r->anioActualProv();
+		$anio = $r->anioActualProv($anio);
 		$respuesta = ModeloOrdenCompra::mdlAgruparOdenes($tabla,$fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	}

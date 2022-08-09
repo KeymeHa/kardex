@@ -2,13 +2,12 @@
 
 class ControladorRadicados
 {
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {$respuesta = '';}
 	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
+	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
 		return $respuesta;
 	}
 
@@ -17,7 +16,7 @@ class ControladorRadicados
 	{
 		$tabla = "radicados";
 		$r = new ControladorFacturas;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRadicados::mdlMostrarRadicadoRango($tabla, $fechaInicial, $fechaFinal, $anio, $id_area, $sw);
 		return $respuesta;
 	}
@@ -47,11 +46,11 @@ class ControladorRadicados
 	}
 
 
-	static public function ctrMostrarCortesRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarCortesRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "cortes";
 		$r = new ControladorRadicados;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloRadicados::mdlMostrarCortesRango($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	
@@ -603,7 +602,7 @@ class ControladorRadicados
 	}//ctrNuevoRegistro
 
 	#							id del usuario 
-	static public function ctrVerRegistrosPQR($id, $per, $mod, $fI, $fF, $es)
+	static public function ctrVerRegistrosPQR($id, $per, $mod, $fI, $fF, $es, $anio)
 	{
 
 		$query = "";
@@ -643,7 +642,7 @@ class ControladorRadicados
 			else
 			{
 				$r = new ControladorRadicados;
-				$anio = $r->anioActual();
+				$anio = $r->anioActual($anio);
 				$query = $anio;
 			}
 

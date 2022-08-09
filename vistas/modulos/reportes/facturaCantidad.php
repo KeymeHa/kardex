@@ -23,7 +23,7 @@
         <div class="col-lg-4">
           <?php
 
-             $countFacProv = ControladorFacturas::ctrContarFacProv($fechaInicial, $fechaFinal);
+             $countFacProv = ControladorFacturas::ctrContarFacProv($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
             if( $countFacProv != null)
             {
@@ -61,7 +61,7 @@
  var data = [
      <?php
 
-     $countFacProv = ControladorFacturas::ctrContarFacProv($fechaInicial, $fechaFinal);
+     $countFacProv = ControladorFacturas::ctrContarFacProv($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
    if($countFacProv != null)
     {

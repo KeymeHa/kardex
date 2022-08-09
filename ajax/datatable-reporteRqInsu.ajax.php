@@ -11,12 +11,11 @@ class TablaRequisiciones
 
 	public $fechaInicial;
 	public $fechaFinal;
+  public $anioActual;
 	public function mostrarTablaRq()
 	{
 
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
-		$requisiciones = ControladorRequisiciones::ctrTraerInsumosRqRango($fechaIn, $fechaOut);
+		$requisiciones = ControladorRequisiciones::ctrTraerInsumosRqRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
  
       if ($requisiciones == null) 
       {
@@ -122,6 +121,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$mostrarRq -> fechaInicial = null;
 		$mostrarRq -> fechaFinal = null;
+    if ( isset($_GET["actual"]) ) 
+    {
+      $mostrarRq -> anioActual = $_GET["actual"];
+    }
 	}
 	else
 	{
@@ -132,6 +135,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+  if ( isset($_GET["actual"]) ) 
+    {
+      $mostrarRq -> anioActual = $_GET["actual"];
+    }
 	$mostrarRq -> fechaInicial = null;
 	$mostrarRq -> fechaFinal = null;
 	$mostrarRq -> mostrarTablaRq();

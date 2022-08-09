@@ -13,7 +13,7 @@
       {
         $item = "id";
         $valor = $_GET["idFactura"];
-        $facturas = ControladorFacturas::ctrMostrarFacturas($item, $valor);
+        $facturas = ControladorFacturas::ctrMostrarFacturas($item, $valor, $_SESSION["anioActual"]);
       }
     }
     else{
@@ -295,7 +295,7 @@
                 <button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarFac">Guardar</button>
                 <?php
                   $editarFac = new ControladorFacturas();
-                  $editarFac -> ctrEditarFactura();
+                  $editarFac -> ctrEditarFactura($_SESSION["anioActual"]);
                 ?>
             </form>
           </div>

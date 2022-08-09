@@ -47,7 +47,7 @@
         <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
         <div class="info-box-content">
         <span class="info-box-text">Realizadas</span>
-        <span class="info-box-number">5</span>
+        <span class="info-box-number"><?php echo $_SESSION["anioActual"];?></span>
         </div>
         </div>
       </div>
@@ -57,7 +57,7 @@
         <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
         <div class="info-box-content">
         <span class="info-box-text">Pendientes</span>
-        <span class="info-box-number">5</span>
+        <span class="info-box-number"></span>
         </div>
         </div>
       </div>

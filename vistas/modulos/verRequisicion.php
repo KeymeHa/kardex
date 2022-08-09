@@ -11,7 +11,7 @@
     {
       $item = "id";
       $valor = $_GET["idRq"];
-      $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor);
+      $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
       $valor =  $requisicion["id_persona"];
       $persona = ControladorPersonas::ctrMostrarPersonas("id_usuario", $valor);
       $valor = $requisicion["id_area"];

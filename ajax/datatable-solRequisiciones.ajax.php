@@ -17,17 +17,16 @@ class TablaRequisiciones
 	public $fechaInicial;
 	public $fechaFinal;
 	public $iduser;
+	public $anioActual;
+
 	public function mostrarTablaRq()
 	{
 
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
-
 		$sw = $this->iduser;
 
-		if($fechaIn != null)
+		if($this->fechaInicial != null)
 		{
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoId($fechaIn, $fechaOut, $sw);
+			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoId($this->fechaInicial, $this->fechaFinal, $sw);
 		}
 		else
 		{
@@ -100,6 +99,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$mostrarRq -> fechaInicial = null;
 		$mostrarRq -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+	    {
+	      $mostrarRq -> anioActual = $_GET["actual"];
+	    }
 	}
 	else
 	{
@@ -109,6 +112,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+    {
+      $mostrarRq -> anioActual = $_GET["actual"];
+    }
 	$mostrarRq -> fechaInicial = null;
 	$mostrarRq -> fechaFinal = null;
 	

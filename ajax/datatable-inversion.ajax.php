@@ -11,20 +11,12 @@ class TablaInversion
 	public $idInsu;
 	public $fechaInicial;
 	public $fechaFinal;
+	public $anioActual;
 	public function mostrarTablaInversion()
 	{	
-		$valor = $this->idInsu;
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 
-		if($fechaIn != null)
-		{
-			$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaIn, $fechaOut);
-		}
-		else
-		{
-			$facturas = ControladorFacturas::ctrMostrarFacturas(null, null);
-		}
+		$facturas = ControladorFacturas::ctrMostrarFacturasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
+
 
 	    if ( count($facturas) == 0) 
 	    {  	echo'{"data": []}';	return; }
@@ -47,7 +39,7 @@ class TablaInversion
 
     		for ( $j=0 ; $j < count($lista); $j++) 
             { 
-              if ($lista[$j]["id"] == $valor && $sw == 0) 
+              if ($lista[$j]["id"] == $this->idInsu && $sw == 0) 
     			{
     				array_push($array_can, $lista[$j]["can"]);
     				array_push($array_codigoInt, $value["codigoInt"]);
@@ -113,6 +105,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$inversion -> fechaInicial = null;
 		$inversion -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+		{
+			$inversion -> anioActual = $_GET["actual"];
+		}
 	}
 	else
 	{
@@ -123,6 +119,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+	{
+		$inversion -> anioActual = $_GET["actual"];
+	}
 	$inversion -> fechaInicial = null;
 	$inversion -> fechaFinal = null;
 	$inversion -> mostrarTablaInversion();

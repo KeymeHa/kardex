@@ -12,20 +12,13 @@ class TablaVentas
 	public $fechaInicial;
 	public $fechaFinal;
 	public $inv;
+	public $anioActual;
 	public function mostrarTablaVentas()
 	{	
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
+
 		$inve = $this->inv;
 
-		if($fechaIn != null)
-		{
-			$ventas = ControladorVentas::ctrMostrarVentasRango($fechaIn, $fechaOut);
-		}
-		else
-		{
-			$ventas = ControladorVentas::ctrMostrarVentas(null, null);
-		}
+		$ventas = ControladorVentas::ctrMostrarVentasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 
 	    if ( count($ventas) == 0) 
 	    {  	echo'{"data": []}';	return; }
@@ -162,6 +155,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$verVentas -> fechaInicial = null;
 		$verVentas -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+	    {
+	      $verVentas -> anioActual = $_GET["actual"];
+	    }
 	}
 	else
 	{
@@ -172,6 +169,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+    {
+      $verVentas -> anioActual = $_GET["actual"];
+    }
 	$verVentas -> fechaInicial = null;
 	$verVentas -> fechaFinal = null;
 	$verVentas -> mostrarTablaVentas();

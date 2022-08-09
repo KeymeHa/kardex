@@ -2,17 +2,16 @@
 class ControladorActas
 {
 
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
 
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {
 	    	$respuesta = '';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio;
 	    }
 
 
@@ -176,11 +175,11 @@ class ControladorActas
 		return $respuesta;
 	}
 
-	static public function ctrMostrarActasRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarActasRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "actas";
 		$r = new ControladorActas;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloActas::mdlMostrarActasRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;

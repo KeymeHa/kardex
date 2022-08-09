@@ -14,27 +14,17 @@ class TablaFacturas
 	public $fechaInicial;
 	public $fechaFinal;
 	public $inv;
+	public $anioActual;
 	public function mostrarTablaFacturas()
 	{	
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
-		$inve = $this->inv;
-
-		if($fechaIn != null)
-		{
-			$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaIn, $fechaOut);
-		}
-		else
-		{
-			$facturas = ControladorFacturas::ctrMostrarFacturas(null, null);
-		}
+		$facturas = ControladorFacturas::ctrMostrarFacturasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 
 	    if ( count($facturas) == 0 || count($facturas[0]) == 0) 
 	    {  	echo'{"data": []}';	return; }
 
 	    $dJson = '{"data": [';
 
-	    if ($inve == 0) 
+	    if ($this->inv == 0) 
 		{
 			for( $i = 0; $i < count($facturas); $i++)
 			{	
@@ -165,6 +155,11 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$verFacturas -> fechaInicial = null;
 		$verFacturas -> fechaFinal = null;
+		
+		if ( isset($_GET["actual"]) ) 
+		{
+			$verFacturas -> anioActual = $_GET["actual"];
+		}
 	}
 	else
 	{
@@ -175,6 +170,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+	{
+		$verFacturas -> anioActual = $_GET["actual"];
+	}
 	$verFacturas -> fechaInicial = null;
 	$verFacturas -> fechaFinal = null;
 	$verFacturas -> mostrarTablaFacturas();

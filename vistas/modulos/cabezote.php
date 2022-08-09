@@ -24,7 +24,7 @@
 		              if ($_SESSION["perfil"] == 3) {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
 		              	$escasos = ControladorInsumos::ctrVerificarInsEscasos(null, null);
-		              	$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr();
+		              	$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr($_SESSION["anioActual"]);
 
 		              	if($agotado != 0)
 		              	{$noti+= 1;}

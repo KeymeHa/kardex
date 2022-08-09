@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `anios` (
 -- Volcando datos para la tabla kardex.anios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `anios` DISABLE KEYS */;
 INSERT INTO `anios` (`id`, `anio`) VALUES
-	(1, 2022),
+	(1, 2021),
 	(2, 2021),
 	(3, 2022);
 /*!40000 ALTER TABLE `anios` ENABLE KEYS */;
@@ -176,15 +176,16 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `descripcion` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `elim` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.categorias: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.categorias: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
 INSERT INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
 	(1, 'Papelería', 'Sin Informacion.', 0),
 	(2, 'Sistemas', 'Sin Informacion.', 0),
 	(3, 'Aseo', 'Sin Informacion.', 0),
-	(4, 'Otros', 'Almacena Insumos que no manejan categoría especifica', 0);
+	(4, 'Cocina', 'Elementos para la cocina', 0),
+	(5, 'Otros', 'Almacena Insumos que no manejan categoría especifica', 0);
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.clientes
@@ -348,10 +349,174 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   KEY `FK_insumos_insumosunidad_2` (`unidad`),
   CONSTRAINT `FK_insumos_insumosunidad` FOREIGN KEY (`unidadSal`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_insumos_insumosunidad_2` FOREIGN KEY (`unidad`) REFERENCES `insumosunidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.insumos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.insumos: ~163 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
+INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`, `imp`) VALUES
+	(1, 3, '1', 'AMBIENTADOR DE BAÑO AIR WICK', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(2, 4, '2', 'AROMATICA SURTIDA EN BOLSA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(3, 3, '3', 'ATOMIZADOR AMBIENTADOR LAVANDA ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(4, 4, '4', 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', 'SIN INFORMACION', NULL, 19, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(5, 4, '5', 'AZUCAR BLANCA*REFINADA*GRANULADA*100% NATURAL', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(6, 1, '6', 'BANDEJA PORTA DOCUMENTOS', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(7, 3, '7', 'BLANQUEADOR (LIMPIDO)', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(8, 1, '8', 'BOLIGRAFO  ROJO ', 'SIN INFORMACION', NULL, 10, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(9, 1, '9', 'BOLIGRAFO NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(10, 3, '10', 'BOLSA BASURA NEGRA X 90*110 ', 'SIN INFORMACION', NULL, 7, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(11, 3, '11', 'BOLSA BASURA VERDE 42*47CMS ', 'SIN INFORMACION', NULL, 9, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(12, 1, '12', 'BORRADOR DE NATA', 'SIN INFORMACION', NULL, 13, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(13, 1, '13', 'BORRADOR DE TABLERO', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(14, 4, '14', 'CAFÉ TOSTADO Y MOLIDO, FUERTE', 'SIN INFORMACION', NULL, 28, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(15, 1, '15', 'CARATULA POLY COVER CARTA ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(16, 1, '16', 'CARTULINA BRISTOL 1/8 X 8 SURTIDAS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(17, 1, '17', 'CARTULINA BRISTOL 70*100 BLANCA', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(18, 2, '18', 'CD-R ', 'SIN INFORMACION', NULL, 129, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(19, 3, '19', 'CERA NATURAL SÓLIDA PARA MADERA AUTOBRILLO', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(20, 1, '20', 'CINTA EMP TRANSP 48X100 REF.301 3M ', 'SIN INFORMACION', NULL, 14, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(21, 1, '21', 'CINTA EMP TRANSP DELGADA 12 MM X40M ', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(22, 2, '22', 'CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(23, 1, '23', 'CINTA INVISIBLE 33M:19MM PARA CHEQUES', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(24, 1, '24', 'CLIP MARIPOSA GIGANTE', 'SIN INFORMACION', NULL, 8, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(25, 1, '25', 'CLIP MARIPOSA X 50 EMP*50 ', 'SIN INFORMACION', NULL, 6, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(26, 1, '26', 'CLIP SENCILLO X 100 EMP*100', 'SIN INFORMACION', NULL, 9, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(27, 1, '27', 'COLBON (PEGANTE UNIVERSAL) 480GR', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(28, 4, '28', 'COLCAFE COFFE CREAM 100 SOBRES DE 3 GR', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(29, 1, '29', 'CORRECTOR LIQUIDO LAPIZ *7 ML', 'SIN INFORMACION', NULL, 8, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(30, 4, '30', 'CREMA INSTANTANEA NO LACTEA PARA CAFÉ ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(31, 3, '31', 'CREMA LAVALOZA ', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(32, 1, '32', 'CUENTA FACIL', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(33, 5, '33', 'DECAMETRO STANPROF 10 MTS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(34, 5, '34', 'DECAMETRO STANPROF 30 MTS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(35, 5, '35', 'DECAMETRO STANPROF 50 MTS', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(36, 3, '36', 'DESENGRASANTE', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(37, 3, '37', 'DESINFECTANTE MULTIUSOS ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(38, 3, '38', 'DETERGENTE EN POLVO ', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(39, 2, '39', 'DVD +R ', 'SIN INFORMACION', NULL, 106, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(40, 3, '40', 'ESCOBA SUAVE MANGO MADERA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(41, 3, '41', 'ESPONJA LAVAPLATOS DOBLE USO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(42, 5, '42', 'FLEXOMETRO LUFKIN 26/8METROS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(43, 1, '43', 'FOLIADOR (NUMERADOR CONSECUTIVO)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(44, 1, '44', 'FORMAS CONTINUAS 1/2 11 1/2 TROQUELADA', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(45, 1, '45', 'FORMAS CONTINUAS 9 1/2 *11 1P BLANCA 901', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(46, 1, '46', 'FORMAS CONTINUAS 9 1/2 *11 3P BLANCA 903 ', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(47, 1, '47', 'GANCHO LEGAJADOR PLASTICO ', 'SIN INFORMACION', NULL, 11, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(48, 1, '48', 'GRAPA COBRIZADA STANDARD *5000 ', 'SIN INFORMACION', NULL, 5, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(49, 1, '49', 'GRAPA GALVANIZADA INDUSTRIAL *1000', 'SIN INFORMACION', NULL, 10, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(50, 1, '50', 'GRAPADORA 340 RANK (SENCILLA)', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(51, 1, '51', 'GRAPADORA INDUSTRIAL HASTA 100 HOJAS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(52, 3, '52', 'GUANTES DE LATEX DE  EXAMEN ', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(53, 3, '53', 'GUANTES SEMI-INDUSTRIALES T9-9 ½*CALIBRE 25*LATEX NATURAL*COLOR NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(54, 1, '54', 'GUIA CLASIFICADORA  CARTULINA REF. 105 AMARILLA ', 'SIN INFORMACION', NULL, 17, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(55, 1, '55', 'GUIAS CELUGUIA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(56, 2, '56', 'HP 10 NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(57, 2, '57', 'HP 711 AMARILLO', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(58, 2, '58', 'HP 711 CYAN', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(59, 2, '59', 'HP 711 MAGENTA', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(60, 2, '60', 'HP 711 NEGRO', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(61, 2, '61', 'HP 82 AMARILLO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(62, 2, '62', 'HP 82 NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(63, 1, '63', 'HUELLERO COLOR NEGRO', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(64, 3, '64', 'JABON LÍQUIDO PARA MANOS, ANTIBACTERIAL, BIODEGRADABLE AROMA MANZANA', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(65, 4, '65', 'LAMPARAS FLUORESCENTES SILVANIA', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(66, 1, '66', 'LAPIZ NEGRO Nº2 ORIG. 482 ', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(67, 1, '67', 'LEGAJADOR AZ OFICIO AZUL ', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(68, 1, '68', 'LEGAJOS (CARPETAS DE EDUBAR)', 'SIN INFORMACION', NULL, 500, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(69, 3, '69', 'LEXMARK AMARILLO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(70, 3, '70', 'LEXMARK CYAN', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(71, 3, '71', 'LEXMARK NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(72, 1, '72', 'LIBRO ACTA 1/2 OFICIO 80H  100 FOLIOS (BITACORA)', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(73, 3, '73', 'LIMPIAVIDRIOS (AMONIACO-DESENGRASANTE SECADO RAPIDO)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(74, 3, '74', 'LIMPION', 'SIN INFORMACION', NULL, 22, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(75, 3, '75', 'LIQUIDO ESPECIAL PARA PISOS (BRILLO)', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(76, 1, '76', 'MARCADOR BORRABLE', 'SIN INFORMACION', NULL, 15, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(77, 1, '77', 'MARCADOR PERMANENTE NEGRO PUNTA FINA  (SHARPIE)', 'SIN INFORMACION', NULL, 21, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(78, 1, '78', 'MARCADORES PERMANENTES SURTIDOS (ROJO/AZUL/NEGRO)', 'SIN INFORMACION', NULL, 6, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(79, 3, '79', 'MASCARILLA DESECHABLE (TAPABOCAS)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(80, 4, '80', 'MEZCLADORES DESECHABLES PARA CAFÉ', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(81, 2, '81', 'MOUSE USB', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(82, 3, '82', 'PAPEL HIGIENIENICO INSTITUCIONAL ROLLOS, DOBLE HOJA, PRECORTADO, BLANCO', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(83, 1, '83', 'PAPEL RESMA DOBLE CARTA 11*17 75GRS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(84, 1, '84', 'PAPEL RESMA FOTOCOPIA 75GR CARTA ', 'SIN INFORMACION', NULL, 10, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(85, 1, '85', 'PAPEL RESMA FOTOCOPIA 75GR OFICIO ', 'SIN INFORMACION', NULL, 20, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(86, 3, '86', 'PAPELERA (CANECA)', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(87, 1, '87', 'PASTA CATALOGO 0.5R HERRAJE BLANCA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(88, 1, '88', 'PASTA CATALOGO 1.0R HERRAJE BLANCA', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(89, 1, '89', 'PASTA CATALOGO 1.5R HERRAJE BLANCA', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(90, 1, '90', 'PASTA CATALOGO 2.0R HERRAJE BLANCA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(91, 1, '91', 'PASTA CATALOGO 2.5R HERRAJE BLANCA', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(92, 1, '92', 'PASTA CATALOGO 3.0D HERRAJE BLANCA', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(93, 1, '93', 'PEGANTE  EN BARRA 40GRS ', 'SIN INFORMACION', NULL, 7, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(94, 1, '94', 'PERFORADORA 3 HUECOS', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(95, 1, '95', 'PERFORADORA RANK 1050 DOS HUECOS SEMI INDUSTRIAL (40 HOJAS)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(96, 1, '96', 'PERFORADORA SENCILLA 1038 RANK', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(97, 4, '97', 'PLATO DESECHABLE MEDIANO *20 ESPUMADO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(98, 1, '98', 'PROTECTOR DE TRANSPARENCIA (BOLSILLOS)', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(99, 1, '99', 'RECIBO DE CAJA MENOR X 200 HOJAS', 'SIN INFORMACION', NULL, 9, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(100, 3, '100', 'RECOGEDOR DE BASURA', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(101, 4, '101', 'REGLA DE 30 CM', 'SIN INFORMACION', NULL, 5, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(102, 1, '102', 'RESALTADORES SURTIDOS ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(103, 1, '103', 'ROLLO PLOTER BOND 75 GR 28 PULGADAS', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(104, 4, '104', 'ROLLO TOALLA COCINA LAVABLE', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(105, 1, '105', 'SACAGRAPA', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(106, 1, '106', 'SACAPUNTA', 'SIN INFORMACION', NULL, 13, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(107, 1, '107', 'SELLO NUMERADOR FOLIADOR AUTOMATICO CONSECUTIVO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(108, 4, '108', 'SERVILLETA 27-5*17', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(109, 1, '109', 'SOBRE MANILA CARTA  22*29 ', 'SIN INFORMACION', NULL, 120, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(110, 1, '110', 'SOBRE MANILA GIGANTE 37*27 ', 'SIN INFORMACION', NULL, 80, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(111, 1, '111', 'SOBRE MANILA OFICIO 25*35 ', 'SIN INFORMACION', NULL, 151, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(112, 4, '112', 'SOBRES NESCAFE TRADICION ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(113, 4, '113', 'TE HELADO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(114, 2, '114', 'TECLADO KB-110X USB ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(115, 1, '115', 'TIJERA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(116, 2, '116', 'TINTA EPSON 664 COLOR AMARILLO', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(117, 2, '117', 'TINTA EPSON 664 COLOR CYAN', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(118, 2, '118', 'TINTA EPSON 664 COLOR MAGENTA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(119, 2, '119', 'TINTA EPSON 664 COLOR NEGRO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(120, 2, '120', 'TINTA PARA SELLO DE CAUCHO', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(121, 1, '121', 'TIRA NEGRA (CAPACIDAD DE 300 HOJAS)', 'SIN INFORMACION', NULL, 5, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(122, 1, '122', 'TIRA NEGRA 11MM*42 AROS (CAPACIDAD DE 70 HOJAS)', 'SIN INFORMACION', NULL, 79, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(123, 1, '123', 'TIRA NEGRA 12 MM (CAPACIDAD DE 80 HOJAS)', 'SIN INFORMACION', NULL, 109, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(124, 1, '124', 'TIRA NEGRA 15 MM (CAPACIDAD DE 120 HOJAS)', 'SIN INFORMACION', NULL, 31, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(125, 1, '125', 'TIRA NEGRA 18 MM (CAPACIDAD DE 140 HOJAS)', 'SIN INFORMACION', NULL, 34, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(126, 1, '126', 'TIRA NEGRA 22 MM (CAPACIDAD DE 170 HOJAS)', 'SIN INFORMACION', NULL, 11, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(127, 1, '127', 'TIRA NEGRA 25 MM (CAPACIDAD DE 200 HOJAS)', 'SIN INFORMACION', NULL, 36, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(128, 1, '128', 'TIRA NEGRA 9MM  (CAPACIDAD DE 50 HOJAS)', 'SIN INFORMACION', NULL, 208, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(129, 2, '129', 'TK 512 AMARILLO', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(130, 2, '130', 'TK 512 MAGENTA', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(131, 2, '131', 'TK512 CYAN', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(132, 3, '132', 'TOALLA DE MANOS BLANCA 24X21CM HOJA TRIPLE DOBLADA EN Z', 'SIN INFORMACION', NULL, 23, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(133, 2, '133', 'TONER NEGRO TK-1147 (2035)', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(134, 2, '134', 'TONER NEGRO TK-137 (2810)', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(135, 2, '135', 'TONER NEGRO TK-3122 (4200)', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(136, 2, '136', 'TONER NEGRO TK-3132 (4300)', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(137, 2, '137', 'TONER NEGRO TK-342 (2020)', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(138, 3, '138', 'TRAPERO TIPO INDUSTRIAL', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(139, 3, '139', 'VARSOL SIN OLOR ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(140, 4, '140', 'VASO 11 ONZAS TRANSPARENTE', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(141, 4, '141', 'VASO CAFETERO TERMICO ESPUMADO (4 ONZAS)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(142, 1, '142', 'LAPIZ ROJO', 'SIN INFORMACION', NULL, 10, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(143, 1, '143', 'NOTAS ADHESIVAS', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(144, 1, '144', 'PLANILLERO ACRILICO CON GANCHO', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(145, 1, '145', 'BLOCK ANOTACIÒN ', 'SIN INFORMACION', NULL, 7, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(146, 1, '146', 'CAJA ARCHIVO INACTIVO # 20', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(147, 1, '147', 'CALCULADORA CASIO 12 DIGITOS', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(148, 2, '148', 'TONER TK-1175 (M2040dn)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(149, 2, '149', 'TONER TK-3160/3162', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(150, 1, '150', 'CHINCHE TRITON NIQUELADO', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(151, 1, '151', 'EXACTO PLÀSTICO GRANDE', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(152, 2, '152', 'TONER NEGRO HP 85A(P1102W)', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(153, 4, '153', 'SERVILLETA DE LUJO 33*32CM ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(154, 2, '154', 'FUNDA PARA CD', 'SIN INFORMACION', NULL, 50, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(155, 1, '155', 'FORMAS CONTINUAS 9 1/2 x 5 1/2  2 PARTES', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(156, 1, '156', 'FORMAS CONTINUAS 9 1/2 x 11 2 PARTES', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(157, 2, '157', 'LEXMARK MAGENTA', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(158, 1, '158', 'BANDERITA', 'SIN INFORMACION', NULL, 14, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(159, 3, '159', 'BOLSA BLANCA', 'SIN INFORMACION', NULL, 11, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(160, 3, '160', 'BOLSA CANECA PEQUEÑA', 'SIN INFORMACION', NULL, 3, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(161, 2, '161', 'TINTA EPSON MAGENTA 544', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(162, 2, '162', 'TINTA EPSON CYAN 544', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(163, 1, '163', 'LIBRO CARTA', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:51', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0);
 /*!40000 ALTER TABLE `insumos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.insumosnombre
@@ -627,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`) VALUES
-	(1, 10, 20, 30, 1, 2, 1, 1, 2022, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 0, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3272, 1772, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
+	(1, 10, 20, 30, 1, 2, 1, 1, 2022, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3272, 1772, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -1008,7 +1173,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-08-08 08:31:56', '2021-02-11 05:06:49', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-08-09 11:40:36', '2021-02-11 05:06:49', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-23 15:35:33', '2021-08-19 06:12:33', '97pabqieof66locspl0m949r0k', 0, 0, 0),
 	(3, 'Karelly Moreno Llorente', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5auUBKAq2MpBHzSIfBZOK52ERDFh3zAhQe', 3, NULL, 'karelly.moreno@edubar.com.co', 1, '2022-08-04 10:53:16', '2021-08-19 06:12:39', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 0),
 	(9, 'Edna Suarez R', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5auUBKAq2MpBHzSIfBZOK52ERDFh3zAhQe', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-07-28 16:04:45', '2022-06-23 16:03:37', 'c3nmo0mb46sussecrpfc4ni8vu', 0, 0, 1),

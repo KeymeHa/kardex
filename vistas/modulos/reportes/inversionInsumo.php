@@ -1,5 +1,5 @@
 <?php
-$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaInicial, $fechaFinal);
+$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
 $array_id = array();
 $array_total = array();

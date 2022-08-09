@@ -14,7 +14,7 @@ $fechaFinal = null;
 
 }
 
-$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaInicial, $fechaFinal);
+$facturas = ControladorFacturas::ctrMostrarFacturasRango($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 $arrayFechas = array();
 $sumaPagosMes = array();
 

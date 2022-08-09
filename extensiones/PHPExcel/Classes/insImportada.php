@@ -51,43 +51,32 @@ if ( isset($_GET["otro"]) )
 
 		$cadenaDeErrores = "";
 
-		for ($i = 4; $i <= $numRows; $i++) 
+		for ($i = 2; $i <= $numRows; $i++) 
 		{
 			$sw = 0;
 			$id_categoria = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-			$codigo = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-			$descripcion = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-			$observacion = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-			$stock = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-			$estante = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-			$nivel = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-			$seccion = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-			$unidad = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-			$contenido = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+			$codigo 	  = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+			$descripcion  = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+			$observacion  = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+			$stock 		  = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+			$estante 	  = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+			$nivel 		  = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+			$seccion 	  = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+			$unidad 	  = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+			$contenido 	  = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
 
-			//validar que el id de la categoria exista
 			$item = "id";
-
 			$valCategoria = ControladorCategorias::ctrMostrarCategoriasConFiltro($item, $id_categoria);
-
-
 
 			if (!isset($valCategoria["categoria"])) 
 			{
 				$id_categoria = ControladorCategorias::ctrValidarOtros();
-
 				$cadenaDeErrores = 'No se encontro la Categoria con ID: $id_categoria , para el insumo $descripcion con codigo $codigo. CELDA A$i';
-
 				$ejecutar = new ImportarInsumos();
 				$ejecutar -> archivoError($cadenaDeErrores);
-
-				
 			}
 
 			unset ($valCategoria);
-
-			//validar que no exista el codigo
-
 			$valInsumos = ControladorInsumos::ctrMostrarInsumos("codigo", $codigo);
 
 			if (isset($valInsumos["id"])) 
@@ -101,9 +90,8 @@ if ( isset($_GET["otro"]) )
 			{
 				$codigo = ControladorParametros::ctrValidarCaracteres($codigo);
 			}
-			unset ($valInsumos);
 
-			//validar que la descipcion y la observacion no tenga ""
+			unset ($valInsumos);
 
 			if ($descripcion == "") 
 			{
@@ -123,7 +111,6 @@ if ( isset($_GET["otro"]) )
 					$ejecutar -> archivoError($cadenaDeErrores);
 				}
 				unset ($valInsumos);
-
 			}
 
 			if ($observacion != "") 

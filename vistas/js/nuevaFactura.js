@@ -2,7 +2,9 @@ $("#codigoFactura").change(function(){
 
 	var factura = $(this).val();
 	var datos = new FormData();
+	var anioActual = $("#inputanioActual").val();
 	datos.append("validarFactura", factura);
+	datos.append("anioActual", anioActual);
 
 	$(".alert").remove();
 

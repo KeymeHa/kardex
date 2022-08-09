@@ -11,19 +11,11 @@ class TablaOrdenes
 {	
 	public $fechaInicial;
 	public $fechaFinal;
+	public $anioActual;
 	public function mostrarTablaOrdenes()
 	{	
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 
-		if($fechaIn != null)
-		{
-			$ordenes = ControladorOrdenCompra::ctrMostrarOrdenesdeComprasRango($fechaIn, $fechaOut);
-		}
-		else
-		{
-			$ordenes = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras(null, null);
-		}
+		$ordenes = ControladorOrdenCompra::ctrMostrarOrdenesdeComprasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 
 	    if ( count($ordenes) == 0) 
 	    {  	echo'{"data": []}';	return; }
@@ -68,6 +60,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 	{
 		$mostrarOrdenes -> fechaInicial = null;
 		$mostrarOrdenes -> fechaFinal = null;
+		if ( isset($_GET["actual"]) ) 
+		{
+			$mostrarOrdenes -> anioActual = $_GET["actual"];
+		}
 	}
 	else
 	{
@@ -78,6 +74,10 @@ if( isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"]) )
 }
 else
 {
+	if ( isset($_GET["actual"]) ) 
+	{
+		$mostrarOrdenes -> anioActual = $_GET["actual"];
+	}
 	$mostrarOrdenes -> fechaInicial = null;
 	$mostrarOrdenes -> fechaFinal = null;
 	$mostrarOrdenes -> mostrarTablaOrdenes();

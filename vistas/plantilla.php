@@ -82,13 +82,14 @@
             {
                 $paginaCargada = '<script type="text/javascript">
                   $( document ).ready(function() {var pagina = '.$js_data["num"].';
-                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].');});</script>';
+                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].');});</script>';
 
                 echo $paginaCargada;
 
                 if ($js_data["sw"] == 1) 
                 {
                   include "modulos/".$_GET["ruta"].".php";
+                  echo '<input type="hidden" id="inputPagCarAnioActual" value="'.$_SESSION["anioActual"].'" readonly>';
 
                   #var_dump($js_data);
                 }

@@ -33,6 +33,7 @@ $("button.btn-param").click(function(){
 
 function verModulos()
 {
+	var anioActual = $('#inputPagCarAnioActual').val();
 	$("span.titulo-box").html("Administrar Modulos y Paginas");
 
 	if ( $("div.contenido-box").children().length != 0 ) 
@@ -50,7 +51,7 @@ function verModulos()
 	'</thead>'+
 	'</table>')
 
-	paginaCargada(34, 0, 0);
+	paginaCargada(34, 0, 0, 0, anioActual);
 }
 
 function verImportarFestivos()

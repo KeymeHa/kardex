@@ -15,20 +15,19 @@ class tablaStock
 	public $tipo;
 	public $fechaInicial;
 	public $fechaFinal;
+	public $anioActual;
 	public function mostrarTablaSotck()
 	{	
-		$fechaIn = $this->fechaInicial;
-		$fechaOut = $this->fechaFinal;
 		$valor = $this->idInsumo;
 		$tipoS = $this->tipo;
 
 		if ($tipoS == "in") 
 		{
-			$respuesta = ControladorFacturas::ctrMostrarFacturasRango($fechaIn, $fechaOut);
+			$respuesta = ControladorFacturas::ctrMostrarFacturasRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		}
 		elseif($tipoS == "out")
 		{
-			$respuesta = ControladorRequisiciones::ctrMostrarRequisicionesRango($fechaIn, $fechaOut);
+			$respuesta = ControladorRequisiciones::ctrMostrarRequisicionesRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		}
 
 	    if ( count($respuesta) == 0) 
@@ -122,6 +121,10 @@ if( isset($_GET["tipoStock"]) )
 			{
 				$stockTipo-> fechaInicial = null;
 				$stockTipo-> fechaFinal = null;
+				if ( isset($_GET["actual"]) ) 
+			    {
+			      $mostrarRq -> anioActual = $_GET["actual"];
+			    }
 			}
 			else
 			{

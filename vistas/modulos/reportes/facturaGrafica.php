@@ -20,7 +20,7 @@
           <div class="chart" id="bar-chart-facGrafica" style="height: 250px;"></div>
         </div>
         <div class="col-lg-4">
-          <?php  $countFacProv = ControladorFacturas::ctrContarFacturasProv($fechaInicial, $fechaFinal);
+          <?php  $countFacProv = ControladorFacturas::ctrContarFacturasProv($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
           if ($countFacProv != null) 
           {

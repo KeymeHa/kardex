@@ -23,7 +23,7 @@ class TablaRegistros
 	public $fechaInicial;
 	public $fechaFinal;
 	public $estado;
-
+	public $anioActual;
 	public function mostrarTabla()
 	{	  
 		//validar usuario y su perfil, ademas si tiene permiso
@@ -32,14 +32,14 @@ class TablaRegistros
 
 		if ($usuario["perfil"] == $modulo) 
 		{
-			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual);
 
 			#$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
 			
 		}
 		elseif ($usuario["perfil"] == 8) 
 		{
-			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+			$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual);
 			#$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR(0, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
 		}
 		else
@@ -54,7 +54,7 @@ class TablaRegistros
 					//traer registros que sean del usuario y sigan en proceso
 					//usuario, modulo, estado, fecha, fecha
 
-					$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado);
+					$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $modulo, $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual);
 
 					 if ( count($registrosPQR) == 0) 
 	   				 { echo'{"data": []}';	return; }
@@ -254,6 +254,10 @@ if (isset($_GET["idusr"]))
 	}
 	else
 	{
+		if ( isset($_GET["actual"]) ) 
+		{
+			$mostrar -> anioActual = $_GET["actual"];
+		}
 		$mostrar -> fechaInicial = null;
 		$mostrar -> fechaFinal = null;
 	}

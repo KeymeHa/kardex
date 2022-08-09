@@ -18,7 +18,7 @@ require_once "../../../modelos/insumos.modelo.php";
 class imprimirFactura{
 
 public $codigoInt;
-
+public $anioActual;
 public function traerImpresionFactura(){
 
 //TRAEMOS LA INFORMACIÓN DE LA VENTA
@@ -26,7 +26,7 @@ public function traerImpresionFactura(){
 $item = "codigoInt";
 $valor = $this->codigoInt;
 
-$respuestaFac = ControladorFacturas::ctrMostrarFacturas($item, $valor);
+$respuestaFac = ControladorFacturas::ctrMostrarFacturas($item, $valor, $this->anioActual);
 
 $fecha = $respuestaFac["fecha"];
 $insumos = json_decode($respuestaFac["insumos"], true);
@@ -227,6 +227,7 @@ $pdf->Output('factura.pdf');
 
 $factura = new imprimirFactura();
 $factura -> codigoInt = $_GET["codigoInt"];
+$factura -> anioActual = $_GET["anioActual"];
 $factura -> traerImpresionFactura();
 
 ?>

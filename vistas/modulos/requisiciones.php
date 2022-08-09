@@ -1,3 +1,9 @@
+<?php
+
+ $anioActual = $_SESSION["anioActual"];
+
+?>
+
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -96,11 +102,11 @@
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Requisiciones realizadas</h5><br>
-                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrContarRequisicionesFecha(0)[0];?>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrContarRequisicionesFecha(0, $anioActual)[0];?>
                     
                   </b></span><br>
-                  <span class="description-text"> <b><?php if (isset(ControladorRequisiciones::ctrContarRequisicionesFecha(1)[0])) {
-                    echo "Mes:".ControladorRequisiciones::ctrContarRequisicionesFecha(1)[0];
+                  <span class="description-text"> <b><?php if (isset(ControladorRequisiciones::ctrContarRequisicionesFecha(1, $anioActual)[0])) {
+                    echo "Mes:".ControladorRequisiciones::ctrContarRequisicionesFecha(1, $_SESSION["anioActual"])[0];
                   } ?></b></span>
                 </div>
               </div>
@@ -112,11 +118,11 @@
 
                   if (isset($_GET["fechaInicial"])) 
                   {
-                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, $_GET["fechaInicial"], $_GET["fechaFinal"]);
+                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, $_GET["fechaInicial"], $_GET["fechaFinal"], $anioActual);
                   }
                   else
                   {
-                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, null, null);
+                    $countAreas = ControladorRequisiciones::ctrContarRqArea(1, null, null, $anioActual);
                   }
                     if($countAreas != null)
                     {
@@ -140,16 +146,16 @@
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Stock Entregados</h5><br>
-                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(3);?></b></span><br>
-                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(4);?></b></span>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(3, $anioActual);?></b></span><br>
+                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(4, $anioActual);?></b></span>
                 </div>
               </div>
 
               <div class="col-sm-3 col-xs-6">
                 <div class="description-block border-right">
                   <h5 class="description-header">Insumos Requeridos</h5><br>
-                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(0);?></b></span><br>
-                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(1);?></b></span>
+                  <span class="description-text">Anual: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(0, $anioActual);?></b></span><br>
+                  <span class="description-text">Mes: <b><?php echo ControladorRequisiciones::ctrTraerInsumosRq(1, $anioActual);?></b></span>
                 </div>
               </div>
 
@@ -227,5 +233,5 @@
 <?php
 
   $borrarRq = new ControladorRequisiciones();
-  $borrarRq -> ctrBorrarRq($_SESSION["id"]);
+  $borrarRq -> ctrBorrarRq($_SESSION["id"], $_SESSION["anioActual"]);
 ?>

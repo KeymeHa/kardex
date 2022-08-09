@@ -2,13 +2,12 @@
 
 class ControladorVentas
 {
-	function anioActual()
+	function anioActual($anio)
 	{
-	    $anio = ControladorParametros::ctrVerAnio(true);
-	    if ($anio["anio"] == 0) 
+	    if ($anio == 0) 
 	    {$respuesta = '';}
 	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"];}
+	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
 		return $respuesta;
 	}
 
@@ -22,11 +21,11 @@ class ControladorVentas
 		return $respuesta;
 	}
 
-	static public function ctrMostrarVentasRango($fechaInicial, $fechaFinal)
+	static public function ctrMostrarVentasRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "ventas";
 		$r = new ControladorVentas;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloVentas::mdlMostrarVentasRango($tabla, $fechaInicial, $fechaFinal, $anio);
 		return $respuesta;
 	

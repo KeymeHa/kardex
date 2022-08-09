@@ -55,6 +55,7 @@ $(".col-md-4").on("click", ".btnEditarProveedor", function(){
 $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 	var idCar = $(this).attr("id_carpeta");
 	var nomCar = $(this).attr("nombre_carpeta");
+	var anioActual = $('#inputPagCarAnioActual').val();
 
 	$("#carpetaElegida").html(nomCar);
 	$("#idCarpetaSelec").val(idCar);
@@ -73,7 +74,7 @@ $(".tablaCarpeta").on("click", "button.btnVerArchivos", function(){
 		localStorage.setItem("idCarpeta", idCar);
 	}
 
-	paginaCargada(20, 0, 0);
+	paginaCargada(20, 0, 0, 0, anioActual);
 
 })
 

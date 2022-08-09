@@ -595,6 +595,8 @@ class ControladorParametros
 	static public function ctrActualizarAnio($item, $valor)
 	{
 		$tabla = "anios";
+		session_start();
+		$_SESSION["anioActual"] = $valor;
 		$respuesta = ModeloParametros::mdlActualizaranio($tabla, $item, $valor);
 		return $respuesta;
 	}

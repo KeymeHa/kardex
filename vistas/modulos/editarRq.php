@@ -12,7 +12,7 @@
       {
         $item = "id";
         $valor = $_GET["idRq"];
-        $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor);
+        $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
       }
     }
     else{
@@ -219,7 +219,7 @@
 
                 <?php
                   $editarRq = new ControladorRequisiciones();
-                  $editarRq -> ctrEditarRequisicion();
+                  $editarRq -> ctrEditarRequisicion($_SESSION["anioActual"]);
                 ?>
             </form>
           </div>

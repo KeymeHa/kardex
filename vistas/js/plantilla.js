@@ -108,6 +108,7 @@ $(".btnNotificaciones").click(function(){
 	var valor = $(this).attr("valor");
 	var bodyNoti = $('#bodyNotificaciones');
 	var titleNoti = $('#tituloNotificaciones');
+	var anioActual = $('#inputPagCarAnioActual').val();
 	if(valor == 1)
 	{
 
@@ -135,7 +136,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(12, 0, 0);
+		paginaCargada(12, 0, 0, anioActual);
 	}
 	else if(valor == 2)
 	{
@@ -163,7 +164,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(13, 0, 0);
+		paginaCargada(13, 0, 0, anioActual);
 		
 	}
 
@@ -176,7 +177,7 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
 });
 
 
-function paginaCargada(pagina, id, per){
+function paginaCargada(pagina, id, per, anioActual){
 
 	if(pagina != 0)
 	{
@@ -216,10 +217,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 
 
@@ -236,10 +237,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 
 			
@@ -255,10 +256,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 			variable+= "&appr=0";
@@ -301,10 +302,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 		}
 		else if(pagina == 15)
@@ -330,11 +331,11 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			}
 			else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 		}
 		else if(pagina == 18)
@@ -413,10 +414,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null&inv=1";
+			  variable = "?fechaInicial=null&inv=1&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1";
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1"+"&actual="+anioActual;
 			}
 
 			
@@ -441,11 +442,11 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable+="&fechaInicial=null";
+			  variable+="&fechaInicial=null&actual="+anioActual;
 			} 
 			else 
 			{
-			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1";
+			  variable+="&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&inv=1"+"&actual="+anioActual;
 			}	
 		}
 		else if(pagina == 26)
@@ -462,9 +463,9 @@ function paginaCargada(pagina, id, per){
 			if (idInsumo != null) 
 			{
 				if (fechaInicial != null) 
-				{variableD = "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;}
+				{variableD = "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;}
 				else
-				{variableD = "&fechaInicial=0&fechaFinal=0";}
+				{variableD = "&fechaInicial=0&fechaFinal=0&actual="+anioActual;}
 
 				variable = "?idInsumo="+idInsumo+variableD+"&tipoStock=in";
 				tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
@@ -518,10 +519,10 @@ function paginaCargada(pagina, id, per){
 			variable = "?iduser="+iduser;
 			if(fechaInicial == null)
 			{
-			  variable+= "&fechaInicial=null";
+			  variable+= "&fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
 
@@ -538,10 +539,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 
 
@@ -587,10 +588,10 @@ function paginaCargada(pagina, id, per){
 			
 			if(fechaInicial == null)
 			{
-			  variable = "?fechaInicial=null";
+			  variable = "?fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 
 			
@@ -637,10 +638,10 @@ function paginaCargada(pagina, id, per){
 
 			if(fechaInicial == null)
 			{
-			  variable+= "&fechaInicial=null";
+			  variable+= "&fechaInicial=null&actual="+anioActual;
 			} else 
 			{
-			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 
 			tablaElegida =  $('.tablaRegistros');
