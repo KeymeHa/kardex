@@ -9,6 +9,15 @@
     }
     else
     {
+
+      $idmodulo = 3;
+      $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+
+      if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
+      {
+        echo'<script> window.location="noAutorizado";</script>';
+      }
+
       $item = "id";
       $valor = $_GET["idRq"];
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
@@ -17,6 +26,7 @@
       $valor = $requisicion["id_area"];
       $area = ControladorAreas::ctrMostrarAreas($item, $valor);
       $listaInsumos = json_decode($requisicion["insumos"], true);
+      $usrApr = ControladorUsuarios::ctrMostrarUsuarios($item, $requisicion["id_usr"]);
       $cantidadInsumos = 0;
 
       if( !$listaInsumos == null )
@@ -91,23 +101,41 @@
           <div class="col-sm-2 col-xs-6">
             <div class="description-block border-right">
               <span class="description-text">Fecha Solicitud</span>
-              <h5 class="description-header"><?php echo ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 0);?></h5>
+              <h5 class="description-header"><?php echo ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 3);?></h5>
             </div>
           </div>
            <div class="col-sm-2 col-xs-6">
             <div class="description-block border-right">
               <span class="description-text">Fecha de Aprobación</span>
-              <h5 class="description-header"><?php echo ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 0);?></h5>
+              <h5 class="description-header"><?php if ( $requisicion["fecha"] === '0000-00-00 00:00:00') { echo 'En espera';
+                # code...
+              }else { echo ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 3);}?></h5>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-sm-2 col-xs-6">
             <div class="description-block">
-              <span class="description-text">Insumos con Nuevo Stock</span>
+              <span class="description-text">Cantidad Items</span>
               <h5 class="description-header"><?php echo $cantidadInsumos;?></h5>
             </div>
             <!-- /.description-block -->
           </div>
+
+          <?php
+
+          if ($requisicion["aprobado"] == 1) 
+          {
+            echo '<div class="col-sm-2 col-xs-6">
+            <div class="description-block">
+              <span class="description-text">Aprobado Por:</span>
+              <h5 class="description-header">'.$usrApr["nombre"].'</h5>
+            </div>
+            <!-- /.description-block -->
+          </div>';
+          }
+
+          ?>
+
         </div><!--row-->
       </div><!--BOX BODY-->
     </div><!--BOX-->
@@ -190,12 +218,15 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">
-              Observaciones de Compras
+              Observaciones del área de Compras
             </h3>
           </div>
           <div class="box-body">
             <p>
-              <?php echo $requisicion["observacion"];?>
+              <?php  if (!empty($requisicion["observacion"])) 
+              {
+                echo "<b>".$usrApr["nombre"]."</b>: ".$requisicion["observacion"];
+              } ?>
             </p>
           </div>
         </div>

@@ -128,7 +128,7 @@
 
                 <?php
                   $anexarRq = new ControladorRequisiciones();
-                  $anexarRq -> ctrCrearRequisicion();
+                  $anexarRq -> ctrCrearRequisicion($_SESSION["perfil"]);
                 ?>
 
             </form>

@@ -101,7 +101,9 @@
           <div class="box-body">
             <!-- ENTRADA PARA EL NOMBRE -->         
             <div class="form-group">       
-              <div class="input-group">          
+                
+              <div class="input-group">   
+
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                 <input type="text" class="form-control input-lg" name="editarNombre" id="editarNombre" placeholder="Ingresar nombre" required>
                 <input type="hidden" class="form-control input-lg" name="editarId" id="editarId" required readonly>

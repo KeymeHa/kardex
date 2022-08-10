@@ -47,9 +47,9 @@ class ModeloRequisiciones
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_sol like '%$fechaFinal%' AND id_persona = $id ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT('$fechaFinal', '%Y %m %d') AND id_persona = $id ORDER BY id DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			//$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -576,7 +576,16 @@ class ModeloRequisiciones
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio AND id_persona = $id ORDER BY id DESC");
+			if ($anio == "") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_persona = $id ORDER BY id DESC");
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $anio AND id_persona = $id ORDER BY id DESC");
+			}
+
+			
 
 			$stmt -> execute();
 

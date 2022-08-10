@@ -102,11 +102,11 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarRequisicionesAppr   Mercado$456
 
-	static public function ctrMostrarRequisicionesRangoId($fechaInicial, $fechaFinal, $id)
+	static public function ctrMostrarRequisicionesRangoId($fechaInicial, $fechaFinal, $id, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual();
+		$anio = $r->anioActualSinAppr($anio);
 		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoIdUsr($tabla, $fechaInicial, $fechaFinal, $anio, $id);
 
 		return $respuesta;
@@ -282,7 +282,7 @@ class ControladorRequisiciones
 	}
 
 
-	static public function ctrCrearRequisicion()
+	static public function ctrCrearRequisicion($perfil)
 	{
 		if ( isset($_POST["listadoInsumosRq"]) ) 
 		{
@@ -300,13 +300,12 @@ class ControladorRequisiciones
 		   	$item = "id";
 	        $valor = $_POST["id_persona"];
 			$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
-			$perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
-			$fechaSol = date("Y-m-d");
+			$fechaSol = date("Y-m-d H:i:s");
 			
-			if ($perfil != 4) 
+			if ($perfil == 3) 
 			{
 				$aprobado = 1;
-				$fechaAp = date("Y-m-d");
+				$fechaAp = date("Y-m-d H:i:s");
 				$tipoob = "observacion";
 				$gen = 0;
 			}

@@ -26,7 +26,7 @@ class TablaRequisiciones
 
 		if($this->fechaInicial != null)
 		{
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoId($this->fechaInicial, $this->fechaFinal, $sw);
+			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRangoId($this->fechaInicial, $this->fechaFinal, $sw, $this->anioActual);
 		}
 		else
 		{
