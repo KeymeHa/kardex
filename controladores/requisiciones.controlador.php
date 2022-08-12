@@ -175,7 +175,7 @@ class ControladorRequisiciones
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualArea();
+		$anio = $r->anioActualArea($anio);
 		$respuesta = ModeloRequisiciones::MdlContarRqdeArea($tabla, $item, $valor, $anio);
 		return $respuesta;
 
@@ -355,7 +355,6 @@ class ControladorRequisiciones
 						$precioCompra = intval($res["precio_compra"]);
 
 						$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
-
 						$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 
 					}//foreach

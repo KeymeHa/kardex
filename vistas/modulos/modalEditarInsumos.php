@@ -51,7 +51,7 @@
                     <div class="col-xs-8">              
                       <div class="input-group">                   
                         <span class="input-group-addon"><i class="fa fa-money"></i></span> 
-                        <input type="number" class="form-control input-lg" id="ePrecioCompra" min="0" placeholder="Precio de compra" autocomplete="off">
+                        <input type="number" class="form-control input-lg" name="ePrecioCompra" id="ePrecioCompra" min="0" placeholder="Precio de compra" autocomplete="off" required>
                       </div>
                     </div>
                   </div>

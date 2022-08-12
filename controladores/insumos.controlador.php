@@ -195,7 +195,7 @@ class ControladorInsumos
 
 			if($_POST["eEstanteP"] == null || $_POST["eEstanteP"] == "")
 			{
-				$eEstanteP = 0;
+				$eEstanteP = "SINF";
 			}
 			else
 			{
@@ -204,7 +204,7 @@ class ControladorInsumos
 
 			if($_POST["eNivelP"] == null || $_POST["eNivelP"] == "")
 			{
-				$eNivelP = 0;
+				$eNivelP = "SINF";
 			}
 			else
 			{
@@ -213,23 +213,26 @@ class ControladorInsumos
 
 			if($_POST["eSeccionP"] == null || $_POST["eSeccionP"] == "")
 			{
-				$eSeccionP = 0;
+				$eSeccionP = "SINF";
 			}
 			else
 			{
 				$eSeccionP = $_POST["eSeccionP"];
 			}
-			/*
-			if($_POST["ePrecioCompra"] == null || $_POST["ePrecioCompra"] == "")
+			
+			if($_POST["ePrecioCompra"] == "")
 			{
 				$ePrecioCompra = 0;
 			}
 			else
 			{
 				$ePrecioCompra = $_POST["ePrecioCompra"];
-			}*/
+			}
 
-			if( preg_match('/^[0-9]+$/', $_POST["eIdP"]) && preg_match('/^[0-9]+$/', $_POST["EsCategoria"]) && preg_match('/^[0-9]+$/', $_POST["eCodigoP"]) && preg_match('/^[0-9]+$/', $_POST["eEstanteP"]) &&	preg_match('/^[0-9]+$/', $_POST["eNivelP"]) && preg_match('/^[0-9]+$/', $_POST["eSeccionP"]))
+			$ejecutar = new ControladorInsumos(); 
+			$valores = $ejecutar->ctrTratarValores($_POST["eIdP"], $ePrecioCompra);
+
+			if( preg_match('/^[0-9]+$/', $_POST["eIdP"]) && preg_match('/^[0-9]+$/', $_POST["EsCategoria"]) )
 			{
 				$tabla = "insumos";
 
@@ -314,6 +317,40 @@ class ControladorInsumos
 			}
 		}
 	}//ctrEditarInsumo
+
+	static public function ctrTratarValores($id, $precioE)
+	{
+		$tabla = "valores";
+		$ejecutar = new ControladorInsumos();
+		$res = $ejecutar -> ctrMostrarInsumos("id", $id);
+
+		$historia = ModeloInsumos::mdlmostrarRegistros($tabla,"id_insumo", $id, 1);
+
+		if($res["precio_compra"] != $precioE)
+		{
+			date_default_timezone_set('America/Bogota');
+			$fechaActual = date("Y-m-d");
+			$hoy = "".$fechaActual;
+
+			if(isset($historia["registro"]) && $historia["registro"] != null)
+			{
+				$dJson = substr($historia["registro"], 0 ,-1);
+				$dJson.= ',{"val":"'.$precioE.'","fe":"'.$hoy.'"}]';
+				$datos = array("registro" => $dJson, "id_insumo" => $id, "tipo" => 1);
+				$respuesta = ModeloInsumos::MdlActualizarH($tabla, $datos);
+			}
+			else
+			{
+				$dJson = '[{"val":"'.$res["precio_compra"].'","fe":"'.$res["fecha"].'"},{"val":"'.$precioE.'","fe":"'.$hoy.'"}]';
+				$datos = array("id_insumo" => $id,
+							   "registro" => $dJson,
+								"tipo" => 1); 
+				$respuesta = ModeloInsumos::mdlNuevaHistoriaPro($tabla, $datos);
+			}
+		}
+
+		return 0;
+	}
 
 	/*=============================================
 				MOSTRAR INSUMOS

@@ -504,6 +504,8 @@ class ControladorRadicados
 
 			$id_area_o = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $id_usuario_o);
 		
+
+			/*
 			foreach ($radicados as $key => $value) 
 			{
 				$modulo = 7;
@@ -534,7 +536,7 @@ class ControladorRadicados
 				//$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"], $value["fecha"], $modulo);
 
 
-			}//foreach ($radicados as $key => $value) 
+			}//foreach ($radicados as $key => $value) */
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
 			

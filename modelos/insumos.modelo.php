@@ -118,8 +118,60 @@ class ModeloInsumos
 		$stmt = null;
 	}
 
+	static public function mdlmostrarRegistros($tabla, $item, $valor, $tipo)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = $valor AND tipo = $tipo");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlNuevaHistoriaPro($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE INTO $tabla(id_insumo, registro, tipo) VALUES (:id_insumo, :registro, :tipo)");
+
+		$stmt->bindParam(":id_insumo", $datos["id_insumo"], PDO::PARAM_STR);
+		$stmt->bindParam(":registro", $datos["registro"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+			return "ok";	
+		}else{
+			return $stmt->errorCode();
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function MdlActualizarH($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET registro = :registro WHERE id_insumo = :id_insumo AND tipo = :tipo");
+
+		$stmt -> bindParam(":registro", $datos["registro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_insumo", $datos["id_insumo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlBuscarInsumo($tabla, $item, $valor)
 	{
+
+
 		if ($item == "id") 
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT $item FROM $tabla WHERE $item = $valor");

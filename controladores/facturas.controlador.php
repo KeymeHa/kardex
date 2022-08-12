@@ -351,6 +351,8 @@ class ControladorFacturas
 							</script>';
 
 							return ;	
+
+							$valores = ControladorInsumos::ctrTratarValores($valor, $precioCompra);
 						}
 					}//foreach
 
@@ -617,6 +619,8 @@ class ControladorFacturas
 						$nuevoStock = 0;
 						$precioCompra = intval($edit["pre"]);
 
+
+
 						foreach ($antLista as $k => $ant) 
 						{
 
@@ -633,6 +637,7 @@ class ControladorFacturas
 									
 
 									$datos = array( 'stock' => $nuevoStock, 'contenido' => $edit["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
+									$valores = ControladorInsumos::ctrTratarValores($valor, $precioCompra);
 									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 								}
 								$sw = true;							
