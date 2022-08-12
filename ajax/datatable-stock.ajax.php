@@ -123,11 +123,12 @@ if( isset($_GET["tipoStock"]) )
 				$stockTipo-> fechaFinal = null;
 				if ( isset($_GET["actual"]) ) 
 			    {
-			      $mostrarRq -> anioActual = $_GET["actual"];
+			      $stockTipo -> anioActual = $_GET["actual"];
 			    }
 			}
 			else
 			{
+				$stockTipo -> anioActual = $_GET["actual"];
 				$stockTipo-> fechaInicial = $_GET["fechaInicial"];
 				$stockTipo-> fechaFinal = $_GET["fechaFinal"];
 			}

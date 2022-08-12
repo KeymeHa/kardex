@@ -87,6 +87,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			{
 				$("#eNivelP").val(0);
 			}
+			
 			else
 			{
 				$("#eNivelP").val(respuesta["nivel"]);

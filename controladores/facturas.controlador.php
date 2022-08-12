@@ -892,12 +892,12 @@ class ControladorFacturas
 	}
 
 
-	static public function ctrTraerInsumosFacRango($fechaInicial, $fechaFinal)
+	static public function ctrTraerInsumosFacRango($fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "facturas";
 
 		$r = new ControladorFacturas;
-		$anio = $r->anioActual();	
+		$anio = $r->anioActual($anio);	
 		$respuesta = ModeloFacturas::MdlTraerInsumosFacRango($tabla, $fechaInicial, $fechaFinal, $anio);
 
 		  return $respuesta;

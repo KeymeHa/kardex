@@ -612,11 +612,11 @@ class ControladorInsumos
 	}//ctrVerificarCanInsumos($tabla)
 	
 
-	static public function ctrInforStock($id, $fechaInicial ,$fechaFinal)
+	static public function ctrInforStock($id, $fechaInicial ,$fechaFinal, $anio)
 	{
 		//traer datos de requisiciones
-		$requisiciones = ControladorRequisiciones::ctrTraerInsumosRqRango($fechaInicial, $fechaFinal);
-		$facturas = ControladorFacturas::ctrTraerInsumosFacRango($fechaInicial, $fechaFinal);
+		$requisiciones = ControladorRequisiciones::ctrTraerInsumosRqRango($fechaInicial, $fechaFinal, $anio);
+		$facturas = ControladorFacturas::ctrTraerInsumosFacRango($fechaInicial, $fechaFinal, $anio);
 
 		$arrayInfo = array();
 

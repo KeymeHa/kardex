@@ -17,16 +17,16 @@
       {
         if (is_null($_GET["fechaInicial"])) 
         {
-          $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], null, null);
+          $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], null, null, $_SESSION["anioActual"]);
         }
         else
         {
-          $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], $_GET["fechaInicial"], $_GET["fechaFinal"]);
+          $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], $_GET["fechaInicial"], $_GET["fechaFinal"], $_SESSION["anioActual"]);
         }
       }
       else
       {
-         $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], null, null);
+         $arrayInfo = ControladorInsumos::ctrInforStock($insumo["id"], null, null, $_SESSION["anioActual"]);
       }
     }
   }
