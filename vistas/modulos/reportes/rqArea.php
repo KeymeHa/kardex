@@ -91,17 +91,17 @@
     ],
     config = {
       data: data,
-      xkey: 'y',
-      ykeys: ['Requisiciones'],
-      labels: ['Requisiciones'],
-      barColors: ['#00a65a'],
+      xkey: "y",
+      ykeys: ["Requisiciones"],
+      labels: ["Requisiciones"],
+      barColors: ["#00a65a"],
       fillOpacity: 0.6,
-      hideHover: 'auto',
+      hideHover: "auto",
       behaveLikeLine: true,
       resize: true
   };
 
-  config.element = 'bar-chart-rqCan';
+  config.element = "bar-chart-rqCan";
   Morris.Bar(config);
 
 

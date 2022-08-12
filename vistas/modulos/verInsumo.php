@@ -235,6 +235,12 @@
       </div>
     </div>
     
+      <?php
 
+      include "reportes/historiaValores.php";
+
+      ?>
+
+  
   </section>
 </div>

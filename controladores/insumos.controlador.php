@@ -318,6 +318,13 @@ class ControladorInsumos
 		}
 	}//ctrEditarInsumo
 
+	static public function ctrmostrarRegistros($item, $valor, $tipo)
+	{
+		$tabla = "valores";
+		$respuesta = ModeloInsumos::mdlmostrarRegistros($tabla , $item, $valor, $tipo);
+		return $respuesta;
+	}
+
 	static public function ctrTratarValores($id, $precioE)
 	{
 		$tabla = "valores";
