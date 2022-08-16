@@ -12,13 +12,24 @@
           $item = "id";
           $valor = $_GET["id_rad"];
           $radicado = ControladorRadicados::ctrMostrarRadicados($item, $valor);
-          $fechaCorregida = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 3);
-          $fechaCorregidaD = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 2);
 
-          if ($radicado["id_corte"] != 0 ) 
+          if ( isset($radicado["id_corte"]) ) 
           {
-             $corte = ControladorRadicados::ctrMostrarCortes("id", $radicado["id_corte"]);
+              $fechaCorregida = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 3);
+              $fechaCorregidaD = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 2);
+
+              if ($radicado["id_corte"] != 0 ) 
+              {
+                 $corte = ControladorRadicados::ctrMostrarCortes("id", $radicado["id_corte"]);
+              }
           }
+          else
+          {
+            echo'<script> history.back(); </script>';
+          }
+
+
+        
 
         }
       }

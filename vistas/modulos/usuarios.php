@@ -351,5 +351,5 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
 
 <?php
   $borrarUsuario = new ControladorUsuarios();
-  $borrarUsuario -> ctrBorrarUsuario();
+  $borrarUsuario -> ctrBorrarUsuario($_SESSION["id"]);
 ?>

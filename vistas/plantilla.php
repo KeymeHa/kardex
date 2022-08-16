@@ -1,14 +1,8 @@
 <?php
     session_start();
 
-    if (isset($_GET["ruta"])) 
-    {
-       $js_data = ControladorParametros::ctrJs_data($_GET["ruta"]);
-    }
-    else
-    {
-      
-    }
+    $js_data = ( isset($_GET["ruta"]) ) ? ControladorParametros::ctrJs_data($_GET["ruta"]) : '';
+
     /*
     $area = ControladorParametros::ctrValidarCaracteres($_POST["editarArea"]);
   .replace(/&quot/gi,'"')     convertir de quot a comillas

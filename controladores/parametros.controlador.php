@@ -21,67 +21,41 @@ class ControladorParametros
 
 			if( $respuesta[8] == $ActualY)
 			{
-				if($val == 4)
+				$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
+
+				switch ($val) 
 				{
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "RQ".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
+					  case 4:
+					    $r = "RQ".$r;
+					    break;
+					  case 5:
+					   $r = "FAC".$r;
+					    break;
+					  case 6:
+					    $r = "PED".$r;
+					    break;
+					  case 7:
+					    $r = "OC".$r;
+					    break;
+					  case 20:
+					    $r = "ACT".$r;
+					    break;
+					  case 26:
+					    $r = "VNT".$r;
+					    break;
+					  case 28:
+					    $r = $radicar->radicar($respuesta[$val], $ActualRad);
+					    break;
+					  case 29:
+					    $r = $radicar->corte($respuesta[$val], $ActualCor);
+					    break;
+					  default:
+					    echo "0";
 				}
 
-				if($val == 5)
-				{
-					
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "FAC".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
+				$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+				return $parametro;
 
-				if($val == 6)
-				{
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "PED".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 7)
-				{
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "OC".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 26)
-				{
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "VNT".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 20)
-				{
-					$r = $radicar->radicarNuevaFac($respuesta[$val], $ActualY);
-					$r = "ACT".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 28)
-				{
-					$r = $radicar->radicar($respuesta[$val], $ActualRad);
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-				if($val == 29)
-				{
-					$r = $radicar->corte($respuesta[$val], $ActualCor);
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
 			}
 			else
 			{
@@ -98,68 +72,40 @@ class ControladorParametros
 
 				$respuesta2 = ModeloParametros::mdlActualizarYear($tabla, $datos);
 				$respuesta3 = ModeloParametros::mdlNuevoyear("anios", $ActualY);
-		
-				if($val == 4)
-				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "RQ".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
 
-				if($val == 5)
-				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "NF".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
+				$r = $radicar->radicarNuevaFac($i, $ActualY);
 
-				if($val == 6)
+				switch ($val) 
 				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "PED".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
+					  case 4:
+					    $r = "RQ".$r;
+					    break;
+					  case 5:
+					   $r = "FAC".$r;
+					    break;
+					  case 6:
+					    $r = "PED".$r;
+					    break;
+					  case 7:
+					    $r = "OC".$r;
+					    break;
+					  case 20:
+					    $r = "ACT".$r;
+					    break;
+					  case 26:
+					    $r = "VNT".$r;
+					    break;
+					  case 28:
+					    $r = $radicar->radicar($i, $ActualRad);
+					    break;
+					  case 29:
+					    $r = $radicar->corte($i, $ActualCor);
+					    break;
+					  default:
+					    echo "0";
 				}
-
-				if($val == 7)
-				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "OC".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 26)
-				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "VNT".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 20)
-				{
-					$r = $radicar->radicarNuevaFac($i, $ActualY);
-					$r = "ACT".$r;
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
-				if($val == 28)
-				{
-					$r = $radicar->radicar($i, $ActualRad);
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-				if($val == 29)
-				{
-					$r = $radicar->corte($i, $ActualCor);
-					$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
-					return $parametro;
-				}
-
+				$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
+				return $parametro;
 			}
 
 		}

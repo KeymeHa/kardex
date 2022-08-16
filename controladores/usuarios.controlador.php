@@ -506,7 +506,7 @@ class ControladorUsuarios
 		}
 	}
 
-	static public function ctrBorrarUsuario()
+	static public function ctrBorrarUsuario($idSESSION)
 	{
 		if(isset($_GET["idUsuario"]))
 		{
@@ -523,7 +523,7 @@ class ControladorUsuarios
 								"numTabla" => 5,
 								"valorAnt" => $_GET["nombreusr"],
 								"valorNew" => "",
-								"id_usr" => $_GET["accionId"]
+								"id_usr" => $idSESSION
 								 );
 
 				$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
