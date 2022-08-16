@@ -154,6 +154,24 @@
 
         <?php
 
+        if (!empty($radicado["correo"]) ) {
+          echo '<div class="col-sm-2 col-xs-6">
+          <div class="description-block border-right">
+            <span class="description-text">Email</span>
+            <h5 class="description-header">'.$radicado["correo"].'</h5>
+          </div>
+          <!-- /.description-block -->
+        </div>';
+        }
+
+        echo ( !empty($radicado["direccion"]) ) ? '<div class="col-sm-2 col-xs-6">
+          <div class="description-block border-right">
+            <span class="description-text">Dirección</span>
+            <h5 class="description-header">'.$radicado["direccion"].'</h5>
+          </div>
+          <!-- /.description-block -->
+        </div>' : '';
+
         if ($radicado["observaciones"] != "") 
         {
           echo '<div class="col-sm-2 col-xs-6">
@@ -165,6 +183,16 @@
         </div>';  # code...
         }
 
+        if ($radicado["soporte"] != "") 
+        {
+          echo '
+                  <div class="col-lg-12">
+                  <embed src="'.$radicado["soporte"].'" width="100%" height="700px"  type="application/pdf"> 
+                     
+                    </a>
+                  </div>';
+        }
+
         ?>
 
         
@@ -173,18 +201,15 @@
 
       <?php
 
-        if ($radicado["soporte"] != "") 
-        {
-          echo '<div class="box-footer">
+        echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
                   <div class="col-md-1">
                   <a href="'.$radicado["soporte"].'"; target="_blank">
-                      <button type="button" class="btn btn-block btn-primary">Soporte</button>
+                      <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
                     </a>
                   </div>
 
                    
-                </div>';
-        }
+                </div>' : '';
 
         ?>
 

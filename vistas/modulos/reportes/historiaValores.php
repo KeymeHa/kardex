@@ -4,17 +4,17 @@
 
 	if (isset($valoresInsumo["id_insumo"]) && !is_null($valoresInsumo["registro"])) 
 	{
-		echo '<div class="col-lg-12"><div class="box box-success">
-      <div class="box-header">
-        <h3 class="box-title">
-          Registro de Precio de Compra
-        </h3>
-      </div>
-      <div class="box-body">
-        <div class="chart" id="bar-chart-valInsu" style="height: 250px;"></div>
-      </div>
-    </div></div>
+		echo ' <div class="box">
 
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                  Registro de Precio de Compra
+                </h3>
+            </div>
+            <div class="box-body">
+              <div class="chart" id="bar-chart-valInsu" style="height: 250px;"></div>
+            </div>
+          </div>
     <script>
 
     new Morris.Line({
