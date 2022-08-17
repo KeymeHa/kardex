@@ -701,6 +701,69 @@ class ControladorRadicados
 		return $respuesta;
 	}
 
+
+	static public function ctrAnularRadicado($idSESSION)
+	{
+		if(isset($_GET["deleteRad"]))
+		{
+
+			$tabla = "usuarios";
+			$idUsr = $_GET["idUsuario"];
+			$respuesta = ModeloUsuarios::mdlModificarCampo($tabla,"elim",$idUsr);
+
+			if($respuesta == "ok")
+			{
+				$tabla = "historial";
+
+				$datos = array( "accion" => 4,
+								"numTabla" => 5,
+								"valorAnt" => $_GET["nombreusr"],
+								"valorNew" => "",
+								"id_usr" => $idSESSION
+								 );
+
+				$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+
+				echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "Usuario Eliminado",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result) {
+									if (result.value) {
+
+									window.location = "usuarios";
+
+									}
+								})
+
+					</script>';
+			}
+			else
+			{
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "No se pudo eliminar el Usuario",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result) {
+									if (result.value) {
+
+									window.location = "usuarios";
+
+									}
+								})
+
+					</script>';
+			}
+		}
+
+	}
+
 }
 
 

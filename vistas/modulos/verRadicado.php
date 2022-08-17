@@ -28,9 +28,6 @@
             echo'<script> history.back(); </script>';
           }
 
-
-        
-
         }
       }
       else
@@ -229,3 +226,8 @@
 
   </section>
 </div>
+
+<?php
+  $anularRad = new ControladorRadicados();
+  $anularRad -> ctrAnularRadicado();
+?>

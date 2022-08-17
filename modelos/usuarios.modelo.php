@@ -218,7 +218,7 @@ class ModeloUsuarios
 		$stmt = null;
 	}
 
-	static public function mdMostrarPerfil($tabla,$item, $valor)
+	static public function mdMostrarPerfil($tabla, $item, $valor)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT perfil FROM usuarios WHERE $item = :$item");
 

@@ -16,7 +16,7 @@
   <section class="content">
 
     <div class="row">
-      <div class="col-md-3 col-lg-4 col-sm-12">
+      <div class="col-md-3 col-lg-3 col-sm-12">
         <div class="box box-primary">
               <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="<?php if($_SESSION["foto"] != ""){ echo $_SESSION["foto"]; }else{ echo'vistas/img/usuarios/default/anonymous.png'; }?>" alt="User profile picture">
@@ -29,6 +29,9 @@
                   <li class="list-group-item">
                     <b>Mi ultima Conexión:</b> <a class="pull-right"><?php echo $_SESSION["ultimoLogin"];?></a>
                   </li>
+                  <li class="list-group-item">
+                    <b>Rol:</b> <a class="pull-right"><?php $perfil = ControladorParametros::ctrVerPerfil($_SESSION["perfil"]); echo $perfil["perfil"]?></a>
+                  </li>
                 </ul>
               </div>
               <div class="box-footer">
@@ -40,21 +43,29 @@
             </div>
       </div>
 
-      <h3>Requisiciones</h3>
+      <?php
 
-      <div class="col-md-2 col-sm-5 col-xs-12">
+      $idmodulo = 3;
+      $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+      $swmod = 0;
+
+      if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo ) 
+      {
+         echo '  <h3>Requisiciones</h3>
+
+      <div class="col-md-3 col-sm-5 col-xs-12">
         <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+        <span class="info-box-icon bg-aqua"><i class="fa fa-slack"></i></span>
         <div class="info-box-content">
         <span class="info-box-text">Realizadas</span>
-        <span class="info-box-number"><?php echo $_SESSION["anioActual"];?></span>
+        <span class="info-box-number">'.$_SESSION["anioActual"].'</span>
         </div>
         </div>
       </div>
 
-      <div class="col-md-2 col-sm-5 col-xs-12">
+      <div class="col-md-3 col-sm-5 col-xs-12">
         <div class="info-box">
-        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
+        <span class="info-box-icon bg-yellow"><i class="fa fa-bookmark-o"></i></span>
         <div class="info-box-content">
         <span class="info-box-text">Pendientes</span>
         <span class="info-box-number"></span>
@@ -62,15 +73,77 @@
         </div>
       </div>
 
-      <div class="col-md-2 col-sm-5 col-xs-12">
+      <div class="col-md-3 col-sm-5 col-xs-12">
         <div class="info-box">
-        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
+        <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
         <div class="info-box-content">
         <span class="info-box-text">Fecha Ultima Rq</span>
         <span class="info-box-number">10-25-2022</span>
         </div>
         </div>
+      </div>';
+         $swmod = 1;
+      }
+
+      unset($verModulo);
+
+      $idmodulo = 7;
+      $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+
+       if (isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
+       {
+          echo '  <h3>Correspondencia</h3>
+
+      <div class="col-md-3 col-sm-5 col-xs-12">
+        <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Asignadas</span>
+        <span class="info-box-number">'.$_SESSION["anioActual"].'</span>
+        </div>
+        </div>
       </div>
+
+      <div class="col-md-3 col-sm-5 col-xs-12">
+        <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="fa fa-circle-o"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Pendientes</span>
+        <span class="info-box-number"></span>
+        </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-5 col-xs-12">
+        <div class="info-box">
+        <span class="info-box-icon bg-red"><i class="fa fa-clock-o"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Vencidas</span>
+        <span class="info-box-number">5</span>
+        </div>
+        </div>
+      </div>';
+         $swmod = 1;
+      }
+
+      if ( $swmod == 0) 
+      {
+        echo '<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+              <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+              <div class="info-box-content">
+              <span class="info-box-text">Modulos</span>
+              <span class="info-box-number">Aqui verás el resumen de los modulos asignados para gestionar.</span>
+              </div>
+
+              </div>
+
+              </div>';
+      }
+
+      ?>
+
+    
 
     </div><!--row-->
 
