@@ -4,11 +4,11 @@
 			<b>S</b>M
 		</span>
 		<span class="logo-lg">
-			<b>S</b>ITMI<em style="font-size: 12px !important;">Versión 1.0 Alpha</em>
+			<b>S</b>ITMI<em style="font-size: 12px !important;">Versión 1.8 Beta</em>
 		</span>
 	</a>
 	<nav class="navbar navbar-static-top" role="navigation">
-	 	<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+	 	<a href="#" id="btn-sidebar-toggle" class="sidebar-toggle" data-toggle="push-menu" role="button">
         	<span class="sr-only">Toggle navigation</span>	      
       	</a>
 		<div class="navbar-custom-menu">

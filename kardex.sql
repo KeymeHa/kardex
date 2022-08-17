@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `anios` (
 -- Volcando datos para la tabla kardex.anios: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `anios` DISABLE KEYS */;
 INSERT INTO `anios` (`id`, `anio`) VALUES
-	(1, 2022),
+	(1, 0),
 	(2, 2021),
 	(3, 2022);
 /*!40000 ALTER TABLE `anios` ENABLE KEYS */;
@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `insumos` (
 -- Volcando datos para la tabla kardex.insumos: ~163 rows (aproximadamente)
 /*!40000 ALTER TABLE `insumos` DISABLE KEYS */;
 INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`, `imp`) VALUES
-	(1, 3, '1', 'AMBIENTADOR DE BAÑO AIR WICK', 'SIN INFORMACION', NULL, 0, 1, 1000, 0, 0, '2022-08-09 11:23:50', 0, '0', '0', '0', 2, 1, 1, 1, 1, 0),
+	(1, 3, '1', 'AMBIENTADOR DE BAÑO AIR WICK', 'SIN INFORMACION', NULL, 0, 1, 1000, 0, 0, '2022-08-09 11:23:50', 0, 'g1', '0', '0', 2, 1, 1, 1, 0, 0),
 	(2, 4, '2', 'AROMATICA SURTIDA EN BOLSA', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, '0', '0', '0', 2, 1, 1, 1, 0, 0),
 	(3, 3, '3', 'ATOMIZADOR AMBIENTADOR LAVANDA ', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(4, 4, '4', 'AZUCAR ALTA PUREZA 200 TUBITOS DE 5G', 'SIN INFORMACION', NULL, 18, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
@@ -794,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 -- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`) VALUES
-	(1, 10, 20, 30, 3, 2, 1, 1, 2022, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3274, 1776, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
+	(1, 10, 20, 30, 3, 2, 1, 1, 2022, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 1, 3284, 1776, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]');
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.perfiles
@@ -968,9 +968,9 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   CONSTRAINT `FK_radicados_objeto` FOREIGN KEY (`id_objeto`) REFERENCES `objeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_radicados_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla kardex.radicados: ~19 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.radicados: ~38 rows (aproximadamente)
 /*!40000 ALTER TABLE `radicados` DISABLE KEYS */;
 INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`, `correo`, `direccion`) VALUES
 	(1, 1, '2022-06-06 11:48:47', '2147483647', 1, 7, 6, 1, 'AMPARADO', 'SUSANA', 4, '0', 2, 1, '0', 5, '2022-06-14', 0, '', NULL, NULL),
@@ -1000,7 +1000,17 @@ INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id
 	(28, 20, '2022-07-28 16:04:50', '20220703270', 1, 1, 6, 9, 'LA DECEPCION LA TRAICION HERMANO', '8', 4, '', 2, 1, 'ES', 5, '2022-08-04', 0, '', '', ''),
 	(29, 20, '2022-07-28 16:05:53', '20220703271', 1, 3, 8, 9, 'NO ME DIGAS NADA NO QUIERO ESCUCHARTE', '24', 4, '', 4, 1, 'ESR', 12, '2022-08-16', 0, '', '', ''),
 	(30, 22, '2022-08-09 16:39:01', '20220803272', 1, 3, 3, 9, 'FACTURA', '6', 4, '', 2, 1, 'ESR', 5, '2022-08-17', 0, 'vistas/radicados/2022/08/09/1773.pdf', '', ''),
-	(31, 0, '2022-08-10 10:34:28', '20220803273', 1, 1, 6, 9, 'PETICION AL PERTENECIENTE', 'ANGELINA JOLIE', 4, '', 2, 1, 'ESR', 5, '2022-08-18', 0, 'vistas/radicados/2022/08/10/1776.pdf', '', '');
+	(31, 0, '2022-08-10 10:34:28', '20220803273', 1, 1, 6, 9, 'PETICION AL PERTENECIENTE', '56', 4, '', 2, 1, 'ESR', 5, '2022-08-18', 0, '', 'prueba@hotmail.com', 'Calle 1 13 Av Benito'),
+	(32, 0, '2022-08-16 08:24:45', '20220803274', 1, 1, 6, 9, 'NOTIFICACION PREDIO PUERTO', '7', 4, '', 2, 1, 'ESR', 5, '2022-08-23', 0, '', '', 'Calle 1 13 Av Juarez'),
+	(33, 0, '2022-08-16 14:04:57', '20220803275', 4, 3, 11, 9, 'AYUDAME SEÑOR A ENTENDER', 'DOÑA JUANA', 5, '', 4, 1, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(34, 0, '2022-08-16 14:05:36', '20220803276', 6, 5, 13, 9, 'OJALA PUDIERA DEVOLVER EL TIEMPO PARA VERTE DE NUEVO', '6', 6, '', 4, 1, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(35, 0, '2022-08-16 14:06:08', '20220803277', 8, 2, 9, 9, 'AQUI ESTOY', '56', 3, '', 5, 5, 'ES', 5, '2022-08-23', 0, '', '', ''),
+	(36, 0, '2022-08-16 14:07:19', '20220803278', 7, 7, 22, 9, 'SI SI COLOMBIA SI SI CARIBE', '51', 3, '', 7, 1, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(37, 0, '2022-08-16 14:08:17', '20220803279', 7, 4, 14, 9, 'HUAWEI MATE S 2016', '40', 3, '', 4, 1, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(38, 0, '2022-08-16 14:11:40', '20220803280', 4, 8, 19, 9, 'EL EXTINTOR ESTA VENCIDO', '24', 6, '', 1, 1, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(39, 0, '2022-08-16 14:12:22', '20220803281', 5, 2, 16, 9, 'DAME DE BEBER DE TU MANANTIAL', '46', 4, '', 3, 7, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(40, 0, '2022-08-16 14:13:12', '20220803282', 3, 7, 15, 9, 'PASE UNOS AÑOS BUSCANDO EL AGUA DE LA VIDA, ESA QUE FLUYE Y QUE DA &quotPAZ&quot', '34', 2, '', 4, 6, 'ESR', 5, '2022-08-23', 0, '', '', ''),
+	(41, 0, '2022-08-16 14:16:47', '20220803283', 8, 5, 9, 9, 'PAGENME MIS PRESTACIONES, NO SEAN VIVOS', '39', 3, '', 6, 2, 'ESR', 5, '2022-08-23', 0, '', '', '');
 /*!40000 ALTER TABLE `radicados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.registropqr
@@ -1181,11 +1191,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-08-11 10:59:54', '2021-02-11 05:06:49', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-08-17 10:18:01', '2021-02-11 05:06:49', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-23 15:35:33', '2021-08-19 06:12:33', '97pabqieof66locspl0m949r0k', 0, 0, 0),
 	(3, 'Karelly Moreno Llorente', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 3, NULL, 'karelly.moreno@edubar.com.co', 1, '2022-08-10 08:17:07', '2021-08-19 06:12:39', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 0),
-	(9, 'Edna Suarez R', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-08-10 16:34:03', '2022-06-23 16:03:37', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
-	(10, 'Peter Zahn C', 'peterz', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-24 08:01:42', '2022-06-23 17:06:28', 'fd94agrc2l1isi90r49kcjo6k6', 0, 0, 1),
+	(9, 'Edna Suarez Restrepo', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-08-16 14:04:50', '2022-06-23 16:03:37', '4a7q8g8n56aidbi6q7omgkias4', 0, 0, 1),
+	(10, 'Peter Zahn Colmenares', 'peterz', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, 'peter.zahn@edubar.com.co', 1, '2022-06-24 08:01:42', '2022-06-23 17:06:28', 'fd94agrc2l1isi90r49kcjo6k6', 0, 0, 1),
 	(11, 'Fernando Barcelo Bercelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, 'fernando.barcelo@edubar.com.co', 1, '0000-00-00 00:00:00', '2022-06-24 08:07:00', NULL, 0, 0, 1),
 	(12, 'Yesid Cantillo Consuegra', 'ycantillo', '$2a$07$asxx54ahjppf45sd87a5auUBKAq2MpBHzSIfBZOK52ERDFh3zAhQe', 7, NULL, 'yesid.cantillo@edubar.com.co', 1, '2022-08-03 09:27:01', '2022-07-12 14:14:55', 'crgsub941msod5pvhgjpmi8qum', 0, 0, 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
@@ -1199,11 +1209,11 @@ CREATE TABLE IF NOT EXISTS `valores` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='Muestra los cambios de valores que lleva un insumo a lo largo del tiempo.';
 
--- Volcando datos para la tabla kardex.valores: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.valores: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `valores` DISABLE KEYS */;
 INSERT INTO `valores` (`id`, `id_insumo`, `registro`, `tipo`) VALUES
 	(1, 2, NULL, 1),
-	(4, 1, '[{"val":"500","fe":"2022-08-09 11:23:50"},{"val":"800","fe":"2022-08-12"},{"val":"1700","fe":"2022-08-12"},{"val":"1000","fe":"2022-08-12"}]', 1);
+	(4, 1, '[{"val":"500","fe":"2022-08-07"},{"val":"800","fe":"2022-08-08"},{"val":"1700","fe":"2022-08-09"},{"val":"1000","fe":"2022-08-12"}]', 1);
 /*!40000 ALTER TABLE `valores` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.ventas

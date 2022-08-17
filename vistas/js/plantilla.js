@@ -776,3 +776,15 @@ function ocultarAlert()
 }
 
 
+$("a#btn-sidebar-toggle").click(function(){
+
+	if ( $( "#body-Gnral" ).hasClass( "sidebar-collapse" ) ) 
+	{
+
+	}
+	else
+	{
+
+	}
+
+})

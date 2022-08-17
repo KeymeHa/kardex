@@ -8,7 +8,7 @@
 
   </div>
 
-    <h1>SITMI</h1><em style="font-size: 12px !important; color: red;">Versión Alpha</em>
+    <h1>SITMI</h1><em style="font-size: 12px !important; color: red;">Versión 1.8 Beta</em>
 
   </div>
 

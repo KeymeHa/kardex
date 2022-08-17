@@ -50,7 +50,7 @@
   <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-<body class="hold-transition skin-green sidebar-collapse sidebar-mini login-page">
+<body class="skin-green sidebar-mini login-page" id="body-Gnral">
    <?php
     if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
     {
