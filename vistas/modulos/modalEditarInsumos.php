@@ -106,6 +106,15 @@
                     </div>
                   </div>
                </div>
+
+               <div class="form-group">  
+               <label>Stock (Modificar este valor puede descuadrar Entradas y Salidas).</label>           
+                <div class="input-group">           
+                  <span class="input-group-addon"><i class="fa fa-cubes"></i></span> 
+                   <input type="number" class="form-control input-lg" id="eStock" min="0" name="eStock" placeholder="cantidad" autocomplete="off">
+                </div>
+              </div>
+
               <div class="form-group row">          
                 <label>&nbsp;Prioridad</label>           
                 <div class="input-group">

@@ -192,6 +192,13 @@ class ControladorInsumos
 	{
 		if ( isset($_POST["eIdP"]) ) 
 		{
+			$eEstanteP = "";
+			$eNivelP = "";
+			$eSeccionP = "";
+			$ePrecioCompra = 0; 
+			$stock = 0;
+			$obsValidada = "";
+			$habilitado = 0;
 
 			if($_POST["eEstanteP"] == null || $_POST["eEstanteP"] == "")
 			{
@@ -232,6 +239,17 @@ class ControladorInsumos
 			$ejecutar = new ControladorInsumos(); 
 			$valores = $ejecutar->ctrTratarValores($_POST["eIdP"], $ePrecioCompra);
 
+			if ($_POST["eStock"] >= 0) 
+			{
+				$stock = $_POST["eStock"];
+			}
+			else
+			{
+				$traer = $ejecutar->ctrMostrarInsumos("id", $_POST["eIdP"]);
+				$stock = $traer["stock"];
+				unset($traer);
+			}
+
 			if( preg_match('/^[0-9]+$/', $_POST["eIdP"]) && preg_match('/^[0-9]+$/', $_POST["EsCategoria"]) )
 			{
 				$tabla = "insumos";
@@ -249,7 +267,7 @@ class ControladorInsumos
 
 				
 
-				if (isset($_POST["editarHabilitado"])) 
+				if ( isset($_POST["editarHabilitado"]) ) 
 				{
 					$habilitado = 0;
 				}
@@ -268,6 +286,7 @@ class ControladorInsumos
 								"prioridad" => $_POST["ePrioridadP"],
 								"precio_compra" => $ePrecioCompra,
 								"habilitado" => $habilitado,
+								"stock" => $stock,
 								"id" => $_POST["eIdP"]);
 
 				$respuesta = ModeloInsumos::mdlEditarInsumo($tabla, $datos);

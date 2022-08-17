@@ -390,7 +390,7 @@ class ModeloInsumos
 	=============================================*/
 	static public function mdlEditarInsumo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_categoria = :id_categoria, codigo = :codigo, descripcion = :descripcion, observacion = :observacion, estante = :estante, nivel = :nivel, seccion = :seccion, prioridad = :prioridad, precio_compra = :precio_compra, habilitado = :habilitado WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_categoria = :id_categoria, codigo = :codigo, descripcion = :descripcion, observacion = :observacion, estante = :estante, nivel = :nivel, seccion = :seccion, prioridad = :prioridad, precio_compra = :precio_compra, habilitado = :habilitado, stock = :stock WHERE id = :id");
 		$stmt -> bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_STR);
 		$stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
@@ -401,6 +401,7 @@ class ModeloInsumos
 		$stmt -> bindParam(":prioridad", $datos["prioridad"], PDO::PARAM_STR);
 		$stmt -> bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
 		$stmt -> bindParam(":habilitado", $datos["habilitado"], PDO::PARAM_INT);
+		$stmt -> bindParam(":stock", $datos["stock"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if($stmt->execute()){

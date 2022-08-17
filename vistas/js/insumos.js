@@ -42,6 +42,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			$('#EsCategoria').append('<option value="'+respuesta['id_categoria']+'">'+respuesta['categoria']+'</option>');
 			$("#ePrioridadP").val(respuesta["prioridad"]);
 			$("#eCodigoP").val(respuesta["codigo"]);
+			$("#eStock").val(respuesta["stock"]);
 
 			llamarUnidad(ElementoUno, respuesta["unidad"]);
 			llamarUnidad(ElementoDos, respuesta["unidadSal"]);
@@ -74,7 +75,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 				$("#ediarContenido").val(respuesta["contenido"]);
 			}
 			
-			if(respuesta["eEstanteP"] == null || respuesta["eEstanteP"] == "")
+			if(respuesta["estante"] == null || respuesta["estante"] == "")
 			{
 				$("#eEstanteP").val(0);	
 			}
@@ -83,7 +84,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 				$("#eEstanteP").val(respuesta["estante"]);	
 			}
 
-			if(respuesta["eNivelP"] == null || respuesta["eNivelP"] == "")
+			if(respuesta["nivel"] == null || respuesta["nivel"] == "")
 			{
 				$("#eNivelP").val(0);
 			}
@@ -93,7 +94,7 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 				$("#eNivelP").val(respuesta["nivel"]);
 			}
 
-			if(respuesta["eSeccionP"] == null || respuesta["eSeccionP"] == "")
+			if(respuesta["seccion"] == null || respuesta["seccion"] == "")
 			{
 				$("#eSeccionP").val(0);
 			}
@@ -110,6 +111,8 @@ $(".tablaInsumos").on("click", "button.btnEditarInsumo", function(){
 			{
 				$("#editarHabilitado").prop("checked", false);
 			}
+
+
 
 		var datosDos = new FormData();
 		datosDos.append("traerCat", 1);
