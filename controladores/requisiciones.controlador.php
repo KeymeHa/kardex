@@ -311,7 +311,7 @@ class ControladorRequisiciones
 			}
 			else
 			{
-				$fechaAp = "0000-00-00";
+				$fechaAp = "0000-00-00 00:00:00";
 				$aprobado = 0;
 				$tipoob = "observacionE";
 				$gen = 1;
@@ -584,7 +584,7 @@ class ControladorRequisiciones
 				 $perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
 				 $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
 				 date_default_timezone_set('America/Bogota');
-					$fechaAp = date("Y-m-d");
+				 $fechaAp = date("Y-m-d H:i:s");
 
 				if ($requisicion["aprobado"] == 0) 
 				{

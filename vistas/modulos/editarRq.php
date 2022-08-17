@@ -103,11 +103,13 @@
                   <div class="form-group">
                     <div class="input-group">
                       <?php if ($requisicion["fecha_sol"] != null) { 
-                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$requisicion["fecha_sol"].'" required readonly>';
+
+                        $fechaSol = ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 3);
+                        echo '<input type="text" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$fechaSol.'" required readonly>';
                       }
                       else
                       {
-                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>';
+                        echo '<input type="text" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>';
                       }
                       ?>
                     </div>              
