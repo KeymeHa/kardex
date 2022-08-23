@@ -18,6 +18,7 @@ require_once "../modelos/usuarios.modelo.php";
 class Tablapersonas
 {	
 	public $idArea;
+	public $anioActual;
 	public function mostrarTablapersonas()
 	{	  
 		$sw = 0;
@@ -48,7 +49,7 @@ class Tablapersonas
            $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
 		   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarPer'  title='Editar persona' data-toggle='modal' data-target='#modalEditarPersona' idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarPer' title='Eliminar' idper='".$personas[$i]["id"]."' nomper='".$usuario["nombre"]."'><i class='fa fa-times'></i></button></div></div>";
 
-		   $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"]);
+		   $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"], $this->anioActual);
 
 
 		   if ($sw == 0) 
@@ -87,10 +88,19 @@ $verpersonas = new Tablapersonas();
 if( isset($_GET["idArea"]))
 {
 	$verpersonas -> idArea = $_GET["idArea"];
-	$verpersonas -> mostrarTablapersonas();
 }
 else
 {
 	$verpersonas -> idArea = null;
-	$verpersonas -> mostrarTablapersonas();
 }
+
+if (isset($_GET["actual"])) 
+{
+	$verpersonas -> anioActual = $_GET["actual"];
+}
+else
+{
+	$verpersonas -> anioActual = 0;
+}
+
+$verpersonas -> mostrarTablapersonas();

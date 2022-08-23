@@ -12,7 +12,7 @@
       $valor = $_GET["idArea"];
       $area = ControladorAreas::ctrMostrarAreasConFiltro($item, $valor);
       $canPersonas = ControladorPersonas::ctrContarPersonas("id_area", $valor);
-      $canRq = ControladorRequisiciones::ctrContarRqdeArea("id_area", $valor);
+      $canRq = ControladorRequisiciones::ctrContarRqdeArea("id_area", $valor, $_SESSION["anioActual"]);
     }
   }
   else
