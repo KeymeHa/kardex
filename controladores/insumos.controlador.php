@@ -294,6 +294,8 @@ class ControladorInsumos
 				if($respuesta == "ok")
 				{
 
+					//unset($_POST);
+
 					if( isset($_GET["idCategoria"]) )
 					{
 						echo'<script>

@@ -58,7 +58,7 @@ class MYPDF extends TCPDF {
         <tr>        
             <td style="width:10px;"></td>
             <td style="width:170px;">Archivo N°: '.$corte['corte'].'-EDU-RADICACIÓN</td>
-            <td style="width:620px;"></td>
+            <td style="width:750px;"></td>
             <td style="width:40px;text-align: right;"><strong>Fec.Rep:</strong></td>
             <td style="width:90px;text-align: right;">'.$fecha.'</td>
             <td style="width:50px;text-align: right;">Cite: '.$numCorte.'</td>
@@ -68,7 +68,7 @@ class MYPDF extends TCPDF {
         <tr>        
             <td rowspan="3" style="width:5px;"></td>
             <td rowspan="3" style="width:120px; border: 1px solid black; font-size:5px; line-height: 1;"><img src="images/logoEdubar.png" width="80" height="auto"></td>
-            <td rowspan="3" style="width:750px; border: 1px solid black; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
+            <td rowspan="3" style="width:880px; border: 1px solid black; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
             <td style="width:58px; border: 1px solid black; font-size:7px;" >
             Código&nbsp;&nbsp;
             </td>
@@ -92,6 +92,29 @@ class MYPDF extends TCPDF {
             </td>   
         </tr>
     </table>
+        
+        <table style="font-size:7px;">
+        <tr>
+        <td>
+        </td>
+        </tr>
+        </table>
+
+        <table cellpadding="8" style="text-align:center;">
+        <tr style="text-align:center; font-size:7.5px;">
+                <td style="border-color: white !important;" width="35"><b>#</b></td>
+                <td border="1" width="90"><b>Número Radicado</b></td>
+                <td border="1" width="107"><b>Fecha Radicado</b></td>
+                <td border="1" width="107"><b>Tipo</b></td>
+                <td border="1" width="107"><b>Remitido A</b></td>
+                <td border="1" width="127"><b>Remitente</b></td>
+                <td border="1" width="261"><b>Asunto</b></td>
+                <td border="1" width="80"><b>Enviado Por</b></td>
+                <td border="1" width="90"><b>Recepcionado Por</b></td>
+                <td border="1" width="117"><b>Fecha Recepcionado</b></td>
+            </tr></table>
+
+
 ';
         // Logo
         $this->SetFont('helvetica', 'B', 20);
@@ -148,7 +171,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(4, 22, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(30, 26, PDF_MARGIN_RIGHT);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -180,22 +203,10 @@ if (count($radicados) != 0)
 {
     $contenidoPDF = "";
 
-    if (count($radicados) < 12) 
-    {
+  #  if (count($radicados) < 12) 
+   # {
 
-         $contenidoPDF.='<table cellpadding="8" style="text-align:center;">
-        <tr style="text-align:center; font-size:7.5px;">
-                <td style="border-color: white !important;" width="25"><b>#</b></td>
-                <td border="1" width="107"><b>Número Radicado</b></td>
-                <td border="1" width="107"><b>Fecha Radicado</b></td>
-                <td border="1" width="107"><b>Tipo</b></td>
-                <td border="1" width="107"><b>Remitido A</b></td>
-                <td border="1" width="107"><b>Remitente</b></td>
-                <td border="1" width="107"><b>Asunto</b></td>
-                <td border="1" width="107"><b>Enviado Por</b></td>
-                <td border="1" width="107"><b>Recepcionado Por</b></td>
-                <td border="1" width="107"><b>Fecha Recepcionado</b></td>
-            </tr>';
+         $contenidoPDF.='<table cellpadding="8" style="text-align:center;">';
 
 
         foreach ($radicados as $key => $value) 
@@ -206,27 +217,27 @@ if (count($radicados) != 0)
             $pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $value["id_pqr"]);
             $fechaRad = ControladorParametros::ctrOrdenFecha($value["fecha"], 3);
             $contenidoPDF.='<tr style="text-align:center; font-size:7.5px;">
-                    <td style="border-color: white !important;">'.$contar.'</td>
-                    <td border="1">'.$value["radicado"].'</td>
-                    <td border="1">'.$fechaRad.'</td>
-                    <td border="1">'.$pqr["nombre"].'</td>
-                    <td border="1">'.$areas["nombre"].'-GRAL</td>
-                    <td border="1">'.$remitente.'</td>
-                    <td border="1">'.$value["asunto"].'</td>
-                    <td border="1"></td>
-                    <td border="1">'.$value["recibido"].'</td>
-                    <td border="1"></td>
+                    <td style="border-color: white !important;" width="32">'.$contar.'</td>
+                    <td border="1" width="90">'.$value["radicado"].'</td>
+                    <td border="1" width="107">'.$fechaRad.'</td>
+                    <td border="1" width="107">'.$pqr["nombre"].'</td>
+                    <td border="1" width="107">'.$areas["nombre"].'-GRAL</td>
+                    <td border="1" width="127">'.$remitente.'</td>
+                    <td border="1" width="261">'.$value["asunto"].'</td>
+                    <td border="1" width="80"></td>
+                    <td border="1" width="90">'.$value["recibido"].'</td>
+                    <td border="1" width="117"></td>
                 </tr>';
 
         }
       $contenidoPDF.='</table>';
 
       $pdf->writeHTML($contenidoPDF, false, true, false, true);
-    }
-    else#holaaa
-    {
+   # }
+   # else#holaaa
+  #  {
 
-    }
+   # }
    
 }
 

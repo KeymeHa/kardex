@@ -80,7 +80,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(15, -5, 0);
+$pdf->SetMargins(0, 0, 0);
 //$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetAutoPageBreak(TRUE, 0);
 $pdf->setPrintHeader(false);
@@ -94,10 +94,8 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 
 // ---------------------------------------------------------
 
-$pdf->setPageOrientation('L');
-
 // add a page
- $pdf->AddPage();
+$pdf->AddPage('L', 'LETTER');
 
  $subtable = '<table cellspacing="1" cellspadding="1" border="0" style="font-size:8px" ><tr><td><img src="images/logoEdubar.png"></td></tr><tr><td><img src="images/FIRMA.jpg"></td></tr></table>';
 
@@ -106,11 +104,11 @@ $pdf->setPageOrientation('L');
         
 
         $headerText = '<table>
-        <tr><td height="541" width="100%"></td></tr>
+        <tr><td height="550" width="100%"></td></tr>
         </table>
         <table border="0">
             <tr>
-                <td width="43%"></td>
+                <td width="55%"></td>
                 <td width="20%" style="font-size:6px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
                     <p style="text-align: justify;">
                         <ul>

@@ -363,7 +363,7 @@ class ControladorRequisiciones
 					$indiceCodigo = "codRq";
 					$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
 
-					if ($perfil != 4) 
+					if ($perfil == 3) 
 					{
 						echo '<script>
 
@@ -400,7 +400,7 @@ class ControladorRequisiciones
 
 							if(result.value){
 							
-								window.location = "inicio";
+								window.location = "hisRequisicion";
 
 							}
 
@@ -427,7 +427,7 @@ class ControladorRequisiciones
 
 					if(result.value){
 					
-						window.location = "requisiciones";
+						window.location = "inicio";
 
 					}
 
