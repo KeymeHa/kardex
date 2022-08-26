@@ -24,7 +24,7 @@ public function traerImpresionOC(){
 $itemOC = "id";
 $valorOC = $this->idOC;
 
-$respuestaOC = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($itemOC, $valorOC);
+$respuestaOC = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($itemOC, $valorOC, 0);
 
 $fecha = ControladorParametros::ctrOrdenFecha($respuestaOC["fecha"], 0);
 $fechaEnt = ControladorParametros::ctrOrdenFecha($respuestaOC["fechaEntrega"], 0);

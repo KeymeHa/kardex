@@ -194,8 +194,11 @@
             <!-- ENTRADA PARA LA CONTRASEÑA -->
 
              <div class="form-group">         
+              
+                 <p class="help-block">Minimo 8 Caracteres, No acepta Simbolos.</p>
               <div class="input-group">         
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+
                 <input type="password" class="form-control input-lg" name="editarPassword" id="editarPassword" placeholder="Ingresar contraseña">
                 <input type="hidden" class="form-control input-lg" name="ActualPassword" id="actualPassword">
               </div>

@@ -58,9 +58,13 @@ class TablaRequisiciones
             {
             	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning' title='Falta aprobación por parte de compras'>En espera</button></div></div>";
             }
-            else
+            else if ($requisiciones[$i]["aprobado"] == 1) 
             {
             	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success' title='Ya fue aprobada esta requisición'>Aprobado</button></div></div>";
+            }
+            else
+            {
+            	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-danger' title='Requisición anulada'>Anulada</button></div></div>";
             }
 
 

@@ -43,11 +43,11 @@ class ControladorOrdenCompra
 	
 	}//ctrMostrarFacturas
 	
-	static public function ctrMostrarOrdenesdeCompras($item, $valor)
+	static public function ctrMostrarOrdenesdeCompras($item, $valor, $anio)
 	{
 		$tabla = "ordenCompra";
 		$r = new ControladorOrdenCompra;
-		$anio = $r->anioActual();
+		$anio = $r->anioActual($anio);
 		$respuesta = ModeloOrdenCompra::mdlMostrarOrdenesdeCompras($tabla, $item, $valor, $anio);
 
 		return $respuesta;

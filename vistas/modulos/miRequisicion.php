@@ -121,20 +121,41 @@
             <!-- /.description-block -->
           </div>
 
-          <?php
+           <?php 
 
           if ($requisicion["aprobado"] == 1) 
           {
             echo '<div class="col-sm-2 col-xs-6">
-            <div class="description-block">
-              <span class="description-text">Aprobado Por:</span>
-              <h5 class="description-header">'.$usrApr["nombre"].'</h5>
-            </div>
-            <!-- /.description-block -->
-          </div>';
+              <div class="description-block border-right">
+                <span class="description-text">Fecha de Aprobación</span>
+                <h5 class="description-header">'.ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 0).'</h5>
+              </div>
+            </div>';
+          }
+          else
+          {
+             echo '<div class="col-sm-3 col-xs-6">
+              <div class="description-block border-right">
+                <span class="description-text">Estado</span>
+                <h5 class="description-header">';
+
+                if ($requisicion["aprobado"] == 0) 
+                {
+                  echo 'En Espera.';
+                }
+                else
+                {
+                   echo 'Anulado el '.ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 0);
+                }
+
+                echo '</h5>
+              </div>
+            </div>';
           }
 
+
           ?>
+
 
         </div><!--row-->
       </div><!--BOX BODY-->

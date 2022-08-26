@@ -588,6 +588,17 @@ class ControladorRequisiciones
 
 				if ($requisicion["aprobado"] == 0) 
 				{
+
+
+					if (isset($_POST["btnAnularRq"])) 
+					{
+						$apro = 2;	
+					}
+					else
+					{
+						$apro = 1;
+					}
+
 					$datos = array( 'id_persona' => $_POST["id_persona"],
 								'id_area' => $persona["id_area"],
 								'id_usr' => $_POST["idUsuario"],
@@ -595,8 +606,10 @@ class ControladorRequisiciones
 								'fecha' => $fechaAp,
 								'observacion' => $_POST["observacionRq"],
 								'registro' => $_POST["editarRegistro"],
-								'aprobado' => 1,
+								'aprobado' => $apro,
 								'id' => $_POST["editarRq"]);
+
+					
 				}
 				else
 				{

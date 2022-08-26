@@ -115,7 +115,7 @@
             <?php
             $item = "fac_asociada";
             $valor = $facturas['id'];
-            $ordenes = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor);
+            $ordenes = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor, $_SESSION["anioActual"]);
             if(!$ordenes == null)
             {
               echo' <div class="col-xs-2">

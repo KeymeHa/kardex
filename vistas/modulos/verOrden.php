@@ -9,7 +9,7 @@
     {
       $item = "id";
       $valor = $_GET["idOC"];
-      $Orden =  ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor);
+      $Orden =  ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor, $_SESSION["anioActual"]);
       $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $Orden["id_proveedor"]); 
       $fecha = substr($Orden["fecha"],8,10);
       $fecha .= "-".substr($Orden["fecha"],5,-3);
