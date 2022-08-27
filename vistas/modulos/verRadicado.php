@@ -228,6 +228,12 @@
 </div>
 
 <?php
+
+  include "modal/modalEditarRadicado.php";
+
+?>
+
+<?php
   $anularRad = new ControladorRadicados();
   $anularRad -> ctrAnularRadicado();
 ?>

@@ -186,8 +186,9 @@
 
         <?php
 
+          #26.
           $editarRadicado = new ControladorRadicados();
-          $editarRadicado -> ctrEditarRad();
+          $editarRadicado -> ctrEditarRad( $_SESSION["id"] );
 
         ?>
 
