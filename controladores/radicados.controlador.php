@@ -374,7 +374,7 @@ class ControladorRadicados
 	}//ctrRadicar
 
 
-	static public function ctrEditarRad($id_usr)
+	static public function ctrEditarRad()
 	{
 		if ( isset($_POST["obsEdit"]) ) {
 			
@@ -385,11 +385,7 @@ class ControladorRadicados
 			$recibido = ControladorParametros::ctrValidarCaracteres($_POST["recEdit"]);
 			$correo = ControladorParametros::ctrValidarCaracteres($_POST["correoEe"]);
 			$direccion = ControladorParametros::ctrValidarCaracteres($_POST["direccionE"]);
-			
-			#26
-			$titulo = "";
-			$tipo = "";
-			
+
 			$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaEdit"], $_POST["objetoEdit"]);
 
 
@@ -430,107 +426,19 @@ class ControladorRadicados
 
 			//historial
 
-			#26
 			#Consultar Radicado
-			$ejecutar = new ControladorRadicados();
-			$verRadicado = $ejecutar -> ctrMostrarRadicados("id", $_POST["id_radEdit"]);
+
 			#ver Que Datos Cambiaron
+
+			#Enviar Al historial
+
+			$ejecutar = new ControladorRadicados();
+
+			$verRadicado = $ejecutar -> ctrMostrarRadicados("id", $_POST["id_radEdit"]);
 
 			if (isset($verRadicado["radicado"]) && $verRadicado["radicado"] != null) 
 			{
-			
-				#26 START
-				$llaves = ['id_usr',
-							'id_accion',
-							'id_pqr',
-							'id_objeto',
-							'id_articulo',
-							'id_remitente',
-							'asunto',
-							'id_area',
-							'cantidad',
-							'recibido',
-							'dias',
-							'fecha_vencimiento',
-							'soporte',
-							'observaciones',
-							'correo',
-							'direccion',
-							'id'];
-
-				$valAnterior = '[';
-				$valNuevo = '[';
-
-				for ($i=0; $i < count($llaves) ; $i++) 
-				{ 
-					if ( $verRadicado[$llaves[$i]] != $datos[$llaves[$i]] ) 
-					{
-						#ca es campo, atributo del registro para consultar
-						#val es el valor, tanto el nuevo como el anterior
-						if ($llaves[$i] == "id_remitente") 
-						{
-							$remitente = $ejecutar -> ctrValidarRemitente($datos[$llaves[$i]]);
-
-							if ( $remitente != $datos[$llaves[$i]] ) 
-							{
-								$valAnterior.= '{"ca":"'.$i.'","val":"'.$remitente.'"},';
-								$valNuevo.= '{"ca":"'.$i.'","val":"'.$datos[$llaves[$i]].'"},';
-							}
-
-						}
-						else
-						{
-							$valAnterior.= '{"ca":"'.$i.'","val":"'.$verRadicado[$llaves[$i]].'"},';
-							$valNuevo.= '{"ca":"'.$i.'","val":"'.$datos[$llaves[$i]].'"},';
-						}
-
-						
-					}
-
-				}
-
-				#26 END
-				 $valAnterior = substr($valAnterior, 0 ,-1);
-		         $valAnterior.= ']';
-		         $valNuevo = substr($valNuevo, 0 ,-1);
-		         $valNuevo.= ']';
-
-				$tabla = "radicados";
-				$respuesta = ModeloRadicados::mdlEditarRad($tabla, $datos);
-
-				if ($respuesta == "ok") 
-				{
-					#26
-					$datos2 = array( "accion" => 3,
-									"numTabla" => 15,
-									"valorAnt" => $valAnterior,
-									"valorNew" => $valNuevo,
-									"id_usr" => $id_usr
-									 );
-					#26
-					$respuesta2 = ModeloHistorial::mdlInsertarHistorial("historial", $datos2);
-
-					$titulo = "¡Radicado #".$_POST["numRadEdit"]." se ha editado!";
-					$tipo = "success";
-
-					
-
-					if (isset($_GET["idCorte"]) && isset($_GET["verCorte"])) 
-					{
-						$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
-						#index.php?ruta=verCorte&idCorte=7
-					}
-					else
-					{
-						$url = "radicado";
-					}
-
-				}
-				else
-				{
-					$titulo = "¡Ha ocurrido un error al editar!";
-					$tipo = "error";
-				}
+				# code...
 			}
 			else
 			{
@@ -538,8 +446,40 @@ class ControladorRadicados
 				$tipo = "error";
 			}
 
+			$tabla = "historial";
 
-			#Enviar Al historial
+			$datos = array( "accion" => 4,
+							"numTabla" => 5,
+							"valorAnt" => $_GET["nombreusr"],
+							"valorNew" => "",
+							"id_usr" => $idSESSION
+							 );
+
+			$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+
+			$tabla = "radicados";
+			$respuesta = ModeloRadicados::mdlEditarRad($tabla, $datos);
+
+			if ($respuesta == "ok") 
+			{
+				$titulo = "¡Radicado #".$_POST["numRadEdit"]." se ha editado!";
+				$tipo = "success";
+
+				if (isset($_GET["idCorte"]) && isset($_GET["verCorte"])) 
+				{
+					$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
+					#index.php?ruta=verCorte&idCorte=7
+				}
+				else
+				{
+					$url = "radicado";
+				}
+			}
+			else
+			{
+				$titulo = "¡Ha ocurrido un error al editar!";
+				$tipo = "error";
+			}
 
 					echo '<script>
 
