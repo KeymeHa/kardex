@@ -198,12 +198,24 @@
                                echo ' <input type="number" class="form-control nuevaCantidadPedida" stock="'.$value["ped"].'" name="nuevaCantidadPedida" min="1" value="'.$value["ped"].'" required readonly>';
                               }
 
-                           
-                         echo' </div>
+                         if($requisicion['aprobado'] == 0)
+                         {
+                             echo' </div>
+                          <div class="col-xs-3 ingresoCantidad">
+                            <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$value["ent"].'">
+                          </div>
+                        </div>';
+                         }
+                         else
+                         {
+                              echo' </div>
                           <div class="col-xs-3 ingresoCantidad">
                             <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="1" value="'.$value["ent"].'" required>
                           </div>
                         </div>';
+                         }
+                           
+                        
                     }
                   }
 
@@ -214,10 +226,11 @@
               <input type="hidden" name="editarRegistro" value="<?php echo $matchError?>">
               <input type="hidden" name="editarRq" value="<?php echo $requisicion['id']?>">
                 <br>
-                <a href="requisiciones">
-                  <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                </a>
-                <button type="submit" style="color: white;" class="btn btn-success pull-right btnGuardarRq"><?php if($requisicion['aprobado'] == 0){echo 'Aprobar';}else{echo 'Editar';}?></button>
+
+                <button type="button" onclick="history.back()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
+
+                <?php if($requisicion['aprobado'] == 0){echo '<button type="submit" style="color: white;" name="btnAnularRq" class="btn btn-warning btnAnularRq"><i class="fa fa-ban"></i> Anular</button>';}?>
+                <button type="submit" style="color: white;" name="btnGuardarRq" class="btn btn-success btnGuardarRq"><i class="fa fa-check"></i> <?php if($requisicion['aprobado'] == 0){echo 'Aprobar';}else{echo 'Editar';}?></button>
 
                 <?php
                   $editarRq = new ControladorRequisiciones();

@@ -6,6 +6,7 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 
 	Swal.fire({
 		  title: 'Eliga la posición del radicado # '+rad+' para imprimir.',
+		  text: 'Debe estar en tamaño carta y escala 100%.',
 		  showDenyButton: true,
 		  showCancelButton: true,
 		  cancelButtonText: 'Cancelar',

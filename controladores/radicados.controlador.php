@@ -377,7 +377,7 @@ class ControladorRadicados
 	static public function ctrEditarRad()
 	{
 		if ( isset($_POST["obsEdit"]) ) {
-			$tabla = "radicados";
+			
 
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["obsEdit"]);
 			$asunto = ControladorParametros::ctrValidarCaracteres($_POST["asuntoEdit"]);
@@ -424,7 +424,40 @@ class ControladorRadicados
 							'direccion' => $direccion,
 							'id' => $_POST["id_radEdit"]);
 
+			//historial
 
+			#Consultar Radicado
+
+			#ver Que Datos Cambiaron
+
+			#Enviar Al historial
+
+			$ejecutar = new ControladorRadicados();
+
+			$verRadicado = $ejecutar -> ctrMostrarRadicados("id", $_POST["id_radEdit"]);
+
+			if (isset($verRadicado["radicado"]) && $verRadicado["radicado"] != null) 
+			{
+				# code...
+			}
+			else
+			{
+				$titulo = "¡Radicado #".$_POST["numRadEdit"]." no se logro editar!";
+				$tipo = "error";
+			}
+
+			$tabla = "historial";
+
+			$datos = array( "accion" => 4,
+							"numTabla" => 5,
+							"valorAnt" => $_GET["nombreusr"],
+							"valorNew" => "",
+							"id_usr" => $idSESSION
+							 );
+
+			$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+
+			$tabla = "radicados";
 			$respuesta = ModeloRadicados::mdlEditarRad($tabla, $datos);
 
 			if ($respuesta == "ok") 

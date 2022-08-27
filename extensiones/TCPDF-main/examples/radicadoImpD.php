@@ -104,12 +104,12 @@ $pdf->AddPage('L', 'LETTER');
         
 
         $headerText = '<table>
-        <tr><td height="550" width="100%"></td></tr>
+        <tr><td height="552" width="100%"></td></tr>
         </table>
         <table border="0">
             <tr>
-                <td width="55%"></td>
-                <td width="20%" style="font-size:6px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
+                <td width="40%"></td>
+                <td width="25%" style="font-size:6px;"><span style="color:white;">____</span><b><u>NOTAS</u></b>:
                     <p style="text-align: justify;">
                         <ul>
                          <li>Para Cualquier información cite el <b>Número del Radicado.</b></li>
