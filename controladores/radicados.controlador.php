@@ -493,9 +493,9 @@ class ControladorRadicados
 
 				#26 END
 				 $valAnterior = substr($valAnterior, 0 ,-1);
-		         $valAnterior.= ']';
+		         $valAnterior.= '],[{"id":"'.$_POST["id_radEdit"].'"}]';
 		         $valNuevo = substr($valNuevo, 0 ,-1);
-		         $valNuevo.= ']';
+		         $valNuevo.= '],[{"id":"'.$_POST["id_radEdit"].'"}]';
 
 				$tabla = "radicados";
 				$respuesta = ModeloRadicados::mdlEditarRad($tabla, $datos);
