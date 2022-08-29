@@ -18,7 +18,7 @@
 
   <section class="content-header">
     <h1>    
-      Modulo Registros<h3 id="titulo-registros"></h3>
+      Módulo Registros<h3 id="titulo-registros"></h3>
     </h1>
     <ol class="breadcrumb">    
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li> 

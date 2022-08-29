@@ -87,7 +87,7 @@
                   <div class="inner">
                     <h3>Encargados</h3>
 
-                    <p>Puedes permitir a un usuario que se encarge de tus modulos.</p>
+                    <p>Puedes permitir a un usuario que se encarge de tus módulos.</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person"></i>

@@ -206,7 +206,7 @@
 			{
 
 				echo '
-				<li class="header">Modulo Ventas</li>
+				<li class="header">Módulo Ventas</li>
 				<li ';
 
 				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "clientes"){ echo'class="active"'; }	}

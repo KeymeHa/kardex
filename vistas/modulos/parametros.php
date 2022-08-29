@@ -59,7 +59,7 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="4">Editar</button></td>
                   </tr>
                    <tr>
-                    <th>Modulos</th>
+                    <th>Módulos</th>
                     <td>Usted puede habilitar los modulos del sistema.</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="5">Administrar</button></td>
                   </tr>

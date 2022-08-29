@@ -5,7 +5,7 @@
   <section class="content-header">
      <h1>
       
-     Modulo de Radicados
+     Módulo de Radicados
       
       <small>Resumen y Busqueda</small>
     
