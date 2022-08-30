@@ -98,7 +98,7 @@ class ModeloRequisiciones
 		}else if($fechaInicial == $fechaFinal){
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2 AND DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') ORDER BY id DESC");
 
 			$stmt -> bindParam(":fecha_sol", $fechaInicial, PDO::PARAM_STR);
 
@@ -118,12 +118,12 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2  AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
 
 			}
 		

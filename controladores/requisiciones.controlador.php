@@ -7,11 +7,11 @@ class ControladorRequisiciones
 	{
 	    if ($anio == 0) 
 	    {
-	    	$respuesta = 'WHERE aprobado = 1';
+	    	$respuesta = 'WHERE aprobado = 1 or aprobado = 2  ';
 	    }
 	    else
 	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1';
+	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1 or aprobado = 2 ';
 	    }
 		return $respuesta;
 	}
@@ -317,13 +317,14 @@ class ControladorRequisiciones
 				$gen = 1;
 			}
 
+			$parametro = ControladorParametros::ctrMostrarParametros(4);
 			
 
 			$tabla = "requisiciones";
 			$datos = array( 'id_area' => $persona["id_area"],  
 							'id_persona' => $_POST["id_persona"],
 							'id_usr' => $_POST["idUsuario"],
-							'codigoInt' => $_POST["codigoInterno"],
+							'codigoInt' => $parametro["codigo"],
 							'insumos' => $_POST["listadoInsumosRq"],
 							'fecha_sol' => $fechaSol,
 							'observacion' => $_POST["observacionRq"],

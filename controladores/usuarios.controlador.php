@@ -52,7 +52,7 @@ class ControladorUsuarios
 
 
 							$_SESSION['sid'] = session_id();
-							$_SESSION['jwt'] = JWTclass::jwt($respuesta["id"], $respuesta[$item]);
+							#$_SESSION['jwt'] = JWTclass::jwt($respuesta["id"], $respuesta[$item]);
 							$_SESSION["iniciarSesion"] = "p3ddmfgqi4j0410jfqukfvv82j";
 							$_SESSION["id"] = $respuesta["id"];
 							$_SESSION["nombre"] = $respuesta["nombre"];
@@ -70,7 +70,7 @@ class ControladorUsuarios
 											$item => $_POST["ingUsuario"]);
 							#$tabla, $item1, $valor1, $item2, $valor2
 							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, $item, $respuesta[$item]);
-							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "sid_ext", $_SESSION['jwt'], $item, $respuesta[$item]);
+							#$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "sid_ext", $_SESSION['jwt'], $item, $respuesta[$item]);
 							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 5, $_SESSION["id"]);
 
 							$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);

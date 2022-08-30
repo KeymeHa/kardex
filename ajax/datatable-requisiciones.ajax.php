@@ -65,16 +65,26 @@ class TablaRequisiciones
             }
             else
             {
+
             	$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRq' idRq='".$requisiciones[$i]["id"]."' title='Ver Requisición'><i class='fa fa-book'></i></button></div><div class='col-md-4'><button class='btn btn-warning btnEditarRq' idRq='".$requisiciones[$i]["id"]."' title='Editar'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarRq' idRq='".$requisiciones[$i]["id"]."' title='Eliminar Rq'><i class='fa fa-close'></i></button></div></div>";
             }
 
-		  	
+		  
+
+		  	if ($requisiciones[$i]["aprobado"] == 2) 
+		  	{
+		  		$codigoInt = "<del>".$requisiciones[$i]["codigoInt"]."</del>";
+		  	}
+		  	else
+		  	{
+		  		$codigoInt = $requisiciones[$i]["codigoInt"];
+		  	}
 
 		  	$fecha = ControladorParametros::ctrOrdenFecha($requisiciones[$i]["fecha_sol"], 0);
 
 	    	$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$requisiciones[$i]["codigoInt"].'",
+	    		"'.$codigoInt.'",
 	    		"'.$usuario['nombre'].'",
 	    		"'.$area['nombre'].'",
 	    		"'.$cantidadInsumos.'",
