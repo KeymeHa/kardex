@@ -1001,4 +1001,13 @@ class ControladorParametros
 	}
 
 
+	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor)
+	{
+
+		$respuesta = ModeloParametros::mdlrAlmacenarAccion($tabla, $id_mensaje, $valor);
+
+		return $respuesta;
+	}
+
+
 }//class

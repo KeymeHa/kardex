@@ -511,4 +511,24 @@ class ModeloParametros
 		$stmt = null;
 	}
 
+	static public function mdlrAlmacenarAccion($tabla, $id_mensaje, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_mensaje, valor) VALUES (:id_mensaje, :valor)");
+
+		$stmt -> bindParam(":id_mensaje", $id_mensaje, PDO::PARAM_INT);
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		if ( $stmt -> execute() ) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return false;
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}
 }

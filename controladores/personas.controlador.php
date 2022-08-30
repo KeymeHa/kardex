@@ -41,7 +41,24 @@ class ControladorPersonas
 		
 	}#ctrMostrarPersonas
 
+	static public function ctrMostrarPersonasRQ($item, $valor)
+	{
+		$tabla = "personas";
+		$respuesta= [[]];
+		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
+	  		
+	  		foreach ($res as $key => $values):
 
+				  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
+			      $respuesta[$key]['id'] = $usuario["id"];
+			      $respuesta[$key]['nombre'] = $usuario["nombre"];
+			      $respuesta[$key]['id_area'] = $values["id_area"];
+			 
+			endforeach;
+
+	    return $respuesta;
+
+	}
 
 
 	static public function ctrMostrarListaPersonas()

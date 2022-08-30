@@ -1,207 +1,173 @@
 <?php
 
+require_once('jsw.controlador.php');
 
-/**
- * 
- */
 class ControladorUsuarios
 {
+	private $tabla_e = "exeption_usuarios";
+	
+	public function getTabla_E_Usuario(){
+		return $this->tabla_e;
+	}
+
 	static public function ctrIngresoUsuario()
 	{
 		if(isset($_POST["ingUsuario"]))
 		{
-			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingUsuario"]) &&
+			$tipo = 'error';
+			$url = 'login';
+			$titulo = '';
+
+			$ejecutar_e = new ControladorUsuarios;
+			
+			if(preg_match('/^[a-zA-Z0-9.@]+$/', $_POST["ingUsuario"]) &&
 			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingPassword"])){
 
 			   	$encriptar = crypt($_POST["ingPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 				$tabla = "usuarios";
 				$item = "usuario";
-				$valor = $_POST["ingUsuario"];
+
+				$valor = ControladorParametros::ctrValidarCaracteres($_POST["ingUsuario"]);
 
 				$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
 
-
-				if($respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] == $encriptar)
+				if (!isset($respuesta["password"])) 
 				{
-					if ($respuesta["estado"] == 0 ) 
-					{
-						echo '<script>
-
-								swal({
-
-									type: "error",
-									title: "¡El Usuario se encuentra Desactivado!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "login";
-
-									}
-
-								});
-							
-
-								</script>';
-					}
-					else
-					{
-						date_default_timezone_set('America/Bogota');
-
-						$fechaActual = date("Y-m-d H:i:s");
-
-
-						$_SESSION['sid'] = session_id();
-						$_SESSION["iniciarSesion"] = "p3ddmfgqi4j0410jfqukfvv82j";
-						$_SESSION["id"] = $respuesta["id"];
-						$_SESSION["nombre"] = $respuesta["nombre"];
-						$_SESSION["usuario"] = $respuesta["usuario"];
-						$_SESSION["foto"] = $respuesta["foto"];
-						$_SESSION["perfil"] = $respuesta["perfil"];
-						$_SESSION["estado"] = $respuesta["estado"];
-						$_SESSION["ultimoLogin"] = $respuesta["ultimo_login"];
-						//$_SESSION["idCategoria"] = 0;
-						$_SESSION["anioActual"] = date("Y");
-						
-
-						$datos = array(	"ultimo_login" => $fechaActual,
-										"sid" => $_SESSION['sid'],
-										"usuario" => $_POST["ingUsuario"]);
-
-						$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, "usuario", $respuesta["usuario"]);
-
-						$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
-
-						echo '<script>
-							window.location = "inicio";			
-						</script>';
-					}
-
+					$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
 				}
 				else
-				{
-
-					if ($respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] != $encriptar) 
+				{//existe
+					if($respuesta[$item] == $valor && $respuesta["password"] == $encriptar)
 					{
-						$intento = intval($respuesta["try"]) + 1;
-						
-
-						if ( $intento == 3) 
+						if ($respuesta["estado"] == 0 ) 
 						{
-							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "estado", 0, "usuario", $respuesta["usuario"]);
+							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor);
+						}
+						else
+						{
+							date_default_timezone_set('America/Bogota');
 
-							echo '<script>
+							$fechaActual = date("Y-m-d H:i:s");
 
-								swal({
 
-									type: "error",
-									title: "¡El Usuario ha sido Desactivado!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "login";
-
-									}
-
-								});
+							$_SESSION['sid'] = session_id();
+							$_SESSION['jwt'] = JWTclass::jwt($respuesta["id"], $respuesta[$item]);
+							$_SESSION["iniciarSesion"] = "p3ddmfgqi4j0410jfqukfvv82j";
+							$_SESSION["id"] = $respuesta["id"];
+							$_SESSION["nombre"] = $respuesta["nombre"];
+							$_SESSION[$item] = $respuesta[$item];
+							$_SESSION["foto"] = $respuesta["foto"];
+							$_SESSION["perfil"] = $respuesta["perfil"];
+							$_SESSION["estado"] = $respuesta["estado"];
+							$_SESSION["ultimoLogin"] = $respuesta["ultimo_login"];
+							//$_SESSION["idCategoria"] = 0;
+							$_SESSION["anioActual"] = date("Y");
 							
 
-								</script>';
-						}
-						elseif($intento != 3)
-						{
-							if ($respuesta["estado"] == 0 ) 
-							{
+							$datos = array(	"ultimo_login" => $fechaActual,
+											"sid" => $_SESSION['sid'],
+											$item => $_POST["ingUsuario"]);
+							#$tabla, $item1, $valor1, $item2, $valor2
+							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, $item, $respuesta[$item]);
+							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "sid_ext", $_SESSION['jwt'], $item, $respuesta[$item]);
+							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 5, $_SESSION["id"]);
 
-								echo '<script>
-
-										swal({
-
-											type: "error",
-											title: "¡El Usuario se encuentra Desactivado!",
-											showConfirmButton: true,
-											confirmButtonText: "Cerrar"
-
-										}).then(function(result){
-
-											if(result.value){
-											
-												window.location = "login";
-
-											}
-
-										});
-									
-
-										</script>';
-							}
-							else
-							{
-
-
-								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", $intento, "usuario", $respuesta["usuario"]);
+							$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
 
 							echo '<script>
-
-								swal({
-
-									type: "error",
-									title: "¡Usuario invalido o desconocido!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "login";
-
-									}
-
-								});
-							
-
-								</script>';
-
-							}
+								window.location = "inicio";			
+							</script>';
 						}
+
 					}
 					else
 					{
-						echo '<script>
 
-								swal({
-
-									type: "error",
-									title: "¡Usuario invalido o desconocido!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "login";
-
-									}
-
-								});
+						if ($respuesta[$item] == $_POST["ingUsuario"] && $respuesta["password"] != $encriptar) 
+						{
+							$intento = intval($respuesta["try"]) + 1;
 							
 
-						</script>';
+							if ( $intento == 3) 
+							{
+								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "estado", 0, $item, $respuesta[$item]);
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 3, '#'.$valor);
+
+								$titulo = '¡El '.$item.' ha sido Desactivado!';
+								
+							}
+							elseif($intento != 3)
+							{
+								if ($respuesta["estado"] == 0 ) 
+								{
+									$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor);
+									$titulo = 'El '.$item.' se encuentra Desactivado';
+
+								}
+								else
+								{
+
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
+								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", $intento, $item, $respuesta["usuario"]);
+
+								$titulo = $item.' invalido o desconocido';
+
+								}
+							}
+						}
+						else
+						{
+
+							if ($respuesta[$item] != $valor ) 
+							{
+								$error = ControladorParametros::ctrAlmacenarAccion($tabla, 1, '#'.$valor);
+							}
+
+							if ( $respuesta["password"] != $encriptar ) 
+							{
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
+							}
+
+							$titulo = $item.' invalido o desconocido';
+
+						}
+
 					}
+				}//existe
+
+			}//pregmatch
+			else
+			{
+
+				
+				$titulo = 'Ingreso no es valido.';
+			}	
+
+
+			echo '<script>
+
+			swal({
+
+				type: "'.$tipo.'",
+				title: "'.$titulo.'",
+				showConfirmButton: true,
+				confirmButtonText: "Cerrar"
+
+			}).then(function(result){
+
+				if(result.value){
+				
+					window.location = "'.$url.'";
 
 				}
 
-			}				
+			});
+		
+
+			</script>';
+
+
 		}
 	}
 
@@ -233,7 +199,7 @@ class ControladorUsuarios
 	{
 		if (isset($_POST["nuevoUsuario"])) {
 			if (preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoNombre"]) &&
-				preg_match('/^[a-zA-Z-0-9]+$/', $_POST["nuevoUsuario"]) &&
+				preg_match('/^[a-zA-Z0-9.@]+$/', $_POST["nuevoUsuario"]) &&
 				preg_match('/^[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoPassword"])) 
 			{
 
