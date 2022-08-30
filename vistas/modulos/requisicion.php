@@ -60,7 +60,7 @@
                         <?php
                         $item = null;
                         $valor = null;
-                        $personas = ControladorPersonas::ctrMostrarPersonas($item, $valor);
+                        $personas = ControladorPersonas::ctrMostrarPersonasOrdenadas($item, $valor);
                         
                        foreach ($personas as $key => $value){
                                   

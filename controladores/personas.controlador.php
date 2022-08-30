@@ -41,26 +41,6 @@ class ControladorPersonas
 		
 	}#ctrMostrarPersonas
 
-	static public function ctrMostrarPersonasRQ($item, $valor)
-	{
-		$tabla = "personas";
-		$respuesta= [[]];
-		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
-	  		
-	  		foreach ($res as $key => $values):
-
-				  $usuario = ControladorUsuarios::ctrMostrarUsuarios("id",$values["id_usuario"]);
-			      $respuesta[$key]['id'] = $usuario["id"];
-			      $respuesta[$key]['nombre'] = $usuario["nombre"];
-			      $respuesta[$key]['id_area'] = $values["id_area"];
-			 
-			endforeach;
-
-	    return $respuesta;
-
-	}
-
-
 	static public function ctrMostrarListaPersonas()
 	{
 		$item = "id_area";
@@ -304,6 +284,46 @@ class ControladorPersonas
 		}
 
 	}
+
+	static public function ctrMostrarPersonasOrdenadas($item, $valor)
+	{
+		$ejecutar = new ControladorPersonas();
+		$array = $ejecutar -> ctrMostrarPersonas($item, $valor);
+		$indice = [];
+		$respuesta = [[]];
+
+		if (isset($array[0]["nombre"])) 
+		{
+			for ($i=0; $i < count($array) ; $i++) 
+			{ 
+				array_push($indice, $array[$i]["nombre"]);
+
+			}//for agregar valor a ordenar
+
+			sort($indice);//orden
+
+			for ($x=0; $x < count($indice) ; $x++) 
+			{ 
+
+				$clave = array_search($indice[$x], array_column($array, 'nombre') );
+
+				$respuesta[$x]["nombre"] = $array[$clave]["nombre"];
+				$respuesta[$x]["id"] = $array[$clave]["id"];
+				$respuesta[$x]["id_area"] = $array[$clave]["id_area"]; 
+
+			}//for agregar valor a ordenar
+
+			return $respuesta;
+
+		}
+		else
+		{
+			return 0;
+		}
+
+		
+
+	}//ctrMostrarPersonasOrdenadas($item, $valor)
 
 }#class
 	
