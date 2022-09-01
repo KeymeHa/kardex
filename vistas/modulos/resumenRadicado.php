@@ -1,6 +1,22 @@
 <div class="content-wrapper">
      <?php
     include "bannerConstruccion.php";
+
+    if (isset($_GET["fechaInicial"])) 
+    {
+      $fechaInicial = $_GET["fechaInicial"];
+      $fechaFinal = $_GET["fechaFinal"];
+    }
+    else
+    {
+      $fechaInicial = null;
+      $fechaFinal = null;
+    }
+
+    $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia",  "tab" => "pqr", "indice" => "id", "foranea" => "id_pqr", "campo" => "nombre"],
+                    1 => [ "tit" => "Dirigida a las áreas",  "tab" => "areas", "indice" => "id", "foranea" => "id_area", "campo" => "nombre"],
+                    2 => [ "tit" => "Tipo de Documento",  "tab" => "articulo", "indice" => "id", "foranea" => "id_articulo", "campo" => "nombre"]);
+
   ?>
   <section class="content-header">
      <h1>
@@ -23,29 +39,46 @@
         <?php 
             include "anios.php";
         ?>
+
+          <button type="button" class="btn btn-success pull-right" id="btn-RandoRadicados">    
+            <span>
+              <i class="fa fa-calendar"></i> Rango de fecha
+            </span>
+            <i class="fa fa-caret-down"></i>
+        </button>
       </div>
       <div class="box-body">   
+          <?php
+
+              for ($y=0; $y < count($TbsRad) ; $y++) 
+              { 
+                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+
+                  if (count($contarRadicados) != 0 && $contarRadicados != false) 
+                  {
+
+                    echo ' <div class="col-xs-4">
+                             <p class="lead">'.$TbsRad[$y]["tit"].'</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                          <tbody>';
+
+                          for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
+                          { 
+                            echo ' <tr>
+                                    <th><a href="index.php?ruta=resumenRadicadoD&tab='.$TbsRad[$y]["tab"].'&indice='.$TbsRad[$y]["indice"].'&val='.$contarRadicados[$x][$TbsRad[$y]["indice"]].'">'.$contarRadicados[$x][$TbsRad[$y]["campo"]].'</a></th>
+                                    <td>'.$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"].'</td>
+                                  </tr>';
+                          }
 
 
-        <div class="col-lg-3 col-md-4 col-xs-12">
-
-          
-
-
-          
-
-          <!--
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Ventas</span>
-              <span class="info-box-number">2600</span>
-            </div>
-          </div>
-          -->
-        </div><!--col-lg-3 col-md-4 col-xs-12-->
-
-
+                    echo ' </tbody>
+                            </table>
+                          </div>
+                        </div><!--<div class="col-xs-4">-->';
+                  }
+              }
+            ?>
       
       </div><!--box-body-->
     </div>

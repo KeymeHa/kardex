@@ -502,4 +502,63 @@ class ModeloRadicados
 		}
 	}
 
+	static public function mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio)
+	{
+		if($fechaInicial == null){
+
+			#"pqr", "id", "nombre", "id_pqr", null, $fechaInicial, $fechaFinal, WHERE YEAR(fecha) = fecha
+			if ($tablaD != null ) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
+				$stmt -> execute();
+			}
+			else
+			{
+				if ($valor == null) 
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
+					$stmt -> execute();
+				}
+			}
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+
+			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT($fechaFinalMasUno, '%Y %m %d') GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+
+			}
+
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+	
+		}
+	}//mdlContarRad
+
 }

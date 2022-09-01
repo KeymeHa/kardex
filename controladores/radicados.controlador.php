@@ -4,10 +4,7 @@ class ControladorRadicados
 {
 	function anioActual($anio)
 	{
-	    if ($anio == 0) 
-	    {$respuesta = '';}
-	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
+		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
 		return $respuesta;
 	}
 
@@ -857,6 +854,38 @@ class ControladorRadicados
 			}
 		}
 
+	}
+
+	static public function ctrContarRad($tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio)
+	{
+
+		if ($anio != 0) 
+		{
+			$r = new ControladorFacturas;
+			$anio = $r->anioActual($anio);
+
+			if ($valor != null) 
+			{
+				$anio = " AND '".$item."' = '".$valor."' ";		
+			}			
+		}
+		else
+		{
+			if ($valor != null) 
+			{
+				$anio = " WHERE '".$item."' = '".$valor."' ";		
+			}
+			else
+			{
+				$anio = '';
+			}
+		}
+
+		$tabla = "radicados";
+
+		$respuesta = ModeloRadicados::mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio);
+
+		return $respuesta;
 	}
 
 }
