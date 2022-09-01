@@ -4,20 +4,14 @@ class ControladorVentas
 {
 	function anioActual($anio)
 	{
-	    if ($anio == 0) 
-	    {$respuesta = '';}
-	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
+		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
 		return $respuesta;
 	}
 
 	function anioActualCli()
 	{
 	    $anio = ControladorParametros::ctrVerAnio(true);
-	    if ($anio["anio"] == 0) 
-	    {$respuesta = 'WHERE ';}
-	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio["anio"].' AND ';}
+	    $respuesta = ($anio == 0) ? 'WHERE ' : 'WHERE YEAR(fecha) = '.$anio["anio"].' AND ';
 		return $respuesta;
 	}
 

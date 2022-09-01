@@ -5,57 +5,25 @@ class ControladorRequisiciones
 
 	function anioActual($anio)
 	{
-	    if ($anio == 0) 
-	    {
-	    	$respuesta = 'WHERE aprobado = 1 or aprobado = 2  ';
-	    }
-	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1 or aprobado = 2 ';
-	    }
+		$respuesta = ($anio == 0) ? 'WHERE aprobado = 1 or aprobado = 2  ' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1 or aprobado = 2 ';
 		return $respuesta;
 	}
 
 	function anioActualSinAppr($anio)
 	{
-	    if ($anio == 0) 
-	    {
-	    	$respuesta = '';
-	    }
-	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio;
-	    }
+	    $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha_sol) = '.$anio;
 		return $respuesta;
 	}
 
 	function anioActualAppr($anio)
 	{
-	    if ($anio == 0) 
-	    {
-	    	$respuesta = 'WHERE aprobado = 0';
-	    }
-	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0';
-	    }
-
+		$respuesta = ($anio == 0) ? 'WHERE aprobado = 0' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0';
 		return $respuesta;
 	}
 
 	function anioActualArea($anio)
 	{
-
-	    if ($anio == 0) 
-	    {
-	    	$respuesta = '';
-	    }
-	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio;
-	    }
-
-
+		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio;
 		return $respuesta;
 	}
 

@@ -5,24 +5,15 @@ class ControladorFacturas
 
 	function anioActual($anio)
 	{
-	    if ($anio == 0) 
-	    {$respuesta = '';}
-	    else
-	    {$respuesta = 'WHERE YEAR(fecha) = '.$anio;}
+	   $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
 		return $respuesta;
 	}
 
 	function anioActualProv($anio)
 	{
-	    if ($anio == 0) 
-	    {
-	    	$respuesta = '';
-	    }
-	    else
-	    {
-	    	$respuesta = 'WHERE YEAR(facturas.fecha) = '.$anio;
-	    }
+		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(facturas.fecha) = '.$anio;
 		return $respuesta;
+
 	}
 
 	static public function ctrMostrarFacturasRango($fechaInicial, $fechaFinal, $anio)
