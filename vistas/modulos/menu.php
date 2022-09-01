@@ -109,9 +109,21 @@
 				echo '"><a href="#">
 						<i class="fa fa-file-text-o"></i>
 						<span>Requisiciones</span>
+
 						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-tight"></i>
-						</span>
+						<i class="fa fa-angle-left pull-tight"></i>';
+
+						$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr($_SESSION["anioActual"]);
+
+						if($solicitud != 0)
+				        {
+				        	echo '<span class="label label-warning pull-right">'.$solicitud.'</span>';
+						}
+
+						
+
+				echo '	</span>
+
 					</a>
 					<ul class="treeview-menu">';
 
@@ -123,7 +135,8 @@
 						
 						echo '<li><a href="proyectos"><i class="fa fa-user"></i>Proyectos</a></li>
 						<li><a href="personas"><i class="fa fa-user"></i>Personas</a></li>
-						<li><a href="requisiciones"><i class="fa fa-file-text"></i>Requisiciones</a></li>
+						<li><a href="requisiciones"><i class="fa fa-file-text"></i>Requisiciones</a>
+						</li>
 					</ul>
 
 				</li>
