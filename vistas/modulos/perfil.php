@@ -2,6 +2,20 @@
 
   <?php
     include "bannerConstruccion.php";
+
+    $fechaInicial = null;
+    $fechaFinal = null;
+
+    if (isset($_GET["fechaInicial"])) 
+    {
+      $fechaInicial = $_GET["fechaInicial"];
+      $fechaFinal = $_GET["fechaFinal"];
+    }
+    else
+    {
+      $fechaInicial = null;
+      $fechaFinal = null;
+    }
   ?>
 
   <section class="content-header">
@@ -16,7 +30,7 @@
   <section class="content">
 
     <div class="row">
-      <div class="col-md-3 col-lg-3 col-sm-12">
+      <div class="col-md-4 col-lg-4 col-sm-12">
         <div class="box box-primary">
               <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="<?php if($_SESSION["foto"] != ""){ echo $_SESSION["foto"]; }else{ echo'vistas/img/usuarios/default/anonymous.png'; }?>" alt="User profile picture">
@@ -43,6 +57,19 @@
             </div>
       </div>
 
+       <?php 
+            include "anios.php";
+          ?>
+
+      <button type="button" class="btn btn-success pull-right" id="btn-RangoPerfil">    
+          <span>
+            <i class="fa fa-calendar"></i> Rango de fecha
+          </span>
+          <i class="fa fa-caret-down"></i>
+      </button>
+
+      <div class="row">
+
       <?php
 
       $idmodulo = 3;
@@ -51,37 +78,32 @@
 
       if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo ) 
       {
-         echo '  <h3>Requisiciones</h3>
+        $valoresPerfil = array( 0 => [ 'tit' => 'Pendientes' , 
+                                        'col' => 'yellow' ],
+                                1 => [ 'tit' => 'Aprobadas' , 
+                                        'col' => 'green' ]  ,
+                                2 => [ 'tit' => 'Rechazadas' , 
+                                        'col' => 'red' ] );
 
-      <div class="col-md-3 col-sm-5 col-xs-12">
-        <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="fa fa-slack"></i></span>
-        <div class="info-box-content">
-        <span class="info-box-text">Realizadas</span>
-        <span class="info-box-number">'.$_SESSION["anioActual"].'</span>
-        </div>
-        </div>
-      </div>
+        echo '<h3>Requisiciones</h3>';
 
-      <div class="col-md-3 col-sm-5 col-xs-12">
-        <div class="info-box">
-        <span class="info-box-icon bg-yellow"><i class="fa fa-bookmark-o"></i></span>
-        <div class="info-box-content">
-        <span class="info-box-text">Pendientes</span>
-        <span class="info-box-number"></span>
-        </div>
-        </div>
-      </div>
+          for ( $i = 0 ; $i < count($valoresPerfil) ; $i++) 
+          {
 
-      <div class="col-md-3 col-sm-5 col-xs-12">
-        <div class="info-box">
-        <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
-        <div class="info-box-content">
-        <span class="info-box-text">Fecha Ultima Rq</span>
-        <span class="info-box-number">10-25-2022</span>
-        </div>
-        </div>
-      </div>';
+
+             $contarRq = ControladorRequisiciones::ctrContarRqdePersonas("id_persona", $_SESSION["id"], "aprobado", $i, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+
+              echo '<div class="col-md-3 col-sm-5 col-xs-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-'.$valoresPerfil[$i]['col'].'"><i class="fa fa-bookmark-o"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">'.$valoresPerfil[$i]['tit'].'</span>
+                          <span class="info-box-number">'.$contarRq.'</span>
+                        </div>
+                      </div>
+                    </div>';
+          
+          }
          $swmod = 1;
       }
 
@@ -133,7 +155,7 @@
               <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
               <div class="info-box-content">
               <span class="info-box-text">Modulos</span>
-              <span class="info-box-number">Aqui verás el resumen de los modulos asignados para gestionar.</span>
+              <span class="info-box-number">Aqui verás el resumen de los modulos asignados para gestionar, Solicita que te asignen a uno.</span>
               </div>
 
               </div>
@@ -142,9 +164,8 @@
       }
 
       ?>
-
-    
-
+        
+      </div><!--class="row"-->
     </div><!--row-->
 
 

@@ -866,7 +866,7 @@ class ControladorRadicados
 
 			if ($valor != null) 
 			{
-				$anio = " AND '".$item."' = '".$valor."' ";		
+				$anio.= " AND '".$item."' = '".$valor."' ";		
 			}			
 		}
 		else

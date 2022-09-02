@@ -185,26 +185,53 @@ class ModeloRequisiciones
 
 	}
 
-	static public function MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal, $anio)
+	static public function MdlContarRqdePersonas($tabla, $item, $valor, $item2, $valor2, $fechaInicial, $fechaFinal, $anio, $tipo_fecha)
 	{
 
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id $anio GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
-			$stmt -> execute();
+			if (!is_null($valor2)) 
+			{
+				if ($anio != "") 
+				{
+					$anio.= ' AND ';
+				}
+				else
+				{
+					$anio = 'WHERE ';
+				}
 
-			return $stmt -> fetchAll();	
-
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio $item = $valor AND $item2 = $valor2;");
+				$stmt -> execute();
+				return $stmt -> fetch();	
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id $anio GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+				$stmt -> execute();
+				return $stmt -> fetchAll();
+			}
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') fecha_sol = :fecha_sol GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
-			$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
+			if (!is_null($valor2)) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE DATE_FORMAT($tipo_fecha, '%Y %m %d') = DATE_FORMAT(:$tipo_fecha, '%Y %m %d') AND  $item = :$item AND  $item2 = :$item2 ");
+				$stmt -> bindParam(":".$tipo_fecha, $fechaFinal, PDO::PARAM_STR);
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+				$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+				$stmt -> execute();
 
-			return $stmt -> fetchAll();
-
+				return $stmt -> fetchAll();
+			}
 		}else{
 
 			$fechaActual = new DateTime();
@@ -217,21 +244,41 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+				if (!is_null($valor2)) 
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND  $item = :$item AND  $item2 = :$item2 ");
+					$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+					$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+					$stmt -> execute();
+					return $stmt -> fetch();
+				}
+				else
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+					$stmt -> execute();
+					return $stmt -> fetchAll();
+				}
+
+				
 
 			}else{
 
-
-				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
-
+				if (!is_null($valor2)) 
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND  $item = :$item AND  $item2 = :$item2 ");
+					$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+					$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+					$stmt -> execute();
+					return $stmt -> fetch();
+				}
+				else
+				{
+					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+					$stmt -> execute();
+					return $stmt -> fetchAll();
+				}
 			}
-		
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
 		}
-
 		$stmt -> close();
 		$stmt = null;
 	}

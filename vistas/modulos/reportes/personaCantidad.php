@@ -22,7 +22,7 @@
 
         <?php 
 
-        $personasRqCount = ControladorRequisiciones::ctrContarRqdePersonas($fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+        $personasRqCount = ControladorRequisiciones::ctrContarRqdePersonas(null, null, null, null, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
         if($_GET['ruta'] != 'personas')
         {

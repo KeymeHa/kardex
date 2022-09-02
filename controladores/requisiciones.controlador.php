@@ -15,6 +15,12 @@ class ControladorRequisiciones
 		return $respuesta;
 	}
 
+	function anioActualConAppr($anio)
+	{
+	    $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
+		return $respuesta;
+	}
+
 	function anioActualAppr($anio)
 	{
 		$respuesta = ($anio == 0) ? 'WHERE aprobado = 0' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0';
@@ -149,14 +155,41 @@ class ControladorRequisiciones
 
 	}
 
-	static public function ctrContarRqdePersonas($fechaInicial, $fechaFinal, $anio)
+	static public function ctrContarRqdePersonas($item, $valor, $item2, $valor2, $fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActualArea($anio);
-		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $fechaInicial, $fechaFinal, $anio);
+		
+		$tipo_fecha = "";
 
-		return $respuesta;
+		if (is_null($item2)) 
+		{
+			$anio = $r->anioActualArea($anio);
+		}
+		else
+		{
+			if ($item2 == "aprobado" && $valor2 == 0) 
+			{
+				$tipo_fecha = "fecha_sol";
+				$anio = $r->anioActualSinAppr($anio);
+			}
+			else
+			{
+				$tipo_fecha = "fecha";
+				$anio = $r->anioActualConAppr($anio);
+			}
+		}
+
+		$respuesta = ModeloRequisiciones::MdlContarRqdePersonas($tabla, $item, $valor, $item2, $valor2, $fechaInicial, $fechaFinal, $anio, $tipo_fecha);
+
+		if (is_null($valor2)) 
+		{
+			return $respuesta;
+		}
+		else
+		{
+			return $respuesta[0];
+		}
 
 	}
 
