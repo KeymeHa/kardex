@@ -238,4 +238,74 @@ class ModeloCategorias
 
 		$stmt = null;
 	}
+
+	static public function mdlCrearAsignacionArea($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE INTO $tabla(id_categorias) VALUES (:id_categorias)");
+
+		$stmt->bindParam(":id_categorias", $datos, PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "eror";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarAsignacionArea($tabla, $item, $valor)
+	{
+
+		if ($item != null) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT id_areas FROM $tabla WHERE $item = :$item");
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> execute();
+			$existe = $stmt->rowCount();
+			if ($existe <= 0) {
+			   $crear = new ModeloCategorias;
+			   $res = $crear -> mdlCrearAsignacionArea($tabla, $valor);
+			  return "ok";
+			}else{return $stmt -> fetch();}
+			$stmt -> close();
+			$stmt = null;
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+			$stmt -> close();
+			$stmt = null;
+		}
+
+
+	}
+
+	static public function mdlAsignacionArea($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_areas = :id_areas WHERE id_categorias = :id_categorias");
+
+		$stmt -> bindParam(":id_areas", $datos["id_areas"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_categorias", $datos["id_categorias"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
 }

@@ -14,15 +14,19 @@ require_once "../modelos/requisiciones.modelo.php";
 require_once "../controladores/proyectos.controlador.php";
 require_once "../modelos/proyectos.modelo.php";
 
+require_once "../controladores/categorias.controlador.php";
+require_once "../modelos/categorias.modelo.php";
+
 		
 class Tablaareas
 {	
-	public $pro;
+	public $id_fk;
+	public $tipo;
 	public $anioActual;
 
 	public function mostrarTablaareas()
 	{	  
-		  $sw = $this->pro;
+		  $sw = $this->id_fk;
 	      $areas = ControladorAreas::ctrMostrarAreas(null, null);
 	      $dJson = '{"data": [';
 
@@ -51,31 +55,39 @@ class Tablaareas
 			}
 			else
 			{
-				$proyecto = ControladorProyectos::ctrMostrarAsignacionArea("id_proyecto", $sw);
+
+				if ($this->tipo == "pro") 
+				{
+					$datos = ControladorProyectos::ctrMostrarAsignacionArea("id_proyecto", $sw);
+				}//if id_fk
+				else
+				{
+					$datos = ControladorCategorias::ctrMostrarPermisoArea("id_categorias", $sw);
+				}//else
 
 				$sw2 = 0;
 
-				if ($proyecto == "ok") 
+				if ($datos == "ok") 
 				{
 					$sw2 = 1;
 				}
 				else
 				{
-					if (isset($proyecto["id_areas"])) {
-						if (is_null($proyecto["id_areas"])) 
+					if (isset($datos["id_areas"])) {
+						if (is_null($datos["id_areas"])) 
 					{
 						$sw2 = 1;
 					}
 					else
 					{
-						if (empty($proyecto["id_areas"])) {
+						if (empty($datos["id_areas"])) {
 							$sw2 = 1;
 						}
 						else
 						{
 							$arrayId = [];
 
-							$listadoAreas = json_decode($proyecto["id_areas"], true);
+							$listadoAreas = json_decode($datos["id_areas"], true);
 
 								for ($i=0; $i < count($areas); $i++) 
 								{ 
@@ -132,8 +144,10 @@ class Tablaareas
 				    		],';
 					}//For
 				}
+
+			
 	
-		}
+			}//else
 		$dJson = substr($dJson, 0 ,-1);  
 	    $dJson.= ']
 		}';
@@ -146,11 +160,24 @@ $verareas = new Tablaareas();
 
 if (isset($_GET["idProy"])) 
 {
-	$verareas -> pro = $_GET["idProy"];
+	$verareas -> id_fk = $_GET["idProy"];
+	$verareas -> tipo = "pro";
 }
 else
 {
-	$verareas -> pro = null;
+	$verareas -> tipo = null;
+	$verareas -> id_fk = null;
+}
+
+if (isset($_GET["idCategoria"])) 
+{
+	$verareas -> id_fk = $_GET["idCategoria"];
+	$verareas -> tipo = "cat";
+}
+else
+{
+	$verareas -> tipo = null;
+	$verareas -> id_fk = null;
 }
 
 if (isset($_GET["actual"])) 

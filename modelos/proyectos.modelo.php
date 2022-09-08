@@ -237,7 +237,7 @@ class ModeloProyectos
 		}
 		else
 		{
-			return "eror";
+			return "error";
 		}
 
 		$stmt->close();

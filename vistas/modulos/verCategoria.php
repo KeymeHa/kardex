@@ -51,15 +51,33 @@
   <section class="content">
 
     <div class="box">
-
       <div class="box-header with-border">
-
-        <a href="categorias">
-        <button class="btn btn-success">
+        <button class="btn btn-success" onclick="history.back()">
           <i class="fa fa-arrow-left"></i>
           Regresar
-        </button></a>
+        </button>
       </div>
+    </div>
+
+    <div class="box box-success collapsed-box">
+      <div class="box-header with-border">
+          <i class="fa fa-check-circle-o"></i> <h3 class="box-title">Permisos de Esta Categoria</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+          <i class="fa fa-plus" id="activarTablaPCat" idCar="<?php echo $_GET['idCategoria']; ?>"></i></button>
+        </div>
+      </div>
+      <div class="box-body">
+
+        <p>Para Habilitar que un área especifica pueda ver los insumos pertenecientes a esta categoria, debe hacer clic en el botón junto al nombre del área hasta que este se coloque en Rojo.</p>
+
+        <br>
+
+        <div id="tablaDivTabPermisoCat"></div>
+      </div>
+    </div>
+
+    <div class="box">
 
       <div class="box-body">  
 

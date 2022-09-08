@@ -507,7 +507,7 @@ function paginaCargada(pagina, id, per, anioActual){
 		{
 			tablaElegida =  $('.tablaInsumosNRq');
 			tablaAjax = 'nuevaRq';
-			variable = "?gen=1";
+			variable = "?gen=1&iduser="+id;
 		}
 		else if(pagina == 30)
 		{
@@ -650,6 +650,21 @@ function paginaCargada(pagina, id, per, anioActual){
 			tablaAjax = 'registros';
 			
 		}
+		else if(pagina == 40)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idCategoria = urlParams.get('idCategoria');
+			if(idCategoria == null)
+			{
+			  variable = "?idCategoria=null";
+			} else 
+			{
+			  variable ="?idCategoria="+idCategoria;
+			}
+			tablaElegida =  $('.tablacategoriaArea');
+			tablaAjax = 'areas';
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {
@@ -776,7 +791,7 @@ function ocultarAlert()
 	$('.alert').hide("fast");
 }
 
-
+/*
 $("a#btn-sidebar-toggle").click(function(){
 
 	if ( $( "#body-Gnral" ).hasClass( "sidebar-collapse" ) ) 
@@ -788,4 +803,4 @@ $("a#btn-sidebar-toggle").click(function(){
 
 	}
 
-})
+})*/

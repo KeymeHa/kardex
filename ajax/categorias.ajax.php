@@ -30,17 +30,21 @@ class AjaxCategorias
 
 	}
 
-	public $idCategoria2;
-
 	public function ajaxContarInsumos(){
 
 		$item = "id_categoria";
-		$valor = $this->idCategoria2;
+		$valor = $this->idCategoria;
 
 		$respuesta = ControladorCategorias::ctrContarInsumos($item, $valor);
 
 		echo json_encode($respuesta);
 
+	}
+
+	public function ajaxAddAreaCategoria($idArea, $idCat, $sw)
+	{
+		$respuesta = ControladorCategorias::ctrAsignarAreaaCategorias($idArea, $idCat, $sw);
+		echo json_encode($respuesta);
 	}
 	
 	public function ajaxMostrarCat(){
@@ -55,12 +59,6 @@ class AjaxCategorias
 	
 }
 
-/*
-
-	OBJETOS EDITAR USUARIO
-
- */
-
 if(isset($_POST["idCategoria"]))
 {
 	$editar = new AjaxCategorias();
@@ -68,10 +66,16 @@ if(isset($_POST["idCategoria"]))
 	$editar -> ajaxEditarCategoria();
 }
 
+if(isset($_POST["idArea"]))
+{
+	$add = new AjaxCategorias();
+	$add -> ajaxAddAreaCategoria($_POST["idArea"], $_POST["idCategoria"], $_POST["sw"]);
+}
+
 if(isset($_POST["idCategoria2"]))
 {
 	$verificarIns = new AjaxCategorias();
-	$verificarIns -> idCategoria2 = $_POST["idCategoria2"];
+	$verificarIns -> idCategoria = $_POST["idCategoria2"];
 	$verificarIns -> ajaxContarInsumos();
 }
 

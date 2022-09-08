@@ -140,3 +140,104 @@ $(".tablaInsumos").on("click", "button.btnEliminarInsumo", function(){
 	})
 })
 
+$("#activarTablaPCat").click(function(){
+
+	if ( $(this).hasClass("fa-plus") ) 
+	{
+		aparecerTablaPermisoCat();
+		paginaCargada(40, 0, 0, 0, 0);
+	}
+	else
+	{
+		validarTablaPermisoCat();
+	}
+})
+
+function aparecerTablaPermisoCat()
+{
+	$('#tablaDivTabPermisoCat').append(
+ 	     '<table class="table table-bordered table-striped dt-responsive tablacategoriaArea" width="100%">'+
+          '<thead>'+
+           '<tr>'+
+            '<th style="width:10px">#</th>'+
+             '<th>Área</th>'+
+             '<th style="width:30px">Acciones</th>'+
+           '</tr>'+
+          '</thead>'+
+         '</table>'
+   )
+}
+
+function validarTablaPermisoCat()
+{
+	if($('#tablaDivTabPermisoCat').find("table").length)
+	{
+	 	$('#tablaDivTabPermisoCat').children().remove();
+	}
+}
+
+$("#tablaDivTabPermisoCat").on("click", "button.btnAddArea", function(){
+
+	var idArea = $(this).attr("idArea");
+	var queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	var idCategoria = urlParams.get('idCategoria');
+	var datos = new FormData();
+	datos.append("idArea", idArea);
+	datos.append("idCategoria", idCategoria);
+
+	if ($(this).hasClass("btn-success") == false) 
+	{
+		datos.append("sw", "out");
+	}
+	else
+	{
+		datos.append("sw", "in");
+	}
+
+	if( $(this).hasClass("btn-success") == false )
+    {
+    	$(this).removeClass("btn-danger");
+	    $(this).addClass("btn-success");
+	    $(this).children("i").removeClass("fa-close");
+	    $(this).children("i").addClass("fa-plus");
+	    $(this).attr("title", "Desasociar");
+    }
+    else
+    {
+    	$(this).removeClass("btn-success");
+	    $(this).addClass("btn-danger");
+	    $(this).children("i").removeClass("fa-plus");
+	    $(this).children("i").addClass("fa-close");
+	    $(this).attr("title", "Asociar");
+    }
+
+	$.ajax({
+		url:"ajax/categorias.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{	
+			
+		}
+	});
+
+});
+
+var idQuitarInsumo = [];
+localStorage.removeItem("AddArea");
+
+$(".tablacategoriaArea").on("draw.dt", function(){
+	if(localStorage.getItem("AddArea") != null){
+		var listaArea = JSON.parse(localStorage.getItem("AddArea"));
+		for(var i = 0; i < listaArea.length; i++)
+		{
+			$("button.RegresarBoton[idArea='"+listaArea[i]["idArea"]+"']").removeClass('btn-default');
+			$("button.RegresarBoton[idArea='"+listaArea[i]["idArea"]+"']").addClass('btn-success agregarInsumo');	
+		}
+	}
+})

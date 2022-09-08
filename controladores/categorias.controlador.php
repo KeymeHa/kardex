@@ -449,5 +449,110 @@ class ControladorCategorias
 
 	}
 
+	static public function ctrMostrarPermisoArea($item, $valor)
+	{
+		$tabla = "categoriaarea";
+		$res = ModeloCategorias::mdlMostrarAsignacionArea($tabla, $item, $valor);
+		return $res;
+	}
+
+	static public function ctrAsignarAreaaCategorias($idArea, $idCat, $sw)
+	{
+		$tabla = "categoriaarea";
+		$mostrar = new ControladorCategorias;
+		$areas = $mostrar->ctrMostrarPermisoArea("id_categorias", $idCat);
+		$lista = null;
+
+		if (is_null($areas["id_areas"]))
+		{
+			$lista = '[{"id":"'.$idArea.'"}]';
+		}
+		else
+		{
+			 if ($areas["id_areas"] == "") 
+			 {
+			 	$lista = '[{"id":"'.$idArea.'"}]';
+			 }
+			 else
+			 {
+			 	$lis = json_decode($areas["id_areas"], true);
+
+			 	$lista = '[';
+
+			 	if ($sw == "out") 
+			 	{
+			 		if (count($lis) == 1) 
+			 		{
+			 			$lista = null;
+			 		}
+			 		else
+			 		{
+			 			foreach ($lis as $key => $value) 
+				 		{
+				 			if ($value["id"] != $idArea) 
+				 			{
+				 				$lista.= '{"id":"'.$value["id"].'"},';
+				 			}
+				 		}	
+
+				 		$lista = substr($lista, 0 ,-1);  
+	    				$lista.= ']';
+			 		}	
+			 	}
+			 	else
+			 	{
+
+			 		$sw2 = 0;
+
+			 		foreach ($lis as $key => $value) 
+			 		{
+			 			$lista.= '{"id":"'.$value["id"].'"},';
+			 		}//foreach	
+
+			 		if ($sw2 != 1) 
+			 		{
+			 			$lista.= '{"id":"'.$idArea.'"},';
+			 		}	
+
+			 		$lista = substr($lista, 0 ,-1);  
+	    			$lista.= ']';
+			 	}//else	
+			 }//else have emty
+		}//else
+
+		$datos = array( 'id_areas' => $lista,  
+						'id_categorias' => $idCat);
+
+
+		$res = ModeloCategorias::mdlAsignacionArea($tabla, $datos);
+		return $res;
+	}
+
+	static public function ctrContarAreas($item, $valor)
+	{
+		$tabla = "categoriaarea";
+		$consulta = ModeloCategorias::mdlMostrarAsignacionArea($tabla, $item, $valor);
+		$res = 0;
+		if (!is_null($consulta["id_areas"])) {
+			if (!empty($consulta["id_areas"])) 
+			{
+				$lista = json_decode($consulta["id_areas"], true);
+				$res = count($lista);
+			}
+		}
+		else
+		{
+			if (is_string($consulta["id_areas"])) 
+			{
+				if (!empty($consulta["id_areas"])) 
+				{
+					$lista = json_decode($consulta["id_areas"], true);
+					$res = count($lista);
+				}
+			}
+		}
+
+		return $res;
+	}
 
 }

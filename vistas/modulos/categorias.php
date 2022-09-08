@@ -46,6 +46,7 @@
            <th>Categoria</th>
            <th>Descripción</th>
            <th>Cantidad Insumos</th>
+           <th>áreas Vinculadas</th>
            <th>Acciones</th>
          </tr> 
         </thead>

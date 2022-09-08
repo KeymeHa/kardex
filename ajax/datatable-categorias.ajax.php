@@ -22,11 +22,15 @@ class TablaCategorias
 			$cantidadInsumos = ControladorCategorias::ctrContarInsumos($itemC, $categorias[$i]["id"]);
 
 		    $acciones = "<div class='btn-group'><button class='btn btn-success btnVerCategoria' title='Ver insumos de esta Categoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-book'></i></button><button class='btn btn-warning btnEditarCategoria' title='Editar Categoria' data-toggle='modal' data-target='#modalEditarCategoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-pencil' ></i></button><button class='btn btn-danger btnEliminarCategoria' title='Eliminar' idCategoria='".$categorias[$i]["id"]."' categoria='".$categorias[$i]["categoria"]."'><i class='fa fa-close'></i></button></div>";
+
+		     $count = ControladorCategorias::ctrContarAreas("id_categorias", $categorias[$i]["id"]);
+
 		    $dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$categorias[$i]["categoria"].'",
 	    		"'.$categorias[$i]["descripcion"].'",
 	    		"'.$cantidadInsumos.'",
+	    		"'.$count.'",
 	    		"'.$acciones.'"
 	    		],';
 		}//For
