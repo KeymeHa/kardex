@@ -200,9 +200,26 @@
 
                          if($requisicion['aprobado'] == 0)
                          {
+                          $valorStock = 0;
+
+                          if($insumo["stock"] < $value["ped"] && $insumo["stock"] != 0) 
+                           {
+                            $valorStock = $insumo["stock"];
+                           }
+                           else
+                           {
+                              if ($value["ped"] <= 0 || $insumo["stock"] == 0) 
+                              {
+                                $valorStock = 0;
+                              }
+                              else
+                              {
+                                 $valorStock = $value["ped"];
+                              }
+                           }
                              echo' </div>
                           <div class="col-xs-3 ingresoCantidad">
-                            <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$value["ent"].'">
+                            <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$valorStock.'">
                           </div>
                         </div>';
                          }
