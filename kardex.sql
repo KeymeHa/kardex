@@ -267,9 +267,9 @@ CREATE TABLE IF NOT EXISTS `exeption_usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_exeption_usuarios_exepcion_mensajes` (`id_mensaje`),
   CONSTRAINT `FK_exeption_usuarios_exepcion_mensajes` FOREIGN KEY (`id_mensaje`) REFERENCES `exepcion_mensajes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
 
--- Volcando datos para la tabla kardex.exeption_usuarios: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.exeption_usuarios: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `exeption_usuarios` DISABLE KEYS */;
 INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`) VALUES
 	(1, 2, '2022-08-30 10:09:34', '#kb'),
@@ -278,7 +278,10 @@ INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`) VALUES
 	(4, 5, '2022-08-30 14:40:11', '1'),
 	(5, 5, '2022-08-30 15:50:29', '1'),
 	(6, 5, '2022-08-31 14:32:29', '1'),
-	(7, 5, '2022-09-01 08:06:05', '1');
+	(7, 5, '2022-09-01 08:06:05', '1'),
+	(8, 5, '2022-09-02 08:20:48', '1'),
+	(9, 5, '2022-09-05 08:43:43', '1'),
+	(10, 5, '2022-09-08 08:21:20', '1');
 /*!40000 ALTER TABLE `exeption_usuarios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -1214,7 +1217,7 @@ INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt
 	(4, 1, 1, 1, 'RQ-004-2022', '[{"id":"4","des":"AZUCAR ALTA PUREZA 200 TUBITOS DE 5G","ped":"1","ent":"0"}]', '2022-08-25 17:05:44', '2022-08-17 16:07:52', '', 5, 2, '', '', 1),
 	(5, 1, 11, 1, 'RQ-005-2022', '[{"id":"1","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"2","ent":"2"}]', '0000-00-00 00:00:00', '2022-08-25 15:38:50', NULL, 5, 0, '', NULL, 1),
 	(6, 1, 1, 1, 'RQ-006-2022', '[{"id":"3","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","ped":"1","ent":0}]', '0000-00-00 00:00:00', '2022-08-30 14:40:32', NULL, 5, 0, '', NULL, 1),
-	(7, 1, 1, 1, 'RQ-007-2022', '[{"id":"3","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","ped":"1","ent":"1"}]', '0000-00-00 00:00:00', '2022-08-30 14:40:53', NULL, 5, 0, '', NULL, 1);
+	(7, 1, 1, 1, 'RQ-007-2022', '[{"id":"3","des":"ATOMIZADOR AMBIENTADOR LAVANDA ","ped":"1","ent":"1"}]', '2022-09-05 09:34:37', '2022-08-30 14:40:53', '', 5, 1, '', 'ATOMIZADOR AMBIENTADOR LAVANDA  con Codigo 3, no tiene stock.:', 1);
 /*!40000 ALTER TABLE `requisiciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.tempdatosrq
@@ -1257,7 +1260,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-09-01 08:06:05', '2021-02-11 05:06:49', '4a7q8g8n56aidbi6q7omgkias4', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE4NzQ1MDYsImV4cCI6OTk3MTI0NzAzNjAsImRhdGEiOnsiaWQiOjEsInVzciI6ImtiIn19.HcyBkxIUAQughOxZm3RHG7upbpwRzLwelKSxMXmHqHw', 0, 0, 1),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-09-08 08:21:20', '2021-02-11 05:06:49', 'oho1qf3bfejuhvhrrqbpe0drbt', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE4NzQ1MDYsImV4cCI6OTk3MTI0NzAzNjAsImRhdGEiOnsiaWQiOjEsInVzciI6ImtiIn19.HcyBkxIUAQughOxZm3RHG7upbpwRzLwelKSxMXmHqHw', 0, 0, 1),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, '', 1, '2022-06-23 15:35:33', '2021-08-19 06:12:33', '97pabqieof66locspl0m949r0k', NULL, 0, 0, 0),
 	(3, 'Karelly Moreno Llorente', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 3, NULL, 'karelly.moreno@edubar.com.co', 1, '2022-08-18 08:35:53', '2021-08-19 06:12:39', '4a7q8g8n56aidbi6q7omgkias4', NULL, 0, 0, 0),
 	(9, 'Edna Suarez Restrepo', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-08-23 10:37:42', '2022-06-23 16:03:37', 'me1ke295ilip8imleg14g668c3', NULL, 0, 0, 1),
