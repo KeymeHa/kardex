@@ -16,6 +16,7 @@
     $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia",  "tab" => "pqr", "indice" => "id", "foranea" => "id_pqr", "campo" => "nombre"],
                     1 => [ "tit" => "Dirigida a las áreas",  "tab" => "areas", "indice" => "id", "foranea" => "id_area", "campo" => "nombre"],
                     2 => [ "tit" => "Tipo de Documento",  "tab" => "articulo", "indice" => "id", "foranea" => "id_articulo", "campo" => "nombre"]);
+    $contarRadicados = [[]];
 
   ?>
   <section class="content-header">
@@ -77,11 +78,80 @@
                           </div>
                         </div><!--<div class="col-xs-4">-->';
                   }
+
+              }
+              if (count($contarRadicados) == 0 || $contarRadicados == false) 
+              {
+                 echo '<h3></i> No se encontraron datos.</h3>';
               }
             ?>
       
       </div><!--box-body-->
     </div>
+
+        <?php
+
+         if (count($contarRadicados) != 0 && $contarRadicados != false) 
+        {
+            for ($y=0; $y < count($TbsRad) ; $y++) 
+            { 
+
+            $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]); 
+
+            $data = "";
+
+                echo '<div class="box box-success">
+                        <div class="box-header">
+                          <div class="box-title">
+                            Grafico '.$TbsRad[$y]["tit"].'
+                          </div>
+                          <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="box-body">  
+                          <div id="bar-chart-'.$TbsRad[$y]["tab"].'"></div>
+                         </div>
+                      </div>
+                            ';
+
+                      for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
+                      { 
+                         $data.= "{ y: '".$contarRadicados[$x][$TbsRad[$y]["campo"]]."', Cantidad: ".$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"]." },";
+                      }
+
+                       $data = substr($data,0,-1);
+
+                echo ' 
+                      <script>
+                       var data = [
+                          '.$data.'
+                          ],
+                          config = {
+                            data: data,
+                            xkey: "y",
+                            ykeys: ["Cantidad"],
+                            labels: ["Cantidad"],
+                            barColors: ["#00a65a"],
+                            fillOpacity: 0.6,
+                            hideHover: "auto",
+                            behaveLikeLine: true,
+                            resize: true
+                        };
+
+                        config.element = "bar-chart-'.$TbsRad[$y]["tab"].'";
+                        Morris.Bar(config);
+
+
+                      </script>
+
+                      ';
+              }
+        }
+
+        ?>
 
   </section>
 </div>
