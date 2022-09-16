@@ -170,27 +170,62 @@ class ControladorParametros
 
 	}
 
+	static public function ctrFormatFecha($fechaI, $sw)
+	{
+		$fecha = new DateTime($fechaI);
+
+		switch ($sw) {
+			case 1:
+				$fecha->format('Y-m-d');
+				break;
+			case 2:
+				$fecha->format('Y/m/d');
+				break;
+			case 3:
+				$fecha->format('d-m-Y');
+				break;
+			case 4:
+				$fecha->format('d/m/Y');
+				break;
+			case 5:
+				$fecha->format('H:i:s');
+				break;
+			case 6:
+				$fecha->format('H:i A');
+				break;
+			case 7:
+				$fecha->format('H:i a');
+				break;
+			default:
+				$fecha->format('Y-m-d H:i:s');
+				break;
+		}
+		return $fecha;
+	}
 
 	static public function ctrOrdenFecha($fechaI, $sw)
 	{
-		if($sw == 0)
-		{
-			if(strlen($fechaI) == 10)
-		    {
-		        $fecha = substr($fechaI,8,10);
-		        $fecha .= "-".substr($fechaI,5,-3);
-		        $fecha .= "-".substr($fechaI,0,-6);
-		    }
-		    else
-		    {
-		        $fecha = substr($fechaI,8,-9);
-		        $fecha .= "-".substr($fechaI,5,-12);
-		        $fecha .= "-".substr($fechaI,0,-15);
-		    }
-		}
-		elseif($sw == 1)
-		{
-			if(strlen($fechaI) == 10)
+		$fecha = "";
+
+		switch ($sw) {
+			case 0:
+				if(strlen($fechaI) == 10)
+			    {
+			        $fecha = substr($fechaI,8,10);
+			        $fecha .= "-".substr($fechaI,5,-3);
+			        $fecha .= "-".substr($fechaI,0,-6);
+			    }
+			    else
+			    {
+			        $fecha = substr($fechaI,8,-9);
+			        $fecha .= "-".substr($fechaI,5,-12);
+			        $fecha .= "-".substr($fechaI,0,-15);
+			    }
+				break;
+
+			case 1:
+				
+				if(strlen($fechaI) == 10)
 			    {
 			       $fecha = substr($fechaI,8,10);
 				   $meses = substr($fechaI,5,-3);
@@ -229,58 +264,91 @@ class ControladorParametros
 				}
 				$fecha.= "-".$mes;
 				$fecha .= "-".substr($fechaI,0,-15);
-		}
-		elseif($sw == 2)
-		{
-			if(strlen($fechaI) == 10)
-		    {
-		        $fecha = substr($fechaI,8,10);
-		        $fecha .= "/".substr($fechaI,5,-3);
-		        $fecha .= "/".substr($fechaI,0,-6);
-		    }
-		    else
-		    {
-		        $fecha = substr($fechaI,8,-9);
-		        $fecha .= "/".substr($fechaI,5,-12);
-		        $fecha .= "/".substr($fechaI,0,-15);
-		    }
 
-		}
-		elseif ($sw == 3) 
-		{
-			$fecha = substr($fechaI,8,-9);//dd
-	        $fecha .= "/".substr($fechaI,5,-12);//mm
-	        $fecha .= "/".substr($fechaI,0,-15);//YY
-	        $hora = substr($fechaI,-9,-6);
+				break;
 
-	        settype($hora, "integer");
+			case 2:
+				if(strlen($fechaI) == 10)
+			    {
+			        $fecha = substr($fechaI,8,10);
+			        $fecha .= "/".substr($fechaI,5,-3);
+			        $fecha .= "/".substr($fechaI,0,-6);
+			    }
+			    else
+			    {
+			        $fecha = substr($fechaI,8,-9);
+			        $fecha .= "/".substr($fechaI,5,-12);
+			        $fecha .= "/".substr($fechaI,0,-15);
+			    }
 
-	        if ($hora < 12) 
-	        {
-	        	$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
-	        	$fecha.= " am"; 
-	        }
-	        else
-	        {
-	        	if ($hora == 12) 
-	        	{
-	        		$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
-	        		$fecha.= " pm"; 
-	        	}
-	        	else
-	        	{
-	        		$hora-= 12;
-	        		$fecha.= " - ".$hora.":".substr($fechaI,14,2)." pm";
-	        	}
-	        }
+				break;
+
+			case 3:
+				$fecha = substr($fechaI,8,-9);//dd
+		        $fecha .= "/".substr($fechaI,5,-12);//mm
+		        $fecha .= "/".substr($fechaI,0,-15);//YY
+		        $hora = substr($fechaI,-9,-6);
+
+		        settype($hora, "integer");
+
+		        if ($hora < 12) 
+		        {
+		        	$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
+		        	$fecha.= " AM"; 
+		        }
+		        else
+		        {
+		        	if ($hora == 12) 
+		        	{
+		        		$fecha.= " - ".substr($fechaI,-9,-3);//hh-mm
+		        		$fecha.= " PM"; 
+		        	}
+		        	else
+		        	{
+		        		$hora-= 12;
+		        		$fecha.= " - ".$hora.":".substr($fechaI,14,2)." PM";
+		        	}
+		        }
+				break;
+
+			case 4:
+				$fecha = substr($fechaI,8,-9);//dd
+		        $fecha .= "/".substr($fechaI,5,-12);//mm
+		        $fecha .= "/".substr($fechaI,0,-15);//YY
+		        $fecha .= " - ".substr($fechaI,-9,0);//hh-mm:ss
+				break;
+
+			case 5:
+		        $hora = substr($fechaI,-8,-6);
+
+		        settype($hora, "integer");
+
+		        if ($hora < 12) 
+		        {
+		        	$fecha.= substr($fechaI,-8,-3);//hh-mm
+		        }
+		        else
+		        {
+		        	if ($hora == 12) 
+		        	{
+		        		$fecha.= substr($fechaI,-9,-3);//hh-mm
+		        	}
+		        	else
+		        	{
+		        		$fecha.= $hora.":".substr($fechaI,14,2);
+		        	}
+		        }
+				break;
+
+			case 6:
+			        $fecha = substr($fechaI,0,10);
+				break;
+			
+			default:
+				$fecha = $fechaI;
+				break;
 		}
-		elseif ($sw == 4) 
-		{
-			$fecha = substr($fechaI,8,-9);//dd
-	        $fecha .= "/".substr($fechaI,5,-12);//mm
-	        $fecha .= "/".substr($fechaI,0,-15);//YY
-	        $fecha .= " - ".substr($fechaI,-9,0);//hh-mm:ss
-		}
+
 		return $fecha;
 	}
 

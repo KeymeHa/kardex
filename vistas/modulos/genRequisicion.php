@@ -149,7 +149,7 @@
                
                <tr>
                  
-                <th style="width:10px">#</th>
+                <!--<th style="width:10px">#</th>-->
                  <th style="width:10px">Código</th>
                  <th>Descripción</th>
                  <th style="width:15px">Acciones</th>

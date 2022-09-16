@@ -169,7 +169,18 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
 
 $(document).ready(function() {
 
-	hoy("#fechaGeneracion");
+	var elemento = $("#fechaAprobacion");
+    var elemento2 = $("#horaAprobacion");
+
+	 if ( $("#fechaAprobacion") ) 
+    {
+    	hoy(elemento);
+    }
+
+    if ( $("#horaAprobacion") ) 
+    {
+    	ahora(elemento2);
+    }
 
     $(".formularioNuevaRq").keypress(function(e) {
         if (e.which == 13) {

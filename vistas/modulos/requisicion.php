@@ -87,16 +87,25 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-xs-5">
-                  <p class="help-block">*Fecha de Solicitud</p>           
+                <div class="row">
+                   <div class="col-sm-6 col-lg-6 col-md-6">
+                  <p class="help-block">*Fecha de Solicitud y Aprobación</p>           
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="date" class="form-control input-xs" name="fechaSol" value="" id="fechaGeneracion" required>
+                      <input type="date" class="form-control" name="fechaAprobacion" id="fechaAprobacion" value="" />
                     </div>              
                   </div>
                 </div>
-              </div><!--row-->
+
+                 <div class="col-sm-3 col-lg-3 col-md-3">
+                  <p class="help-block">*y Hora</p>           
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="time" id="horaAprobacion" name="horaAprobacion" class="form-control timepicker" value=""/>
+                    </div>              
+                  </div>
+                </div>
+              </div>
 
               <textarea class="form-control" rows="3" name="observacionRq" rows="3" name="observacionRq" placeholder="Observaciones" autocomplete="off" style="resize: none"></textarea>
 

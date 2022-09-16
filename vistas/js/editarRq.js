@@ -34,10 +34,10 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
                   	'</div>'+
                   '</div>'+
                   '<div class="col-xs-3 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="1" value="1" required>'+
+                   ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="0" value="0" required>'+
                   '</div>'+
                   '<div class="col-xs-3 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadEntregada" stock="'+stock+'" name="nuevaCantidadEntregada" min="1" value="1" required>'+
+                   ' <input type="number" class="form-control nuevaCantidadEntregada" stock="'+stock+'" name="nuevaCantidadEntregada" min="0" value="0" required>'+
                   '</div>'+
                 '</div>'
 				)
@@ -154,10 +154,10 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
 	
 	if(Number($(this).val()) === 0)
 	{
-		$(this).val(Number(1));
+		$(this).val(Number(0));
 	}else if (Number($(this).val()) < 0)
 	{
-		$(this).val(Number(1));
+		$(this).val(Number(0));
 	}
 
 	listarProductosRq();
@@ -170,6 +170,22 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    var elemento = $("#fechaAprobacion");
+    var elemento2 = $("#horaAprobacion");
+
+    if ( $("#fechaAprobacion") ) 
+    {
+    	hoy(elemento);
+    }
+
+    if ( $("#horaAprobacion") ) 
+    {
+    	ahora(elemento2);
+    }
+
+    
+
 });
 
 

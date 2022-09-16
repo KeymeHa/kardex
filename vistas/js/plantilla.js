@@ -23,23 +23,31 @@ function hoy(elemento)
 
 		if(mes < 10 && dia < 10){
 
-			var fecha = anio+"/0"+mes+"/0"+dia;
+			var fecha = anio+"-0"+mes+"-0"+dia;
 
 		}else if(mes < 10 && dia > 9){
 
-			var fecha = anio+"/0"+mes+"/"+dia;
+			var fecha = anio+"-0"+mes+"-"+dia;
 
 		}else if(mes > 9 && dia < 10){
 
-			var fecha = anio+"/"+mes+"/0"+dia;
+			var fecha = anio+"-"+mes+"-0"+dia;
 
 		}else{
 
-			var fecha = anio+"/"+mes+"/"+dia;
+			var fecha = anio+"-"+mes+"-"+dia;
 
 		}	
 
 	$(elemento).val(fecha);
+}
+
+function ahora(elemento)
+{
+	var dt = new Date();
+	var time = dt.getHours() + ":" + dt.getMinutes();
+
+	$(elemento).val(time);
 }
 
 $("#selectAnio").on("click", "li a", function(){

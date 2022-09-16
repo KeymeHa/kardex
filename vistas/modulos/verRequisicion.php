@@ -102,7 +102,7 @@
             echo '<div class="col-sm-2 col-xs-6">
               <div class="description-block border-right">
                 <span class="description-text">Fecha de Aprobación</span>
-                <h5 class="description-header">'.ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 0).'</h5>
+                <h5 class="description-header">'.ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 3).'</h5>
               </div>
             </div>';
           }

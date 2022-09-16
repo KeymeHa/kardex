@@ -160,7 +160,6 @@ class TablaNuevaFactura
   				if ($gatillo == 1) 
   				{
   					$dJson .='[
-		    		"'.($i + 1).'",
 		    		"'.$insumos[$i]["codigo"].'",
 		    		"'.$insumos[$i]["descripcion"].'",
 		    		"'.$acciones.'"

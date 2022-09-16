@@ -102,20 +102,60 @@
                   <p class="help-block">*Fecha de Solicitud</p>           
                   <div class="form-group">
                     <div class="input-group">
-                      <?php if ($requisicion["fecha_sol"] != null) { 
+                      <?php 
 
+                      if ($requisicion["gen"] == 1) 
+                      {
                         $fechaSol = ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 3);
                         echo '<input type="text" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$fechaSol.'" required readonly>';
                       }
                       else
                       {
-                        echo '<input type="text" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" required readonly>';
+                         $fechaSol = ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 6);
+                        echo '<input type="date" class="form-control" name="nuevaFechaSolRq" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$fechaSol.'" required />';
+
+                        $fechaSol = ControladorParametros::ctrOrdenFecha($requisicion["fecha_sol"], 5);
+                        echo '<input type="time" class="form-control" name="nuevaHoraSolRq" placeholder="08:00 AM" autocomplete="off" value="'.$fechaSol.'" required />';
                       }
                       ?>
                     </div>              
                   </div>
                 </div>
               </div><!--row-->
+
+              <?php
+                if ( $requisicion["aprobado"] == 0 ) 
+                {
+                  echo '<div class="row">
+                        <div class="col-xs-5">
+                          <p class="help-block">*Fecha de Aprobación</p>           
+                          <div class="form-group">
+                            <div class="input-group">
+                               <input type="date" class="form-control" id="fechaAprobacion" name="fechaAprobacion" placeholder="dd/mm/AAAA" autocomplete="off" value="" required />
+                               <input type="time" class="form-control" id="horaAprobacion" name="horaAprobacion" placeholder="08:00 AM" autocomplete="off" value="" required />
+                            </div>              
+                          </div>
+                        </div>
+                      </div>';
+                }
+                else
+                {
+                  $textApr = ( $requisicion["aprobado"] == 1 ) ? "Aprobación" : "Anulación";
+                  $fechaApr = ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 6);
+                  $horaApr = ControladorParametros::ctrOrdenFecha($requisicion["fecha"], 5);
+                  echo '<div class="row">
+                        <div class="col-xs-5">
+                          <p class="help-block">*Fecha de '.$textApr.'</p>           
+                          <div class="form-group">
+                            <div class="input-group">
+                               <input type="date" class="form-control" name="fechaAprobacion" placeholder="dd/mm/AAAA" autocomplete="off" value="'.$fechaApr.'" required />
+                               <input type="time" class="form-control" name="horaAprobacion" placeholder="08:00 AM" autocomplete="off" value="'.$horaApr.'" required />
+                            </div>              
+                          </div>
+                        </div>
+                      </div>';
+                }
+              ?>
 
                <textarea class="form-control" rows="3" name="observacionRq" rows="3" placeholder="Observaciones" autocomplete="off" style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
 
@@ -217,6 +257,9 @@
                                  $valorStock = $value["ped"];
                               }
                            }
+
+                           
+
                              echo' </div>
                           <div class="col-xs-3 ingresoCantidad">
                             <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$valorStock.'">
@@ -225,9 +268,17 @@
                          }
                          else
                          {
+
+                          $valorStock = 0;
+
+                            if ($requisicion["aprobado"] != 2) 
+                           {
+                               $valorStock = $value["ent"];
+                           }
+
                               echo' </div>
                           <div class="col-xs-3 ingresoCantidad">
-                            <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="1" value="'.$value["ent"].'" required>
+                            <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$value["ent"].'" required>
                           </div>
                         </div>';
                          }
@@ -239,15 +290,15 @@
                 ?>
               </div>
 
-              <input type="hidden" name="listadoInsumosRq" id="listadoInsumosRq" value>
+              <input type="hidden" name="listadoInsumosRq" id="listadoInsumosRq" value='<?php echo $requisicion["insumos"]?>'>
               <input type="hidden" name="editarRegistro" value="<?php echo $matchError?>">
               <input type="hidden" name="editarRq" value="<?php echo $requisicion['id']?>">
                 <br>
 
-                <button type="button" onclick="history.back()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
+                <button type="button" onclick="history.back()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> <?php if($requisicion['aprobado'] == 2){echo 'Regresar';}else{echo 'Cancelar';}?></button>
 
                 <?php if($requisicion['aprobado'] == 0){echo '<button type="submit" style="color: white;" name="btnAnularRq" class="btn btn-warning btnAnularRq"><i class="fa fa-ban"></i> Anular</button>';}?>
-                <button type="submit" style="color: white;" name="btnGuardarRq" class="btn btn-success btnGuardarRq"><i class="fa fa-check"></i> <?php if($requisicion['aprobado'] == 0){echo 'Aprobar';}else{echo 'Editar';}?></button>
+                <button type="submit" style="color: white;" name="btnGuardarRq" <?php if($requisicion['aprobado'] == 2){echo 'disabled';} ?>  class="btn btn-success btnGuardarRq"><i class="fa fa-check"></i> <?php if($requisicion['aprobado'] == 0){echo 'Aprobar';}elseif(($requisicion['aprobado'] == 1)){echo 'Editar';}else{echo 'No se puede Editar';}?></button>
 
                 <?php
                   $editarRq = new ControladorRequisiciones();
