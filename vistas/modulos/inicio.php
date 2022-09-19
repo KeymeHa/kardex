@@ -42,7 +42,7 @@
                 //$area_o = ControladorPersonas::ctrMostrarPersonas("id_usuario", 11);
                 //var_dump($area_o);
 
-                if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2){ echo'<div class="col-lg-3 col-xs-6">
+                if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2){ echo'<div class="col-lg-6 col-md-6 col-xs-12">
 
 
                 <!-- small box -->
@@ -57,10 +57,10 @@
                   </div>
                   <a href="usuarios" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->';}
+              </div><!--col-lg-6 col-md-6 col-xs-12-->';}
 
 
-               if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 10){ echo'<div class="col-lg-3 col-xs-6">
+               if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 10){ echo'<div class="col-lg-6 col-md-6 col-xs-12">
 
 
                 <!-- small box -->
@@ -75,11 +75,11 @@
                   </div>
                   <a href="equipos" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->';}
+              </div><!--col-lg-6 col-md-6 col-xs-12-->';}
 
               if($_SESSION["perfil"] == '7' || $_SESSION["perfil"] == '3')
               {
-                echo'<div class="col-lg-3 col-xs-6">
+                echo'<div class="col-lg-6 col-md-6 col-xs-12">
 
 
                 <!-- small box -->
@@ -94,13 +94,13 @@
                   </div>
                   <a href="asignaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->';
+              </div><!--col-lg-6 col-md-6 col-xs-12-->';
               }
 
 
               if($_SESSION["perfil"] == '7')
               {
-                 echo'<div class="col-lg-3 col-xs-6">
+                 echo'<div class="col-lg-6 col-md-6 col-xs-12">
                   <!-- small box -->
                   <div class="small-box bg-blue">
                     <div class="inner">
@@ -112,13 +112,13 @@
                     </div>
                     <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
-                </div><!--col-lg-3 col-xs-6-->';
+                </div><!--col-lg-6 col-md-6 col-xs-12-->';
               }
 
 
                if($_SESSION["perfil"] == '6')
               {
-                 echo'<div class="col-lg-3 col-xs-6">
+                 echo'<div class="col-lg-6 col-md-6 col-xs-12">
                   <!-- small box -->
                   <div class="small-box bg-blue">
                     <div class="inner">
@@ -130,9 +130,9 @@
                     </div>
                     <a href="radicado" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
-                </div><!--col-lg-3 col-xs-6-->
+                </div><!--col-lg-6 col-md-6 col-xs-12-->
 
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-6 col-md-6 col-xs-12">
                   <!-- small box -->
                   <div class="small-box bg-green">
                     <div class="inner">
@@ -144,11 +144,11 @@
                     </div>
                     <a href="cortes" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
-                </div><!--col-lg-3 col-xs-6-->';
+                </div><!--col-lg-6 col-md-6 col-xs-12-->';
               }
 
 
-              if($_SESSION["perfil"] == '3'){ echo'<div class="col-lg-3 col-xs-6">
+              if($_SESSION["perfil"] == '3'){ echo'<div class="col-lg-6 col-md-6 col-xs-12">
 
                 <!-- small box -->
                 <div class="small-box bg-yellow">
@@ -161,8 +161,8 @@
                   </div>
                   <a href="inventario" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->
-              <div class="col-lg-3 col-xs-6">
+              </div><!--col-lg-6 col-md-6 col-xs-12-->
+              <div class="col-lg-6 col-md-6 col-xs-12">
 
                 <!-- small box -->
                 <div class="small-box bg-blue">
@@ -176,8 +176,8 @@
                   </div>
                   <a href="proveedores" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->
-              <div class="col-lg-3 col-xs-6">
+              </div><!--col-lg-6 col-md-6 col-xs-12-->
+              <div class="col-lg-6 col-md-6 col-xs-12">
 
                 <!-- small box -->
                 <div class="small-box bg-red">
@@ -191,14 +191,16 @@
                   </div>
                   <a href="generaciones" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!--col-lg-3 col-xs-6-->';}
+              </div><!--col-lg-6 col-md-6 col-xs-12-->';}
+
+                $swmod = 0;
 
                 $idmodulo = 3;
                 $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
 
                 if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
                 {
-                     echo '<div class="col-lg-3 col-xs-6">
+                     echo '<div class="col-lg-6 col-md-6 col-xs-12">
 
                       <!-- small box -->
                       <div class="small-box bg-red">
@@ -212,10 +214,10 @@
                         </div>
                         <a href="genRequisicion" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
-                    </div><!--col-lg-3 col-xs-6-->
+                    </div><!--col-lg-6 col-md-6 col-xs-12-->
 
 
-                    <div class="col-lg-3 col-xs-6">
+                    <div class="col-lg-6 col-md-6 col-xs-12">
 
                       <!-- small box -->
                       <div class="small-box bg-green">
@@ -229,8 +231,9 @@
                         </div>
                         <a href="index.php?ruta=hisRequisicion&iduser='.$_SESSION["id"].'" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
-                    </div><!--col-lg-3 col-xs-6-->';
+                    </div><!--col-lg-6 col-md-6 col-xs-12-->';
 
+                     $swmod = 1;
 
                 }
 
@@ -239,7 +242,7 @@
 
                 if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
                 {
-                     echo'<div class="col-lg-3 col-xs-6">
+                     echo'<div class="col-lg-6 col-md-6 col-xs-12">
                           <!-- small box -->
                           <div class="small-box bg-blue">
                             <div class="inner">
@@ -252,7 +255,25 @@
                             </div>
                             <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                           </div>
-                        </div><!--col-lg-3 col-xs-6-->';
+                        </div><!--col-lg-6 col-md-6 col-xs-12-->';
+
+                 $swmod = 1;
+
+                }
+
+                if ( $swmod == 0 && $_SESSION["perfil"] == 4) 
+                {
+                  echo '<br><div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+                        <div class="info-box-content">
+                        <span class="info-box-text">Modulos</span>
+                        <span class="info-box-number">Si te aparece este mensaje, solicita que te asignen a un módulo para su gestión.</span>
+                        </div>
+
+                        </div>
+
+                        </div>';
                 }
 
                 ?>

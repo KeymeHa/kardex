@@ -148,14 +148,14 @@
          $swmod = 1;
       }
 
-      if ( $swmod == 0) 
+      if ( $swmod == 0 && $_SESSION["perfil"] == 4) 
       {
-        echo '<div class="col-md-3 col-sm-6 col-xs-12">
+        echo '<br><div class="col-lg-6 col-sm-6 col-md-6">
               <div class="info-box">
               <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
               <div class="info-box-content">
               <span class="info-box-text">Modulos</span>
-              <span class="info-box-number">Aqui verás el resumen de los modulos asignados para gestionar, Solicita que te asignen a uno.</span>
+              <span class="info-box-number">Si te aparece este mensaje, solicita que te asignen a un módulo para su gestión.</span>
               </div>
 
               </div>
