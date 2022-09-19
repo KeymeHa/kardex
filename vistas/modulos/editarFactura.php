@@ -130,6 +130,17 @@
                 </div>        
               </div>
 
+              <div class="row">
+                <div class="col-xs-5">
+                  <p class="help-block">*Fecha</p>           
+                  <div class="form-group">
+                    <div class="input-group">
+                       <input type="date" class="form-control" name="fechaAprobacion" placeholder="dd/mm/AAAA" autocomplete="off" value="<?php echo $facturas['fecha'];?>" required />
+                    </div>              
+                  </div>
+                </div>
+              </div>
+
               
               <textarea class="form-control" rows="3" name="observacionNF" placeholder="Observaciones" style="resize: none"><?php  echo $facturas["observacion"];?></textarea>
 
@@ -228,7 +239,7 @@
              
                 ?>
               </div>
-              <input type="hidden" name="listaInsumos" id="listaInsumos" value>
+              <input type="hidden" name="listaInsumos" id="listaInsumos" value='<?php echo $facturas["insumos"];?>'>
               <input type="hidden" name="valorIva" id="valorIva" value="<?php echo $facturas['iva'];?>">
               <input type="hidden" name="valorSub" id="valorSub" value="<?php echo $facturas['inversion'];?>">
               <div class="form-group" id="cajaToNuFa">

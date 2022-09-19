@@ -230,7 +230,7 @@ class ModeloFacturas
 
 	static public function mdlEditarFactura($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo, id_usr = :id_usr, id_proveedor = :id_proveedor, soporte = :soporte, insumos = :insumos, inversion = :inversion, iva = :iva, observacion = :observacion WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo, id_usr = :id_usr, id_proveedor = :id_proveedor, soporte = :soporte, insumos = :insumos, inversion = :inversion, iva = :iva, observacion = :observacion, fecha = :fecha WHERE id = :id");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_STR);
@@ -240,6 +240,7 @@ class ModeloFacturas
 		$stmt->bindParam(":inversion", $datos["inversion"], PDO::PARAM_INT);
 		$stmt->bindParam(":iva", $datos["iva"], PDO::PARAM_INT);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if ($stmt->execute()) 

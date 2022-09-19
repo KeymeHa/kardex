@@ -203,9 +203,6 @@ class ControladorFacturas
 			$codigoFac = ControladorParametros::ctrValidarCaracteres($_POST["codigoFactura"]);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionNF"]);
 
-			date_default_timezone_set('America/Bogota');
-			$hoy = date("Y-m-d");
-
 			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
 							'codigo' => $codigoFac,
 							'id_usr' => $_POST["idUsuario"],
@@ -215,7 +212,7 @@ class ControladorFacturas
 							'inversion' => $_POST["valorSub"],
 							'iva' => $_POST["valorIva"],
 							'observacion' => $observacion,
-							'fecha' => $hoy);
+							'fecha' => $_POST["fechaAprobacion"]);
 
 
 			$respuesta = ModeloFacturas::mdlRegistrarFactura($tabla, $datos);
@@ -710,6 +707,7 @@ class ControladorFacturas
 								'inversion' => $_POST["valorSub"],
 								'iva' => $_POST["valorIva"],
 								'observacion' => $observacion,
+								'fecha' => $_POST["fechaAprobacion"],
 								'id' => $_POST["idFactura"]);
 
 				$tabla = "facturas";

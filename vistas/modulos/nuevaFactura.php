@@ -103,6 +103,17 @@
                 </div>        
               </div>
 
+              <div class="row">
+                  <div class="col-sm-6 col-lg-6 col-md-6">
+                    <p class="help-block">*Fecha</p>           
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="date" class="form-control" name="fechaAprobacion" id="fechaAprobacionF" value="" />
+                    </div>              
+                  </div>
+                </div>
+              </div>
+
                <textarea class="form-control" rows="3" name="observacionNF" placeholder="Observaciones" style="resize: none"></textarea>
 
               <div class="row">

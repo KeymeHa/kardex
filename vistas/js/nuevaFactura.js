@@ -331,6 +331,13 @@ function sumarPreciosNF(){
 }
 
 $(document).ready(function() {
+
+	var elemento = $("#fechaAprobacionF");
+	 if ( elemento ) 
+    {
+    	hoy(elemento);
+    }
+
 	//$("button.btnGuardarFac").removeClass("btn-success");
     $(".formularioNuevaFactura").keypress(function(e) {
         if (e.which == 13) {
