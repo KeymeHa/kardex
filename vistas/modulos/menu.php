@@ -325,7 +325,7 @@
 
 				<li class="treeview ';
 
-				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'genRequisicion' || $_GET['ruta'] == 'hisRequisicion'){ echo 'active';} }
+				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisicion' || $_GET['ruta'] == 'hisRequisicion'){ echo 'active';} }
 
 				echo '"><a href="#">
 						<i class="fa fa-envelope-o"></i>
@@ -335,7 +335,7 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li><a href="genRequisicion"><i class="fa fa-envelope-square"></i>Nuevo Requisición</a></li>
+						<li><a href="requisicion"><i class="fa fa-envelope-square"></i>Nueva Requisición</a></li>
 						<li><a href="hisRequisicion"><i class="fa fa-clone"></i>Historial</a></li>
 					</ul>
 				</li>';

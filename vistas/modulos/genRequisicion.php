@@ -42,7 +42,7 @@
 
           <div class="box-body">
 
-          <form role="form" method="post" enctype="multipart/form-data" class="formularioNuevaRq">
+          <form role="form" method="post" class="formularioNuevaRq">
 
               <div class="row">
                 
@@ -79,7 +79,7 @@
                 <div class="col-xs-7">
                   <div class="form-group">
                     <label>Proyecto Asociado</label>
-                    <select class="form-control" name="id_proyecto">
+                    <select class="form-control"  name="id_proyecto" id="selecProyecto" required>
                       <?php
                         $proyecto = ControladorProyectos::ctrMostrarProyectosPorArea($personas["id_area"]);
                         for ($i=0; $i < count($proyecto); $i++) 

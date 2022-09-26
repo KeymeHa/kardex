@@ -212,7 +212,7 @@
                         <div class="icon">
                           <i class="fa fa-file-text"></i>
                         </div>
-                        <a href="genRequisicion" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="requisicion" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div><!--col-lg-6 col-md-6 col-xs-12-->
 

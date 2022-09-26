@@ -52,7 +52,7 @@ class TablaRequisiciones
 
             $cantidadInsumos = ControladorParametros::ctrContarInsumos($requisiciones[$i]["insumos"]);
             $proyecto = ControladorProyectos::ctrMostrarNombreProyectos("id",$requisiciones[$i]["id_proyecto"]);
-            $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerSoli' idRq='".$requisiciones[$i]["id"]."' title='Ver'><i class='fa fa-book'></i> Ver</button></div></div>";
+            $acciones = "<div class='btn-group'><div class='col-md-5'><button class='btn btn-success btnVerSoli' idRq='".$requisiciones[$i]["id"]."' title='Ver'><i class='fa fa-book'></i> Ver</button></div><div class='col-md-3'><button class='btn btn-info btnReplicarRq' idRq='".$requisiciones[$i]["id"]."' title='Replicar'><i class='fa  fa-copy'></i></button></div></div>";
 
             if ($requisiciones[$i]["aprobado"] == 0) 
             {

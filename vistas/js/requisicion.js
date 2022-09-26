@@ -1,6 +1,3 @@
-
-
-
 $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
@@ -25,7 +22,9 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 			var descripcion = respuesta["descripcion"];
 			var stock = respuesta["stock"];
 
-			$(".nuevoInsumoAgregadoRq").append(
+			if( $("#tipoGen").length > 0 )
+			{
+				$(".nuevoInsumoAgregadoRq").append(
 
 				'<div class="row" style="padding:5px 15px">'+
                   '<div class="col-xs-6" style="padding-right:0px">'+
@@ -44,6 +43,26 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
                   '</div>'+
                 '</div>'
 				)
+			}
+			else
+			{
+				$(".nuevoInsumoAgregadoRq").append(
+
+				'<div class="row" style="padding:5px 15px">'+
+                  '<div class="col-xs-7" style="padding-right:0px">'+
+                   ' <div class="input-group">'+
+                    '  <span class="input-group-addon">'+
+                     '   <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'+idInsumo+'"><i class="fa fa-times"></i></button>'+
+                     ' </span>'+
+                    '<input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'+idInsumo+'" value="'+descripcion+'" readonly>'+
+                  	'</div>'+
+                  '</div>'+
+                  '<div class="col-xs-4 ingresoCantidad">'+
+                   ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="1" value="1" required>'+
+                  '</div>'+
+                '</div>'
+				)
+			}
 			listarProductosRq();
 		}
 	});
@@ -244,13 +263,22 @@ function listarProductosRq(){
 	var listaInsumosRq = [];
 	var descripcionRq = $(".nuevaDescripcionInsumo");
 	var pedidaRq = $(".nuevaCantidadPedida");
-	var entregadaRq = $(".nuevaCantidadEntregada");
+
+	if( $(".nuevaCantidadEntregada").length > 0 )
+	{
+		var entregadaRq = $(".nuevaCantidadEntregada").val();
+	}
+	else
+	{
+		var entregadaRq = 0;
+	}
+
 
 	for(var i = 0; i < descripcionRq.length; i++){
 		listaInsumosRq.push({ "id" : $(descripcionRq[i]).attr("idInsumo"), 
 							  "des" : $(descripcionRq[i]).val(),
 							  "ped" : $(pedidaRq[i]).val(),
-							  "ent" : $(entregadaRq[i]).val()})
+							  "ent" : entregadaRq})
 	}
 
 	console.log(listaInsumosRq);

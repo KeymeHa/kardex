@@ -286,6 +286,10 @@ function paginaCargada(pagina, id, per, anioActual){
 		{
 			tablaElegida =  $('.tablaInsumosNRq');
 			tablaAjax = 'nuevaRq';
+			if (per != 3 ) 
+			{
+				variable = "?gen=1&iduser="+id;
+			}
 		}
 		else if(pagina == 12)
 		{
@@ -535,8 +539,6 @@ function paginaCargada(pagina, id, per, anioActual){
 			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
 			tablaDatatable(tablaElegida, tablaAjax, variable, columna, orden);
-
-
 		}
 		else if(pagina == 31)
 		{

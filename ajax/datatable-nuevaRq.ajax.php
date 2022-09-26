@@ -8,7 +8,6 @@ require_once "../modelos/categorias.modelo.php";
 
 class TablaNuevaFactura
 {
-	
 	public $gen;
 	public $iduser;
 	public function mostrarTablaInsumos()
