@@ -13,6 +13,12 @@
         $item = "id";
         $valor = $_GET["idRq"];
         $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
+
+        if (!isset($requisicion["id_persona"])) 
+        {
+          echo'<script> window.location="requisiciones";</script>';
+        }
+
       }
     }
     else{

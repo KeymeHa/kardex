@@ -1,3 +1,14 @@
+<?php
+  if(isset($_GET["idRq"]) )
+    {
+      if( !is_null($_GET["idRq"]) )
+      {
+        $item = "id";
+        $valor = $_GET["idRq"];
+        $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
+      }
+    }
+?>
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
@@ -160,18 +171,133 @@
               </div>';
 
               ?>
-              <div class="form-group nuevoInsumoAgregadoRq"></div>
+              <div class="form-group nuevoInsumoAgregadoRq">
+                
+                <?php
 
-              <input type="hidden" name="listadoInsumosRq" id="listadoInsumosRq" value>
+                   if (isset($requisicion["insumos"]) && !is_null($requisicion["insumos"])) 
+                  {
+                    $listaInsumos = json_decode($requisicion["insumos"], true);
+                    $matchError = "";
+                    $jsonInsumos = '[';
 
+                    if(!$listaInsumos == null)
+                    {
+                      
+
+                      foreach ($listaInsumos as $key => $value) 
+                      {
+
+                         $insumo = ControladorInsumos::ctrMostrarInsumos("id", $value["id"]);
+
+                         if ($insumo["stock"] == 0) 
+                         {
+                          $matchError.= $insumo["descripcion"]." con Codigo ".$insumo["codigo"].", no tiene stock.:";
+                         }
+                         elseif($insumo["stock"] < $value["ped"]) 
+                         {
+                           $matchError.= $insumo["descripcion"]." con codigo ".$insumo["codigo"].", tiene menor stock al solicitado.:";
+                         }
+
+                         $stock = intval($value["ent"]) + $insumo["stock"];
+
+                          echo ( $_SESSION["perfil"] == 3 ) ? '<div class="row" style="padding:5px 15px"><div class="col-xs-6' : '<div class="row" style="padding:5px 15px">
+                            <div class="col-xs-7';
+
+                          echo '" style="padding-right:0px">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+
+                                <button type="button" class="btn btn-danger btn-xs quitarInsumo" idInsumo="'.$value["id"].'"><i class="fa fa-times"></i></button></span>
+                              <input type="text" class="form-control nuevaDescripcionInsumo" idInsumo="'.$value["id"].'" value="'.$value["des"].'" title="'.$value["des"].'" readonly>
+                              </div>
+                            </div>';
+
+                            echo ( $_SESSION["perfil"] == 3 ) ? '<div class="col-xs-3' : '<div class="col-xs-4';
+
+                            echo'
+                             ingresoCantidad">
+
+                             <input type="number" class="form-control nuevaCantidadPedida" stock="'.$value["ped"].'" name="nuevaCantidadPedida" min="1" value="'.$value["ped"].'" required>';
+
+                             if ($_SESSION["perfil"] == 3) 
+                             {
+                                  $valorStock = 0;
+
+                                  if($insumo["stock"] < $value["ped"] && $insumo["stock"] != 0) 
+                                   {
+                                    $valorStock = $insumo["stock"];
+                                   }
+                                   else
+                                   {
+                                      if ($value["ped"] <= 0 || $insumo["stock"] == 0) 
+                                      {
+                                        $valorStock = 0;
+                                      }
+                                      else
+                                      {
+                                         $valorStock = $value["ped"];
+                                      }
+                                   }
+
+                                  
+                                  echo '</div>
+                                  <div class="col-xs-3 ingresoCantidad">
+                                    <input type="number" class="form-control nuevaCantidadEntregada" stock="'.$stock.'" name="nuevaCantidadEntregada" min="0" value="'.$valorStock.'">
+                                  </div>
+                                </div>';
+
+                                $jsonInsumos.= '{"id":"'.$value["id"].'","des":"'.$value["des"].'","ped":"'.$value["ped"].'","ent":'.$valorStock.'},';
+
+
+                             }//if ($_SESSION["perfil"] == 3) 
+                             else
+                             {
+                               echo '</div></div>';
+                             }
+                            
+                      }
+
+                      if ($_SESSION["perfil"] == 3) 
+                      {
+                        $jsonInsumos = substr($jsonInsumos, 0 ,-1);
+                         $jsonInsumos.= ']';
+
+                        echo "</div>
+                          <input type='hidden' name='listadoInsumosRq' id='listadoInsumosRq' value='".$jsonInsumos."'>";
+                      }
+                      else
+                      {
+                        foreach ($listaInsumos as $key => $value) 
+                        {
+                          $jsonInsumos.= '{"id":"'.$value["id"].'","des":"'.$value["des"].'","ped":"'.$value["ped"].'","ent":0},';
+                        }
+                         $jsonInsumos = substr($jsonInsumos, 0 ,-1);
+                         $jsonInsumos.= ']';
+
+                         echo "</div>
+                          <input type='hidden' name='listadoInsumosRq' id='listadoInsumosRq' value='".$jsonInsumos."'>";
+                      }
+
+                    }
+                  }//si esta definido insumos
+                  else
+                  {
+                    echo '</div>
+                          <input type="hidden" name="listadoInsumosRq" id="listadoInsumosRq" value>';
+                  }
+
+                ?>
                 <br>
+                <input type="hidden" name="editarRegistro" value="<?php echo (isset($matchError) )? $matchError : '';?>">
 
                 <a href="javascript:history.back()">
                   <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
                 </a>
-                <button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarRq">Guardar</button>
-
                 <?php
+
+                  echo ( isset($requisicion["insumos"]) && !is_null($requisicion["insumos"]) ) ? '<button type="submit" style="color: white;" class="btn btn-success pull-right btnGuardarRq">Guardar</button>' : '<button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarRq">Guardar</button>';
+
                   $anexarRq = new ControladorRequisiciones();
                   $anexarRq -> ctrCrearRequisicion($_SESSION["perfil"]);
                 ?>
@@ -179,6 +305,31 @@
             </form>
           </div>
         </div>
+         <?php 
+          if (isset($requisicion['aprobado']) ) 
+          {
+            if (!empty($matchError)) 
+            {
+              echo '<div class="col-lg-12 col-md-5 col-sm-12">
+                  <div class="box box-warning" style="overflow:scroll; height: 200px">
+                      <div class="box-header with-border">
+                        Consola de Validación
+                      </div>
+                      <div class="box-body">
+                      <ul class="todo-list ui-sortable">';
+              $listado = explode(":", $matchError);
+
+              for ($i=0; $i < count($listado)-1 ; $i++) 
+              { 
+                 echo '<li><small class="label label-warning">Adv</small><span class="text">'.$listado[$i].'</span></li>';
+              }
+
+              echo '</ul></div>
+                    </div>
+                </div>';
+            }
+          }
+        ?>
       </div>
 
       <div class="col-lg-7">

@@ -33,6 +33,11 @@ $(".tablaRqs").on("click", "button.btnEditarRq", function(){
 	window.location = "index.php?ruta=editarRq&idRq="+idRq;
 })
 
+$(".tablaRqs").on("click", "button.btnReplicarRq", function(){
+	var idRq = $(this).attr("idRq");
+	window.location = "index.php?ruta=requisicion&idRq="+idRq;
+})
+
 $(".tablaRqs").on("click", "button.btnEliminarRq", function(){
 
 	var idRq = $(this).attr("idRq");
