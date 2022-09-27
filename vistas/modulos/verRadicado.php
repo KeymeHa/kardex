@@ -206,21 +206,23 @@
         
 
       </div>
+      <div class="box-footer">
+
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-block btn-info btnEditarRq"><i class="fa fa-copy"></i> Replicar</button>
+        </div>
 
       <?php
 
-        echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
+        echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '
                   <div class="col-md-1">
                   <a href="'.$radicado["soporte"].'"; target="_blank">
                       <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
                     </a>
-                  </div>
-
-                   
-                </div>' : '';
+                  </div>' : '';
 
         ?>
-
+        </div>
       
     </div>
 

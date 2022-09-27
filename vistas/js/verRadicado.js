@@ -1,4 +1,11 @@
 //26 Editar Radicado
+
+
+$("button.btnEditarRq").click(function(){
+	var idRq = $(this).attr("idRq");
+	window.location = "index.php?ruta=editarRq&idRq="+idRq;
+})
+
 $("button.btnEditarRadicado").click( function(){
 
 	var id_rad = $(this).attr("id_rad");
