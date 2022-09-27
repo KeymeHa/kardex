@@ -2,7 +2,7 @@
     session_start();
 
     $js_data = ( isset($_GET["ruta"]) ) ? ControladorParametros::ctrJs_data($_GET["ruta"]) : '';
-
+    $modoManto = ControladorParametros::ctrModoMantenimiento();
     /*
     $area = ControladorParametros::ctrValidarCaracteres($_POST["editarArea"]);
   .replace(/&quot/gi,'"')     convertir de quot a comillas
@@ -54,6 +54,14 @@
    <?php
     if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
     {
+
+     
+
+      if (isset($modoManto["modomanto"]) && $modoManto["modomanto"] == 1) 
+      {
+        include "modulos/salir.php";
+      }
+
       echo '<div class="wrapper">';
       include "modulos/cabezote.php";
       include "modulos/menu.php";

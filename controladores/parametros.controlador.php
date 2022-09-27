@@ -2,6 +2,15 @@
 
 class ControladorParametros
 {
+
+	static public function ctrModoMantenimiento()
+	{
+		$item = "id";
+		$tabla = "parametros";
+		$respuesta = ModeloParametros::mdlMostrarParamentros($tabla, $item);
+		return $respuesta;
+	}
+
 	static public function ctrMostrarParametros($val)
 	{
 		if($val != null)

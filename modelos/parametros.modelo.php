@@ -33,6 +33,16 @@ class ModeloParametros
 		$stmt = null;
 	}
 
+	static public function mdlModoMantenimiento()
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT modomanto FROM $tabla WHERE $item = :$item");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static function mdlConsultarAi($tabla)
 	{
 		$info = new Conexion();
