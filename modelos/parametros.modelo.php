@@ -521,12 +521,13 @@ class ModeloParametros
 		$stmt = null;
 	}
 
-	static public function mdlrAlmacenarAccion($tabla, $id_mensaje, $valor)
+	static public function mdlrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip_cliente)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_mensaje, valor) VALUES (:id_mensaje, :valor)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_mensaje, valor, ip_cliente) VALUES (:id_mensaje, :valor, :ip_cliente)");
 
 		$stmt -> bindParam(":id_mensaje", $id_mensaje, PDO::PARAM_INT);
 		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":ip_cliente", $ip_cliente, PDO::PARAM_STR);
 
 		if ( $stmt -> execute() ) 
 		{

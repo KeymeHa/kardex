@@ -18,6 +18,13 @@ class ControladorUsuarios
 			$url = 'login';
 			$titulo = '';
 
+			if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+				    $ipcliente = $_SERVER['HTTP_CLIENT_IP'];
+				} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+				    $ipcliente = $_SERVER['HTTP_X_FORWARDED_FOR'];
+				} else {
+				    $ipcliente = $_SERVER['REMOTE_ADDR'];
+				}
 			$ejecutar_e = new ControladorUsuarios;
 			
 			if(preg_match('/^[a-zA-Z0-9.@]+$/', $_POST["ingUsuario"]) &&
@@ -34,7 +41,7 @@ class ControladorUsuarios
 
 				if (!isset($respuesta["password"])) 
 				{
-					$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
+					$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor, $ipcliente);
 				}
 				else
 				{//existe
@@ -42,7 +49,7 @@ class ControladorUsuarios
 					{
 						if ($respuesta["estado"] == 0 ) 
 						{
-							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor);
+							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor, $ipcliente);
 						}
 						else
 						{
@@ -71,7 +78,7 @@ class ControladorUsuarios
 							#$tabla, $item1, $valor1, $item2, $valor2
 							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", 0, $item, $respuesta[$item]);
 							$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "sid_ext", $_SESSION['jwt'], $item, $respuesta[$item]);
-							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 5, $_SESSION["id"]);
+							$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 5, $_SESSION["id"], $ipcliente);
 
 							$respuesta = ModeloUsuarios::mdlHoraUsuario($tabla, $datos);
 
@@ -92,7 +99,7 @@ class ControladorUsuarios
 							if ( $intento == 3) 
 							{
 								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "estado", 0, $item, $respuesta[$item]);
-								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 3, '#'.$valor);
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 3, '#'.$valor, $ipcliente);
 
 								$titulo = '¡El '.$item.' ha sido Desactivado!';
 								
@@ -101,14 +108,14 @@ class ControladorUsuarios
 							{
 								if ($respuesta["estado"] == 0 ) 
 								{
-									$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor);
+									$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 4, '#'.$valor, $ipcliente);
 									$titulo = 'El '.$item.' se encuentra Desactivado';
 
 								}
 								else
 								{
 
-								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor, $ipcliente);
 								$actualizar = ModeloUsuarios::mdlActualizarUsuario($tabla, "try", $intento, $item, $respuesta["usuario"]);
 
 								$titulo = $item.' invalido o desconocido';
@@ -121,12 +128,12 @@ class ControladorUsuarios
 
 							if ($respuesta[$item] != $valor ) 
 							{
-								$error = ControladorParametros::ctrAlmacenarAccion($tabla, 1, '#'.$valor);
+								$error = ControladorParametros::ctrAlmacenarAccion($tabla, 1, '#'.$valor, $ipcliente);
 							}
 
 							if ( $respuesta["password"] != $encriptar ) 
 							{
-								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor);
+								$error = ControladorParametros::ctrAlmacenarAccion($ejecutar_e->getTabla_E_Usuario(), 2, '#'.$valor, $ipcliente);
 							}
 
 							$titulo = $item.' invalido o desconocido';
