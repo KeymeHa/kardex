@@ -19,7 +19,7 @@ function validarRuta()
 
 $(".tablaRqs").on("click", "button.btnVerSoli", function(){
 	var idRq = $(this).attr("idRq");
-	window.location = "index.php?ruta=miRequisicion&idRq="+idRq;
+	window.location = "index.php?ruta=verRequisicion&idRq="+idRq;
 })
 
 $(".tablaRqs").on("click", "button.btnReplicarRq", function(){

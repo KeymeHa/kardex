@@ -1078,10 +1078,10 @@ class ControladorParametros
 	}
 
 
-	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor)
+	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip)
 	{
 
-		$respuesta = ModeloParametros::mdlrAlmacenarAccion($tabla, $id_mensaje, $valor);
+		$respuesta = ModeloParametros::mdlrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip);
 
 		return $respuesta;
 	}

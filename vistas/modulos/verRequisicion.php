@@ -4,20 +4,39 @@
   {
     if($_GET["idRq"] == null)
     {
-      echo'<script> window.location="requisiciones";</script>';
-
+      echo'<script> window.location="inicio";</script>';
     }
     else
     {
+
+      if ($_SESSION["perfil"] != 3) 
+      {
+         $idmodulo = 3;
+        $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
+
+        if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
+        {
+          echo'<script> window.location="noAutorizado";</script>';
+        }
+      }// if ($_SESSION["perfil"] != 3) 
+
       $item = "id";
       $valor = $_GET["idRq"];
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
+      echo ( !isset($requisicion["id_persona"]) ) ? '<script> window.location="inicio";</script>' : '';
+
+      $usrApr = ControladorUsuarios::ctrMostrarUsuarios($item, $requisicion["id_usr"]);
       $valor =  $requisicion["id_persona"];
       $persona = ControladorPersonas::ctrMostrarPersonas("id_usuario", $valor);
       $valor = $requisicion["id_area"];
       $area = ControladorAreas::ctrMostrarAreas($item, $valor);
       $listaInsumos = json_decode($requisicion["insumos"], true);
       $cantidadInsumos = 0;
+      $boxStyleBorder = '';
+      if ($requisicion["aprobado"] == 1) 
+      {$boxStyleBorder = ' box-success';}
+      else
+      {$boxStyleBorder = ' box-danger';}
 
       if( !$listaInsumos == null )
       {
@@ -31,7 +50,7 @@
   }
   else{
 
-   echo'<script> window.location="requisiciones";</script>';
+   echo'<script> window.location="inicio";</script>';
 
   }
 
@@ -69,7 +88,7 @@
 
   <section class="content">
 
-    <div class="box">
+    <div class="box <?php echo $boxStyleBorder; ?> ">
       <div class="box-header with-border">
         <h3 class="box-title">Información de la Requisición</h3> 
       </div>
@@ -108,7 +127,7 @@
           }
           else
           {
-             echo '<div class="col-sm-3 col-xs-6">
+             echo '<div class="col-sm-2 col-xs-6">
               <div class="description-block border-right">
                 <span class="description-text">Estado</span>
                 <h5 class="description-header">';
@@ -142,7 +161,7 @@
         </div><!--row-->
       </div><!--BOX BODY-->
     </div><!--BOX-->
-    <div class="box">
+    <div class="box <?php echo $boxStyleBorder; ?>">
       <div class="box-body">
         <table class="table table-bordered table-striped dt-responsive tablas" width="100%">       
         <thead>      
@@ -203,30 +222,30 @@
 
         <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="box">
-          <div class="box-header">
+        <div class="box <?php echo $boxStyleBorder; ?>">
+          <div class="box-header with-border">
             <h3 class="box-title">
               Tus Observaciones
             </h3>
           </div>
           <div class="box-body">
             <p>
-              <?php echo $requisicion["observacion"];?>
+              <?php echo ($_SESSION["perfil"] == 3) ? $requisicion["observacion"] : $requisicion["observacionE"] ;?>
             </p>
           </div>
         </div>
       </div>
 
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="box">
-          <div class="box-header">
+        <div class="box <?php echo $boxStyleBorder; ?>">
+          <div class="box-header with-border">
             <h3 class="box-title">
-              Observaciones del Encargado
+              Observaciones de<?php echo ($_SESSION["perfil"] != 3) ? ' Compras' : 'l Encargado' ;  ?>
             </h3>
           </div>
           <div class="box-body">
             <p>
-              <?php echo $requisicion["observacionE"];?>
+              <?php echo ($_SESSION["perfil"] == 3) ? "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacionE"] : "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacion"] ;?>
             </p>
           </div>
         </div>
@@ -235,6 +254,7 @@
     </div>
 
     <?php 
+
 
     if (!is_null($requisicion["registro"]) ) 
     {
