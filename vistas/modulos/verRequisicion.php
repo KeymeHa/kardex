@@ -21,7 +21,7 @@
       }// if ($_SESSION["perfil"] != 3) 
 
       $item = "id";
-      $valor = $_GET["idRq"];
+      $valor = c;
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
       echo ( !isset($requisicion["id_persona"]) ) ? '<script> window.location="inicio";</script>' : '';
 
@@ -65,7 +65,7 @@
         Regresar
       </button>
     </a>
-    <a href="index.php?ruta=requisicion&idRq=<?php echo $valor;?>">
+    <a href="index.php?ruta=requisicion&idRq=<?php echo $_GET['idRq'];?>">
       <button class="btn btn-info btn-md btnReplicarRq"><i class="fa fa-copy"></i> 
       Replicar
       </button>
@@ -250,7 +250,7 @@
           </div>
           <div class="box-body">
             <p>
-              <?php echo ($_SESSION["perfil"] == 3) ? "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacionE"] : "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacion"] ;?>
+              <?php echo ($_SESSION["perfil"] == 3) ? "</strong>: ".$requisicion["observacionE"] : "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacion"] ;?>
             </p>
           </div>
         </div>
