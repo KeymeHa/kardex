@@ -61,11 +61,16 @@
   <section class="content-header">
 
     <a href="javascript:history.back()">
-      <button class="btn btn-success btn-xs"><i class="fa fa-chevron-left"></i> 
+      <button class="btn btn-success btn-md"><i class="fa fa-chevron-left"></i> 
         Regresar
       </button>
     </a>
-
+    <a href="index.php?ruta=requisicion&idRq=<?php echo $valor;?>">
+      <button class="btn btn-info btn-md btnReplicarRq"><i class="fa fa-copy"></i> 
+      Replicar
+      </button>
+    </a>
+    
     <br><br>
 
     <h1>
