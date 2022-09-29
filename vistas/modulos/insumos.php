@@ -379,7 +379,7 @@
                   </div>
                 </div>
                <div class="form-group row" style="margin-left: 5px;">
-                    <div class="input-group">                 
+                    <div class="input-group">
                       <button class="btn btn-danger pull-right" id="genPDFInsumos" disabled="">
                         <i class="fa fa-file-pdf-o"></i>
                         Generar Acta de Inventario PDF

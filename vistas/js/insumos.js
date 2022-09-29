@@ -211,6 +211,12 @@ $("#modalGeneracionInsumos").on("click", "#genPDFInsumos", function(){
 
 })
 
+$("#modalGeneracionInsumos").on("click", "#genXlsInsumos", function(){
+
+	window.open("extensiones/export/insumos-ex.php", "_blank");
+
+})
+
 $(".tablaInsumos").on("click", "button.btn-stock", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
