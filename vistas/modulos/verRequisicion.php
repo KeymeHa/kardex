@@ -21,7 +21,7 @@
       }// if ($_SESSION["perfil"] != 3) 
 
       $item = "id";
-      $valor = c;
+      $valor = $_GET["idRq"];
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
       echo ( !isset($requisicion["id_persona"]) ) ? '<script> window.location="inicio";</script>' : '';
 
