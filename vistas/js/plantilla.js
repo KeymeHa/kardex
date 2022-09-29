@@ -505,10 +505,7 @@ function paginaCargada(pagina, id, per, anioActual){
 			var queryString = window.location.search;
 			var urlParams = new URLSearchParams(queryString);
 			var idProy = urlParams.get('idProy');
-			if(idProy == null)
-			{
-			  variable = "?idProy=null";
-			} else 
+			if(idProy != null)
 			{
 			  variable ="?idProy="+idProy;
 			}

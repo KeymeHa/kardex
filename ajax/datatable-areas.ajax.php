@@ -34,7 +34,7 @@ class Tablaareas
 	    {  	echo'{"data": []}';	return; }
 
 
-			if ($sw == null) 
+			if (is_null($sw) && is_null($this->tipo) ) 
 			{
 				for( $i = 0; $i < count($areas); $i++)
 				{	
@@ -163,21 +163,11 @@ if (isset($_GET["idProy"]))
 	$verareas -> id_fk = $_GET["idProy"];
 	$verareas -> tipo = "pro";
 }
-else
-{
-	$verareas -> tipo = null;
-	$verareas -> id_fk = null;
-}
 
 if (isset($_GET["idCategoria"])) 
 {
 	$verareas -> id_fk = $_GET["idCategoria"];
 	$verareas -> tipo = "cat";
-}
-else
-{
-	$verareas -> tipo = null;
-	$verareas -> id_fk = null;
 }
 
 if (isset($_GET["actual"])) 
