@@ -714,5 +714,4 @@ class ControladorInsumos
 		//recorrer facturas
 		return $arrayInfo;
 	}
-
 }#ControladorInsumos
