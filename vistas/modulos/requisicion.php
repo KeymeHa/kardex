@@ -121,14 +121,6 @@
                       <div class="form-group">
                         <div class="input-group">
                           <input type="date" class="form-control" name="fechaAprobacion" id="fechaAprobacion" value="" />
-                        </div>              
-                      </div>
-                    </div>
-
-                   <div class="col-sm-3 col-lg-3 col-md-3">
-                    <p class="help-block">*y Hora</p>           
-                    <div class="form-group">
-                      <div class="input-group">
                         <input type="time" id="horaAprobacion" name="horaAprobacion" class="form-control timepicker" value=""/>
                       </div>              
                     </div>
