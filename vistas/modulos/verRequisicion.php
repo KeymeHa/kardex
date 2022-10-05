@@ -11,7 +11,7 @@
 
       if ($_SESSION["perfil"] != 3) 
       {
-         $idmodulo = 3;
+        $idmodulo = 3;
         $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
 
         if ( !isset($verModulo["modulo"]) &&  $verModulo["modulo"] != $idmodulo) 
@@ -23,7 +23,10 @@
       $item = "id";
       $valor = $_GET["idRq"];
       $requisicion = ControladorRequisiciones::ctrMostrarRequisiciones($item, $valor, $_SESSION["anioActual"]);
+
       echo ( !isset($requisicion["id_persona"]) ) ? '<script> window.location="inicio";</script>' : '';
+
+      echo ($_SESSION["id"] != $requisicion["id_persona"] && $_SESSION["perfil"] != 3 ) ? '<script> window.location="inicio";</script>' : '';
 
       $usrApr = ControladorUsuarios::ctrMostrarUsuarios($item, $requisicion["id_usr"]);
       $valor =  $requisicion["id_persona"];
@@ -137,7 +140,7 @@
                 <span class="description-text">Estado</span>
                 <h5 class="description-header">';
 
-                if ($requisicion["aprobado"] == 0) 
+                if ($requisicion["aprobado"] == 0 || $requisicion["aprobado"] == 3) 
                 {
                   echo 'En Espera.';
                 }
