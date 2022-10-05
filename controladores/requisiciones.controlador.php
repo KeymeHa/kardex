@@ -23,7 +23,7 @@ class ControladorRequisiciones
 
 	function anioActualAppr($anio)
 	{
-		$respuesta = ($anio == 0) ? 'WHERE aprobado = 0' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0';
+		$respuesta = ($anio == 0) ? 'WHERE aprobado = 0 or  aprobado = 3' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 0 or  aprobado = 3';
 		return $respuesta;
 	}
 
@@ -491,145 +491,168 @@ class ControladorRequisiciones
 		{
 			if ($_POST["editarRq"] != null) 
 			{
-				
-				//actualizacion de inventario
-
-				$verRq = new ControladorRequisiciones;
-				$requisicion = $verRq->ctrMostrarRequisiciones("id", $_POST["editarRq"], $anio);
-
-				if (!isset($_POST["btnAnularRq"])) 
-				{
-					if(!$_POST["listadoInsumosRq"] == "")
-					{
-						$editLista = json_decode($_POST["listadoInsumosRq"], true);
-						$antLista = json_decode($requisicion["insumos"], true);
-						$array_antLista = [];
-
-						foreach ($antLista as $key => $value) 
-						{
-							$array_antLista [] = $value["id"];
-							//array_push($array_antLista, $value["id"]);
-						}
-			
-						foreach ($editLista as $key => $edit) 
-						{
-							$item = "id";
-							$valor = $edit["id"];
-							$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
-							$sw = false;
-							$nuevoStock = 0;
-							$precioCompra = intval($insumo["precio_compra"]);
-
-							foreach ($antLista as $k => $ant) 
-							{
-
-
-								if($edit["id"] == $ant["id"])
-								{
-									$clave = array_search($ant["id"], $array_antLista);
-									unset($array_antLista[$clave]);
-
-									if($edit["ent"] != $ant["ent"])
-									{
-										if ($edit["ent"] > $ant["ent"]) 
-										{
-											$nuevoStock = $insumo["stock"] - ($edit["ent"] - $ant["ent"]);
-										}
-										else
-										{
-											$nuevoStock = $insumo["stock"] + ($ant["ent"] - $edit["ent"]);
-										}
-
-										$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
-										$respuesta = ControladorInsumos::ctrActualizarStock($datos);
-									}
-
-									$sw = true;							
-								}
-							}
-								
-							if($sw != true)
-							{
-								$nuevoStock = $insumo["stock"] - $edit["ent"];
-								$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
-								$respuesta = ControladorInsumos::ctrActualizarStock($datos);
-							}
-						}//foreach
-
-						if( count($array_antLista) >= 1)
-						{
-							$mayor = 1;
-							$mayor = max( array_keys($array_antLista) );
-
-							for ( $i=0 ; $i < $mayor + 1 ; $i++) 
-							{ 
-								if( array_key_exists($i, $array_antLista) )
-								{
-									foreach ($antLista as $key => $value) 
-									{
-										if($array_antLista[$i] == $value["id"])
-										{	
-											$item = "id";
-											$valor = $value["id"];
-											$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
-											$nuevoStock = intval($insumo["stock"]) + intval($value["ent"]);
-											$precioCompra = $insumo["precio_compra"];
-											$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
-											$respuesta = ControladorInsumos::ctrActualizarStock($datos);
-										}
-									}
-								}
-							}
-													
-						}
-					}
-				}
-
-				 $perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
-				 $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
-
-				 $fechaAp = $_POST["fechaAprobacion"]." ".$_POST["horaAprobacion"];
-				 $fechaSol = ($requisicion["gen"] == 1) ? $requisicion["fecha_sol"] : $_POST["nuevaFechaSolRq"]." ".$_POST["nuevaHoraSolRq"];
-
-				 $datosE = array( 'id_persona' => $_POST["id_persona"],
-								'id_area' => $persona["id_area"],
-								'id_usr' => $_POST["idUsuario"],
-								'insumos' => $_POST["listadoInsumosRq"],
-								'fecha' => $fechaAp,
-								'fecha_sol' => $fechaSol,
-								'observacion' => $_POST["observacionRq"],
-								'id' => $_POST["editarRq"]);
-
-				 $apro = 0;
-				 if ($requisicion["aprobado"] == 0) 
-				 {
-				 	$apro = (isset($_POST["btnAnularRq"])) ? 2 : 1;
-				 	$datosE['registro'] = $_POST["editarRegistro"];
-				 }
-				 else
-				 {
-				 	$apro = $requisicion["aprobado"];
-				 }
-
-				$datosE['aprobado'] = $apro;
-
-				#ACTUALIZAR REQUISICION
-				$tabla = "requisiciones";
-				$editado = ModeloRequisiciones::mdlEditarRq($tabla, $datosE);
-
 				$titulo = "";
 				$tipo = "";
 
-				if ($editado == "ok") {
+				//actualizacion de inventario
+				$verRq = new ControladorRequisiciones;
+				$requisicion = $verRq->ctrMostrarRequisiciones("id", $_POST["editarRq"], $anio);
 
-					$titulo = "¡Requisición Editada!";
-					$tipo = "success";
-				}
+				if ($requisicion["aprobado"] != 2) 
+				{
+					if (!isset($_POST["btnAnularRq"])) 
+					{
+						if(!$_POST["listadoInsumosRq"] == "")
+						{
+							$editLista = json_decode($_POST["listadoInsumosRq"], true);
+							$antLista = json_decode($requisicion["insumos"], true);
+							$array_antLista = [];
+
+							foreach ($antLista as $key => $value) 
+							{
+								$array_antLista [] = $value["id"];
+								//array_push($array_antLista, $value["id"]);
+							}
+				
+							foreach ($editLista as $key => $edit) 
+							{
+								$item = "id";
+								$valor = $edit["id"];
+								$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+								$sw = false;
+								$nuevoStock = 0;
+								$precioCompra = intval($insumo["precio_compra"]);
+
+								foreach ($antLista as $k => $ant) 
+								{
+
+
+									if($edit["id"] == $ant["id"])
+									{
+										$clave = array_search($ant["id"], $array_antLista);
+										unset($array_antLista[$clave]);
+
+										if($edit["ent"] != $ant["ent"])
+										{
+											if ($edit["ent"] > $ant["ent"]) 
+											{
+												$nuevoStock = $insumo["stock"] - ($edit["ent"] - $ant["ent"]);
+											}
+											else
+											{
+												$nuevoStock = $insumo["stock"] + ($ant["ent"] - $edit["ent"]);
+											}
+
+											$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+											$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+										}
+
+										$sw = true;							
+									}
+								}
+									
+								if($sw != true)
+								{
+									$nuevoStock = $insumo["stock"] - $edit["ent"];
+									$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+								}
+							}//foreach
+
+							if( count($array_antLista) >= 1)
+							{
+								$mayor = 1;
+								$mayor = max( array_keys($array_antLista) );
+
+								for ( $i=0 ; $i < $mayor + 1 ; $i++) 
+								{ 
+									if( array_key_exists($i, $array_antLista) )
+									{
+										foreach ($antLista as $key => $value) 
+										{
+											if($array_antLista[$i] == $value["id"])
+											{	
+												$item = "id";
+												$valor = $value["id"];
+												$insumo = ControladorInsumos::ctrMostrarInsumos($item, $valor);
+												$nuevoStock = intval($insumo["stock"]) + intval($value["ent"]);
+												$precioCompra = $insumo["precio_compra"];
+												$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
+												$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+											}
+										}
+									}
+								}
+														
+							}
+						}
+					}
+
+					 $perfil = ControladorUsuarios::ctrMostrarPerfil("id", $_POST["id_persona"]);
+					 $persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
+
+					 $fechaAp = $_POST["fechaAprobacion"]." ".$_POST["horaAprobacion"];
+					 $fechaSol = ($requisicion["gen"] == 1) ? $requisicion["fecha_sol"] : $_POST["nuevaFechaSolRq"]." ".$_POST["nuevaHoraSolRq"];
+
+					 $observacion = (isset($_POST["observacion"])) ? ControladorParametros::ctrValidarCaracteres($_POST["observacion"]) : $requisicion["observacion"] ;
+
+					  $observacionE = (isset($_POST["observacionE"])) ? ControladorParametros::ctrValidarCaracteres($_POST["observacionE"]) : $requisicion["observacionE"] ;
+
+					 $datosE = array( 'id_persona' => $_POST["id_persona"],
+									'id_area' => $persona["id_area"],
+									'id_usr' => $_POST["idUsuario"],
+									'insumos' => $_POST["listadoInsumosRq"],
+									'fecha' => $fechaAp,
+									'fecha_sol' => $fechaSol,
+									'observacion' =>  $observacion,
+									'observacionE' =>  $observacionE,
+									'id' => $_POST["editarRq"]);
+
+					 $apro = 0;
+					 if ($requisicion["aprobado"] == 0) 
+					 {
+					 	$apro = (isset($_POST["btnAnularRq"])) ? 2 : 1;
+					 	$datosE['registro'] = $_POST["editarRegistro"];
+					 }
+					 else
+					 {
+					 	if ($_POST["perEditar"] != 3) 
+					 	{
+					 		$apro = 3;
+					 	}
+					 	else
+					 	{
+					 		$apro = 1;
+					 	}
+					 }
+
+					$datosE['aprobado'] = $apro;
+
+					#ACTUALIZAR REQUISICION
+					$tabla = "requisiciones";
+					$editado = ModeloRequisiciones::mdlEditarRq($tabla, $datosE);
+
+					if ($editado == "ok") 
+					{
+						$titulo = "¡Requisición Editada!";
+						$tipo = "success";
+					}
+					else
+					{
+						$titulo = "¡Error al Editar!";
+						$tipo = "error";
+					}
+
+				}//Solo si no esta anulado
 				else
 				{
 					$titulo = "¡Error al Editar!";
 					$tipo = "error";
 				}
+
+				$url = ($_POST["perEditar"] != 3) ? 'hisRequisicion' : 'requisiciones' ;
+
+				
 
 				echo '<script>
 
@@ -644,7 +667,7 @@ class ControladorRequisiciones
 
 						if(result.value){
 						
-							window.location = "requisiciones";
+							window.location = "'.$url.'";
 
 						}
 
