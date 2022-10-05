@@ -601,9 +601,32 @@ class ControladorRequisiciones
 					 $fechaAp = $_POST["fechaAprobacion"]." ".$_POST["horaAprobacion"];
 					 $fechaSol = ($requisicion["gen"] == 1) ? $requisicion["fecha_sol"] : $_POST["nuevaFechaSolRq"]." ".$_POST["nuevaHoraSolRq"];
 
-					 $observacion = (isset($_POST["observacion"])) ? ControladorParametros::ctrValidarCaracteres($_POST["observacion"]) : $requisicion["observacion"] ;
+					 if(isset($_POST["observacion"]))
+					 {
+					 	 $observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacion"]) ;
 
-					  $observacionE = (isset($_POST["observacionE"])) ? ControladorParametros::ctrValidarCaracteres($_POST["observacionE"]) : $requisicion["observacionE"] ;
+					 	 if ($requisicion["observacion"] != $observacion) 
+					 	 {
+					 	 	$valorAnt .= "Compras Modifico el Comentario. ";
+					 	 }
+					 }
+					 else
+					 {
+					 	 $observacion = $requisicion["observacion"] ;
+					 }
+
+					  if(isset($_POST["observacionE"]))
+					 {
+					 	 $observacionE = ControladorParametros::ctrValidarCaracteres($_POST["observacionE"]) ;
+					 	 if ($requisicion["observacionE"] != $observacionE) 
+					 	 {
+					 	 	$valorAnt .= "El Encargado Modifico el Comentario. ";
+					 	 }
+					 }
+					 else
+					 {
+					 	 $observacionE = $requisicion["observacionE"] ;
+					 }
 
 					 $datosE = array( 'id_persona' => $_POST["id_persona"],
 									'id_area' => $persona["id_area"],
