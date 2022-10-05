@@ -611,7 +611,11 @@ class ControladorRequisiciones
 					 $apro = 0;
 					 if ($requisicion["aprobado"] == 0) 
 					 {
-					 	$apro = (isset($_POST["btnAnularRq"])) ? 2 : 1;
+					 	if ($_POST["perEditar"] == 3) 
+					 	{
+					 		$apro = (isset($_POST["btnAnularRq"])) ? 2 : 1;
+					 	}
+					 		
 					 	$datosE['registro'] = $_POST["editarRegistro"];
 					 }
 					 else

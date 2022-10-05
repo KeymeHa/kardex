@@ -21,6 +21,12 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
 		success: function(respuesta){	
 			var descripcion = respuesta["descripcion"];
 			var stock = respuesta["stock"];
+			var valEnt = 1;
+
+			if( $("#perEditar").val() != 3 )
+			{
+				valEnt = 0;
+			}
 
 			$(".nuevoInsumoAgregadoRq").append(
 
@@ -34,13 +40,19 @@ $(".tablaInsumosNRq").on("click", "button.agregarInsumo", function(){
                   	'</div>'+
                   '</div>'+
                   '<div class="col-xs-3 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="0" value="0" required>'+
+                   ' <input type="number" class="form-control nuevaCantidadPedida" stock="'+stock+'" name="nuevaCantidadPedida" min="1" value="1" required>'+
                   '</div>'+
                   '<div class="col-xs-3 ingresoCantidad">'+
-                   ' <input type="number" class="form-control nuevaCantidadEntregada" stock="'+stock+'" name="nuevaCantidadEntregada" min="0" value="0" required>'+
+                   ' <input type="number" class="form-control nuevaCantidadEntregada" stock="'+stock+'" name="nuevaCantidadEntregada" min="0" value="'+valEnt+'" required>'+
                   '</div>'+
                 '</div>'
-				)
+			)
+
+			if( $("#perEditar").val() != 3 )
+			{
+				$("input.nuevaCantidadEntregada").attr("readonly","");
+			}
+
 			listarProductosRq();
 		}
 	});
@@ -183,8 +195,6 @@ $(document).ready(function() {
     {
     	ahora(elemento2);
     }
-
-    
 
 });
 

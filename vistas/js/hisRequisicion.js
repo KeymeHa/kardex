@@ -27,6 +27,11 @@ $(".tablaRqs").on("click", "button.btnReplicarRq", function(){
 	window.location = "index.php?ruta=requisicion&idRq="+idRq;
 })
 
+$(".tablaRqs").on("click", "button.btnEditarRq", function(){
+	var idRq = $(this).attr("idRq");
+	window.location = "index.php?ruta=editarRq&idRq="+idRq;
+})
+
 if(localStorage.getItem("capturarRango") != null)
 {
 	$("#btn-RangoRequisicionS span").html(localStorage.getItem("capturarRango"));

@@ -328,7 +328,7 @@ class ControladorParametros
 				break;
 
 			case 5:
-		        $hora = substr($fechaI,-8,-6);
+		        $hora = substr($fechaI,-7,-6);
 
 		        settype($hora, "integer");
 

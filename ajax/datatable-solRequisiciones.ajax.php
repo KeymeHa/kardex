@@ -52,19 +52,28 @@ class TablaRequisiciones
 
             $cantidadInsumos = ControladorParametros::ctrContarInsumos($requisiciones[$i]["insumos"]);
             $proyecto = ControladorProyectos::ctrMostrarNombreProyectos("id",$requisiciones[$i]["id_proyecto"]);
-            $acciones = "<div class='btn-group'><div class='col-md-5'><button class='btn btn-success btnVerSoli' idRq='".$requisiciones[$i]["id"]."' title='Ver'><i class='fa fa-book'></i> Ver</button></div><div class='col-md-3'><button class='btn btn-info btnReplicarRq' idRq='".$requisiciones[$i]["id"]."' title='Replicar'><i class='fa  fa-copy'></i></button></div></div>";
+            $acciones = "<div class='btn-group'><div class='col-md-5'><button class='btn btn-success btnVerSoli' idRq='".$requisiciones[$i]["id"]."' title='Ver'><i class='fa fa-book'></i> Ver</button></div><div class='col-md-3'><button class='btn btn-info btnReplicarRq' idRq='".$requisiciones[$i]["id"]."' title='Replicar'><i class='fa  fa-copy'></i></button></div>";
 
             if ($requisiciones[$i]["aprobado"] == 0) 
             {
+            	$acciones .= "</div>";
+
             	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning' title='Falta aprobación por parte de compras'>En espera</button></div></div>";
             }
             else if ($requisiciones[$i]["aprobado"] == 1) 
             {
+            	$acciones .= "<div class='col-md-3'><button class='btn btn-warning btnEditarRq' idRq='".$requisiciones[$i]["id"]."' title='Editar'><i class='fa fa-pencil'></i></button></div></div>";
             	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success' title='Ya fue aprobada esta requisición'>Aprobado</button></div></div>";
+            }
+            else if ($requisiciones[$i]["aprobado"] == 2) 
+            {
+            	$acciones .= "</div>";
+            	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-danger' title='Requisición anulada'>Anulada</button></div></div>";
             }
             else
             {
-            	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-danger' title='Requisición anulada'>Anulada</button></div></div>";
+            	$acciones .= "</div>";
+            	$estado = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning' title='Requisición modificada y en espera de aprobación'>Modificado y En Espera</button></div></div>";
             }
 
 
