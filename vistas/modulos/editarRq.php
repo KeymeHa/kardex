@@ -56,7 +56,7 @@
             Datos Requisición
           </div>
           <div class="box-body">
-          <form role="form" method="post" class="formularioNuevaRq">
+          <form role="form" method="post" class="formularioNuevaRq" id="form-Edit-Rq">
               <div class="row">
                 <div class="col-xs-5">
                   <div class="form-group">
@@ -188,11 +188,11 @@
                 }
               ?>
 
-                <textarea class="form-control" rows="3" name="observacionRq" rows="3" placeholder="Observaciones de Compras" name="observacion" autocomplete="off" <?php echo($_SESSION["perfil"]!=3) ? 'readonly':'';?> style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
+                <textarea class="form-control" rows="3" name="observacion" rows="3" placeholder="Observaciones de Compras" form="form-Edit-Rq" autocomplete="off" <?php echo($_SESSION["perfil"]!=3) ? 'readonly':'';?> style="resize: none"><?php echo $requisicion["observacion"]; ?></textarea>
 
                <br>
                <p class="help-block">Observaciones del encargado</p>
-               <textarea class="form-control" rows="3" rows="3" placeholder="Observaciones del Encargado" autocomplete="off" name="observacionE" style="resize: none" <?php echo($_SESSION["perfil"]==3) ? 'readonly':'';?> ><?php echo $requisicion["observacionE"]; ?></textarea>
+               <textarea class="form-control" rows="3" rows="3" placeholder="Observaciones del Encargado" autocomplete="off" name="observacionE" form="form-Edit-Rq" style="resize: none" <?php echo($_SESSION["perfil"]==3) ? 'readonly':'';?> > <?php echo $requisicion["observacionE"]; ?></textarea>
               
               
               <div class="row">
