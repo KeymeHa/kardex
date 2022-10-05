@@ -45,7 +45,27 @@ function hoy(elemento)
 function ahora(elemento)
 {
 	var dt = new Date();
-	var time = dt.getHours() + ":" + dt.getMinutes();
+	var hora = 0;
+	var min = 0;
+	if (dt.getHours() <= 9) 
+	{
+		hora = "0"+dt.getHours();
+	}
+	else
+	{
+		hora = dt.getHours();
+	}
+
+	if (dt.getMinutes() <= 9) 
+	{
+		min = "0"+dt.getMinutes();
+	}
+	else
+	{
+		min = dt.getMinutes();
+	}
+
+	var time = hora + ":" + min;
 
 	$(elemento).val(time);
 }
