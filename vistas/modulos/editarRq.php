@@ -19,6 +19,8 @@
           echo'<script> window.location="requisiciones";</script>';
         }
 
+         echo ($_SESSION["id"] != $requisicion["id_persona"] && $_SESSION["perfil"] != 3 ) ? '<script> window.location="inicio";</script>' : '';
+
       }
     }
     else{
