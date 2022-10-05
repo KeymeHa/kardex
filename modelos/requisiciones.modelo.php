@@ -724,7 +724,7 @@ class ModeloRequisiciones
 	{
 		if (isset($datos["registro"])) 
 		{
-			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, fecha_sol = :fecha_sol, observacion = :observacion, registro = :registro, aprobado = :aprobado WHERE id = :id");
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, fecha_sol = :fecha_sol, observacion = :observacion, registro = :registro, aprobado = :aprobado , observacionE = :observacionE WHERE id = :id");
 
 			$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
@@ -735,11 +735,12 @@ class ModeloRequisiciones
 			$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
 			$stmt->bindParam(":registro", $datos["registro"], PDO::PARAM_STR);
 			$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
+			$stmt->bindParam(":observacionE", $datos["observacionE"], PDO::PARAM_STR);
 			$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, fecha_sol = :fecha_sol, observacion = :observacion, aprobado = :aprobado WHERE id = :id");
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_persona = :id_persona, id_area = :id_area, id_usr = :id_usr, insumos = :insumos, fecha = :fecha, fecha_sol = :fecha_sol, observacion = :observacion, aprobado = :aprobado, observacionE = :observacionE WHERE id = :id");
 
 			$stmt->bindParam(":id_persona", $datos["id_persona"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
@@ -749,6 +750,7 @@ class ModeloRequisiciones
 			$stmt->bindParam(":fecha_sol", $datos["fecha_sol"], PDO::PARAM_STR);
 			$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
 			$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
+			$stmt->bindParam(":observacionE", $datos["observacionE"], PDO::PARAM_STR);
 			$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		}
 
