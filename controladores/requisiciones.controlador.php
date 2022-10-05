@@ -491,6 +491,7 @@ class ControladorRequisiciones
 		{
 			if ($_POST["editarRq"] != null) 
 			{
+				$valorAnt = "";
 				$titulo = "";
 				$tipo = "";
 
@@ -506,6 +507,12 @@ class ControladorRequisiciones
 						{
 							$editLista = json_decode($_POST["listadoInsumosRq"], true);
 							$antLista = json_decode($requisicion["insumos"], true);
+
+							if ($_POST["listadoInsumosRq"] != $requisicion["insumos"]) 
+							{
+								$valorAnt = "Modificada lista de insumos. ";
+							}
+
 							$array_antLista = [];
 
 							foreach ($antLista as $key => $value) 
@@ -623,9 +630,11 @@ class ControladorRequisiciones
 					 	if ($_POST["perEditar"] != 3) 
 					 	{
 					 		$apro = 3;
+					 		$valorAnt .= "Solicitó Aprobación de Modificación. ";
 					 	}
 					 	else
 					 	{
+					 		$valorAnt .= "Aprobó la Modificación. ";
 					 		$apro = 1;
 					 	}
 					 }
@@ -635,6 +644,15 @@ class ControladorRequisiciones
 					#ACTUALIZAR REQUISICION
 					$tabla = "requisiciones";
 					$editado = ModeloRequisiciones::mdlEditarRq($tabla, $datosE);
+
+					$datos = array( "accion" => 3,
+									"numTabla" => 9,
+									"valorAnt" => $valorAnt,
+									"valorNew" => "",
+									"id_usr" => $_POST["idUsuario"],
+									"id_otro" => $_POST["editarRq"]
+									 );
+					$respuesta = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
 
 					if ($editado == "ok") 
 					{

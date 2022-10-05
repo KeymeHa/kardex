@@ -253,7 +253,7 @@
           </div>
           <div class="box-body">
             <p>
-              <?php echo ($_SESSION["perfil"] == 3) ? "</strong>: ".$requisicion["observacionE"] : "<strong>".$usrApr["nombre"]."</strong>: ".$requisicion["observacion"] ;?>
+              <?php echo ($_SESSION["perfil"] == 3) ? "</strong>: ".$requisicion["observacionE"] : $requisicion["observacion"] ;?>
             </p>
           </div>
         </div>

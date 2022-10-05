@@ -6,13 +6,21 @@ class ModeloHistorial
 {
 	static public function mdlInsertarHistorial($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(accion, numTabla, valorAnt, valorNew, id_usr) VALUES (:accion, :numTabla, :valorAnt, :valorNew, :id_usr)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(accion, numTabla, valorAnt, valorNew, id_usr, id_otro) VALUES (:accion, :numTabla, :valorAnt, :valorNew, :id_usr, :id_otro)");
 
 		$stmt->bindParam(":accion", $datos["accion"], PDO::PARAM_INT);
 		$stmt->bindParam(":numTabla", $datos["numTabla"], PDO::PARAM_INT);
 		$stmt->bindParam(":valorAnt", $datos["valorAnt"], PDO::PARAM_STR);
 		$stmt->bindParam(":valorNew", $datos["valorNew"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
+		if (isset($datos["id_otro"])) 
+		{
+			$stmt->bindParam(":id_otro", $datos["id_otro"], PDO::PARAM_INT);
+		}
+		else
+		{
+			$stmt->bindParam(":id_otro", 0, PDO::PARAM_INT);
+		}
 
 		if($stmt->execute())
 		{
