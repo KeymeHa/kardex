@@ -19,10 +19,13 @@
    echo'<script> window.location="cortes";</script>';
   }
 
+
+  $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia",  "tab" => "pqr", "indice" => "id", "foranea" => "id_pqr", "campo" => "nombre"],
+                    1 => [ "tit" => "Dirigida a las áreas",  "tab" => "areas", "indice" => "id", "foranea" => "id_area", "campo" => "nombre"],
+                    2 => [ "tit" => "Tipo de Documento",  "tab" => "articulo", "indice" => "id", "foranea" => "id_articulo", "campo" => "nombre"]);
+  $contarRadicados = [[]];
+
 ?>
-
-
-
 
 <div class="content-wrapper">
   <section class="content-header">
@@ -37,7 +40,7 @@
   </section>
   <section class="content">
     <div class="box">
-      <div class="box-header with-border">
+      <div class="box-header">
         <button class="btn btn-success" onclick="history.back()">
           <i class="fa fa-arrow-left" ></i>
           Regresar
@@ -48,6 +51,54 @@
         </button>
         <h3 class="box-title">Fecha Generación :<?php echo $fechaCorte;?></h3>  
       </div>
+    </div>
+
+    <div class="box">
+      <div class="box box-body">
+        <?php
+
+              $indiceD = ($_SESSION["anioActual"] != 0) ? 'AND id_corte = '.$valor  : 'WHERE id_corte = '.$valor ;
+
+
+
+              for ($y=0; $y < count($TbsRad) ; $y++) 
+              { 
+                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $indiceD , null, null, $_SESSION["anioActual"]);
+
+                  if (count($contarRadicados) != 0 && $contarRadicados != false) 
+                  {
+
+                    echo ' <div class="col-xs-4">
+                             <p class="lead">'.$TbsRad[$y]["tit"].'</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                          <tbody>';
+
+                          for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
+                          { 
+                            echo ' <tr>
+                                    <th><a href="index.php?ruta=resumenRadicadoD&tab='.$TbsRad[$y]["tab"].'&indice='.$TbsRad[$y]["indice"].'&val='.$contarRadicados[$x][$TbsRad[$y]["indice"]].'">'.$contarRadicados[$x][$TbsRad[$y]["campo"]].'</a></th>
+                                    <td>'.$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"].'</td>
+                                  </tr>';
+                          }
+
+
+                    echo ' </tbody>
+                            </table>
+                          </div>
+                        </div><!--<div class="col-xs-4">-->';
+                  }
+
+              }
+              if (count($contarRadicados) == 0 || $contarRadicados == false) 
+              {
+                 echo '<h3></i> No se encontraron datos.</h3>';
+              }
+            ?>
+      </div>
+    </div>
+
+    <div class="box">
       <div class="box-body">       
           <table class="table table-bordered table-striped dt-responsive tablaRadicados" width="100%">
               <thead>

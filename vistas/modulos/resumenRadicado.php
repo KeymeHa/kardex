@@ -53,7 +53,7 @@
 
               for ($y=0; $y < count($TbsRad) ; $y++) 
               { 
-                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, "" ,$fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
                   if (count($contarRadicados) != 0 && $contarRadicados != false) 
                   {
@@ -96,7 +96,7 @@
             for ($y=0; $y < count($TbsRad) ; $y++) 
             { 
 
-            $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]); 
+            $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, "", $fechaInicial, $fechaFinal, $_SESSION["anioActual"]); 
 
             $data = "";
 

@@ -502,21 +502,21 @@ class ModeloRadicados
 		}
 	}
 
-	static public function mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio)
+	static public function mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
 			#"pqr", "id", "nombre", "id_pqr", null, $fechaInicial, $fechaFinal, WHERE YEAR(fecha) = fecha
 			if ($tablaD != null ) 
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
+				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
 				$stmt -> execute();
 			}
 			else
 			{
 				if ($valor == null) 
 				{
-					$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
+					$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
 					$stmt -> execute();
 				}
 			}

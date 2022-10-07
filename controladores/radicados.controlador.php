@@ -698,7 +698,6 @@ class ControladorRadicados
 	#							id del usuario 
 	static public function ctrVerRegistrosPQR($id, $per, $mod, $fI, $fF, $es, $anio)
 	{
-
 		$query = "";
 
 		if ($fI != null) 
@@ -856,24 +855,25 @@ class ControladorRadicados
 
 	}
 
-	static public function ctrContarRad($tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio)
+	static public function ctrContarRad($tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio)
 	{
+
 
 		if ($anio != 0) 
 		{
-			$r = new ControladorFacturas;
+			$r = new ControladorRadicados;
 			$anio = $r->anioActual($anio);
 
 			if ($valor != null) 
 			{
-				$anio.= " AND '".$item."' = '".$valor."' ";		
+				$anio.= " AND '".$item."' = '".$valor."' ".$otro;		
 			}			
 		}
 		else
 		{
 			if ($valor != null) 
 			{
-				$anio = " WHERE '".$item."' = '".$valor."' ";		
+				$anio = " WHERE '".$item."' = '".$valor."' ".$otro;		
 			}
 			else
 			{
@@ -883,7 +883,7 @@ class ControladorRadicados
 
 		$tabla = "radicados";
 
-		$respuesta = ModeloRadicados::mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $fechaInicial, $fechaFinal, $anio);
+		$respuesta = ModeloRadicados::mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
 	}
