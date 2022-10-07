@@ -69,7 +69,7 @@ $bloque3 = <<<EOF
 	<table>	
 		<tr>		
 			<td rowspan="3" style="width:10px;"></td>
-			<td rowspan="3" style="width:120px; border: 1px solid black; text-align:center; font-size:5px; line-height: 1;"><img src="images/logoEdubar.png" width="80" height="auto"></td>
+			<td rowspan="3" style="width:120px; border: 1px solid black; text-align:center; font-size:5px; line-height: 1;"><img src="images/logoEdubar2.png" width="80" height="auto"></td>
 			<td rowspan="3" style="width:555px; border: 1px solid black; text-align: center; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
 			<td style="width:50px; border: 1px solid black; text-align: right; font-size:7px;" >
 			Código&nbsp;&nbsp;

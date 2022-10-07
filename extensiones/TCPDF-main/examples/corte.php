@@ -67,7 +67,7 @@ class MYPDF extends TCPDF {
     <table align="center"> 
         <tr>        
             <td rowspan="3" style="width:5px;"></td>
-            <td rowspan="3" style="width:120px; border: 1px solid black; font-size:5px; line-height: 1;"><img src="images/logoEdubar.png" width="80" height="auto"></td>
+            <td rowspan="3" style="width:120px; border: 1px solid black; font-size:5px; line-height: 1;"><img src="images/logoEdubar2.png" width="80" height="auto"></td>
             <td rowspan="3" style="width:880px; border: 1px solid black; font-size:8px;"><span style="line-height:5px;">CONTROL DE GESTIÓN</span> <br> OFICINA DE RADICACIÓN</td>
             <td style="width:58px; border: 1px solid black; font-size:7px;" >
             Código&nbsp;&nbsp;
@@ -127,11 +127,24 @@ class MYPDF extends TCPDF {
     // Page footer
     public function Footer() {
         // Position at 15 mm from bottom
+        $item = "id";
+        if (isset($_GET["idC"]) ) 
+        {
+           $valor = $_GET["idC"];
+        }
+        else
+        {
+           $valor = 1;     
+        }
+        $corte = ControladorRadicados::ctrMostrarCortes($item, $valor);
+        $radicados = ControladorRadicados::ctrMostrarRadicados($item."_corte", $corte["id"]);
+        $minRad = $radicados[0]["radicado"];
+        $maxRad = $radicados[count($radicados)-1]["radicado"];
         $this->SetY(-15);
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0, 0, 'Entregado Por:_____________| Recibido Por:___________ Fecha:____/___/________  Hora:___:___[am] - [pm]      Página: '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 0, 'Entregado Por:_____________| Recibido Por:___________ Fecha:____/___/________  Hora:___:___[am] - [pm] ( '.$minRad.' - '.$maxRad.' )   Página:'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
 
