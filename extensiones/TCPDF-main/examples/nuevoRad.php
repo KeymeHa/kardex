@@ -51,7 +51,7 @@ $style = array(
     'fgcolor' => array(0,0,0),
 );
 
-$pdf->Ln(195);
+$pdf->Ln(190);
 $style['cellfitalign'] = 'R';
 //$barcode = $pdf->serializeTCPDFtagParameters(array($corte, 'EAN13', 105, '', 122, 3, 0.2, $style, 'N'));
 

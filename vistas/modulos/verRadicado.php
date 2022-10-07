@@ -207,11 +207,6 @@
 
       </div>
       <div class="box-footer">
-
-        <div class="col-xs-4">
-          <button type="button" class="btn btn-block btn-info btnEditarRq"><i class="fa fa-copy"></i> Replicar</button>
-        </div>
-
       <?php
 
         echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '
