@@ -291,9 +291,9 @@ CREATE TABLE IF NOT EXISTS `exeption_usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_exeption_usuarios_exepcion_mensajes` (`id_mensaje`),
   CONSTRAINT `FK_exeption_usuarios_exepcion_mensajes` FOREIGN KEY (`id_mensaje`) REFERENCES `exepcion_mensajes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
 
--- Volcando datos para la tabla kardex.exeption_usuarios: ~48 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.exeption_usuarios: ~45 rows (aproximadamente)
 /*!40000 ALTER TABLE `exeption_usuarios` DISABLE KEYS */;
 INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`, `ip_cliente`) VALUES
 	(1, 2, '2022-08-30 10:09:34', '#kb', NULL),
@@ -356,7 +356,9 @@ INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`, `ip_clien
 	(58, 5, '2022-10-05 07:55:16', '3', '::1'),
 	(59, 5, '2022-10-05 14:23:52', '1', '::1'),
 	(60, 5, '2022-10-05 14:24:13', '1', '::1'),
-	(61, 5, '2022-10-05 14:27:57', '3', '::1');
+	(61, 5, '2022-10-05 14:27:57', '3', '::1'),
+	(62, 5, '2022-10-06 09:19:06', '1', '::1'),
+	(63, 5, '2022-10-07 11:50:08', '1', '::1');
 /*!40000 ALTER TABLE `exeption_usuarios` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.facturas
@@ -423,15 +425,25 @@ CREATE TABLE IF NOT EXISTS `historial` (
   `valorNew` text COLLATE utf8_spanish_ci DEFAULT '',
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `id_usr` int(11) NOT NULL,
+  `id_otro` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.historial: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.historial: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `historial` DISABLE KEYS */;
-INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`) VALUES
-	(7, 3, 15, '[{"ca":"2","val":"3"},{"ca":"4","val":"5"},{"ca":"5","val":"ALCALDÍA : B/QUILLA ROJA"}]', '[{"ca":"2","val":"6"},{"ca":"4","val":"7"},{"ca":"5","val":"54"}]', '2022-08-27 11:06:46', 1),
-	(8, 3, 15, '[{"ca":"3","val":"3"},{"ca":"6","val":"PRACTICA LO QUE APRENDES"},{"ca":"7","val":"3"}]', '[{"ca":"3","val":"11"},{"ca":"6","val":"HAZIEL SI ES NECIO"},{"ca":"7","val":"4"}]', '2022-08-27 11:20:22', 1),
-	(9, 3, 15, '[{"ca":"1","val":"3"},{"ca":"2","val":"6"},{"ca":"7","val":"4"}],[{"id":"51"}]', '[{"ca":"1","val":"5"},{"ca":"2","val":"4"},{"ca":"7","val":"1"}],[{"id":"51"}]', '2022-08-27 11:30:53', 1);
+INSERT INTO `historial` (`id`, `accion`, `numTabla`, `valorAnt`, `valorNew`, `fecha`, `id_usr`, `id_otro`) VALUES
+	(7, 3, 15, '[{"ca":"2","val":"3"},{"ca":"4","val":"5"},{"ca":"5","val":"ALCALDÍA : B/QUILLA ROJA"}]', '[{"ca":"2","val":"6"},{"ca":"4","val":"7"},{"ca":"5","val":"54"}]', '2022-08-27 11:06:46', 1, 0),
+	(8, 3, 15, '[{"ca":"3","val":"3"},{"ca":"6","val":"PRACTICA LO QUE APRENDES"},{"ca":"7","val":"3"}]', '[{"ca":"3","val":"11"},{"ca":"6","val":"HAZIEL SI ES NECIO"},{"ca":"7","val":"4"}]', '2022-08-27 11:20:22', 1, 0),
+	(9, 3, 15, '[{"ca":"1","val":"3"},{"ca":"2","val":"6"},{"ca":"7","val":"4"}],[{"id":"51"}]', '[{"ca":"1","val":"5"},{"ca":"2","val":"4"},{"ca":"7","val":"1"}],[{"id":"51"}]', '2022-08-27 11:30:53', 1, 0),
+	(10, 3, 9, 'Listado de insumos. Solicitó Aprobación de Modificación. ', '', '2022-10-05 15:16:48', 1, 21),
+	(11, 3, 9, 'Modificada lista de insumos. Aprobó la Modificación. ', '', '2022-10-05 15:25:23', 3, 21),
+	(12, 3, 9, 'Aprobó la Modificación. ', '', '2022-10-05 15:25:43', 3, 21),
+	(13, 3, 9, 'Aprobó la Modificación. ', '', '2022-10-05 15:32:42', 3, 21),
+	(14, 3, 9, 'Aprobó la Modificación. ', '', '2022-10-05 15:33:13', 3, 21),
+	(15, 3, 9, 'Aprobó la Modificación. ', '', '2022-10-05 15:38:31', 3, 21),
+	(16, 3, 9, 'Solicitó Aprobación de Modificación. ', '', '2022-10-05 15:39:31', 1, 21),
+	(17, 3, 9, 'Compras Modifico el Comentario. Aprobó la Modificación. ', '', '2022-10-05 15:40:25', 3, 21),
+	(18, 3, 9, 'El Encargado Modifico el Comentario. Solicitó Aprobación de Modificación. ', '', '2022-10-05 15:40:59', 1, 21);
 /*!40000 ALTER TABLE `historial` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.impuestos
@@ -503,7 +515,7 @@ INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observaci
 	(19, 3, '19', 'CERA NATURAL SÓLIDA PARA MADERA AUTOBRILLO', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(20, 1, '20', 'CINTA EMP TRANSP 48X100 REF.301 3M ', 'SIN INFORMACION', NULL, 14, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(21, 1, '21', 'CINTA EMP TRANSP DELGADA 12 MM X40M ', 'SIN INFORMACION', NULL, 2, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
-	(22, 2, '22', 'CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL', 'SIN INFORMACION', NULL, 1, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
+	(22, 2, '22', 'CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL', 'SIN INFORMACION', NULL, 0, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(23, 1, '23', 'CINTA INVISIBLE 33M:19MM PARA CHEQUES', 'SIN INFORMACION', NULL, 4, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(24, 1, '24', 'CLIP MARIPOSA GIGANTE', 'SIN INFORMACION', NULL, 8, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
 	(25, 1, '25', 'CLIP MARIPOSA X 50 EMP*50 ', 'SIN INFORMACION', NULL, 6, 1, 0, 0, 0, '2022-08-09 11:23:50', 0, 'SINF', 'SINF', 'SINF', 2, 1, 1, 1, 1, 0),
@@ -1285,7 +1297,7 @@ CREATE TABLE IF NOT EXISTS `requisiciones` (
   CONSTRAINT `FK_requisiciones_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla kardex.requisiciones: ~20 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.requisiciones: ~21 rows (aproximadamente)
 /*!40000 ALTER TABLE `requisiciones` DISABLE KEYS */;
 INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt`, `insumos`, `fecha`, `fecha_sol`, `observacion`, `id_proyecto`, `aprobado`, `observacionE`, `registro`, `gen`) VALUES
 	(1, 1, 1, 3, 'RQ-001-2022', '[{"id":"4","des":"AZUCAR ALTA PUREZA 200 TUBITOS DE 5G","ped":"1","ent":"1"},{"id":"6","des":"BANDEJA PORTA DOCUMENTOS","ped":"4","ent":"1"}]', '2022-08-09 00:00:00', '2022-08-09 00:00:00', 'Todo bien todo bacano', 5, 1, NULL, 'BANDEJA PORTA DOCUMENTOS con codigo 6, tiene menor stock al solicitado.:', 1),
@@ -1308,7 +1320,7 @@ INSERT INTO `requisiciones` (`id`, `id_area`, `id_persona`, `id_usr`, `codigoInt
 	(18, 1, 1, 3, 'RQ-018-2022', '[{"id":"22","des":"CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL","ped":"1","ent":"1"},{"id":"39","des":"DVD +R ","ped":"1","ent":"1"}]', '2022-09-27 14:11:00', '2022-09-27 14:09:23', '', 5, 1, '', '', 1),
 	(19, 1, 1, 3, 'RQ-019-2022', '[{"id":"4","des":"AZUCAR ALTA PUREZA 200 TUBITOS DE 5G","ped":"1","ent":"1"}]', '2022-09-27 14:12:00', '2022-09-27 14:12:00', '', 5, 1, NULL, NULL, 0),
 	(20, 1, 1, 1, 'RQ-020-2022', '[{"id":"1","des":"AMBIENTADOR DE BAÑO AIR WICK","ped":"5","ent":"5"},{"id":"4","des":"AZUCAR ALTA PUREZA 200 TUBITOS DE 5G","ped":"5","ent":"5"},{"id":"116","des":"TINTA EPSON 664 COLOR AMARILLO","ped":"1","ent":"0"},{"id":"117","des":"TINTA EPSON 664 COLOR CYAN","ped":"2","ent":"0"},{"id":"18","des":"CD-R ","ped":"2","ent":"0"}]', '2022-09-28 08:46:00', '2022-09-28 08:45:29', 'Mensaje de la Encargada', 5, 3, 'Este es el mensaje del encargado', '', 1),
-	(21, 1, 1, 3, 'RQ-021-2022', '[{"id":"18","des":"CD-R ","ped":"1","ent":"1"},{"id":"154","des":"FUNDA PARA CD","ped":"5","ent":"5"}]', '2022-10-05 12:07:00', '2022-10-04 17:14:58', NULL, 5, 1, '', '', 1);
+	(21, 1, 1, 1, 'RQ-021-2022', '[{"id":"18","des":"CD-R ","ped":"1","ent":"1"},{"id":"154","des":"FUNDA PARA CD","ped":"5","ent":"5"},{"id":"22","des":"CINTA IMPRESORA EPSON LX300/800 8750- ORIGINAL","ped":"1","ent":"1"}]', '2022-10-05 12:07:00', '2022-10-04 17:14:58', 'compras modificacion', 5, 3, 'la verdad no queria esos insumos', '', 1);
 /*!40000 ALTER TABLE `requisiciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla kardex.tempdatosrq
@@ -1351,7 +1363,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla kardex.usuarios: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-10-05 14:24:13', '2021-02-11 05:06:49', 'tg9r6k3ej6jjhmpm7fjqj3ntek', '3eb672c0e5d8010407217cd46aeadce1f649fb50', 0, 0, 1),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2022-10-07 11:50:08', '2021-02-11 05:06:49', 'nb7bl100rpkquf5bvvjtkoplfk', 'b754179a18d8564a566a8393c78e9d5286daccdb', 0, 0, 1),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 3, NULL, 'carmen.rebolledo@edubar.com.co', 1, '2022-09-19 10:05:50', '2021-08-19 06:12:33', 'oho1qf3bfejuhvhrrqbpe0drbt', '8aeac4f855c50abf9960bd423dc16a80cd60e130', 0, 0, 0),
 	(3, 'Karelly Moreno Llorente', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 3, NULL, 'karelly.moreno@edubar.com.co', 1, '2022-10-05 14:27:57', '2021-08-19 06:12:39', 'tg9r6k3ej6jjhmpm7fjqj3ntek', 'f0ce5d8c40ba42594a93798a46d69a879e0a7e0a', 0, 0, 0),
 	(9, 'Edna Suarez Restrepo', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-08-23 10:37:42', '2022-06-23 16:03:37', 'me1ke295ilip8imleg14g668c3', NULL, 0, 0, 1),
