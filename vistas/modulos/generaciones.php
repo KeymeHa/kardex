@@ -126,7 +126,7 @@
         <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">Facturas de Proveedores</h3>
+        <h3 class="box-title">Remisiones de Proveedores</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                   title="Collapse">
@@ -143,8 +143,8 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                   <div class="inner">
-                    <h3>Facturas</h3>
-                    <p>Ingreso de facturas y relación de nuevo stock.</p>
+                    <h3>Remisiones</h3>
+                    <p>Ingreso de remisiones y relación de nuevo stock.</p>
                     
                   </div>
                   <div class="icon">
@@ -155,7 +155,7 @@
               </div><!--col-lg-5 col-xs-6-->
               <div class="col-sm-2  col-xs-3">
                 <div class="description-block border-right">
-                  <span class="description-text">Facturas</span>
+                  <span class="description-text">Remisiones</span>
                   <h5 class="description-header"><?php echo $contarFac[0];?></h5>
                 </div>
                 <!-- /.description-block -->

@@ -22,7 +22,7 @@
           ?>
         <div class="btn-group pull-right">
           <button class="btn btn-success" id="btnParamDatosFAC" paramDFac="1" data-toggle="modal" data-target="#modalDatosFacturación">
-            Datos Facturación
+            Datos Remisión
           </button>
         </div>
         <div class="btn-group pull-right" style="margin-right: 5px;">

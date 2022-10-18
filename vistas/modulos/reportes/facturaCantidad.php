@@ -4,7 +4,7 @@
       
       <i class="fa fa-bar-chart"></i>
 
-      <h3 class="box-title">Cantidad de Facturas</h3>
+      <h3 class="box-title">Cantidad de Remisiones</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -69,7 +69,7 @@
 
         foreach ($countFacProv as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."', Facturas: ".$value[1]." },";
+         $ykeys.= "{ y: '".$value[0]."', Remisiones: ".$value[1]." },";
 
         }
 
@@ -78,7 +78,7 @@
 
     }else{
 
-       echo "{ y: '0', Facturas: '0' }";
+       echo "{ y: '0', Remisiones: '0' }";
 
     }
 
@@ -87,8 +87,8 @@
     config = {
       data: data,
       xkey: 'y',
-      ykeys: ['Facturas'],
-      labels: ['Facturas'],
+      ykeys: ['Remisiones'],
+      labels: ['Remisiones'],
       barColors: ['#00a65a'],
       fillOpacity: 0.6,
       hideHover: 'auto',

@@ -37,18 +37,18 @@
     </a>
     <br><br>
     <h1>    
-      Factura: <b><?php echo $facturas["codigoInt"];?></b>  
+      Remisión: <b><?php echo $facturas["codigoInt"];?></b>  
     </h1>
     <ol class="breadcrumb">     
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li><a href="facturas"> facturas</a></li>    
+      <li><a href="facturas"> Remisiones</a></li>    
       <li class="active"><?php echo $facturas["codigoInt"];?></li>  
     </ol>
   </section>
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">Información de la Factura</h3> 
+        <h3 class="box-title">Información de la Remisión</h3> 
       </div>    
       <div class="box-body">  
         <div class="row">

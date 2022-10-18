@@ -45,7 +45,7 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                   </tr>
                   <tr>
                     <th>Datos Generales de la empresa</th>
-                    <td>Esta información es util para generar actas, Ordenes de compra, Facturas, permite identificar datos basicos como, Representante, Nit, Encargados, direcciones y teléfono.</td>
+                    <td>Esta información es util para generar actas, Ordenes de compra, Remisiones, permite identificar datos basicos como, Representante, Nit, Encargados, direcciones y teléfono.</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="2">Editar</button></td>
                   </tr>
                   <tr>

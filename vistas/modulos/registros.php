@@ -22,7 +22,7 @@
     </h1>
     <ol class="breadcrumb">    
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li> 
-      <li class="active">Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Facturas';} ?></li>  
+      <li class="active">Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';} ?></li>  
     </ol>
   </section>
   <section class="content">
@@ -57,7 +57,7 @@
      <div class="box box-success">
       <div class="box-header with-border">
         <h3 class="box-title">
-          Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Facturas';} ?>
+          Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';} ?>
         </h3>
       </div>
       <div class="box-body">  

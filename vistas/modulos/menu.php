@@ -98,7 +98,7 @@
 						<!--<li><a href="pedidos"><i class="fa fa-file-text"></i>Pedidos</a></li>-->
 						<li><a href="cotizaciones"><i class="fa fa-file-text"></i>Cotizaciones</a></li>
 						<li><a href="ordendecompras"><i class="fa fa-file-text"></i>Ordenes de Compra</a></li>
-						<li><a href="facturas"><i class="fa fa-file-text"></i>Facturas</a></li>
+						<li><a href="facturas"><i class="fa fa-file-text"></i>Remisiones</a></li>
 					</ul>
 				</li>
 

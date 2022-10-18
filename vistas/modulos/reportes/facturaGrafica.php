@@ -69,7 +69,7 @@
 
         foreach ($countFacProv as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."', Facturas: ".($value[1]+$value[2])." },";
+         $ykeys.= "{ y: '".$value[0]."', Remisiones: ".($value[1]+$value[2])." },";
 
         }
 
@@ -78,7 +78,7 @@
 
     }else{
 
-       echo "{ y: '0', Facturas: '0' }";
+       echo "{ y: '0', Remisiones: '0' }";
 
     }
 
@@ -87,8 +87,8 @@
     config = {
       data: data,
       xkey: 'y',
-      ykeys: ['Facturas'],
-      labels: ['Facturas'],
+      ykeys: ['Remisiones'],
+      labels: ['Remisiones'],
       barColors: ['#00a65a'],
       fillOpacity: 0.6,
       hideHover: 'auto',

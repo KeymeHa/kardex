@@ -28,7 +28,7 @@
     
     <h1>
       
-      Editar Factura: <?php  echo $facturas["codigoInt"];?>
+      Editar Remisión: <?php  echo $facturas["codigoInt"];?>
     
     </h1>
 
@@ -38,7 +38,7 @@
 
       <li><a href="#">Generaciones</a></li>
 
-      <li><a href="facturas">Facturas</a></li>
+      <li><a href="facturas">Remisiones</a></li>
       
       <li class="active"><?php  echo $facturas["codigoInt"];?></li>
     
@@ -52,7 +52,7 @@
         <div class="box box-success">
 
           <div class="box-header with-border">
-            Datos de la Factura
+            Datos de la Remisión
           </div>
 
           <div class="box-body">
@@ -75,7 +75,7 @@
 
                 <div class="col-xs-7">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Codigo Factura</label>
+                    <label for="exampleInputEmail1">Codigo Ramisión</label>
 
                     <input type="text" class="form-control" id="codigoFactura" name="codigoFactura" placeholder="ej: COD-02-2021" value="<?php echo $facturas['codigo'];?>" autocomplete="off" title="Codigo o referencia del proveedor" required>
                   </div>
@@ -147,7 +147,7 @@
               <div class="row">
                  <div class="col-xs-7">
                   <div class="form-group">
-                    <label for="exampleInputFile">Soporte Factura</label>
+                    <label for="exampleInputFile">Soporte de la remisión</label>
                     <input type="file" name="soporteFactura">
 
                     <p class="help-block">*Solo acepta Un solo PDF.</p> 

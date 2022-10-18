@@ -1,12 +1,12 @@
 <div class="content-wrapper">
   <section class="content-header"> 
     <h1>   
-      Facturas
+      Remisiones
     </h1>
     <ol class="breadcrumb"> 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li><a href="#">Generaciones</a></li>  
-      <li class="active">Facturas</li> 
+      <li class="active">Remisiones</li> 
     </ol>
   </section>
   <section class="content">
@@ -20,14 +20,14 @@
          {
             echo '         
           <button class="btn btn-success" disabled data-toggle="modal" title="Debe existir al menos 1 (un) Proveedor"><i class="fa fa-plus"></i>  
-            Agregar Factura
+            Agregar Remisión
           </button>';
          }
          else
          {
             echo '<a href="nuevaFactura">          
           <button class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"></i>  
-            Agregar Factura
+            Agregar Remisión
           </button>
         </a>';
          }
@@ -73,7 +73,7 @@
          <tr>
           <th style="width:10px">#</th>
            <th>Código</th>
-           <th>Código Factura</th>
+           <th>Código Remisión</th>
            <th>Proveedor</th>
            <th>Insumos Ingresados</th>
            <th>Total Invertido</th>

@@ -6,7 +6,7 @@
     <ol class="breadcrumb"> 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li><a href="generaciones">Generaciones</a></li>
-      <li><a href="facturas">Facturas</a></li>  
+      <li><a href="facturas">Remisiones</a></li>  
       <li class="active">Insumos</li> 
     </ol>
   </section>

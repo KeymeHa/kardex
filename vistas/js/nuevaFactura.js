@@ -23,7 +23,7 @@ $("#codigoFactura").change(function(){
 		{
 				if(respuesta)
 				{
-					$("#codigoFactura").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe una Factura con el mismo Codigo.</div>');
+					$("#codigoFactura").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe una remisión con el mismo Codigo.</div>');
 		    		$("#codigoFactura").val("");
 	    		}
 	    	

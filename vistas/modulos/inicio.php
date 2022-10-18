@@ -183,7 +183,7 @@
                 <div class="small-box bg-red">
                   <div class="inner">
                     <h3>Generaciones</h3>
-                    <p>Ingreso de facturas, ordenes de compra y pedidos de los usuarios.</p>
+                    <p>Ingreso de Remisiones, ordenes de compra y pedidos de los usuarios.</p>
                     
                   </div>
                   <div class="icon">

@@ -38,7 +38,7 @@ class ControladorParametros
 					    $r = "RQ".$r;
 					    break;
 					  case 5:
-					   $r = "FAC".$r;
+					   $r = "REM".$r;
 					    break;
 					  case 6:
 					    $r = "PED".$r;
@@ -90,7 +90,7 @@ class ControladorParametros
 					    $r = "RQ".$r;
 					    break;
 					  case 5:
-					   $r = "FAC".$r;
+					   $r = "REM".$r;
 					    break;
 					  case 6:
 					    $r = "PED".$r;

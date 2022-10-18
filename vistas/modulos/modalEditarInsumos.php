@@ -58,7 +58,7 @@
                </div>
 
                <div class="form-group">  
-               <label>Unidad de Medida Entrada (Facturas)</label>           
+               <label>Unidad de Medida Entrada (Remisiones)</label>           
                 <div class="input-group">           
                   <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span> 
                   <select class="form-control input-lg" id="editarUnidadEnt" name="editarUnidadEnt" required>

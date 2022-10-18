@@ -4,7 +4,7 @@
     
     <h1>
       
-      Nueva Factura
+      Nueva Remisión
     
     </h1>
 
@@ -14,9 +14,9 @@
 
       <li><a href="#">Generaciones</a></li>
 
-      <li><a href="facturas">Facturas</a></li>
+      <li><a href="facturas">Remisiones</a></li>
       
-      <li class="active">Nueva Factura</li>
+      <li class="active">Nueva Remisión</li>
     
     </ol>
 
@@ -28,7 +28,7 @@
         <div class="box box-success">
 
           <div class="box-header with-border">
-            Datos de la Factura
+            Datos de la Remisión
           </div>
 
           <div class="box-body">
@@ -119,7 +119,7 @@
               <div class="row">
                  <div class="col-xs-7">
                   <div class="form-group">
-                    <label for="exampleInputFile">Soporte Factura</label>
+                    <label for="exampleInputFile">Soporte Remisión</label>
                     <input type="file" name="soporteFactura">
 
                     <p class="help-block">*Solo acepta Un solo PDF.</p> 
