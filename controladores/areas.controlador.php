@@ -165,16 +165,17 @@ class ControladorAreas
 			if($respuesta == "ok")
 			{
 
-				$tabla = "historial";
+				$tablah = "historial";
 
-				$datos = array( "accion" => 4,
+				$datosh = array( "accion" => 4,
 								"numTabla" => 6,
 								"valorAnt" => $_GET["nomArea"],
 								"valorNew" => "",
-								"id_usr" => $sessionId
+								"id_usr" => $sessionId,
+								"id_otro" => 0
 								 );
 
-				$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+				$respuesta = ModeloHistorial::mdlInsertarHistorial($tablah, $datosh);
 
 				echo'<script>
 

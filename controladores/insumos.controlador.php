@@ -502,8 +502,9 @@ class ControladorInsumos
 									"numTabla" => 2,
 									"valorAnt" => $_GET["descripcion"],
 									"valorNew" => "",
-									"id_usr" => $_GET["accionId"]
-									 );
+									"id_usr" => $_GET["accionId"],
+								"id_otro" => 0
+								 );
 
 					$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
 
