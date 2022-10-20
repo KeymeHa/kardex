@@ -32,7 +32,7 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 				   ' <div class="input-group-btn">'+
 				        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Mas Opciones"><i class="fa fa-plus"></i></button>'+
 				        '<ul class="dropdown-menu">'+
-				          '<li><a href="#"><input type="number" class="form-control nuevoImpuesto" value="0" min="0" title="impuesto personalizado"></a>'+
+				          '<li><input type="number" class="form-control nuevoImpuesto" value="0" min="0" title="impuesto personalizado">&nbsp;<i class="fa fa-percent"></i>'+
 				          '</li>'+
 				         ' <li >'+
 				            '<a href="#" idInsumo="'+idInsumo+'" class="quitarInsumo"><i class="fa fa-times"></i> Eliminar</a>'+
@@ -220,10 +220,11 @@ $(".formularioNuevaFactura").on("change", "input.nuevaCantidadInsumo", function(
 	listarInsumosNF();
 })
 
+/*
 $(".formularioNuevaFactura").on("change", "input.nuevoContenido", function(){
 	sumarPreciosNF();
 	listarInsumosNF();
-})
+})*/
 
 $(".formularioNuevaFactura").on("change", "input.nuevoImpuesto", function(){
 	sumarPreciosNF();
@@ -258,22 +259,29 @@ function sumarPreciosNF(){
 
 	for(var i = 0; i < precioItem.length; i++){
 
-		if( Number($(impItem[i]).val()) == 0 ) 
+		if( Number( $(impItem[i]).val() ) == 0 ) 
 		{
 			sumaSubT+= Number($(precioItem[i]).val());
 		}
 		else
 		{
-			sumaSubTo+= Number($(precioItem[i]).val());
-			IMPSubTo+= Number($(precioItem[i]).val())*(Number($(impItem[i]).val()))/100 ;
+			sumaSubTo += Number( $(precioItem[i]).val() );
+			
+			IMPSubTo += Number( $(precioItem[i]).val() )*( Number( $( impItem[i]).val() ) ) / 100 ;
+
+			//alert("sumaSubTo " + sumaSubTo + ", IMPSubTo" + IMPSubTo );
 			
 		}
 	}
 	var iva = Number($("#iva").val());
 
 	var valorIva = ( iva / 100 ) * sumaSubT;
+
 	sumaSubT+= sumaSubTo;
- 	var totalconIVA = valorIva + sumaSubTo + IMPSubTo;
+
+ 	var totalconIVA = valorIva + sumaSubT + IMPSubTo;
+
+ 	
 
  	//Valor sub total
  	//valor iva del subtotal
@@ -288,6 +296,8 @@ function sumarPreciosNF(){
 	
 	$("#valorIva").val(valorIva);//ok
 	$("#valorSub").val(sumaSubT+IMPSubTo);//ok
+
+	//alert(', valorIva:'+valorIva+', sumaSubTo:'+sumaSubTo+', IMPSubTo:'+IMPSubTo);
 
 	$("#totaIMP").number(true, 0);
 	$("#totalSinIVA").number(true, 0);//ok
