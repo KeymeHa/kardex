@@ -504,7 +504,8 @@ class ControladorRadicados
 									"numTabla" => 15,
 									"valorAnt" => $valAnterior,
 									"valorNew" => $valNuevo,
-									"id_usr" => $id_usr
+									"id_usr" => $id_usr,
+									"id_otro" => 0
 									 );
 					#26
 					$respuesta2 = ModeloHistorial::mdlInsertarHistorial("historial", $datos2);
@@ -514,7 +515,9 @@ class ControladorRadicados
 
 					
 
-					if (isset($_GET["idCorte"]) && isset($_GET["verCorte"])) 
+					$url = (isset($_GET["idCorte"])) ? "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"] : "radicado";  
+/*
+					if (isset($_GET["idCorte"])) 
 					{
 						$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
 						#index.php?ruta=verCorte&idCorte=7
@@ -523,7 +526,7 @@ class ControladorRadicados
 					{
 						$url = "radicado";
 					}
-
+*/
 				}
 				else
 				{
