@@ -207,7 +207,7 @@ class ModeloRequisiciones
 			}
 			else
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id $anio GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id $anio GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) DESC");
 				$stmt -> execute();
 				return $stmt -> fetchAll();
 			}
@@ -216,7 +216,7 @@ class ModeloRequisiciones
 
 			if (!is_null($valor2)) 
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE DATE_FORMAT($tipo_fecha, '%Y %m %d') = DATE_FORMAT(:$tipo_fecha, '%Y %m %d') AND  $item = :$item AND  $item2 = :$item2 ");
+				$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE DATE_FORMAT($tipo_fecha, '%Y %m %d') = DATE_FORMAT(:$tipo_fecha, '%Y %m %d') AND  $item = :$item AND  $item2 = :$item2 ORDER BY COUNT(*) DESC");
 				$stmt -> bindParam(":".$tipo_fecha, $fechaFinal, PDO::PARAM_STR);
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 				$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
@@ -225,7 +225,7 @@ class ModeloRequisiciones
 			}
 			else
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+				$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) DESC");
 				$stmt -> bindParam(":fecha_sol", $fechaFinal, PDO::PARAM_STR);
 
 				$stmt -> execute();
@@ -246,7 +246,7 @@ class ModeloRequisiciones
 
 				if (!is_null($valor2)) 
 				{
-					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND  $item = :$item AND  $item2 = :$item2 ");
+					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND  $item = :$item AND  $item2 = :$item2 ORDER BY COUNT(*) DESC");
 					$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 					$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
 					$stmt -> execute();
@@ -254,7 +254,7 @@ class ModeloRequisiciones
 				}
 				else
 				{
-					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) DESC");
 					$stmt -> execute();
 					return $stmt -> fetchAll();
 				}
@@ -265,7 +265,7 @@ class ModeloRequisiciones
 
 				if (!is_null($valor2)) 
 				{
-					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND  $item = :$item AND  $item2 = :$item2 ");
+					$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $tipo_fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND  $item = :$item AND  $item2 = :$item2 ORDER BY COUNT(*) DESC");
 					$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 					$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
 					$stmt -> execute();
@@ -273,7 +273,7 @@ class ModeloRequisiciones
 				}
 				else
 				{
-					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) ASC");
+					$stmt = Conexion::conectar()->prepare("SELECT usuarios.nombre, COUNT(usuarios.nombre) FROM $tabla INNER JOIN usuarios ON $tabla.id_persona = usuarios.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(usuarios.nombre) ORDER BY COUNT(usuarios.nombre) DESC");
 					$stmt -> execute();
 					return $stmt -> fetchAll();
 				}
@@ -453,7 +453,7 @@ class ModeloRequisiciones
 		{
 			if($fechaInicial == null){
 
-				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio  GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio  GROUP BY(areas.nombre) ORDER BY COUNT(areas.nombre) DESC");
 
 				$stmt -> execute();
 
@@ -463,7 +463,7 @@ class ModeloRequisiciones
 			}else if($fechaInicial == $fechaFinal){
 
 				#SELECT areas.nombre, COUNT(areas.nombre) FROM requisiciones INNER JOIN areas ON requisiciones.id_area = areas.id WHERE fecha_sol like '%2021-09-22%' GROUP BY(areas.nombre);
-				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND aprobado = 1 GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND aprobado = 1 GROUP BY(areas.nombre) ORDER BY COUNT(areas.nombre) DESC");
 
 				//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') ORDER BY id DESC");
 				#$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre) WHERE fecha_sol like '%$fechaFinal%'");
@@ -486,12 +486,12 @@ class ModeloRequisiciones
 
 				if($fechaFinalMasUno == $fechaActualMasUno){
 
-					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND aprobado = 1  GROUP BY(areas.nombre)");
+					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND aprobado = 1  GROUP BY(areas.nombre) ORDER BY COUNT(areas.nombre) DESC");
 
 				}else{
 
 
-					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' AND aprobado = 1 GROUP BY(areas.nombre)");
+					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' AND aprobado = 1 GROUP BY(areas.nombre) ORDER BY COUNT(areas.nombre) DESC");
 
 				}
 			
