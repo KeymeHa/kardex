@@ -32,7 +32,7 @@ $(".tablaInsumosNFactura").on("click", "button.agregarInsumo", function(){
 				   ' <div class="input-group-btn">'+
 				        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Mas Opciones"><i class="fa fa-plus"></i></button>'+
 				        '<ul class="dropdown-menu">'+
-				          '<li><input type="number" class="form-control nuevoImpuesto" value="0" min="0" title="impuesto personalizado">&nbsp;<i class="fa fa-percent"></i>'+
+				          '<li><input type="number" class="form-control nuevoImpuesto" value="0" min="0" title="impuesto personalizado"><i class="fa fa-percent"></i>'+
 				          '</li>'+
 				         ' <li >'+
 				            '<a href="#" idInsumo="'+idInsumo+'" class="quitarInsumo"><i class="fa fa-times"></i> Eliminar</a>'+
