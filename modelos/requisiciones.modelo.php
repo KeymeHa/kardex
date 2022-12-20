@@ -463,7 +463,7 @@ class ModeloRequisiciones
 			}else if($fechaInicial == $fechaFinal){
 
 				#SELECT areas.nombre, COUNT(areas.nombre) FROM requisiciones INNER JOIN areas ON requisiciones.id_area = areas.id WHERE fecha_sol like '%2021-09-22%' GROUP BY(areas.nombre);
-				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND aprobado = 1 GROUP BY(areas.nombre)");
 
 				//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') ORDER BY id DESC");
 				#$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre) WHERE fecha_sol like '%$fechaFinal%'");
@@ -486,12 +486,12 @@ class ModeloRequisiciones
 
 				if($fechaFinalMasUno == $fechaActualMasUno){
 
-					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY(areas.nombre)");
+					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND aprobado = 1  GROUP BY(areas.nombre)");
 
 				}else{
 
 
-					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY(areas.nombre)");
+					$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' AND aprobado = 1 GROUP BY(areas.nombre)");
 
 				}
 			
@@ -530,12 +530,7 @@ class ModeloRequisiciones
 
 			}else if($fechaInicial == $fechaFinal){
 
-
-			//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') ORDER BY id DESC");
-
-				#SELECT areas.nombre, COUNT(areas.nombre) FROM requisiciones INNER JOIN areas ON requisiciones.id_area = areas.id WHERE fecha_sol like '%2021-09-22%' GROUP BY(areas.nombre);
-				$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY MONTH(fecha_sol)");
-				#$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre) WHERE fecha_sol like '%$fechaFinal%'");
+				$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY MONTH(fecha_sol)");
 
 				$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -555,12 +550,31 @@ class ModeloRequisiciones
 
 				if($fechaFinalMasUno == $fechaActualMasUno){
 
-					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY MONTH(fecha_sol)");
+					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY MONTH(fecha_sol)");
 
 				}else{
 
 
-					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones WHERE fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY MONTH(fecha_sol)");
+					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY MONTH(fecha_sol)");
+
+					// ENCARGADO
+
+						#fechaInicial != null
+					    #fechaFinal != null
+						#id_persona != 0
+						#aprobado == 1
+
+					//SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones WHERE aprobado = 1 AND id_persona = 1 AND fecha_sol BETWEEN '2022-09-01' AND '2022-09-30' GROUP BY MONTH(fecha_sol)
+
+//------------------------------------------------------------------------------------------------------------------------
+
+					// COMPRAS
+						#fechaInicial != null
+					    #fechaFinal != null
+						#id_persona != 0
+						#aprobado == 1
+
+					//SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones WHERE aprobado = 1 AND id_persona = 1 AND fecha_sol BETWEEN '2022-09-01' AND '2022-09-30' GROUP BY MONTH(fecha_sol)
 
 				}
 			
