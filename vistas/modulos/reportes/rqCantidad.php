@@ -4,7 +4,7 @@
       
       <i class="fa fa-bar-chart"></i>
 
-      <h3 class="box-title">Cantidad Requisiciones Por Mes y Año</h3>
+      <h3 class="box-title">Requisiciones Aprobadas</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -24,7 +24,20 @@
 
           <?php
 
-            $countAreas = ControladorRequisiciones::ctrCantidadMesAnioRq(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+            $id = $_SESSION["id"];
+
+            if (isset($_GET["ruta"])) 
+            {
+              $id = ($_GET["ruta"] == "reportesRq") ? 0 : $_SESSION["id"] ;
+            }
+            else
+            {
+              $id = 0;
+            }
+
+            $id = ($_GET["ruta"] == "reportesRq") ? 0 : $_SESSION["id"] ;
+
+            $countAreas = ControladorRequisiciones::ctrCantidadMesAnioRq(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"], $id);
 
             if( $countAreas != null)
             {
