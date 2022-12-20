@@ -5,7 +5,7 @@ class ControladorRequisiciones
 
 	function anioActual($anio)
 	{
-		$respuesta = ($anio == 0) ? 'WHERE aprobado = 1 or aprobado = 2  ' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1 or aprobado = 2 ';
+		$respuesta = ($anio == 0) ? 'WHERE aprobado = 1' : 'WHERE YEAR(fecha_sol) = '.$anio.' AND aprobado = 1';
 		return $respuesta;
 	}
 
@@ -17,7 +17,7 @@ class ControladorRequisiciones
 
 	function anioActualConAppr($anio)
 	{
-	    $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
+	    $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio.' aprobado = 1 ';
 		return $respuesta;
 	}
 
@@ -29,7 +29,7 @@ class ControladorRequisiciones
 
 	function anioActualArea($anio)
 	{
-		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio;
+		$respuesta = ($anio == 0) ? 'WHERE aprobado = 1' : 'WHERE YEAR(requisiciones.fecha_sol) = '.$anio.' AND  aprobado = 1';
 		return $respuesta;
 	}
 
@@ -81,7 +81,7 @@ class ControladorRequisiciones
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
 		$anio = $r->anioActualSinAppr($anio);
-		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoIdUsr($tabla, $fechaInicial, $fechaFinal, $anio, $id);
+ 		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRangoIdUsr($tabla, $fechaInicial, $fechaFinal, $anio, $id);
 
 		return $respuesta;
 	
@@ -194,12 +194,26 @@ class ControladorRequisiciones
 	}
 
 
-	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal, $anio)
+	static public function ctrCantidadMesAnioRq($sw, $fechaInicial, $fechaFinal, $anio, $id)
 	{
 		$tabla = "requisiciones";
-
 		$r = new ControladorRequisiciones;
-		$anio = $r->anioActual($anio);
+
+		$anio = $r->anioActual($anio);	
+
+		if ($id != 0 and $fechaInicial != null) 
+		{
+			$anio .=" AND id_persona = ".$id." AND ";
+		}
+		elseif ($id != 0 and $fechaInicial == null)
+		{
+			$anio .=" AND id_persona = ".$id." ";
+		}
+		elseif($fechaInicial != null)
+		{
+			$anio .= " AND ";
+		}
+
 		$respuesta = ModeloRequisiciones::MdlCantidadMesAnioRq($tabla, $sw, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
