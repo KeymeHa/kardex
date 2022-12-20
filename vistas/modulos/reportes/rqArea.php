@@ -24,11 +24,10 @@
 
           <?php
 
-          
+          $countAreas = ControladorRequisiciones::ctrContarRqArea(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
 
-            if($countAreas = ControladorRequisiciones::ctrContarRqArea(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]) != null)
+            if($countAreas != null)
             {
-              $countAreas = ControladorRequisiciones::ctrContarRqArea(0, $fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
               echo '<table class="table table-condensed">
             <tbody><tr>
               <th style="width: 10px">#</th>
