@@ -260,6 +260,76 @@ class ModeloParametros
 
 	}
 
+	static public function mdlCrearFiltroPQR($tabla, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE $tabla SET id_usr = ::id_usr ");
+
+		$stmt->bindParam(":id_usr", $valor, PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "eror";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarFiltroPQR($tabla, $item, $valor)
+	{
+
+		if ($item != null) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT id_pqr FROM $tabla WHERE $item = :$item");
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> execute();
+			$existe = $stmt->rowCount();
+			if ($existe <= 0) {
+			   $crear = new ModeloParametros;
+			   $res = $crear -> mdlCrearFiltroPQR($tabla, $valor);
+			  return "ok";
+			}else{return $stmt -> fetch();}
+			$stmt -> close();
+			$stmt = null;
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+			$stmt -> close();
+			$stmt = null;
+		}
+
+
+	}
+
+	static public function mdlAsignacionFiltroPQR($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_pqr = :id_pqr WHERE id_usr = :id_usr");
+
+		$stmt -> bindParam(":id_pqr", $datos["id_pqr"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 
 	static public function mdlNuevoAnioInversion($tabla, $datos)
 	{
@@ -503,6 +573,15 @@ class ModeloParametros
 
 		return $stmt -> fetchAll();
 
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarModulosInfo($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
 		$stmt->close();
 		$stmt = null;
 	}

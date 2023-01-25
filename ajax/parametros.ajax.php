@@ -38,6 +38,19 @@ class AjaxParametros
 		$respuesta = ControladorParametros::ctrVerModulos();
 		echo json_encode($respuesta);
 	}
+
+	//Para traer información de tablas como: objeto, PQR, Estado, Tipo_PQR
+	public $verModInfo;
+	public function ajaxModuloInfo(){
+		$respuesta = ControladorParametros::ctrVerModulosInfo($this->verModInfo);
+		echo json_encode($respuesta);
+	}
+
+	public function ajaxAddFiltroPQR($idPqr, $idusr, $sw)
+	{
+		$respuesta = ControladorParametros::ctrAsignarFiltroPQR($idPqr, $idusr, $sw);
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["paramIns"]))
@@ -62,8 +75,19 @@ if(isset($_POST["traerIMP"]))
 {	$traerIMP = new AjaxParametros();
 	$traerIMP -> ajaxImp();}
 
+//trae todos las paginas
 if(isset($_POST["verMod"]))
 {	$verMod = new AjaxParametros();
 	$verMod -> ajaxModulos();}
 
+//trae la información de una tabla especifica
+if(isset($_POST["verModInfo"]))
+{	$verModInfo = new AjaxParametros();
+	$verModInfo -> verModInfo = $_POST["verModInfo"];
+	$verModInfo -> ajaxModuloInfo();}
 
+if(isset($_POST["idPqr"]))
+{
+	$add = new AjaxParametros();
+	$add -> ajaxAddFiltroPQR($_POST["idPqr"], $_POST["idusr"], $_POST["sw"]);
+}

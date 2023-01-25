@@ -24,17 +24,28 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
   <section class="content">
 
     <div class="row">
-      <div class="col-xs-12 col-md-6 col-lg-6">
+      <?php
+
+      echo '<input type="hidden" value="'.$_SESSION["id"].'" id="idusr" readonly>';
+
+      ?>
+      <div class="col-xs-12 col-md-5 col-lg-5">
         <div class="box box-success">
           <div class="box-header with-border">
             <h3 class="box-title">Listado de parametros del Sistema</h3>
           </div>
-          <div class="box-body">       
-          
-            <div class="table-responsive">
-             <table class="table">
-                <tbody>
-                  <?php
+          <div class="box-body">   
+
+            <table class="table table-bordered table-striped dt-responsive tablas" width="100%" >
+              <thead>
+               <tr>
+                 <th style="width:10px">Modulo</th>
+                 <th>Descripción</th>
+                 <th style="width: 50px">Acciones</th>
+               </tr>
+              </thead>
+              <tbody>
+                <?php
 
                   if ($_SESSION["perfil"] == '1' || $_SESSION["perfil"] == '2') 
                   {
@@ -74,31 +85,48 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                   }
                   elseif ($_SESSION["perfil"] == '7') {
                    echo '<tr>
-                    <th>Ajustar Terminos</th>
+                    <td>Objeto</td>
                     <td>Puede Cambiar los terminos y valores de retención de documeentos</td>
-                    <td><button type="button" class="btn btn-block btn-success btn-param" sw="7">Administrar</button></td>
+                    <td>  
+                        <div class="btn-group">
+                          <div class="col-md-4">
+                            <button class="btn btn-warning" title="Ver y Editar" onclick="verTerminos()">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Correspondencia</td>
+                    <td>Filtrado de  correspondencia, puedes marcar todo aquello que necesites llevar la trazabilidad</td>
+                    <td>  
+                        <div class="btn-group">
+                          <div class="col-md-4">
+                            <button class="btn btn-warning" title="Ver y Editar" onclick="verPQR()">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </td>
                   </tr>';
                   }
 
                   ?>
-
-
-                 
-                </tbody>
-              </table>
-            </div>
-
-          </div>
+              </tbody>
+            </table>  
+               
+          </div><!--<div class="box-body">-->
+          
         </div>
       </div>
 
-      <div class="col-xs-12 col-md-6 col-lg-6">
+      <div class="col-xs-12 col-md-7 col-lg-7">
         <div class="box box-success">
           <div class="box-header">
-           <span class="titulo-box"></span> 
+           <h3 class="titulo-box"></h3> 
           </div><!--box-header-->
-          <div class="box-body contenido-box">
-
+          <div class="box-body contenido-box" id="tablaDivTabPermisoCat">
           </div><!--box-body-->
         </div><!--box box-success-->
       </div><!--col-xs-12 col-md-6 col-lg-6-->

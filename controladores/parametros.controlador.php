@@ -1000,6 +1000,104 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	//Ver información de un modulo
+	static public function ctrVerModulosInfo($tabla)
+	{
+
+		//Para validar que no se manipule otra tabla que no sean estas
+		$array_tablas = [ "objeto", "pqr", "estado", "tipo_pqr" ];
+
+		if ( in_array($tabla, $array_tablas) ) 
+		{
+			$respuesta = ModeloParametros::mdlMostrarModulosInfo($tabla);
+			return $respuesta;    
+		}
+		else // No existe el valor de la tabla recibida
+		{
+			return null;
+		}
+
+	}
+
+		static public function ctrMostrarFiltroPQR($item, $valor)
+	{
+		$tabla = "pqr_filtro";
+		$res = ModeloParametros::mdlMostrarFiltroPQR($tabla, $item, $valor);
+		return $res;
+	}
+
+	static public function ctrAsignarFiltroPQR($idPQR, $idUsr, $sw)
+	{
+		$tabla = "pqr_filtro";
+		$mostrar = new ControladorParametros;
+		$pqr = $mostrar->ctrMostrarFiltroPQR("id_usr", $idUsr);
+		$lista = null;
+
+		if (is_null($pqr["id_pqr"]))
+		{
+			$lista = '[{"id":"'.$idPQR.'"}]';
+		}
+		else
+		{
+			 if ($pqr["id_pqr"] == "") 
+			 {
+			 	$lista = '[{"id":"'.$idPQR.'"}]';
+			 }
+			 else
+			 {
+			 	$lis = json_decode($pqr["id_pqr"], true);
+
+			 	$lista = '[';
+
+			 	if ($sw == "out") 
+			 	{
+			 		if (count($lis) == 1) 
+			 		{
+			 			$lista = null;
+			 		}
+			 		else
+			 		{
+			 			foreach ($lis as $key => $value) 
+				 		{
+				 			if ($value["id"] != $idPQR) 
+				 			{
+				 				$lista.= '{"id":"'.$value["id"].'"},';
+				 			}
+				 		}	
+
+				 		$lista = substr($lista, 0 ,-1);  
+	    				$lista.= ']';
+			 		}	
+			 	}
+			 	else
+			 	{
+
+			 		$sw2 = 0;
+
+			 		foreach ($lis as $key => $value) 
+			 		{
+			 			$lista.= '{"id":"'.$value["id"].'"},';
+			 		}//foreach	
+
+			 		if ($sw2 != 1) 
+			 		{
+			 			$lista.= '{"id":"'.$idPQR.'"},';
+			 		}	
+
+			 		$lista = substr($lista, 0 ,-1);  
+	    			$lista.= ']';
+			 	}//else	
+			 }//else have emty
+		}//else
+
+		$datos = array( 'id_pqr' => $lista,  
+						'id_usr' => $idUsr);
+
+
+		$res = ModeloParametros::mdlAsignacionFiltroPQR($tabla, $datos);
+		return $res;
+	}
+
 	//Radicados
 	static public function ctrmostrarRegistros($tabla, $item, $valor)
 	{
