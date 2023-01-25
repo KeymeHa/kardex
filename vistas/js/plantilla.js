@@ -164,7 +164,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(12, 0, 0, anioActual);
+		paginaCargada(12, 0, 0, anioActual, 0);
 	}
 	else if(valor == 2)
 	{
@@ -192,7 +192,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(13, 0, 0, anioActual);
+		paginaCargada(13, 0, 0, anioActual, 0);
 		
 	}
 
@@ -205,7 +205,7 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
 });
 
 
-function paginaCargada(pagina, id, per, anioActual){
+function paginaCargada(pagina, id, per, anioActual, dato){
 
 	if(pagina != 0)
 	{
@@ -691,6 +691,18 @@ function paginaCargada(pagina, id, per, anioActual){
 			}
 			tablaElegida =  $('.tablacategoriaArea');
 			tablaAjax = 'areas';
+		}
+		else if(pagina == 41)
+		{
+			variable ="?mod="+dato;
+
+			if (id != 0) 
+			{
+				variable += "&id="+id;
+			}
+
+			tablaElegida =  $('.tablaModulos');
+			tablaAjax = 'modulos';
 		}
 		
 
