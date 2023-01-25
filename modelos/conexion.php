@@ -4,7 +4,7 @@ class Conexion
 {
 	private $database = "kardex";
 	private $userDB = "root";
-	private $passDB = "";
+	private $passDB = "1994";
 	
 	public function getDatabase(){
 		return $this->database;
