@@ -227,7 +227,7 @@ class ModeloProyectos
 
 	static public function mdlCrearAsignacionArea($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT IGNORE INTO $tabla(id_proyecto) VALUES (:id_proyecto)");
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE $tabla SET id_proyecto = :id_proyecto");
 
 		$stmt->bindParam(":id_proyecto", $datos, PDO::PARAM_STR);
 

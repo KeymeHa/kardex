@@ -241,7 +241,7 @@ class ModeloCategorias
 
 	static public function mdlCrearAsignacionArea($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT IGNORE INTO $tabla(id_categorias) VALUES (:id_categorias)");
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE $tabla SET id_categorias = :id_categorias");
 
 		$stmt->bindParam(":id_categorias", $datos, PDO::PARAM_STR);
 
