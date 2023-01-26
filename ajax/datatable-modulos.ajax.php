@@ -4,7 +4,7 @@ require_once "../modelos/parametros.modelo.php";
 class TablaModulos
 {
 	public $mod; 
-	public $idUsr;
+	public $perUsr;
 	public function mostrarTablaModulos()
 	{	  
 
@@ -39,7 +39,7 @@ class TablaModulos
 			}
 			elseif ($this->mod == "pqr_filtro") 
 			{
-				$datos = ControladorParametros::ctrMostrarFiltroPQR("id_usr", $this->idUsr);
+				$datos = ControladorParametros::ctrMostrarFiltroPQR("id_per", $this->perUsr);
 
 				$sw2 = 0;
 				if ($datos == "ok") 
@@ -151,11 +151,11 @@ else
 	echo'{"data": [id nulo]}';
 }
 
-if (isset($_GET["id"]))
+if (isset($_GET["per"]))
 {
-	if ( $_GET["id"] != 0  ) 
+	if ( $_GET["per"] != 0  ) 
 	{
-		$activarMod-> idUsr = $_GET["id"];
+		$activarMod-> perUsr = $_GET["per"];
 		
 	}
 	else

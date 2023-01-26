@@ -46,9 +46,9 @@ class AjaxParametros
 		echo json_encode($respuesta);
 	}
 
-	public function ajaxAddFiltroPQR($idPqr, $idusr, $sw)
+	public function ajaxAddFiltroPQR($idPqr, $idPer, $sw)
 	{
-		$respuesta = ControladorParametros::ctrAsignarFiltroPQR($idPqr, $idusr, $sw);
+		$respuesta = ControladorParametros::ctrAsignarFiltroPQR($idPqr, $idPer, $sw);
 		echo json_encode($respuesta);
 	}
 }
@@ -89,5 +89,5 @@ if(isset($_POST["verModInfo"]))
 if(isset($_POST["idPqr"]))
 {
 	$add = new AjaxParametros();
-	$add -> ajaxAddFiltroPQR($_POST["idPqr"], $_POST["idusr"], $_POST["sw"]);
+	$add -> ajaxAddFiltroPQR($_POST["idPqr"], $_POST["idPer"], $_POST["sw"]);
 }

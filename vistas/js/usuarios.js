@@ -29,6 +29,8 @@ $("#nuevoUsuario").change(function(){
 	});
 })
 
+
+
 $("#nuevoPassword").change(function(){
 
 	var pass = $(this).val();

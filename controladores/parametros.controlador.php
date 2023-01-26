@@ -1019,18 +1019,18 @@ class ControladorParametros
 
 	}
 
-		static public function ctrMostrarFiltroPQR($item, $valor)
+	static public function ctrMostrarFiltroPQR($item, $valor)
 	{
 		$tabla = "pqr_filtro";
 		$res = ModeloParametros::mdlMostrarFiltroPQR($tabla, $item, $valor);
 		return $res;
 	}
 
-	static public function ctrAsignarFiltroPQR($idPQR, $idUsr, $sw)
+	static public function ctrAsignarFiltroPQR($idPQR, $idPer, $sw)
 	{
 		$tabla = "pqr_filtro";
 		$mostrar = new ControladorParametros;
-		$pqr = $mostrar->ctrMostrarFiltroPQR("id_usr", $idUsr);
+		$pqr = $mostrar->ctrMostrarFiltroPQR("id_per", $idPer);
 		$lista = null;
 
 		if (is_null($pqr["id_pqr"]))
@@ -1091,7 +1091,7 @@ class ControladorParametros
 		}//else
 
 		$datos = array( 'id_pqr' => $lista,  
-						'id_usr' => $idUsr);
+						'id_per' => $idPer);
 
 
 		$res = ModeloParametros::mdlAsignacionFiltroPQR($tabla, $datos);

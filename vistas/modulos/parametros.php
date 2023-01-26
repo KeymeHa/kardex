@@ -26,7 +26,7 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
     <div class="row">
       <?php
 
-      echo '<input type="hidden" value="'.$_SESSION["id"].'" id="idusr" readonly>';
+      echo '<input type="hidden" value="'.$_SESSION["perfil"].'" id="perUsr" readonly>';
 
       ?>
       <div class="col-xs-12 col-md-5 col-lg-5">
@@ -126,8 +126,23 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
           <div class="box-header">
            <h3 class="titulo-box"></h3> 
           </div><!--box-header-->
-          <div class="box-body contenido-box" id="tablaDivTabPermisoCat">
+
+          <div class="box-body">
+
+            <div class="row">
+              <div class="contenido-box-1">
+              </div><!--contenido-box-1-->
+            </div><!--row-->
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="contenido-box" id="tabla-Div-Tab-FiltroPQR">
+                </div><!--contenido-box-->
+              </div>
+            </div><!--row-->
+
           </div><!--box-body-->
+
         </div><!--box box-success-->
       </div><!--col-xs-12 col-md-6 col-lg-6-->
     </div><!--row-->

@@ -262,9 +262,9 @@ class ModeloParametros
 
 	static public function mdlCrearFiltroPQR($tabla, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT IGNORE $tabla SET id_usr = ::id_usr ");
+		$stmt = Conexion::conectar()->prepare("INSERT IGNORE $tabla SET id_per = :id_per ");
 
-		$stmt->bindParam(":id_usr", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":id_per", $valor, PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
 		{
@@ -272,7 +272,7 @@ class ModeloParametros
 		}
 		else
 		{
-			return "eror";
+			return "error";
 		}
 
 		$stmt->close();
@@ -310,10 +310,10 @@ class ModeloParametros
 
 	static public function mdlAsignacionFiltroPQR($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_pqr = :id_pqr WHERE id_usr = :id_usr");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_pqr = :id_pqr WHERE id_per = :id_per");
 
 		$stmt -> bindParam(":id_pqr", $datos["id_pqr"], PDO::PARAM_STR);
-		$stmt -> bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_per", $datos["id_per"], PDO::PARAM_INT);
 
 		if($stmt -> execute()){
 

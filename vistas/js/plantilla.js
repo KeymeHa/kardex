@@ -696,9 +696,9 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 		{
 			variable ="?mod="+dato;
 
-			if (id != 0) 
+			if (per != 0) 
 			{
-				variable += "&id="+id;
+				variable += "&per="+per;
 			}
 
 			tablaElegida =  $('.tablaModulos');
