@@ -51,6 +51,12 @@ class AjaxParametros
 		$respuesta = ControladorParametros::ctrAsignarFiltroPQR($idPqr, $idPer, $sw);
 		echo json_encode($respuesta);
 	}
+
+	public function ajaxVerAcciones()
+	{
+		$respuesta = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["paramIns"]))
@@ -90,4 +96,10 @@ if(isset($_POST["idPqr"]))
 {
 	$add = new AjaxParametros();
 	$add -> ajaxAddFiltroPQR($_POST["idPqr"], $_POST["idPer"], $_POST["sw"]);
+}
+
+if(isset($_POST["verAcciones"]))
+{
+	$accionespqr = new AjaxParametros();
+	$accionespqr -> ajaxVerAcciones();
 }

@@ -23,9 +23,9 @@ class ControladorParametros
 			    date_default_timezone_set('America/Bogota');
 			} catch (Exception $e){	}
 
-			$ActualY = date("Y");
-			$ActualRad = date("Ym");
-			$ActualCor = date("ymd");
+			$ActualY = date("Y");//año
+			$ActualRad = date("Ym");//año dia
+			$ActualCor = date("ymd");//año mes dia
 			$radicar = new ControladorParametros;
 
 			if( $respuesta[8] == $ActualY)
@@ -55,7 +55,7 @@ class ControladorParametros
 					  case 28:
 					    $r = $radicar->radicar($respuesta[$val], $ActualRad);
 					    break;
-					  case 29:
+					  case 27:
 					    $r = $radicar->corte($respuesta[$val], $ActualCor);
 					    break;
 					  default:
@@ -107,7 +107,7 @@ class ControladorParametros
 					  case 28:
 					    $r = $radicar->radicar($i, $ActualRad);
 					    break;
-					  case 29:
+					  case 27:
 					    $r = $radicar->corte($i, $ActualCor);
 					    break;
 					  default:
@@ -1105,6 +1105,12 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrmostrarRegistroEspecifico($tabla, $item1, $valor, $item2)
+	{
+		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor);
+		return $respuesta[$item2];
+	}
+
 	static public function ctrTraerCampo($tabla, $item, $valor, $item2)
 	{
 		$respuesta = ModeloParametros::mdlTraerCampo($tabla, $item, $valor, $item2);
@@ -1176,11 +1182,17 @@ class ControladorParametros
 	}
 
 
+	static public function ctrContarEstados($item, $estado)
+	{
+		$tabla = "registropqr";
+		$anio = ($_SESSION["anioActual"] == 0) ? 'WHERE ' : 'WHERE YEAR(fecha) = '.$_SESSION["anioActual"].' AND ';
+		$respuesta = ModeloParametros::mdlContarEstados($tabla, $item, $estado, $anio);
+		return $respuesta['COUNT(*)'];
+	}
+
 	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip)
 	{
-
 		$respuesta = ModeloParametros::mdlrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip);
-
 		return $respuesta;
 	}
 

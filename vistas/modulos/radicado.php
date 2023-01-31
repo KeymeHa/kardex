@@ -197,7 +197,7 @@ for ($i=0; $i < count($porcion); $i++)
       <div class="col-lg-12">
          <div class="box box-success">
           <div class="box-header with-border">
-           <h3 class="box-title">Listado de Radicados Para Corte: <b># <?php  $val = 29;
+           <h3 class="box-title">Listado de Radicados Para Corte: <b># <?php  $val = 27;
                      $parametro = ControladorParametros::ctrMostrarParametros($val); echo $parametro["codigo"];?></b></h3> 
           </div>
           <div class="box-body">       

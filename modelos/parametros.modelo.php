@@ -64,6 +64,19 @@ class ModeloParametros
 		;
 	}
 
+	
+
+	static public function mdlmostrarRegistrosEspecifico($tabla, $item, $valor)
+	{
+	
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlmostrarRegistros($tabla, $item, $valor)
 	{
 		if($item != null)
@@ -619,6 +632,19 @@ class ModeloParametros
 
 		$stmt -> close();
 		$stmt = null;
+
+	}
+
+	static public function mdlContarEstados($tabla, $item, $valor, $anio)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio $item = :$item ");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+
+		$stmt = null;
+
 
 	}
 }

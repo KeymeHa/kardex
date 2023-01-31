@@ -2,7 +2,7 @@
 
 class ControladorRadicados
 {
-	function anioActual($anio)
+	public static function anioActual($anio)
 	{
 		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
 		return $respuesta;
@@ -584,7 +584,7 @@ class ControladorRadicados
 		
 		if ($count > 0)//si existe al menos un registro
 		{
-			$corte = ControladorParametros::ctrMostrarParametros(29);
+			$corte = ControladorParametros::ctrMostrarParametros(27);
 			//actualizar todos los radicados con id_corte 0 a el numero de corte
 			$tabla = "cortes";
 			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
@@ -597,41 +597,117 @@ class ControladorRadicados
 			date_default_timezone_set('America/Bogota');
 			$fechaActual = date("Y-m-d H:i:s");
 
-			$id_area_o = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $id_usuario_o);
-		
+			//llamar pqrfiltro
 
-			/*
+
+			$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR(null, null);
+
+            $id_per = [];
+            $id_pqr  = [[]];
+
+            foreach ($traer_filtro as $key => $value) 
+            {
+
+              if(!is_null($value["id_pqr"]))
+              {
+                 $id_per[$key] = $value["id_per"];
+                 $id_pqr[$key]["id_pqr"] = json_decode($value["id_pqr"], true);
+              }
+
+            }
+            //perfil para buscar una persona encargada de esa correspondencia
+            $per = 3;
+
 			foreach ($radicados as $key => $value) 
 			{
-				$modulo = 7;
+				for ($y=0; $y < count($id_per); $y++) 
+				{ 
+					$sw = 0; //dejar de buscar el id_pqr
+					$x = 0; // movimiento de elemento 
+					 /*
+			                 Y
+			                          x
+			          "idpqr"  0 {1, 2, 3 }
+			                            ["id"]
+			                 1
 
-				if ($value["id_pqr"] == 5 || $value["id_pqr"] == 6) 
-				{
-					$modulo = 3;//tesoreria
-				}//$value["id_pqr"] != 5 && $value["id_pqr"] != 6
+			          id_per array(3) 
+			          { 
+			            [0]=> int(7)
+			            [1]=> int(8) 
+			            [2]=> int(6) 
+			          } 
 
-				$datos = array( 'dias' => 0,
-								'id_corte' => $id_corte["id"],
-								'id_radicado' => $value["id"],
-								'id_area_o' => $id_area_o["id_area"],
-								'id_usuario_o' => $id_usuario_o,
-								'id_area_d' => $value["id_area"],
-								'id_usuario_d' => 0,
-								'id_accion' => 2,
+			          id_pqr array(3) 
+			          { 
+			            [0]=> array(1) { ["id_pqr"]=> array(4) 
+			            { 
+			                [0]=> array(1) 
+			                { ["id"]=> string(1) "1" } 
+			                [1]=> array(1) 
+			                  { ["id"]=> string(1) "2" }
+			                [2]=> array(1) 
+			                  { ["id"]=> string(1) "3" } 
+			                [3]=> array(1) 
+			                  { ["id"]=> string(1) "4" } } 
+			            } 
+
+			            [1]=> array(1)  { ["id_pqr"]=> array(2) 
+			            { 
+			                [0]=> array(1) 
+			                  { ["id"]=> string(1) "6" } 
+			                [1]=> array(1) 
+			                  { ["id"]=> string(1) "5" } } 
+			            } 
+
+			            [2]=> array(1)  { ["id_pqr"]=> array(2) 
+			            { 
+			                [0]=> array(1) 
+			                    { ["id"]=> string(1) "8" } 
+			                  [1]=> array(1) 
+			                    { ["id"]=> string(1) "7" } } 
+			            } 
+			          }
+
+			          */
+
+					 while ( $x <= count($id_pqr[$y]["id_pqr"]) && $sw == 0) 
+			          {
+			            if (array_key_exists($x, $id_pqr[$y]["id_pqr"])) 
+			            {
+			              if ($id_pqr[$y]["id_pqr"][$x]["id"] == $value["id_pqr"] ) 
+			              {
+			                $per = $id_per[$y];
+			                $sw = 1;
+			              }
+			              else
+			              {
+			                $x++;
+			              }
+			            }else
+			            {
+			              $x++;
+			            }
+			          }//while
+
+				}//for
+
+			    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $value["id_area"], $per);
+				
+				$datos = array( 'id_radicado' => $value["id"],
+								'id_area' => $value["id_area"],
+								'id_usuario' => $id_usuario,
+								'id_estado' => 5,
+								'id_pqr' => $value["id_pqr"],
+								'fecha_vencimiento' => $value["fecha_vencimiento"],
+								'fecha_actualizacion' => $value["fecha"],
 								'fecha' => $value["fecha"],
-							 	'vigencia' => 1,
-							 	'observacion' => $value["observaciones"],
-							 	'soporte' => $value["soporte"],
-							 	'sw' => 1,
-							 	'indicativo' => 1,
-							 	'modulo' => $modulo);
-
+								'dias_habiles' => $value["dias"],
+								'dias_restantes' => $value["dias"]);
 
 				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
-				//$trazabilidad = ModeloRadicados::mdlNuevaTrazabilidad("registro", $value["id"], $value["fecha"], $modulo);
 
-
-			}//foreach ($radicados as $key => $value) */
+			}//foreach ($radicados as $key => $value)
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
 			
@@ -660,7 +736,7 @@ class ControladorRadicados
 			
 	}//ctrGenerarCorte()
 
-
+/*
 	static public function ctrNuevoRegistro()
 	{#INCOMPLETO
 		if (isset($_POST["actualizacion"])) 
@@ -696,45 +772,57 @@ class ControladorRadicados
 
 			$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
 		}//if isset
-	}//ctrNuevoRegistro
+	}//ctrNuevoRegistro*/
 
 	#							id del usuario 
-	static public function ctrVerRegistrosPQR($id, $per, $mod, $fI, $fF, $es, $anio)
+	static public function ctrVerRegistrosPQR($id, $per, $fI, $fF, $es, $anio, $item, $valor)
 	{
 		$query = "";
+		$tabla = "registropqr";
 
-		if ($fI != null) 
+		if (is_null($valor)) 
 		{
 
-			if ( validateDate($fI) && validateDate($fF) ) 
+			if ($fI != null) 
 			{
-				if($fI == $fF)
+
+				if ( validateDate($fI) && validateDate($fF) ) 
 				{
-					$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
-					#ORDER BY fecha DESC
+					if($fI == $fF)
+					{
+						$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
+						#ORDER BY fecha DESC
+					}
+					else
+					{
+						$fechaActual = new DateTime();
+						$fechaActual ->add(new DateInterval("P1D"));
+						$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+						$fechaFinal2 = new DateTime($fF);
+						$fechaFinal2 ->add(new DateInterval("P1D"));
+						$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+						if($fechaFinalMasUno == $fechaActualMasUno){
+
+							$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
+
+						}else{
+
+							$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
+
+						}
+					
+					}
 				}
 				else
 				{
-					$fechaActual = new DateTime();
-					$fechaActual ->add(new DateInterval("P1D"));
-					$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-					$fechaFinal2 = new DateTime($fF);
-					$fechaFinal2 ->add(new DateInterval("P1D"));
-					$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-					if($fechaFinalMasUno == $fechaActualMasUno){
-
-						$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
-
-					}else{
-
-						$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
-
-					}
-				
+					$r = new ControladorRadicados;
+					$anio = $r->anioActual($anio);
+					$query = $anio;
 				}
-			}
+
+			}//$fI != null
 			else
 			{
 				$r = new ControladorRadicados;
@@ -742,44 +830,24 @@ class ControladorRadicados
 				$query = $anio;
 			}
 
-		}//$fI != null
-		else
-		{
-			$r = new ControladorRadicados;
-			$anio = $r->anioActual();
-			$query = $anio;
-		}
-
-		if ($per != 7) 
-		{
-			if ($id != 0) 
+			if (!is_null($es) || $es != 0) 
 			{
-				$query.= " AND id_usuario_o = ".$id."OR id_usuario_d = ".$id;
+				//si existe estado enviar, sino no enviar solo pendientes y vencidas
+				$query.= " AND id_estado = ".$es;
 			}
-		}
 
-		if ($es == 1 || $es == 0) 
-		{
-			$query.= " AND sw = ".$es;
-		}
-		else
-		{
-			$query.= " AND sw = 1";
-		}
+			
 
-		if ($mod == 7 || $mod == 8) 
-		{
-			$query.= " AND modulo = ".$mod." ORDER BY fecha DESC";
+			$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $item);
 		}
 		else
 		{
-			$query.= " AND modulo = 7 ORDER BY fecha DESC";
+
+			$query = "WHERE ".$item." = ".$valor;
+			$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $item);
 		}
 
-		$tabla = "registropqr";
-
-		$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query);
-
+	
 		return $respuesta;
 
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
@@ -889,6 +957,26 @@ class ControladorRadicados
 		$respuesta = ModeloRadicados::mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio);
 
 		return $respuesta;
+	}
+
+
+	static public function ctrAccesoRapidoRegistros($idRegistro, $sw)
+	{
+		$traer = new ControladorRadicados;
+		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
+		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
+
+		
+		if ($sw == 1) 
+		{
+			return $radicado;
+		}
+		else
+		{
+			return $registro;
+		}
+
+		
 	}
 
 }

@@ -1,9 +1,12 @@
 <?php
 
+
+require_once "../controladores/personas.controlador.php";
 require_once "../controladores/radicados.controlador.php";
 require_once "../controladores/parametros.controlador.php";
 require_once "../controladores/areas.controlador.php";
 
+require_once "../modelos/personas.modelo.php";
 require_once "../modelos/radicados.modelo.php";
 require_once "../modelos/parametros.modelo.php";
 require_once "../modelos/areas.modelo.php";

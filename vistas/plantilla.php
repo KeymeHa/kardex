@@ -84,7 +84,7 @@
             {
                 $paginaCargada = '<script type="text/javascript">
                   $( document ).ready(function() {var pagina = '.$js_data["num"].';
-                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].');});</script>';
+                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].',0);});</script>';
 
                 echo $paginaCargada;
 

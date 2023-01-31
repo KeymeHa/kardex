@@ -76,13 +76,13 @@ function verPQR()
 {
 	limpiarcontenidobox();
 
-	$('div.contenido-box-1').append(
+	/*$('div.contenido-box-1').append(
 		'<div class="form-group col-lg-6">'+
 		'<label>Select</label>'+
 		'<select class="form-control" id="selectPer">'+
 		'</select>'+
 		'</div>'
-	)
+	)*/
 
 	var perfiles = new FormData();
 	perfiles.append("perfil", 1);
@@ -127,12 +127,12 @@ function tablacat(per)
        '</tr>'+
       '</thead>'+
     '</table>')
-	paginaCargada(41, per, 0, 0, "pqr_filtro");
+	paginaCargada(41, 0, per, 0, "pqr_filtro");
 }
 
-$( "#selectPer" ).change(function() {
+$("#selectPer").on('change', function() {
 	var per = $(this).val();
-  	limpiarcontenidobox();
+    limpiarcontenidobox();
   	$("h3.titulo-box").html('Filtrar Correspondencia');
 	tablacat(per);
 });
@@ -193,8 +193,8 @@ function limpiarcontenidobox()
 	if ( $("#tabla-Div-Tab-FiltroPQR").children().length != 0 ) 
 	{	$("#tabla-Div-Tab-FiltroPQR").children().remove(); 	}
 
-	if ( $("div.contenido-box-1").children().length != 0 ) 
-	{  $("div.contenido-box-1").children().remove();     }
+	/*if ( $("div.contenido-box-1").children().length != 0 ) 
+	{  $("div.contenido-box-1").children().remove();     }*/
 }
 
 function verTerminos()

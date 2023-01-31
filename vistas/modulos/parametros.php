@@ -78,6 +78,31 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                     <th>Festivos</th>
                     <td>Permite importar por medio de un archivo en excel los festivos de un año</td>
                     <td><button type="button" class="btn btn-block btn-success btn-param" sw="6">Administrar</button></td>
+                  </tr><tr>
+                    <td>Objeto</td>
+                    <td>Puede Cambiar los terminos y valores de retención de documeentos</td>
+                    <td>  
+                        <div class="btn-group">
+                          <div class="col-md-4">
+                            <button class="btn btn-warning" title="Ver y Editar" onclick="verTerminos()">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Correspondencia</td>
+                    <td>Filtrado de  correspondencia, puedes marcar todo aquello que necesites llevar la trazabilidad</td>
+                    <td>  
+                        <div class="btn-group">
+                          <div class="col-md-4">
+                            <button class="btn btn-warning" title="Ver y Editar" onclick="verPQR()">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </td>
                   </tr>';
                   }
                   elseif ($_SESSION["perfil"] == '3') {
@@ -115,7 +140,17 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                   ?>
               </tbody>
             </table>  
-               
+            <?php
+
+            $traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", 7);
+            $id_pqr = json_decode($traer_filtro["id_pqr"], true);
+
+            echo $id_pqr[2]["id"];            
+
+            //var_dump($id_pqr);
+
+            ?>
+              
           </div><!--<div class="box-body">-->
           
         </div>
@@ -131,6 +166,11 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
 
             <div class="row">
               <div class="contenido-box-1">
+                <div class="form-group col-lg-6">
+                <label>Select</label>
+                  <select class="form-control" id="selectPer">
+                  </select>
+                </div>
               </div><!--contenido-box-1-->
             </div><!--row-->
 

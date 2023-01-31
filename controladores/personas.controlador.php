@@ -14,6 +14,14 @@ class ControladorPersonas
 	}
 
 
+	static public function ctrMostrarIdPersonaPerfil($item, $valor, $perfil)
+	{
+		$tabla = "personas";
+		$res = ModeloPersonas::mdlMostrarIdPersonaPerfil($tabla, $item, $valor, $perfil);
+		return $res["id_usuario"];
+	}
+
+
 	static public function ctrMostrarPersonas($item, $valor)
 	{
 		$tabla = "personas";

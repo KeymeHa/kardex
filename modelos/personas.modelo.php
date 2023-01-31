@@ -35,6 +35,24 @@ class ModeloPersonas
 		$stmt = null;
 	}
 
+	static public function mdlMostrarIdPersonaPerfil($tabla, $item, $valor, $perfil)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT id_usuario FROM $tabla WHERE $item = :$item AND id_perfil = :id_perfil");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":id_perfil", $perfil, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlMostrarPersonasArea($tabla, $item, $valor)
 	{
 

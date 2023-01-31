@@ -131,11 +131,23 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
-	static public function mdlmostrarRegistrosPQR($tabla, $query)
+	static public function mdlmostrarRegistrosPQR($tabla, $query, $item)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
-		$stmt -> execute();
-		return $stmt -> fetchAll();
+
+		if (is_null($item)) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
+			$stmt -> execute();
+			return $stmt -> fetch();
+		}
+
+		
 		$stmt -> close();
 		$stmt = null;
 	}
@@ -367,23 +379,18 @@ class ModeloRadicados
 
 	static public function mdlNuevoRegistro($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(dias, id_corte, id_radicado, id_area_o, id_usuario_o, id_area_d, id_usuario_d, id_accion, fecha, vigencia, observacion,soporte, sw, indicativo, modulo) VALUES (:dias, :id_corte, :id_radicado, :id_area_o, :id_usuario_o, :id_area_d, :id_usuario_d, :id_accion, :fecha, :vigencia, :observacion, :soporte, :sw, :indicativo, :modulo)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado, id_area, id_usuario,	id_estado,	id_pqr, fecha_vencimiento, fecha_actualizacion, fecha, dias_habiles, dias_restantes) VALUES (:id_radicado, :id_area, :id_usuario, :id_estado, :id_pqr, :fecha_vencimiento, :fecha_actualizacion, :fecha, :dias_habiles, :dias_restantes)");
 
-		$stmt->bindParam(":dias", $datos["dias"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_corte", $datos["id_corte"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_radicado", $datos["id_radicado"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_area_o", $datos["id_area_o"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_usuario_o", $datos["id_usuario_o"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_area_d", $datos["id_area_d"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_usuario_d", $datos["id_usuario_d"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_accion", $datos["id_accion"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_radicado", $datos["id_radicado"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_pqr", $datos["id_pqr"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_actualizacion", $datos["fecha_actualizacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
-		$stmt->bindParam(":vigencia", $datos["vigencia"], PDO::PARAM_STR);
-		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":soporte", $datos["soporte"], PDO::PARAM_STR);
-		$stmt->bindParam(":sw", $datos["sw"], PDO::PARAM_STR);
-		$stmt->bindParam(":indicativo", $datos["indicativo"], PDO::PARAM_STR);
-		$stmt->bindParam(":modulo", $datos["modulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":dias_habiles", $datos["dias_habiles"], PDO::PARAM_STR);
+		$stmt->bindParam(":dias_restantes", $datos["dias_restantes"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 

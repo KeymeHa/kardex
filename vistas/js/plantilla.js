@@ -657,13 +657,20 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 
 			variable = "?idusr="+id+"&p="+per;
 
-			if(estado == null)
+			if(dato != 0 )
 			{
-			  variable+= "&es=1";
-			} else 
-			{
-			  variable+= "&es="+estado;
+				variable+= "&es="+dato;
 			}
+			else if(estado != null)
+			{
+				variable+= "&es="+estado;
+			}
+			else
+			{
+				variable+= "&es=null";
+			}
+
+			variable+= "&p="+per;
 
 			if(fechaInicial == null)
 			{
@@ -672,6 +679,7 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 			{
 			  variable+= "&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
 			}
+
 
 			tablaElegida =  $('.tablaRegistros');
 			tablaAjax = 'registros';
