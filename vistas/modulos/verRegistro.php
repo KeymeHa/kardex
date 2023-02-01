@@ -54,8 +54,8 @@
             <dd><?php echo $fecha; ?></dd>
             <dt>Fecha Vencimiento:</dt>
             <dd><?php echo $fecha_vencimiento; ?></dd>
-            <dt>Días Restantes:</dt>
-            <dd><?php echo $registro["dias_restantes"]; ?></dd>
+            <dt>Días de Retención:</dt>
+            <dd><?php echo "2 / ".$registro["dias_habiles"]." días habiles"; ?></dd>
             <dt>Estado:</dt>
             <dd><?php echo $estado; ?></dd>
           </dl>
@@ -74,6 +74,26 @@
             <dd><?php echo $area_responsable; ?></dd>
              <dt>Encargado(a):</dt>
             <dd><?php echo $responsable; ?></dd>
+             <dt>Recibido:</dt>
+            <dd><?php echo $radicado["recibido"]; ?></dd>
+            <?php
+
+            if (!is_null($radicado["observaciones"]) && $radicado["observaciones"] != "" ) {
+              echo ' <dt>Observaciones (Gral):</dt>
+            <dd>'.$radicado["observaciones"].'</dd>';
+            }
+
+            if (!is_null($radicado["direccion"]) && $radicado["direccion"] != "") {
+              echo ' <dt>Dirección:</dt>
+            <dd>'.$radicado["direccion"].'</dd>';
+            }
+
+             if (!is_null($radicado["correo"]) && $radicado["correo"] != "") {
+              echo ' <dt>Correo Electrónico:</dt>
+            <dd>'.$radicado["correo"].'</dd>';
+            }
+
+            ?>
           </dl>
 
 
@@ -82,6 +102,18 @@
 
 
       </div><!--BOX BODY-->
+      
+        <?php
+
+         echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
+                  <div class="col-md-1">
+                  <a href="'.$radicado["soporte"].'"; target="_blank">
+                      <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
+                    </a>
+                  </div></div>' : '';
+
+        ?>
+     
     </div><!--BOX-->
     <div class="box">
       <div class="box-header">
