@@ -116,7 +116,7 @@ class TablaRegistros
 			
 						*/
 
-						if ($registrosPQR["id_estado"] == 1 || $registrosPQR["id_estado"] == 4) 
+						if ($registrosPQR[$i]["id_estado"] == 1 || $registrosPQR[$i]["id_estado"] == 4) 
 						{
 							$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div></div>";
 						}
