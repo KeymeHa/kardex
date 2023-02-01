@@ -183,7 +183,7 @@
 
         <div class="modal-header" style="background:#00A65A; color:white">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Radicado: <b id="tituloRegistro">202301120005</b></h4>
+          <h4 class="modal-title">Radicado: <b id="tituloRegistro"></b></h4>
         </div>
 
         <!--=====================================
@@ -192,10 +192,9 @@
 
         <div class="modal-body">
           <div class="box-body">
-
             <div class="row">
-                 <div class="col-md-5" style="font-size: 18px;">
-                    <dl class="dl-horizontal">
+                 <div class="col-md-6">
+                    <dl class="dl-horizontal" style="font-size: 18px;">
                     <dt>Fecha Radicado:</dt>
                       <dd id="mod-fecha-rad"></dd>
                     <dt>Remitente:</dt>
@@ -203,10 +202,29 @@
                     <dt>Área Encargada:</dt>
                       <dd id="mod-area"></dd>
                     </dl>
+
+                    <p>Seleccione una acción rapida para este oficio.</p>
+                    <!-- ENTRADA PARA EL NOMBRE -->         
+                    <div class="form-group">   
+                      <input type="hidden" id="id_Registro_accion" name="idRegistro" value="">    
+                      <select class="form-control" id="select_accion" required>
+                        <?php
+
+                        $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
+                        echo '<option value="">Seleccione una Acción</option>';
+                        foreach ($accion_pqr as $key => $value) 
+                        {
+                          echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
+                        }
+
+                        ?>
+                      </select>
+                    </div>  
+
                   </div>
 
-                 <div class="col-md-5" style="font-size: 18px;">
-                    <dl class="dl-horizontal">
+                 <div class="col-md-6" >
+                    <dl class="dl-horizontal" style="font-size: 18px;">
                     <dt>Fecha Vencimiento</dt>
                       <dd id="mod-fecha-venc"></dd>
                     <dt>Estado Actual</dt>
@@ -214,38 +232,17 @@
                       <dt>Responsable:</dt>
                       <dd id="mod-responsable"></dd>
                     </dl>
+                    <div class="row div-progress-bar"></div>
                   </div>
             </div><!--row-->
 
             <div class="row">
-              <div class="col-md-4">
-                    <p>Seleccione una acción rapida para este oficio.</p>
-                    <!-- ENTRADA PARA EL NOMBRE -->         
-                  <div class="form-group">   
-                    <input type="hidden" id="id_Registro_accion" name="idRegistro" value="">    
-                    <select class="form-control" id="select_accion" required>
-                      <?php
-
-                      $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
-                      echo '<option value="">Seleccione una Acción</option>';
-                      foreach ($accion_pqr as $key => $value) 
-                      {
-                        echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
-                      }
-
-                      ?>
-                    </select>
-                  </div>
-              </div>
+               <div id="contenido-modal-accion"></div>
             </div>
 
-          
-
           </div>
 
-          <div id="contenido-modal-accion">
-            
-          </div>
+         
 
         </div>
 

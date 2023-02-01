@@ -164,6 +164,7 @@ $("table.tablaRegistros").on('click', '.btnFastRegistro', function()
 	var idRegistro = $(this).attr("idRegistro");
 
 	$("#id_Registro_accion").val(idRegistro);
+	$("div.div-progress-bar").children().remove();
 
 	//INFORMACION RADICADO
 
@@ -182,61 +183,108 @@ $("table.tablaRegistros").on('click', '.btnFastRegistro', function()
 		dataType: "json",
 		success: function(respuesta){
 
+			var tipoProgress = "";
+
+			if (respuesta["contador"] < 33) 
+			{
+				tipoProgress = "success";
+			}
+			else if(respuesta["contador"] >= 34 && respuesta["contador"] <= 66)
+			{
+				tipoProgress = "warning";
+			}
+			else
+			{
+				tipoProgress = "danger";
+			}
+
+
+
+			$('div.div-progress-bar').append('<div class="col-lg-12"><div class="row"><div class="pull-left">'+respuesta["fecha"]+'</div><div class="pull-right">'+respuesta["fecha_vencimiento"]+'</div></div></div><p>'+respuesta["contador"]+'%</p><div class="progress progress-sm active">'+
+                  '<div class="progress-bar progress-bar-'+tipoProgress+' progress-bar-striped" role="progressbar" style="width: '+respuesta["contador"]+'%" title="">'+
+                  '<span class="sr-only">20% Complete</span>'+
+                  '</div>'+
+                  '</div>')
+
 			$('#mod-fecha-rad').html(respuesta["fecha"]);
 			$('#mod-remitente').html(respuesta["id_remitente"]);
 			$('#mod-area').html(respuesta["area_responsable"]);
 			$('#mod-fecha-venc').html(respuesta["fecha_vencimiento"]);
 			$('#mod-estado').html(respuesta["estado"]);
 			$('#mod-responsable').html(respuesta["responsable"]);
-
-			
-
-		}
-	});
-
-/*
-	var acciones = new FormData();
-	acciones.append("verAcciones", 1);
-
-	
-
-	$.ajax({
-
-		url:"ajax/parametros.ajax.php",
-		method: "POST",
-		data: acciones,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(respuesta){
-
-			
-
-			alert(respuesta.length);
-
-			for (var i = 0; i <= respuesta.length; i++) 
-			{
-					//$("#select_accion").append('<option value="'+respuesta[i]["id"]+'">'+respuesta[i]["codigo"]+' - '+respuesta[i]["nombre"]+'<option>');
-					$("#select_accion").append('<option value="'+i+'">hola<option>');
-			
-			}
+			$('#mod-contador').html(respuesta["contador"]);
+			$('#tituloRegistro').html(respuesta["radicado"]);
 
 		}
 	});
-*/
-
-	//traer radicado info
-
-
 
 });
 
 
 $('#select_accion').change(function() {
 	var valor = $(this).val();
-    alert("valor seleccionado "+valor);
+	$("#contenido-modal-accion").children().remove();
+    
+    //traslado interno
+	if (valor == 1) 
+	{
+
+	}
+	else if(valor == 2)
+	{
+		$("#contenido-modal-accion").append(' <div class="col-md-6">'+      
+                  '<div class="input-group">'+          
+                    '<span class="input-group-addon"><i class="fa fa-user"></i></span>'+
+                    '<input type="text" class="form-control input-lg" id="nuevoRemitente" placeholder="Ingresar nombre">'+
+                  '</div>'+
+                '</div>');
+		elimTabla();
+		paginaCargada(37, 0, 0, 0, 0);
+	}
+	else if(valor == 3)
+	{
+		
+	}
+	else if(valor == 4)
+	{
+		
+	}
+	else if(valor == 5)
+	{
+		
+	}
+	else if(valor == 6)
+	{
+		
+	}
+
+
 });
+
+
+$("#nuevoRemitente").change(function() {
+	var remitente = $(this).val();
+
+    $("#contenido-modal-accion input[type=search]").val(remitente);
+
+});
+
+function elimTabla()
+{
+
+	$("#contenido-modal-accion").append(
+		
+		'<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
+		'<thead>'+      
+		 '<tr>'+           
+		  '<th style="width:5px">#</th>'+
+		   '<th>Nombre</th>'+
+		   '<th style="width:10px">Acción</th>'+
+		 '</tr> '+
+		'</thead>'+
+		'</table>'
+	)
+}
 
 
 
