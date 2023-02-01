@@ -140,7 +140,7 @@ function aparecertablaRegistros()
 $("h4.banner-pendientes").click(function(){
 	var es = $("#inputVar").attr("es");
 	validarTablaRegistro();
-	aparecerTablaAnexo();
+	aparecerTablaRegistros();
 	envioParametros(es);
 
 })
@@ -149,7 +149,7 @@ $("div.box-semaforo").click(function() {
 
 	var es = $(this).attr("idEstado");
 	validarTablaRegistro();
-	aparecerTablaAnexo();
+	aparecerTablaRegistros();
 	envioParametros(es);
 	
 });
@@ -228,7 +228,18 @@ $('#select_accion').change(function() {
     //traslado interno
 	if (valor == 1) 
 	{
-
+		$("#contenido-modal-accion").append(
+			'<table class="table table-bordered table-striped dt-responsive tablaPersonas" width="100%">'+
+			'<thead>'+
+			 '<tr>'+
+			   '<th style="width:10px">#</th>'+
+			   '<th>Nombre</th>'+
+			   '<th>Área</th>'+
+			   '<th style="width: 50px;">Acciones</th>'+
+			 '</tr>'+ 
+			'</thead>'+
+		'</table>');
+		paginaCargada(16, 0, 0, 0, 3);
 	}
 	else if(valor == 2)
 	{
@@ -238,7 +249,7 @@ $('#select_accion').change(function() {
                     '<input type="text" class="form-control input-lg" id="nuevoRemitente" placeholder="Ingresar nombre">'+
                   '</div>'+
                 '</div>');
-		elimTabla();
+		tablaRemitentesExternos();
 		paginaCargada(37, 0, 0, 0, 0);
 	}
 	else if(valor == 3)
@@ -269,7 +280,7 @@ $("#nuevoRemitente").change(function() {
 
 });
 
-function elimTabla()
+function tablaRemitentesExternos()
 {
 
 	$("#contenido-modal-accion").append(
@@ -287,7 +298,7 @@ function elimTabla()
 }
 
 
-
+//mostrar registro seleccionado
 function envioParametros(es)
 {
 	var idUser = $("#inputVar").attr("idUser");
@@ -304,7 +315,7 @@ function validarTablaRegistro()
 	}
 }
 
-function aparecerTablaAnexo()
+function aparecerTablaRegistros()
 {
 	$("div.div-tablaRegistros").append(
 		'<table class="table table-bordered table-striped dt-responsive tablaRegistros" width="100%">'+

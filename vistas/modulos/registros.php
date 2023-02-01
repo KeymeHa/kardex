@@ -237,7 +237,8 @@
             </div><!--row-->
 
             <div class="row">
-               <div id="contenido-modal-accion"></div>
+               <div id="contenido-modal-accion" class="col-md-8"></div>
+               <div class="col-md-4"></div>
             </div>
 
           </div>

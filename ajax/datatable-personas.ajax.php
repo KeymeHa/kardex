@@ -19,9 +19,10 @@ class Tablapersonas
 {	
 	public $idArea;
 	public $anioActual;
+	public $sw;
 	public function mostrarTablapersonas()
 	{	  
-		$sw = 0;
+		$sw = $this->sw;
 
 		$valor = $this->idArea;
 
@@ -71,6 +72,17 @@ class Tablapersonas
 	    		"'.$acciones.'"
 	    		],';
 		   }
+		   else
+		   {
+		   		$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnSelectPer'  title='Seleccionar a ".$personas[$i]["nombre"]."' idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-check'></i></button></div></div>";
+
+		   		$dJson .='[
+	    		"'.($i + 1).'",
+	    		"'.$personas[$i]["nombre"].'",
+	    		"'.$areas["nombre"].'",
+	    		"'.$acciones.'"
+	    		],';
+		   }
 
 		    
 		}//For
@@ -101,6 +113,17 @@ if (isset($_GET["actual"]))
 else
 {
 	$verpersonas -> anioActual = 0;
+}
+
+
+//sirve para omitir ciertas columnas como requisiciones y acciones
+if (isset($_GET["sw"])) 
+{
+	$verpersonas -> sw = $_GET["sw"];
+}
+else
+{
+	$verpersonas -> sw = 0;
 }
 
 $verpersonas -> mostrarTablapersonas();

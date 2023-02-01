@@ -351,6 +351,11 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 			tablaElegida =  $('.tablaPersonas');
 			tablaAjax = 'personas';
 			variable = "?actual="+anioActual;
+
+			if(dato != 0)
+			{
+			  variable = "?sw="+dato;
+			}
 		}
 		else if(pagina == 17)
 		{
