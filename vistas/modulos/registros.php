@@ -176,7 +176,7 @@
 <div id="modalRegistroPQR" class="modal fade" role="dialog"> 
   <div class="modal-dialog modal-lg" >
     <div class="modal-content">
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" enctype="multipart/form-data" class="formularioModalRegistros">
         <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
@@ -225,9 +225,9 @@
 
                  <div class="col-md-6" >
                     <dl class="dl-horizontal" style="font-size: 18px;">
-                    <dt>Fecha Vencimiento</dt>
+                    <dt>Fecha Vencimiento:</dt>
                       <dd id="mod-fecha-venc"></dd>
-                    <dt>Estado Actual</dt>
+                    <dt>Estado Actual:</dt>
                       <dd id="mod-estado"></dd>
                       <dt>Responsable:</dt>
                       <dd id="mod-responsable"></dd>
@@ -238,7 +238,9 @@
 
             <div class="row">
                <div id="contenido-modal-accion" class="col-md-8"></div>
-               <div class="col-md-4"></div>
+               <div id="contenido-modal-detalles" class="col-md-4">
+                 
+               </div>
             </div>
 
           </div>
@@ -253,7 +255,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-          <button type="submit" class="btn btn-success">Grabar</button>
+          <button type="submit" class="btn btn-success btn-GuardarRegistro">Grabar</button>
         </div>
 
 

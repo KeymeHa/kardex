@@ -224,6 +224,7 @@ $("table.tablaRegistros").on('click', '.btnFastRegistro', function()
 $('#select_accion').change(function() {
 	var valor = $(this).val();
 	$("#contenido-modal-accion").children().remove();
+	$("#contenido-modal-detalles").children().remove();
     
     //traslado interno
 	if (valor == 1) 
@@ -243,14 +244,23 @@ $('#select_accion').change(function() {
 	}
 	else if(valor == 2)
 	{
-		$("#contenido-modal-accion").append(' <div class="col-md-6">'+      
-                  '<div class="input-group">'+          
+		$("#contenido-modal-accion").append('<div class="row"><div class="col-lg-6">'+
+				'<div class="input-group">'+          
                     '<span class="input-group-addon"><i class="fa fa-user"></i></span>'+
                     '<input type="text" class="form-control input-lg" id="nuevoRemitente" placeholder="Ingresar nombre">'+
-                  '</div>'+
+                  '</div></div><br>'+
                 '</div>');
+
+		$("#contenido-modal-detalles").append('<input type="hidden" name="listadoRemitentes" id="listadoRemitentes" value>'+
+			'<div class="form-group nuevoRemitenteAgregado"><div class="row">'+
+                '<div class="col-xs-1"></div>'+
+                '<div class="col-xs-7" style="padding-right:0px">'+
+                 ' <p class="help-block">Trasladar a:</p>'+ 
+                '</div>'+
+                '<br>'+
+              '</div></div>');
 		tablaRemitentesExternos();
-		paginaCargada(37, 0, 0, 0, 0);
+		paginaCargada(37, 0, 0, 0, 1);
 	}
 	else if(valor == 3)
 	{
@@ -272,20 +282,115 @@ $('#select_accion').change(function() {
 
 });
 
+$(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
 
-$("#nuevoRemitente").change(function() {
-	var remitente = $(this).val();
 
-    $("#contenido-modal-accion input[type=search]").val(remitente);
+	var idRemitente = $(this).attr("idRemitente");
+	var remitente = $(this).attr("remitente");
+
+	$(this).removeClass('btn-success agregarRemitente');
+
+	$(this).addClass('btn-default');
+
+
+	$(".nuevoRemitenteAgregado").append(
+		'<div class="row" style="padding:5px 15px">'+
+           ' <div class="input-group">'+
+            '  <span class="input-group-addon">'+
+             '   <button type="button" class="btn btn-danger btn-xs quitarRemitente" idRemitente="'+idRemitente+'"><i class="fa fa-times"></i></button>'+
+             ' </span>'+
+            '<input type="text" class="form-control nuevoRemitenteRegistro" idRemitente="'+idRemitente+'" value="'+remitente+'" readonly>'+
+          	'</div>'+
+        '</div>')
+
+	listarRemitentes();
+
 
 });
+
+
+$(".tablaRemitentes").on("draw.dt", function(){
+	if(localStorage.getItem("quitarRemitente") != null){
+		var listaidRemitentes = JSON.parse(localStorage.getItem("quitarRemitente"));
+		for(var i = 0; i < listaidRemitentes.length; i++)
+		{
+			$("button.RegresarBoton[idRemitente='"+listaidRemitentes[i]["idRemitente"]+"']").removeClass('btn-default');
+			$("button.RegresarBoton[idRemitente='"+listaidRemitentes[i]["idRemitente"]+"']").addClass('btn-success agregarRemitente');	
+		}
+	}
+})
+
+$(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
+        
+        if( $("button.btnGuardarRq").hasClass("btn-success") == false )
+        {
+        	$("button.btnGuardarRq").addClass("btn-success");
+        	$('button.btnGuardarRq').attr("disabled", false);
+        }
+    listarRemitentes();
+})
+
+//EDITAR
+
+
+var idquitarRemitente = [];
+localStorage.removeItem("quitarRemitente");
+
+$(".formularioModalRegistros").on("click", "button.quitarRemitente", function(){
+
+	$(this).parent().parent().parent().remove();
+
+	var idRemitente = $(this).attr("idRemitente");
+
+	if(localStorage.getItem("quitarRemitente") == null)
+	{ idquitarRemitente = []; 
+	}
+	else
+	{ idquitarRemitente.concat(localStorage.getItem("quitarRemitente"));}
+
+	if($('.nuevoRemitenteAgregado').find(".row").length)
+	{
+        
+    }else
+    {
+    	$("button.btnGuardarRq").removeClass("btn-success");
+    	$("button.btnGuardarRq").addClass("btn-default");
+    	$('button.btnGuardarRq').attr("disabled", true);
+    }
+
+	idquitarRemitente.push({"idRemitente":idRemitente});
+	localStorage.setItem("quitarRemitente", JSON.stringify(idquitarRemitente));
+
+	$("button.RegresarBoton[idRemitente='"+idRemitente+"']").removeClass("btn-default");
+	$("button.RegresarBoton[idRemitente='"+idRemitente+"']").addClass("btn-success agregarRemitente");
+
+	listarRemitentes();
+
+})
+
+function listarRemitentes(){
+
+	var listarRemitentesArray = [];
+	var remitente = $(".nuevoRemitenteRegistro");
+
+
+	for(var i = 0; i < remitente.length; i++){
+		listarRemitentesArray.push({ "id" : $(remitente[i]).attr("idRemitente"), 
+							  "rem" : $(remitente[i]).val()})
+	}
+
+	console.log(listarRemitentesArray);
+
+	$("#listadoRemitentes").val(JSON.stringify(listarRemitentesArray)); 
+
+}
 
 function tablaRemitentesExternos()
 {
 
 	$("#contenido-modal-accion").append(
 		
-		'<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
+		'<div class="row"><br><table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
 		'<thead>'+      
 		 '<tr>'+           
 		  '<th style="width:5px">#</th>'+
@@ -293,7 +398,7 @@ function tablaRemitentesExternos()
 		   '<th style="width:10px">Acción</th>'+
 		 '</tr> '+
 		'</thead>'+
-		'</table>'
+		'</table></div>'
 	)
 }
 

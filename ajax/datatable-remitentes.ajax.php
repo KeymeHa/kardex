@@ -6,8 +6,11 @@ require_once "../modelos/parametros.modelo.php";
 
 		
 class TablaRemitentes
-{	public function mostrarTablaRemitentes()
+{	
+	public $sw ;
+	public function mostrarTablaRemitentes()
 	{	  
+
 		  $item = null;
 	      $valor = null;
 	      $remitentes = ControladorParametros::ctrmostrarRegistros("remitente", null, null);
@@ -19,7 +22,17 @@ class TablaRemitentes
 
 		for( $i = 0; $i < count($remitentes); $i++)
 		{	
-			$acciones = "<div class='btn-group'><button type='button' class='btn btn-success btnRemitente' data-dismiss='modal' onclick='enviarRemitente(".$remitentes[$i]["id"].")' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-plus'></i></button></div>";
+
+			if ( $this->sw == 1 ) 
+			{
+				$acciones = "<div class='btn-group'><button type='button' class='btn btn-success agregarRemitente RegresarBoton' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-plus'></i></button></div>";
+			}
+			else
+			{
+				$acciones = "<div class='btn-group'><button type='button' class='btn btn-success btnRemitente' data-dismiss='modal' onclick='enviarRemitente(".$remitentes[$i]["id"].")' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-plus'></i></button></div>";
+			}
+
+			
 
 		    $dJson .='[
 	    		"'.($i + 1).'",
@@ -37,4 +50,14 @@ class TablaRemitentes
 }
 
 $verRemitentes = new TablaRemitentes();
+
+if(isset($_GET["sw"]))
+{
+	$verRemitentes -> sw = $_GET["sw"];
+}
+else
+{
+	$verRemitentes -> sw = 0;
+}
+
 $verRemitentes -> mostrarTablaRemitentes();

@@ -634,6 +634,12 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 		{
 
 			tablaElegida =  $('.tablaRemitentes');
+
+			if(dato != 0)
+			{
+			  variable = "?sw="+dato;
+			}
+
 			tablaAjax = 'remitentes';
 			
 		}
