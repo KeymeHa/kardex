@@ -966,7 +966,33 @@ class ControladorRadicados
 		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
 
-		
+		//fecha inicio final
+
+		$datetime1 = date_create($registro["fecha"]);
+		$datetime2 = date_create($registro["fecha_vencimiento"]);
+		$interval = date_diff($datetime1, $datetime2);
+
+		//fecha actual y final
+
+		$fechaActual = date('d-m-Y');
+		$datetime3 = date_create($fechaActual);
+		$interval2 = date_diff($datetime3, $datetime2);
+
+		//resultado
+
+		$porcentaje = ((float)$interval->format('%a') * 10) / $interval2->format('%a'); // Regla de tres
+    	$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
+    	$registro["contador"] = $radicado["contador"];
+
+    	$hora = new DateTime($registro["fecha"]);
+    	$registro["hora"] = $hora->format('h:i a');
+
+		$radicado["fecha"] = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
+		$radicado["fecha_vencimiento"] = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);
+
+		$registro["fecha"] = $radicado["fecha"];
+		$registro["fecha_vencimiento"] = $radicado["fecha_vencimiento"];
+
 		if ($sw == 1) 
 		{
 			return $radicado;

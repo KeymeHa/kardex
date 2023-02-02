@@ -10,12 +10,9 @@
       $valor = $_GET["idRegistro"];
       $registro = ControladorRadicados::ctrAccesoRapidoRegistros($valor, 0);
       $radicado = ControladorRadicados::ctrAccesoRapidoRegistros($valor, 1);
-
-      $fecha = ControladorParametros::ctrOrdenFecha($radicado["fecha"], 0);
-      $fecha_vencimiento = ControladorParametros::ctrOrdenFecha($radicado["fecha_vencimiento"], 0);
       $area_responsable = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $registro["id_area"], "nombre");
       $responsable = ControladorParametros::ctrmostrarRegistroEspecifico('usuarios', "id", $registro["id_usuario"], "nombre");
-      $estado = ControladorParametros::ctrmostrarRegistroEspecifico('estado_pqr', "id", $registro["id_estado"], "nombre");
+      $estado = ControladorParametros::ctrmostrarRegistros('estado_pqr', "id", $registro["id_estado"]);
     }
   }
   else
@@ -32,7 +29,7 @@
     </a>
     <br><br>
     <h1>    
-      Radicado: <?php echo $radicado["radicado"]." - ".$estado; ?><b></b>  
+      Radicado: <?php echo $radicado["radicado"]." - ".$estado["nombre"]; ?><b></b>  
     </h1>
     <ol class="breadcrumb">     
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -41,65 +38,97 @@
     </ol>
   </section>
   <section class="content">
-    <div class="box">
+    <div class="box box-<?php echo $estado['html'];?>">
       <div class="box-header with-border">
         <h3 class="box-title">Información Registro</h3> 
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          </div>
       </div>    
       <div class="box-body" style="font-size: 18px;">  
 
-         <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-6">
 
-          <dl class="dl-horizontal">
-            <dt>Fecha Radicado:</dt>
-            <dd><?php echo $fecha; ?></dd>
-            <dt>Fecha Vencimiento:</dt>
-            <dd><?php echo $fecha_vencimiento; ?></dd>
-            <dt>Días de Retención:</dt>
-            <dd><?php echo "2 / ".$registro["dias_habiles"]." días habiles"; ?></dd>
-            <dt>Estado:</dt>
-            <dd><?php echo $estado; ?></dd>
-          </dl>
+            <dl class="dl-horizontal">
+              <dt>Fecha Radicado:</dt>
+              <dd><?php echo $radicado["fecha"]; ?></dd>
+              <dt>Fecha Vencimiento:</dt>
+              <dd><?php echo $radicado["fecha_vencimiento"]; ?></dd>
+              <dt>Días de Retención:</dt>
+              <dd><?php echo "2 / ".$registro["dias_habiles"]." días habiles"; ?></dd>
+              <dt>Estado:</dt>
+              <dd><button type="button" class="btn btn-<?php echo $estado['html'];?>" ><?php echo $estado["nombre"]; ?></button></dd>
+            </dl>
 
 
+          </div>
+
+          <div class="col-lg-6">
+
+            <dl class="dl-horizontal">
+              <dt>Asunto:</dt>
+              <dd><?php echo $radicado["asunto"]; ?></dd>
+              <dt>Remitente:</dt>
+              <dd><?php echo $radicado["id_remitente"]; ?></dd>
+              <dt>Área Encargada:</dt>
+              <dd><?php echo $area_responsable; ?></dd>
+               <dt>Encargado(a):</dt>
+              <dd><?php echo $responsable; ?></dd>
+               <dt>Recibido por:</dt>
+              <dd><?php echo $radicado["recibido"]; ?></dd>
+              <?php
+
+              if (!is_null($radicado["observaciones"]) && $radicado["observaciones"] != "" ) {
+                echo ' <dt>Observaciones (Gral):</dt>
+              <dd>'.$radicado["observaciones"].'</dd>';
+              }
+
+              if (!is_null($radicado["direccion"]) && $radicado["direccion"] != "") {
+                echo ' <dt>Dirección:</dt>
+              <dd>'.$radicado["direccion"].'</dd>';
+              }
+
+               if (!is_null($radicado["correo"]) && $radicado["correo"] != "") {
+                echo ' <dt>Correo Electrónico:</dt>
+              <dd>'.$radicado["correo"].'</dd>';
+              }
+
+              ?>
+            </dl>
+
+
+          </div>
+        </div><!--class row-->
+        <div class="row">
+          <div class="col-md-12">
+
+          <?php 
+
+            if ($radicado["contador"] < 33) 
+            {
+              $tipoProgress = "success";
+            }
+            else if($radicado["contador"] >= 34 && $radicado["contador"] <= 66)
+            {
+              $tipoProgress = "warning";
+            }
+            else
+            {
+              $tipoProgress = "danger";
+            }
+
+            echo '<div class="col-lg-12"><div class="row"><div class="pull-left">'.$radicado["fecha"].'</div><div class="pull-right">'.$radicado["fecha_vencimiento"].'</div></div></div><p>'.$radicado["contador"].'%</p><div class="progress progress-sm active">
+                  <div class="progress-bar progress-bar-'.$tipoProgress.' progress-bar-striped" role="progressbar" style="width: '.$radicado["contador"].'%" title="">
+                  <span class="sr-only">20% Complete</span>
+                  </div>
+                  </div>';?>
+
+
+
+          </div>
         </div>
-
-        <div class="col-lg-6">
-
-          <dl class="dl-horizontal">
-            <dt>Asunto:</dt>
-            <dd><?php echo $radicado["asunto"]; ?></dd>
-            <dt>Remitente:</dt>
-            <dd><?php echo $radicado["id_remitente"]; ?></dd>
-            <dt>Área Encargada:</dt>
-            <dd><?php echo $area_responsable; ?></dd>
-             <dt>Encargado(a):</dt>
-            <dd><?php echo $responsable; ?></dd>
-             <dt>Recibido:</dt>
-            <dd><?php echo $radicado["recibido"]; ?></dd>
-            <?php
-
-            if (!is_null($radicado["observaciones"]) && $radicado["observaciones"] != "" ) {
-              echo ' <dt>Observaciones (Gral):</dt>
-            <dd>'.$radicado["observaciones"].'</dd>';
-            }
-
-            if (!is_null($radicado["direccion"]) && $radicado["direccion"] != "") {
-              echo ' <dt>Dirección:</dt>
-            <dd>'.$radicado["direccion"].'</dd>';
-            }
-
-             if (!is_null($radicado["correo"]) && $radicado["correo"] != "") {
-              echo ' <dt>Correo Electrónico:</dt>
-            <dd>'.$radicado["correo"].'</dd>';
-            }
-
-            ?>
-          </dl>
-
-
-        </div>
-
-
 
       </div><!--BOX BODY-->
       
@@ -118,111 +147,123 @@
     <div class="box">
       <div class="box-header">
        <h3 class="box-title">Acciones</h3>
+       <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+        </div>
       </div>
       <div class="box-body">
-       
+        <form role="form" method="post" enctype="multipart/form-data" class="formularioModalRegistros">
+        <div class="row">
+          <div class="col-md-6"><p>Fecha</p><input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" /></div>
+          <div class="col-md-6"><p>Hora</p><input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/></div>
+        </div>
+
+        <div class="row">
+          <br>
+          <div class="col-md-6">
+            <p>Seleccione una acción rapida para este oficio.</p>
+                    <!-- ENTRADA PARA EL NOMBRE -->         
+              <div class="form-group">   
+                <input type="hidden" id="id_Registro_accion" name="idRegistro" value="">    
+                <select class="form-control" id="select_accion" required name="accionReg">
+                  <?php
+
+                  $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
+                  echo '<option value="">Seleccione una Acción</option>';
+                  foreach ($accion_pqr as $key => $value) 
+                  {
+                    echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
+                  }
+
+                  ?>
+                </select>
+              </div>
+          </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+               <div class="panel">Detalles</div>
+              </div>
+            </div>
+          </div>
+
+         <div class="row">
+             <div id="contenido-modal-accion" class="col-md-8"></div>
+             <div id="contenido-modal-detalles" class="col-md-4"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+               <div class="panel">Constancia</div>
+                  <input type="file" name="editarArchivo">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Observaciones</label>
+                <textarea class="form-control" rows="3" rows="10" placeholder="Observaciones" name="observacionesReg" style="resize: none;"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 
     <div class="row">
 <div class="col-md-12">
 
-<ul class="timeline">
+  <ul class="timeline">
 
-<li class="time-label">
-<span class="bg-red">
-10 Feb. 2014
-</span>
-</li>
-
-
-<li>
-<i class="fa fa-envelope bg-blue"></i>
-<div class="timeline-item">
-<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-<div class="timeline-body">
-Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-weebly ning heekya handango imeem plugg dopplr jibjab, movity
-jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-quora plaxo ideeli hulu weebly balihoo...
-</div>
-<div class="timeline-footer">
-<a class="btn btn-primary btn-xs">Read more</a>
-<a class="btn btn-danger btn-xs">Delete</a>
-</div>
-</div>
-</li>
+    <li class="time-label">
+      <span class="bg-green">
+      <?php echo $radicado["fecha"];?>
+      </span>
+    </li>
 
 
-<li>
-<i class="fa fa-user bg-aqua"></i>
-<div class="timeline-item">
-<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-</div>
-</li>
+    <li>
+      <i class="fa fa-envelope bg-blue"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i> <?php echo $registro["hora"];?></span>
+          <h3 class="timeline-header">Fue Radicado el Documento</h3>
+      </div>
+    </li>
 
+    <!--
+  
+    <li>
+      <i class="fa fa-envelope bg-blue"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i>hora</span>
+          <h3 class="timeline-header">Fue Radicado el Documento</h3>
+          <div class="timeline-body">
+          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+          weebly ning heekya handango imeem plugg dopplr jibjab, movity
+          jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+          quora plaxo ideeli hulu weebly balihoo...
+          </div>
+        <div class="timeline-footer">
+          <a class="btn btn-primary btn-xs">Read more</a>
+          <a class="btn btn-danger btn-xs">Delete</a>
+        </div>
+      </div>
+    </li>
 
-<li>
-<i class="fa fa-comments bg-yellow"></i>
-<div class="timeline-item">
-<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-<div class="timeline-body">
-Take me to your leader!
-Switzerland is small and neutral!
-We are more like Germany, ambitious and misunderstood!
-</div>
-<div class="timeline-footer">
-<a class="btn btn-warning btn-flat btn-xs">View comment</a>
-</div>
-</div>
-</li>
+    -->
 
+    <li>
+      <i class="fa fa-clock-o bg-gray"></i>
+    </li>
 
-<li class="time-label">
-<span class="bg-green">
-3 Jan. 2014
-</span>
-</li>
+  </ul><!--class="timeline"-->
 
-
-<li>
-<i class="fa fa-camera bg-purple"></i>
-<div class="timeline-item">
-<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-<div class="timeline-body">
-<img src="https://placehold.it/150x100" alt="..." class="margin">
-<img src="https://placehold.it/150x100" alt="..." class="margin">
-<img src="https://placehold.it/150x100" alt="..." class="margin">
-<img src="https://placehold.it/150x100" alt="..." class="margin">
-</div>
-</div>
-</li>
-
-
-<li>
-<i class="fa fa-video-camera bg-maroon"></i>
-<div class="timeline-item">
-<span class="time"><i class="fa fa-clock-o"></i> 5 days ago</span>
-<h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
-<div class="timeline-body">
-<div class="embed-responsive embed-responsive-16by9">
-<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<div class="timeline-footer">
-<a href="#" class="btn btn-xs bg-maroon">See comments</a>
-</div>
-</div>
-</li>
-
-<li>
-<i class="fa fa-clock-o bg-gray"></i>
-</li>
-</ul>
 </div>
 
 </div>

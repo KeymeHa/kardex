@@ -161,6 +161,20 @@ $("table.tablaRegistros").on('click', '.btnVerRegistro', function() {
 
 $("table.tablaRegistros").on('click', '.btnFastRegistro', function() 
 {
+
+	var elemento = $("#fechaReg");
+    var elemento2 = $("#horaReg");
+
+	if ( $("#fechaReg") ) 
+    {
+    	hoy(elemento);
+    }
+
+    if ( $("#horaReg") ) 
+    {
+    	ahora(elemento2);
+    }
+	
 	var idRegistro = $(this).attr("idRegistro");
 
 	$("#id_Registro_accion").val(idRegistro);
@@ -290,7 +304,7 @@ function tablaRemitentesExternos()
 
 	$("#contenido-modal-accion").append(
 		
-		'<div class="row"><br><table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
+		'<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
 		'<thead>'+      
 		 '<tr>'+           
 		  '<th style="width:5px">#</th>'+
@@ -298,8 +312,7 @@ function tablaRemitentesExternos()
 		   '<th style="width:10px">Acción</th>'+
 		 '</tr> '+
 		'</thead>'+
-		'</table></div>'
-	)
+		'</table')
 }
 
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
@@ -474,19 +487,6 @@ $(".tablaPersonas").on("draw.dt", function(){
 	}
 })
 
-
-
-$(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
-        
-    if( $("button.btnGuardarRq").hasClass("btn-success") == false )
-    {
-    	$("button.btnGuardarRq").addClass("btn-success");
-    	$('button.btnGuardarRq').attr("disabled", false);
-    }
-
-    listarencargados();
-})
-
 var idquitarEncargado = [];
 localStorage.removeItem("quitarEncargado");
 
@@ -501,16 +501,6 @@ $(".formularioModalRegistros").on("click", "button.quitarEncargado", function(){
 	}
 	else
 	{ idquitarEncargado.concat(localStorage.getItem("quitarEncargado"));}
-
-	if($('.nuevoencargadoAgregado').find(".row").length)
-	{
-        
-    }else
-    {
-    	$("button.btnGuardarRq").removeClass("btn-success");
-    	$("button.btnGuardarRq").addClass("btn-default");
-    	$('button.btnGuardarRq').attr("disabled", true);
-    }
 
 	idquitarEncargado.push({"idper":idper});
 	localStorage.setItem("quitarEncargado", JSON.stringify(idquitarencargado));
@@ -548,6 +538,8 @@ function envioParametros(es)
 	var per = $("#inputVar").attr("per");
 	var anio = $("#inputVar").attr("anio");
 	paginaCargada(39, idUser, per, anio, es);
+
+	
 }
 
 function validarTablaRegistro()

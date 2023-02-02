@@ -142,6 +142,7 @@
     </div>
 
      <div class="box box-success">
+
       <div class="box-header with-border">
         <h3 class="box-title">
           Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';} ?>
@@ -236,12 +237,39 @@
                     <div class="row div-progress-bar"></div>
                   </div>
             </div><!--row-->
+            <div class="row">
+              <div class="col-md-6">
+                  <p>Fecha</p>
+                  <input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" />
+              </div>
+               <div class="col-md-6">
+                  <p>Hora</p>
+                  <input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/>
+              </div>
+            </div>
+
+            <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+               <div class="panel">Detalles</div>
+              </div>
+            </div>
+          </div>
 
             <div class="row">
                <div id="contenido-modal-accion" class="col-md-8"></div>
                <div id="contenido-modal-detalles" class="col-md-4"></div>
             </div>
 
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+               <div class="panel">Constancia</div>
+                  <input type="file" name="editarArchivo">
+              </div>
+            </div>
           </div>
 
           <div class="row">
