@@ -25,7 +25,7 @@ class TablaRemitentes
 
 			if ( $this->sw == 1 ) 
 			{
-				$acciones = "<div class='btn-group'><button type='button' class='btn btn-success agregarRemitente RegresarBoton' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-plus'></i></button></div>";
+				$acciones = "<div class='btn-group'><button type='button' class='btn btn-success agregarRemitente RegresarBotonE' title='Seleccionar Remitente' remitente='".$remitentes[$i]["nombre"]."' idRemitente='".$remitentes[$i]["id"]."'><i class='fa fa-plus'></i></button></div>";
 			}
 			else
 			{

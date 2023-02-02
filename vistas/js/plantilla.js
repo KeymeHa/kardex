@@ -348,13 +348,18 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 		}
 		else if(pagina == 16)
 		{
-			tablaElegida =  $('.tablaPersonas');
+			
 			tablaAjax = 'personas';
 			variable = "?actual="+anioActual;
 
-			if(dato != 0)
+			if(dato == 4)
 			{
 			  variable = "?sw="+dato;
+			  tablaElegida =  $('.tablaPersonasReg');
+			}
+			else
+			{
+				tablaElegida =  $('.tablaPersonas');
 			}
 		}
 		else if(pagina == 17)

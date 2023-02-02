@@ -19,10 +19,10 @@ class Tablapersonas
 {	
 	public $idArea;
 	public $anioActual;
-	public $sw;
+	public $gatillo;
 	public function mostrarTablapersonas()
 	{	  
-		$sw = $this->sw;
+		$sw = $this->gatillo;
 
 		$valor = $this->idArea;
 
@@ -72,9 +72,10 @@ class Tablapersonas
 	    		"'.$acciones.'"
 	    		],';
 		   }
-		   else
+		   elseif($sw == 4)
 		   {
-		   		$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnSelectPer'  title='Seleccionar a ".$personas[$i]["nombre"]."' idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-check'></i></button></div></div>";
+
+		   		$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success agregarPersona RegresarBotonE' type='button' encargado='".$personas[$i]["nombre"]."'  title='Seleccionar a ".$personas[$i]["nombre"]."'  idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-check'></i></button></div></div>";
 
 		   		$dJson .='[
 	    		"'.($i + 1).'",
@@ -119,11 +120,11 @@ else
 //sirve para omitir ciertas columnas como requisiciones y acciones
 if (isset($_GET["sw"])) 
 {
-	$verpersonas -> sw = $_GET["sw"];
+	$verpersonas -> gatillo = $_GET["sw"];
 }
 else
 {
-	$verpersonas -> sw = 0;
+	$verpersonas -> gatillo = 0;
 }
 
 $verpersonas -> mostrarTablapersonas();

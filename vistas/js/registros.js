@@ -112,7 +112,7 @@ $(".tablaRegistros").on("click", "button.btnVerRegistro", function(){
 	window.location = "index.php?ruta=correspondencia&idRegistro="+idRegistro;
 })
 
-
+/*
 function aparecertablaRegistros()
 {
 	$("div.div-tablaRegistros").append(
@@ -134,7 +134,7 @@ function aparecertablaRegistros()
         '</table>'
 		);
 }
-
+*/
 
 
 $("h4.banner-pendientes").click(function(){
@@ -221,27 +221,25 @@ $("table.tablaRegistros").on('click', '.btnFastRegistro', function()
 });
 
 
+//--------------------------------------------------SELECT ACCION REGISTROS ( VENTANA MODAL )-----------------------------------
+
 $('#select_accion').change(function() {
 	var valor = $(this).val();
 	$("#contenido-modal-accion").children().remove();
 	$("#contenido-modal-detalles").children().remove();
     
-    //traslado interno
-	if (valor == 1) 
+    //traslado interno  
+
+    //devuelto para reasignación (El encargado de recibir el oficio, menciono que no es de su competencia, 
+	//El encargado de jurídica recibe el oficio y lo remite a la nueva área encargada de responderlo
+	if (valor == 1 || valor == 3) 
 	{
-		$("#contenido-modal-accion").append(
-			'<table class="table table-bordered table-striped dt-responsive tablaPersonas" width="100%">'+
-			'<thead>'+
-			 '<tr>'+
-			   '<th style="width:10px">#</th>'+
-			   '<th>Nombre</th>'+
-			   '<th>Área</th>'+
-			   '<th style="width: 50px;">Acciones</th>'+
-			 '</tr>'+ 
-			'</thead>'+
-		'</table>');
-		paginaCargada(16, 0, 0, 0, 3);
+		$("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEncargados" value>'+
+			'<div class="form-group nuevoencargadoAgregado"></div>');
+		tablaEncargadosInternos();
+		paginaCargada(16, 0, 0, 0, 4);
 	}
+	//traslado externo
 	else if(valor == 2)
 	{
 		$("#contenido-modal-accion").append('<div class="row"><div class="col-lg-6">'+
@@ -251,7 +249,7 @@ $('#select_accion').change(function() {
                   '</div></div><br>'+
                 '</div>');
 
-		$("#contenido-modal-detalles").append('<input type="hidden" name="listadoRemitentes" id="listadoRemitentes" value>'+
+		$("#contenido-modal-detalles").append('<input type="hidden" name="listadoRemitentesReg" id="listadoRemitentes" value>'+
 			'<div class="form-group nuevoRemitenteAgregado"><div class="row">'+
                 '<div class="col-xs-1"></div>'+
                 '<div class="col-xs-7" style="padding-right:0px">'+
@@ -262,18 +260,19 @@ $('#select_accion').change(function() {
 		tablaRemitentesExternos();
 		paginaCargada(37, 0, 0, 0, 1);
 	}
-	else if(valor == 3)
-	{
-		
-	}
+	
+	//Respondido por evaluar
 	else if(valor == 4)
 	{
 		
 	}
+	//Respondido y Enviado (Se genero respuesta por el encargado de 
+	//gestionar la respuesta y fue enviado al supervisor para su aprobación)
 	else if(valor == 5)
 	{
 		
 	}
+	//Para Enviar (por Correo Electrónico y/o Correo Fisico)
 	else if(valor == 6)
 	{
 		
@@ -281,6 +280,27 @@ $('#select_accion').change(function() {
 
 
 });
+
+
+
+//--------------------------------------------------TABLA REMITENTES------------------------------------------------
+
+function tablaRemitentesExternos()
+{
+
+	$("#contenido-modal-accion").append(
+		
+		'<div class="row"><br><table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
+		'<thead>'+      
+		 '<tr>'+           
+		  '<th style="width:5px">#</th>'+
+		   '<th>Nombre</th>'+
+		   '<th style="width:10px">Acción</th>'+
+		 '</tr> '+
+		'</thead>'+
+		'</table></div>'
+	)
+}
 
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
 
@@ -320,6 +340,7 @@ $(".tablaRemitentes").on("draw.dt", function(){
 	}
 })
 
+/*
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
         
         if( $("button.btnGuardarRq").hasClass("btn-success") == false )
@@ -328,10 +349,7 @@ $(".formularioModalRegistros").on("click", "button.agregarRemitente", function()
         	$('button.btnGuardarRq').attr("disabled", false);
         }
     listarRemitentes();
-})
-
-//EDITAR
-
+})*/
 
 var idquitarRemitente = [];
 localStorage.removeItem("quitarRemitente");
@@ -385,23 +403,143 @@ function listarRemitentes(){
 
 }
 
-function tablaRemitentesExternos()
-{
 
+
+
+//-------------------------------------------------FIN TABLA REMITENTES----------------------------------------------------
+//-----------------------------------------------TABLA ENCARGADOS INTERNOS-------------------------------------------------
+
+function tablaEncargadosInternos()
+{
 	$("#contenido-modal-accion").append(
-		
-		'<div class="row"><br><table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
-		'<thead>'+      
-		 '<tr>'+           
-		  '<th style="width:5px">#</th>'+
+	'<table class="table table-bordered table-striped dt-responsive tablaPersonasReg" width="100%">'+
+		'<thead>'+
+		 '<tr>'+
+		   '<th style="width:10px">#</th>'+
 		   '<th>Nombre</th>'+
-		   '<th style="width:10px">Acción</th>'+
-		 '</tr> '+
+		   '<th>Área</th>'+
+		   '<th style="width: 50px;">Acciones</th>'+
+		 '</tr>'+ 
 		'</thead>'+
-		'</table></div>'
-	)
+	'</table>');
 }
 
+
+$(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
+
+
+	var idper = $(this).attr("idper");
+	var encargado = $(this).attr("encargado");
+
+	//$(this).removeClass('btn-success agregarPersona');
+
+	//$(this).addClass('btn-default');
+
+	if ( $(".nuevoencargadoAgregado").children().length > 0 ) 
+	{
+		$(".nuevoencargadoAgregado").children().remove();
+	}
+
+	$(".nuevoencargadoAgregado").append(
+		'<div class="row">'+
+                '<div class="col-xs-1"></div>'+
+                '<div class="col-xs-7" style="padding-right:0px">'+
+                 ' <p class="help-block">Asignar a:</p>'+ 
+                '</div>'+
+                '<br>'+
+              '</div>'+
+		'<div class="row" style="padding:5px 15px">'+
+           ' <div class="input-group">'+
+            '  <span class="input-group-addon">'+
+             '   <button type="button" class="btn btn-danger btn-xs quitarEncargado" idper="'+idper+'"><i class="fa fa-times"></i></button>'+
+             ' </span>'+
+            '<input type="text" class="form-control nuevoencargadoRegistro" idper="'+idper+'" value="'+encargado+'" readonly>'+
+          	'</div>'+
+        '</div>')
+
+	listarencargados();
+
+
+});
+
+
+$(".tablaPersonas").on("draw.dt", function(){
+	if(localStorage.getItem("quitarEncargado") != null){
+		var listaidpers = JSON.parse(localStorage.getItem("quitarEncargado"));
+		for(var i = 0; i < listaidpers.length; i++)
+		{
+			$("button.RegresarBotonE[idper='"+listaidpers[i]["idper"]+"']").removeClass('btn-default');
+			$("button.RegresarBotonE[idper='"+listaidpers[i]["idper"]+"']").addClass('btn-success agregarPersona');	
+		}
+	}
+})
+
+
+
+$(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
+        
+    if( $("button.btnGuardarRq").hasClass("btn-success") == false )
+    {
+    	$("button.btnGuardarRq").addClass("btn-success");
+    	$('button.btnGuardarRq').attr("disabled", false);
+    }
+
+    listarencargados();
+})
+
+var idquitarEncargado = [];
+localStorage.removeItem("quitarEncargado");
+
+$(".formularioModalRegistros").on("click", "button.quitarEncargado", function(){
+
+	$(this).parent().parent().parent().remove();
+
+	var idper = $(this).attr("idper");
+
+	if(localStorage.getItem("quitarEncargado") == null)
+	{ idquitarEncargado = []; 
+	}
+	else
+	{ idquitarEncargado.concat(localStorage.getItem("quitarEncargado"));}
+
+	if($('.nuevoencargadoAgregado').find(".row").length)
+	{
+        
+    }else
+    {
+    	$("button.btnGuardarRq").removeClass("btn-success");
+    	$("button.btnGuardarRq").addClass("btn-default");
+    	$('button.btnGuardarRq').attr("disabled", true);
+    }
+
+	idquitarEncargado.push({"idper":idper});
+	localStorage.setItem("quitarEncargado", JSON.stringify(idquitarencargado));
+
+	$("button.RegresarBotonE[idper='"+idper+"']").removeClass("btn-default");
+	$("button.RegresarBotonE[idper='"+idper+"']").addClass("btn-success agregarPersona");
+
+	listarencargados();
+
+})
+
+function listarencargados(){
+
+	var listarencargadosArray = [];
+	var encargado = $(".nuevoencargadoRegistro");
+
+
+	for(var i = 0; i < encargado.length; i++){
+		listarencargadosArray.push({ "id" : $(encargado[i]).attr("idper"), 
+							  "rem" : $(encargado[i]).val()})
+	}
+
+	console.log(listarencargadosArray);
+
+	$("#listadoEncargados").val(JSON.stringify(listarencargadosArray)); 
+
+}
+
+//--------------------------------------------FIN TABLA ENCARGADOS INTERNOS------------------------------------------------
 
 //mostrar registro seleccionado
 function envioParametros(es)

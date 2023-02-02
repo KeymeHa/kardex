@@ -77,7 +77,8 @@
              </h4>
             </div>';
     }//vencidas
-    elseif ($estados_pqr[3] > 0) 
+    
+    if ($estados_pqr[3] > 0) 
     {
       echo '<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -207,7 +208,7 @@
                     <!-- ENTRADA PARA EL NOMBRE -->         
                     <div class="form-group">   
                       <input type="hidden" id="id_Registro_accion" name="idRegistro" value="">    
-                      <select class="form-control" id="select_accion" required>
+                      <select class="form-control" id="select_accion" required name="accionReg">
                         <?php
 
                         $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
@@ -238,15 +239,19 @@
 
             <div class="row">
                <div id="contenido-modal-accion" class="col-md-8"></div>
-               <div id="contenido-modal-detalles" class="col-md-4">
-                 
-               </div>
+               <div id="contenido-modal-detalles" class="col-md-4"></div>
             </div>
 
           </div>
 
-         
-
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Observaciones</label>
+                <textarea class="form-control" rows="3" rows="10" placeholder="Observaciones" name="observacionesReg" style="resize: none;"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!--=====================================
