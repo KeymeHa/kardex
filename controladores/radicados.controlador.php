@@ -966,6 +966,49 @@ class ControladorRadicados
 		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
 
+		$datetime1 = date_create($registro["fecha"]);
+		$datetime2 = date_create($registro["fecha_vencimiento"]);
+		$fechaActual = date('d-m-Y');
+		$datetime3 = date_create($fechaActual);
+
+		$interval = date_diff($datetime1, $datetime2);
+		$interval2 = date_diff($datetime3, $datetime2);
+
+		if ($interval2->format('%a') <= $interval->format('%a') ) 
+		{
+			if($interval->format('%a') != 0 && $interval2->format('%a') != 0)
+			{
+				$porcentaje = ((float)$interval2->format('%a') * 10) / $interval->format('%a'); // Regla de tres
+				$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
+	    		$registro["contador"] = $radicado["contador"];
+			}
+			else
+			{
+				$registro["contador"] = 100;
+				$radicado["contador"] = 100;
+			}
+		}
+		else
+		{
+			$registro["contador"] = 100;
+			$radicado["contador"] = 100;
+		}
+
+		/*$radicado["fecha"] = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
+		$radicado["fecha_vencimiento"] = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);*/
+
+		$hora = new DateTime($registro["fecha"]);
+    	$registro["hora"] = $hora->format('h:i a');
+
+    	$radicado["hora"] = $registro["hora"];
+
+
+    	/*$fechaActual = date('d-m-Y');
+		$datetime3 = date_create($fechaActual);
+		$interval2 = date_diff($datetime3, $datetime2);*/
+
+
+		/*
 		//fecha inicio final
 
 		$datetime1 = date_create($registro["fecha"]);
@@ -987,11 +1030,10 @@ class ControladorRadicados
     	$hora = new DateTime($registro["fecha"]);
     	$registro["hora"] = $hora->format('h:i a');
 
-		$radicado["fecha"] = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
-		$radicado["fecha_vencimiento"] = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);
+		
 
 		$registro["fecha"] = $radicado["fecha"];
-		$registro["fecha_vencimiento"] = $radicado["fecha_vencimiento"];
+		$registro["fecha_vencimiento"] = $radicado["fecha_vencimiento"];*/
 
 		if ($sw == 1) 
 		{
@@ -1005,6 +1047,8 @@ class ControladorRadicados
 		
 	}
 
+	
+	
 }
 
 
