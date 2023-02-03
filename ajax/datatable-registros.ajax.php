@@ -139,7 +139,7 @@ class TablaRegistros
 				    		"'.$usuarioNombre["nombre"].'",
 				    		"'.$fecha_respuesta.'",
 				    		"'.$fecha_vencimiento.'",
-				    		"'.$registrosPQR[$i]["dias_restantes"].'",
+				    		"'.$registrosPQR[$i]["dias_contados"].'/'.$registrosPQR[$i]["dias_habiles"].'",
 				    		"'.$acciones.'"
 				    		],';
 

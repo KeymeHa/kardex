@@ -336,7 +336,7 @@ $(".formularioModalRegistros").on("click", "button.agregarRemitente", function()
           	'</div>'+
         '</div>')
 
-	listarRemitentes();
+	//listarRemitentes();
 
 
 });
@@ -353,7 +353,7 @@ $(".tablaRemitentes").on("draw.dt", function(){
 	}
 })
 
-/*
+
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
         
         if( $("button.btnGuardarRq").hasClass("btn-success") == false )
@@ -362,7 +362,7 @@ $(".formularioModalRegistros").on("click", "button.agregarRemitente", function()
         	$('button.btnGuardarRq').attr("disabled", false);
         }
     listarRemitentes();
-})*/
+})
 
 var idquitarRemitente = [];
 localStorage.removeItem("quitarRemitente");
@@ -422,6 +422,7 @@ function listarRemitentes(){
 //-------------------------------------------------FIN TABLA REMITENTES----------------------------------------------------
 //-----------------------------------------------TABLA ENCARGADOS INTERNOS-------------------------------------------------
 
+
 function tablaEncargadosInternos()
 {
 	$("#contenido-modal-accion").append(
@@ -443,6 +444,7 @@ $(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
 
 	var idper = $(this).attr("idper");
 	var encargado = $(this).attr("encargado");
+	var idArea = $(this).attr("idArea");
 
 	//$(this).removeClass('btn-success agregarPersona');
 
@@ -466,11 +468,11 @@ $(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
             '  <span class="input-group-addon">'+
              '   <button type="button" class="btn btn-danger btn-xs quitarEncargado" idper="'+idper+'"><i class="fa fa-times"></i></button>'+
              ' </span>'+
-            '<input type="text" class="form-control nuevoencargadoRegistro" idper="'+idper+'" value="'+encargado+'" readonly>'+
+            '<input type="text" class="form-control nuevoencargadoRegistro" idArea="'+idArea+'" idper="'+idper+'" value="'+encargado+'" readonly>'+
           	'</div>'+
         '</div>')
 
-	listarencargados();
+	//listarencargados();
 
 
 });
@@ -520,12 +522,13 @@ function listarencargados(){
 
 	for(var i = 0; i < encargado.length; i++){
 		listarencargadosArray.push({ "id" : $(encargado[i]).attr("idper"), 
-							  "rem" : $(encargado[i]).val()})
+									"idA" : $(encargado[i]).attr("idArea"), 
+							  		"nom" : $(encargado[i]).val()})
 	}
 
 	console.log(listarencargadosArray);
 
-	$("#listadoEncargados").val(JSON.stringify(listarencargadosArray)); 
+	$("#listadoEngargadoReg").val(JSON.stringify(listarencargadosArray)); 
 
 }
 
@@ -565,7 +568,7 @@ function aparecerTablaRegistros()
            '<th>Encargado</th>'+
            '<th>Fecha Respuesta</th>'+
            '<th>Fecha Vencimiento</th>'+
-           '<th>dias_restantes</th>'+ 
+           '<th>días</th>'+ 
            '<th>Acciones</th>'+
          '</tr>'+
         '</thead>'+

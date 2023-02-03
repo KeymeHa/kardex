@@ -15,6 +15,7 @@ $(document).ready(function() {
 
 });
 
+
 $('#select_accion').change(function() {
     var valor = $(this).val();
     $("#contenido-modal-accion").children().remove();
@@ -26,7 +27,7 @@ $('#select_accion').change(function() {
     //El encargado de jurídica recibe el oficio y lo remite a la nueva área encargada de responderlo
     if (valor == 1 || valor == 3) 
     {
-        $("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEncargados" value>'+
+        $("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEngargadoReg" value>'+
             '<div class="form-group nuevoencargadoAgregado"></div>');
         tablaEncargadosInternos();
         paginaCargada(16, 0, 0, 0, 4);
@@ -80,7 +81,7 @@ $('#select_accion').change(function() {
 function tablaRemitentesExternos()
 {
 
-   $("#contenido-modal-accion").append(
+    $("#contenido-modal-accion").append(
         
         '<table class="table table-bordered table-striped dt-responsive tablaRemitentes" data-page-length="10" width="100%" data-page-length="25">'+       
         '<thead>'+      
@@ -90,8 +91,7 @@ function tablaRemitentesExternos()
            '<th style="width:10px">Acción</th>'+
          '</tr> '+
         '</thead>'+
-        '</table>'
-    )
+        '</table')
 }
 
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
@@ -132,7 +132,7 @@ $(".tablaRemitentes").on("draw.dt", function(){
     }
 })
 
-/*
+
 $(".formularioModalRegistros").on("click", "button.agregarRemitente", function(){
         
         if( $("button.btnGuardarRq").hasClass("btn-success") == false )
@@ -141,7 +141,7 @@ $(".formularioModalRegistros").on("click", "button.agregarRemitente", function()
             $('button.btnGuardarRq').attr("disabled", false);
         }
     listarRemitentes();
-})*/
+})
 
 var idquitarRemitente = [];
 localStorage.removeItem("quitarRemitente");
@@ -157,6 +157,16 @@ $(".formularioModalRegistros").on("click", "button.quitarRemitente", function(){
     }
     else
     { idquitarRemitente.concat(localStorage.getItem("quitarRemitente"));}
+
+    if($('.nuevoRemitenteAgregado').find(".row").length)
+    {
+        
+    }else
+    {
+        $("button.btnGuardarRq").removeClass("btn-success");
+        $("button.btnGuardarRq").addClass("btn-default");
+        $('button.btnGuardarRq').attr("disabled", true);
+    }
 
     idquitarRemitente.push({"idRemitente":idRemitente});
     localStorage.setItem("quitarRemitente", JSON.stringify(idquitarRemitente));
@@ -191,6 +201,7 @@ function listarRemitentes(){
 //-------------------------------------------------FIN TABLA REMITENTES----------------------------------------------------
 //-----------------------------------------------TABLA ENCARGADOS INTERNOS-------------------------------------------------
 
+
 function tablaEncargadosInternos()
 {
     $("#contenido-modal-accion").append(
@@ -212,6 +223,7 @@ $(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
 
     var idper = $(this).attr("idper");
     var encargado = $(this).attr("encargado");
+    var idArea = $(this).attr("idArea");
 
     //$(this).removeClass('btn-success agregarPersona');
 
@@ -235,7 +247,7 @@ $(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
             '  <span class="input-group-addon">'+
              '   <button type="button" class="btn btn-danger btn-xs quitarEncargado" idper="'+idper+'"><i class="fa fa-times"></i></button>'+
              ' </span>'+
-            '<input type="text" class="form-control nuevoencargadoRegistro" idper="'+idper+'" value="'+encargado+'" readonly>'+
+            '<input type="text" class="form-control nuevoencargadoRegistro" idArea="'+idArea+'" idper="'+idper+'" value="'+encargado+'" readonly>'+
             '</div>'+
         '</div>')
 
@@ -254,19 +266,6 @@ $(".tablaPersonas").on("draw.dt", function(){
             $("button.RegresarBotonE[idper='"+listaidpers[i]["idper"]+"']").addClass('btn-success agregarPersona'); 
         }
     }
-})
-
-
-
-$(".formularioModalRegistros").on("click", "button.agregarPersona", function(){
-        
-    if( $("button.btnGuardarRq").hasClass("btn-success") == false )
-    {
-        $("button.btnGuardarRq").addClass("btn-success");
-        $('button.btnGuardarRq').attr("disabled", false);
-    }
-
-    listarencargados();
 })
 
 var idquitarEncargado = [];
@@ -302,11 +301,57 @@ function listarencargados(){
 
     for(var i = 0; i < encargado.length; i++){
         listarencargadosArray.push({ "id" : $(encargado[i]).attr("idper"), 
-                              "rem" : $(encargado[i]).val()})
+                                    "idA" : $(encargado[i]).attr("idArea"), 
+                                    "nom" : $(encargado[i]).val()})
     }
 
     console.log(listarencargadosArray);
 
-    $("#listadoEncargados").val(JSON.stringify(listarencargadosArray)); 
+    $("#listadoEngargadoReg").val(JSON.stringify(listarencargadosArray)); 
 
 }
+
+//--------------------------------------------FIN TABLA ENCARGADOS INTERNOS------------------------------------------------
+
+//mostrar registro seleccionado
+function envioParametros(es)
+{
+    var idUser = $("#inputVar").attr("idUser");
+    var per = $("#inputVar").attr("per");
+    var anio = $("#inputVar").attr("anio");
+    paginaCargada(39, idUser, per, anio, es);
+
+    
+}
+
+function validarTablaRegistro()
+{
+    if($('div.div-tablaRegistros').find("table").length)
+    {
+        $('div.div-tablaRegistros').children().remove();        
+    }
+}
+
+function aparecerTablaRegistros()
+{
+    $("div.div-tablaRegistros").append(
+        '<table class="table table-bordered table-striped dt-responsive tablaRegistros" width="100%">'+
+        '<thead>'+
+         '<tr>'+
+           '<th>Fecha Radicado</th>'+
+           '<th># Radicado</th>'+
+           '<th>Estado</th>'+
+           '<th>Asunto</th>'+
+           '<th>Remitente</th>'+
+           '<th>Área</th>'+
+           '<th>Encargado</th>'+
+           '<th>Fecha Respuesta</th>'+
+           '<th>Fecha Vencimiento</th>'+
+           '<th>días</th>'+ 
+           '<th>Acciones</th>'+
+         '</tr>'+
+        '</thead>'+
+        '</table>'
+        );
+}
+

@@ -75,7 +75,7 @@ class Tablapersonas
 		   elseif($sw == 4)
 		   {
 
-		   		$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success agregarPersona RegresarBotonE' type='button' encargado='".$personas[$i]["nombre"]."'  title='Seleccionar a ".$personas[$i]["nombre"]."'  idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-check'></i></button></div></div>";
+		   		$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success agregarPersona RegresarBotonE' type='button' encargado='".$personas[$i]["nombre"]."'  title='Seleccionar a ".$personas[$i]["nombre"]."'  idper='".$personas[$i]["id"]."' idArea='".$personas[$i]["id_area"]."'><i class='fa fa-check'></i></button></div></div>";
 
 		   		$dJson .='[
 	    		"'.($i + 1).'",

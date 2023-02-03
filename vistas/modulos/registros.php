@@ -162,7 +162,7 @@
            <th>Encargado</th>
            <th>Fecha Respuesta</th>
            <th>Fecha Vencimiento</th>
-           <th>dias_restantes</th> 
+           <th>días</th> 
            <th style="width: 100px">Acciones</th>
          </tr> 
         </thead>
@@ -291,6 +291,10 @@
           <button type="submit" class="btn btn-success btn-GuardarRegistro">Grabar</button>
         </div>
 
+        <?php
+          $actualizarReg = new ControladorRadicados();
+          $actualizarReg -> ctrActualizarRegistro();
+        ?>
 
       </form>
     </div>

@@ -423,11 +423,15 @@ class ModeloRadicados
 
 	static public function mdlAcualizarTrazabilidad($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_indicativo = :id_indicativo, sw = :sw  WHERE id_radicado = :id_radicado");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_area = :id_area, id_estado = :id_estado, fecha_asignacion = :fecha_asignacion, acciones = :acciones, observacion_usuario = :observacion_usuario  WHERE id = :id");
 
-		$stmt->bindParam(":id_indicativo", $datos["id_indicativo"], PDO::PARAM_STR);
-		$stmt->bindParam(":sw", $datos["sw"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_radicado", $datos["id_radicado"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_asignacion", $datos["fecha_asignacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":acciones", $datos["acciones"], PDO::PARAM_STR);
+		$stmt->bindParam(":observacion_usuario", $datos["observacion_usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 

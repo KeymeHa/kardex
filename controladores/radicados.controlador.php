@@ -960,6 +960,8 @@ class ControladorRadicados
 	}
 
 
+
+
 	static public function ctrAccesoRapidoRegistros($idRegistro, $sw)
 	{
 		$traer = new ControladorRadicados;
@@ -973,6 +975,9 @@ class ControladorRadicados
 
 		$interval = date_diff($datetime1, $datetime2);
 		$interval2 = date_diff($datetime3, $datetime2);
+
+		//días contados
+		$interval3 = date_diff($datetime1, $datetime3);
 
 		if ($interval2->format('%a') <= $interval->format('%a') ) 
 		{
@@ -993,47 +998,11 @@ class ControladorRadicados
 			$registro["contador"] = 100;
 			$radicado["contador"] = 100;
 		}
-
-		/*$radicado["fecha"] = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
-		$radicado["fecha_vencimiento"] = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);*/
-
+		$registro["diascontados"] = $interval3->format('%a')-1;
 		$hora = new DateTime($registro["fecha"]);
     	$registro["hora"] = $hora->format('h:i a');
 
     	$radicado["hora"] = $registro["hora"];
-
-
-    	/*$fechaActual = date('d-m-Y');
-		$datetime3 = date_create($fechaActual);
-		$interval2 = date_diff($datetime3, $datetime2);*/
-
-
-		/*
-		//fecha inicio final
-
-		$datetime1 = date_create($registro["fecha"]);
-		$datetime2 = date_create($registro["fecha_vencimiento"]);
-		$interval = date_diff($datetime1, $datetime2);
-
-		//fecha actual y final
-
-		$fechaActual = date('d-m-Y');
-		$datetime3 = date_create($fechaActual);
-		$interval2 = date_diff($datetime3, $datetime2);
-
-		//resultado
-
-		$porcentaje = ((float)$interval->format('%a') * 10) / $interval2->format('%a'); // Regla de tres
-    	$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
-    	$registro["contador"] = $radicado["contador"];
-
-    	$hora = new DateTime($registro["fecha"]);
-    	$registro["hora"] = $hora->format('h:i a');
-
-		
-
-		$registro["fecha"] = $radicado["fecha"];
-		$registro["fecha_vencimiento"] = $radicado["fecha_vencimiento"];*/
 
 		if ($sw == 1) 
 		{
@@ -1047,7 +1016,286 @@ class ControladorRadicados
 		
 	}
 
-	
+	static public function ctrActualizarRegistro()
+	{
+		
+		if ( isset($_POST["idRegistro"]) && isset($_POST["accionReg"]) ) 
+			{
+				$traer = new ControladorRadicados;
+				$registro = $traer->ctrAccesoRapidoRegistros($_POST["idRegistro"], 0);
+
+				$error = 0;
+
+				/*
+
+				fechaReg
+				horaReg
+				idRegistro
+				accionReg
+				editarArchivo
+				observacionesReg
+				listadoEngargadoReg
+				listadoRemitentesReg
+
+				*/
+
+				if (!is_null($registro)) 
+				{
+
+					$dJsonAcc = '[';
+					$dJsonObs_usr = '[';
+
+					if ($_POST["accionReg"] == 1) 
+					{
+						# interno...
+
+						if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"])) 
+						{
+
+							try {
+
+								if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
+								{
+									$fechaActual = $_POST["fechaReg"];
+								}
+								else
+								{
+									$fechaActual = date('d-m-Y');
+								}
+
+								if( isset($_POST["horaReg"]) && (!is_null($_POST["horaReg"]) || !empty($_POST["horaReg"])) )
+								{
+									$horaActual = $_POST["horaReg"];
+								}
+								else
+								{
+	    							$horaActual = date('h:i a');
+								}
+
+								//VALIDAR QUE NO ESTE VACIO LOS ENCARGADOS
+								$encargados = json_decode($_POST["listadoEngargadoReg"], true);	
+
+								$id_Encargado = $encargados[0]["id"];
+								$nombre_Encargado = $encargados[0]["nom"];
+								$id_Area_Encargado = $encargados[0]["idA"];
+
+								if ($id_Encargado != $registro["id_usuario"]) 
+								{
+									$idAccion = $_POST["accionReg"];
+								}
+								else
+								{
+									$idAccion = 3;
+								}
+
+								
+
+								if (count($encargados) > 0) 
+								{
+									if (is_null($registro["acciones"])) 
+									{
+
+										 $dJsonAcc ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'",}}]';
+
+									}
+									else
+									{
+
+										$encargadosHistoria = json_decode($registro["acciones"], true);	 
+
+
+										if (!empty($encargadosHistoria) && count($encargadosHistoria) > 0 ) 
+										{
+											//registrados
+
+											for ($y=0; $y < count($encargadosHistoria); $y++) 
+											{ 
+												 $dJsonAcc .='{"fe":"'.$encargadosHistoria[$y]["fe"].'","hr":"'.$encargadosHistoria[$y]["hr"].'","acc":"'.$encargadosHistoria[$y]["acc"].'","da":{"id":"'.$encargadosHistoria[$y]["da"]["id"].'","nom":"'.$encargadosHistoria[$y]["da"]["nom"].'","idA":"'.$encargadosHistoria[$y]["da"]["idA"].'"}},';
+											}
+
+											 $dJsonAcc .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
+
+											//encargados
+										}
+										else
+										{
+											 $dJsonAcc ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
+										}
+										
+
+									}
+
+
+									if (!empty($_POST["observacionesReg"])) 
+									{
+										$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]) ;
+
+									 if (!is_null($registro["observacion_usuario"])) 
+									 {
+									 	try {
+									 		$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
+
+
+										 		if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+										 		{
+										 			foreach ($observaciones_usuario_his as $key => $value) {
+										 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
+										 			}
+
+										 			$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
+
+										 		}
+										 		else
+										 		{
+										 			$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
+										 		}
+
+
+										 	} catch (Exception $error) {
+										 		
+										 	}
+
+										 }
+										 else
+										 {
+										 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observaciones_usuario_his.'"}]';
+
+										 }
+									}
+									else
+									{
+										$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
+
+
+								 		if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+								 		{
+								 			foreach ($observaciones_usuario_his as $key => $value) {
+								 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
+								 			}
+
+								 		}
+								 		else
+								 		{
+								 			$dJsonObs_usr = null;
+								 		}
+
+									}
+
+								if ($registro["id_estado"] == 5) 
+								{
+									$estadoPQR = 2;
+								}
+								elseif ($registro["id_estado"] == 3) 
+								{
+									$estadoPQR = $registro["id_estado"];
+								}
+
+								
+
+			 					$datos = array( 
+									'id_usuario' => $id_Encargado,
+									'id_area' => $id_Area_Encargado,
+									'id_estado' => $estadoPQR,
+									'fecha_asignacion' => $fechaActual.' '.$horaActual,
+									'acciones' => $dJsonAcc,
+									'observacion_usuario' => $dJsonObs_usr,
+									'id' => $_POST["idRegistro"]);
+									
+
+			 						$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad("registropqr", $datos);
+
+			 						var_dump($respuesta);
+
+			 						if (isset($_GET["idRegistro"])) 
+									{
+										$urlSW = 'index.php?ruta=verRegistro&idRegistro='.$_GET["idRegistro"];
+									}
+
+			 						if($respuesta == "ok")
+									{
+
+										$tipoSW = 'success';
+										$titleSW = 'Acción Realizada';
+
+									}
+									else
+									{
+										$tipoSW = 'error';
+										$titleSW = 'Ha Ocurrido un error';
+										
+									}
+
+									echo'<script>
+
+											swal({
+												  type: "'.$tipoSW.'",
+												  title: "'.$titleSW.'",
+												  showConfirmButton: true,
+												  confirmButtonText: "Cerrar"
+												  }).then(function(result) {
+															if (result.value) {
+
+															window.location = "'.$urlSW.'";
+
+															}
+														})
+
+											</script>';
+
+								}//if (count($encargados) > 0) 
+								else
+								{
+									$error = "Lista de encargados vacia." ; 
+								}
+								
+							} catch (Exception $e) {
+
+								//VALIDAR FECHA DE ACCION
+
+							
+
+							}//catch
+
+
+							
+
+							
+
+							//$acciones = json_decode($_POST["q"], true);	
+							
+						}//if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"]))	
+						else
+						{
+							$error = "se encontraron no se encontro un encargado en este registro. ";
+						}
+
+
+					}//if ($_POST["accionReg"] == 1) 	
+				
+				}//if (!is_null($registro)) 	
+
+			}//	if ( isset($_POST["idRegistro"]) && isset($_POST["accionReg"]) ) 
+
+
+						//isset["listadoEngargadoReg"]
+						//si el encargado es igual al encargado registrado al momento de radicar
+							//marcar  estado_pqr como pendiente y guardar  
+							//guardar en accion registro_pqr: fecha {id, nombre, id_accionpqr, 1 pendiente(asignado)}
+							//
+
+						//sino, marcar estado pqr como pendiente, y guardar en accion registro_pqr:
+								//fecha_radicado {id, nombre, id_accionpqr, 3 Devuelto para Reasignacion(Reasignado)}
+
+						    //actualizar fecha_actualizacion registro pqr, realizar el conteo 
+						//validar fecha radicado registro validar fecha actual
+
+
+							
+
+
+	}
+
+
 	
 }
 
