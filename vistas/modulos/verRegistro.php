@@ -245,7 +245,7 @@
       <i class="fa fa-envelope bg-blue"></i>
       <div class="timeline-item">
         <span class="time"><i class="fa fa-clock-o"></i> <?php echo $registro["hora"];?></span>
-          <h3 class="timeline-header">Fue Radicado el Documento</h3>
+          <h3 class="timeline-header">Radicación del documento.</h3>
       </div>
     </li>
 
@@ -253,84 +253,65 @@
 
      $grupoFechas = [];
 
+
+     
+
     if ($registro["acciones"] != null) 
     {
       $accionesPQR = json_decode($registro["acciones"], true);
 
-      if (count($accionesPQR) > 0) 
+      if (count($accionesPQR) > 0 ) 
         {
-           foreach ($accionesPQR as $key => $value) {
+           foreach ($accionesPQR as $key => $value) 
+           {
       
               if (!in_array($value["fe"], $grupoFechas)) 
               {
                 $grupoFechas[] = $value["fe"];
               }
 
-            }
-        }  
-    }
+           }
 
-    for ($i=0; $i < count($grupoFechas); $i++) 
-    { 
 
-      $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$i], 0);
+           for ($y=0; $y < count($grupoFechas) ; $y++) 
+           { 
 
-      echo '<li class="time-label">
-      <span class="bg-green">
-      '.$fechaTemp.'
-      </span>
-    </li>';
+            $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$y], 0);
 
-      for ($x=0; $x < count($accionesPQR); $x++) 
-      { 
+              echo '<li class="time-label">
+                      <span class="bg-green">
+                 '.$fechaTemp.'
+                  </span>
+                </li>';
 
-        if ($grupoFechas[$i] == $accionesPQR[$x]["fe"]) 
-        {
-          $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
+             for ($x=0; $x < count($accionesPQR); $x++) 
+             { 
 
-           echo '<li>
-            <i class="fa fa-mail-forward bg-yellow"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> '.$horaTemp->format('h:i a').'</span>
-                <h3 class="timeline-header">';
-
-                if ($accionesPQR[$x]["acc"] == 1) 
+                if ($grupoFechas[$y] == $accionesPQR[$x]["fe"]) 
                 {
-                  $areaE = ControladorParametros::ctrmostrarRegistroEspecifico('areas', 'id', $accionesPQR[$x]["da"]["idA"], 'nombre');
-                  echo 'fue asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaE;
+                   $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
+                   $horaR = $horaTemp->format('h:i a');
+
+
+                  $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
+
+                  echo '<li>
+                  <i class="fa fa-share bg-yellow"></i>
+                  <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                      <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
+                  </div>
+                </li>';
                 }
-
-                echo '</h3>
-            </div>
-          </li>';
-        }
-      }
-
-     
-    }
+             }
+           }
 
 
-   /* if ($registro["observacion_usuario"] != null) 
-    {
-      $observacionPQR = json_decode($registro["observacion_usuario"], true);
-      if (count($observacionPQR) > 0) 
-        {
-             foreach ($observacionPQR as $key => $value) {
-      
-              if (!in_array($value["fe"], $grupoFechas)) 
-              {
-                $grupoFechas[] = $value["fe"];
-              }
-
-            }
         }  
+
     }
 
-     var_dump($accionesPQR);
-     echo '<br>';
-    var_dump($grupoFechas);
-     echo '<br>';
-     var_dump($observacionPQR);*/
+    
 
     ?>
 

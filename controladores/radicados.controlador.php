@@ -968,24 +968,34 @@ class ControladorRadicados
 		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
 
-		$datetime1 = date_create($registro["fecha"]);
-		$datetime2 = date_create($registro["fecha_vencimiento"]);
+		$fInicial = date_create($registro["fecha"]);
+		$fFinal = date_create($registro["fecha_vencimiento"]);
 		$fechaActual = date('d-m-Y');
-		$datetime3 = date_create($fechaActual);
+		$fActual = date_create($fechaActual);
 
-		$interval = date_diff($datetime1, $datetime2);
-		$interval2 = date_diff($datetime3, $datetime2);
+		$iniFin = date_diff($fInicial, $fFinal);//fecha inicio fecha fin
+		$actFin = date_diff($fActual, $fFinal);//fecha actual fecha fin
+		$iniActual = date_diff($fInicial, $fActual);//fecha
 
-		//días contados
-		$interval3 = date_diff($datetime1, $datetime3);
+		
 
-		if ($interval2->format('%a') <= $interval->format('%a') ) 
+		if ( $iniActual->format('%a') <= $iniFin->format('%a') ) 
+		{
+			$porcentaje = ((float)$iniActual->format('%a')  /  $registro["dias_habiles"])*100; // Regla de tres
+			$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
+			$registro["contador"] = $radicado["contador"];
+		}
+		else
+		{
+			$registro["contador"] = 100;
+			$radicado["contador"] = 100;
+		}
+
+
+		/*if ($interval2->format('%a') <= $interval->format('%a') ) 
 		{
 			if($interval->format('%a') != 0 && $interval2->format('%a') != 0)
 			{
-				$porcentaje = ((float)$interval2->format('%a') * 10) / $interval->format('%a'); // Regla de tres
-				$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
-	    		$registro["contador"] = $radicado["contador"];
 			}
 			else
 			{
@@ -997,8 +1007,8 @@ class ControladorRadicados
 		{
 			$registro["contador"] = 100;
 			$radicado["contador"] = 100;
-		}
-		$registro["diascontados"] = $interval3->format('%a')-1;
+		}*/
+		$registro["diascontados"] = $iniActual->format('%a')-1;
 		$hora = new DateTime($registro["fecha"]);
     	$registro["hora"] = $hora->format('h:i a');
 
@@ -1044,6 +1054,7 @@ class ControladorRadicados
 
 					$dJsonAcc = '[';
 					$dJsonObs_usr = '[';
+					$estadoPQR = 5;
 
 					if ($_POST["accionReg"] == 1) 
 					{
@@ -1079,7 +1090,16 @@ class ControladorRadicados
 								$nombre_Encargado = $encargados[0]["nom"];
 								$id_Area_Encargado = $encargados[0]["idA"];
 
-								if ($id_Encargado != $registro["id_usuario"]) 
+								if ($registro["id_estado"] == 5) 
+								{
+									$estadoPQR = 2;
+								}
+								elseif ($registro["id_estado"] == 3) 
+								{
+									$estadoPQR = $registro["id_estado"];
+								}
+
+								if ($id_Encargado == $registro["id_usuario"]) 
 								{
 									$idAccion = $_POST["accionReg"];
 								}
@@ -1181,14 +1201,7 @@ class ControladorRadicados
 
 									}
 
-								if ($registro["id_estado"] == 5) 
-								{
-									$estadoPQR = 2;
-								}
-								elseif ($registro["id_estado"] == 3) 
-								{
-									$estadoPQR = $registro["id_estado"];
-								}
+								
 
 								
 
