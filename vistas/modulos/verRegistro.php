@@ -252,15 +252,12 @@
     <?php
 
      $grupoFechas = [];
-
-
-     
+     $accionesPQR = json_decode($registro["acciones"], true);
 
     if ($registro["acciones"] != null) 
     {
-      $accionesPQR = json_decode($registro["acciones"], true);
 
-      if (count($accionesPQR) > 0 ) 
+      if (!is_null($accionesPQR) && count($accionesPQR) > 0 ) 
         {
            foreach ($accionesPQR as $key => $value) 
            {
@@ -308,6 +305,10 @@
 
 
         }  
+        else
+        {
+          echo 'ERROR al contar el array';
+        }
 
     }
 
