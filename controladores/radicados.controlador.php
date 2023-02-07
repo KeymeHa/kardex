@@ -1036,6 +1036,79 @@ class ControladorRadicados
 
 				$error = 0;
 
+				
+				if (isset($_GET["idRegistro"])) 
+				{
+					$urlSW = 'index.php?ruta=verRegistro&idRegistro='.$_GET["idRegistro"];
+				}
+				else
+				{
+					$urlSW = 'registro';
+				}
+
+				$tipoSW = '';
+				$titleSW = '';	
+
+				if (!is_null($registro)) 
+				{
+					if (!empty($_POST["observacionesReg"])) 
+				{
+					$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]) ;
+					$dJsonObs_usr = '[';
+					$dJsonAcc = '[';
+
+				 if (!is_null($registro["observacion_usuario"])) 
+				 {
+				 	try {
+				 		$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
+
+
+					 		if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+					 		{
+					 			foreach ($observaciones_usuario_his as $key => $value) {
+					 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
+					 			}
+
+					 			$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
+
+					 		}
+					 		else
+					 		{
+					 			$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
+					 		}
+
+
+					 	} catch (Exception $error) {
+					 		
+					 	}
+
+					 }
+					 else
+					 {
+					 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observaciones_usuario_his.'"}]';
+
+					 }
+				}
+				else
+				{
+					$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
+
+
+						if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+						{
+							foreach ($observaciones_usuario_his as $key => $value) 
+							{
+								$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
+							}
+
+						}
+						else
+						{
+							$dJsonObs_usr = null;
+						}
+
+				}
+
 				/*
 
 				fechaReg
@@ -1049,11 +1122,6 @@ class ControladorRadicados
 
 				*/
 
-				if (!is_null($registro)) 
-				{
-
-					$dJsonAcc = '[';
-					$dJsonObs_usr = '[';
 					$estadoPQR = 5;
 
 					if ($_POST["accionReg"] == 1) 
@@ -1146,60 +1214,7 @@ class ControladorRadicados
 									}
 
 
-									if (!empty($_POST["observacionesReg"])) 
-									{
-										$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]) ;
-
-									 if (!is_null($registro["observacion_usuario"])) 
-									 {
-									 	try {
-									 		$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
-
-
-										 		if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-										 		{
-										 			foreach ($observaciones_usuario_his as $key => $value) {
-										 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
-										 			}
-
-										 			$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
-
-										 		}
-										 		else
-										 		{
-										 			$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observaciones_usuario_his.'"}]';
-										 		}
-
-
-										 	} catch (Exception $error) {
-										 		
-										 	}
-
-										 }
-										 else
-										 {
-										 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observaciones_usuario_his.'"}]';
-
-										 }
-									}
-									else
-									{
-										$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
-
-
-								 		if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-								 		{
-								 			foreach ($observaciones_usuario_his as $key => $value) {
-								 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
-								 			}
-
-								 		}
-								 		else
-								 		{
-								 			$dJsonObs_usr = null;
-								 		}
-
-									}
+									
 
 								
 
@@ -1219,10 +1234,7 @@ class ControladorRadicados
 
 			 						var_dump($respuesta);
 
-			 						if (isset($_GET["idRegistro"])) 
-									{
-										$urlSW = 'index.php?ruta=verRegistro&idRegistro='.$_GET["idRegistro"];
-									}
+			 						
 
 			 						if($respuesta == "ok")
 									{
@@ -1238,22 +1250,7 @@ class ControladorRadicados
 										
 									}
 
-									echo'<script>
-
-											swal({
-												  type: "'.$tipoSW.'",
-												  title: "'.$titleSW.'",
-												  showConfirmButton: true,
-												  confirmButtonText: "Cerrar"
-												  }).then(function(result) {
-															if (result.value) {
-
-															window.location = "'.$urlSW.'";
-
-															}
-														})
-
-											</script>';
+									
 
 								}//if (count($encargados) > 0) 
 								else
@@ -1269,44 +1266,86 @@ class ControladorRadicados
 
 							}//catch
 
-
-							
-
-							
-
 							//$acciones = json_decode($_POST["q"], true);	
 							
 						}//if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"]))	
 						else
 						{
-							$error = "se encontraron no se encontro un encargado en este registro. ";
+							$tipoSW = 'error';
+							$titleSW = 'se encontraron no se encontro un encargado en este registro';
 						}
 
 
 					}//if ($_POST["accionReg"] == 1) 	
+					elseif ($_POST["accionReg"] == 2) 
+					{
+						/*
+
+						[{"id":"4","rem":"ALCALDÍA DE B/QUILLA : CONTROL URBANO Y ESPACIO PÚBLICO "},{"id":"7","rem":"ALCALDIA DE BARRANQUILLA / SECRETARIO DE OBRAS PUBLICAS"},{"id":"9","rem":"AVP"}]
+
+						listadoRemitentesReg
+						fechaReg
+						horaReg
+						idRegistro
+						accionReg
+						editarArchivo
+						observacionesReg
+						listadoRemitentesReg
+
+						*/
+					}
+					elseif ($_POST["accionReg"] == 3) 
+					{
+						$tipoSW = 'success';
+						$titleSW = 'Faltan parametros';
+					}
+					elseif ($_POST["accionReg"] == 4) 
+					{
+						$tipoSW = 'success';
+						$titleSW = 'Faltan parametros';
+					}
+					elseif ($_POST["accionReg"] == 5) 
+					{
+						$tipoSW = 'success';
+						$titleSW = 'Faltan parametros';
+					}
+					elseif ($_POST["accionReg"] == 6) 
+					{
+						$tipoSW = 'success';
+						$titleSW = 'Faltan parametros';
+					}
+					elseif ($_POST["accionReg"] == 7) 
+					{
+						$tipoSW = 'success';
+						$titleSW = 'Faltan parametros';
+					}
 				
-				}//if (!is_null($registro)) 	
+				}//si existe el registo a modificar
+
+
+
+				echo'<script>
+
+				swal({
+					  type: "'.$tipoSW.'",
+					  title: "'.$titleSW.'",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "'.$urlSW.'";
+
+								}
+							})
+
+				</script>';
 
 			}//	if ( isset($_POST["idRegistro"]) && isset($_POST["accionReg"]) ) 
 
 
-						//isset["listadoEngargadoReg"]
-						//si el encargado es igual al encargado registrado al momento de radicar
-							//marcar  estado_pqr como pendiente y guardar  
-							//guardar en accion registro_pqr: fecha {id, nombre, id_accionpqr, 1 pendiente(asignado)}
-							//
 
-						//sino, marcar estado pqr como pendiente, y guardar en accion registro_pqr:
-								//fecha_radicado {id, nombre, id_accionpqr, 3 Devuelto para Reasignacion(Reasignado)}
-
-						    //actualizar fecha_actualizacion registro pqr, realizar el conteo 
-						//validar fecha radicado registro validar fecha actual
-
-
-							
-
-
-	}
+	}//function
 
 
 	
