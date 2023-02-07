@@ -231,7 +231,6 @@
 
     <div class="row">
 <div class="col-md-12">
-
   <ul class="timeline">
 
     <li class="time-label">
@@ -252,13 +251,12 @@
     <?php
 
      $grupoFechas = [];
-     $accionesPQR = json_decode($registro["acciones"], true);
 
     if ($registro["acciones"] != null) 
     {
 
-      if (!is_null($accionesPQR) && count($accionesPQR) > 0 ) 
-        {
+        $accionesPQR = json_decode($registro["acciones"], true);
+
            foreach ($accionesPQR as $key => $value) 
            {
       
@@ -289,26 +287,38 @@
                    $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
                    $horaR = $horaTemp->format('h:i a');
 
+                   if ( isset($accionesPQR[$x]["da"]["nom"]) ) 
+                   {
+                      $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
 
-                  $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
+                      echo '<li>
+                      <i class="fa fa-share bg-yellow"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                          <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
+                      </div>
+                    </li>';
+                   }elseif ($accionesPQR[$x]["acc"] == 2) 
+                   {
+                      $remitentes = "";
 
-                  echo '<li>
-                  <i class="fa fa-share bg-yellow"></i>
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                      <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
-                  </div>
-                </li>';
+                      for ($i=0; $i < count($accionesPQR[$x]["da"]); $i++) 
+                      { 
+                        $remitentes .= "(".$accionesPQR[$x]["da"][$i]["rem"].")";
+                      }
+
+                     echo '<li>
+                      <i class="fa fa-share bg-yellow"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                          <h3 class="timeline-header">Traslado por Compentencia a '.$remitentes.'.</h3>
+                      </div>
+                     </li>';
+                   }
+
                 }
              }
            }
-
-
-        }  
-        else
-        {
-          echo 'ERROR al contar el array';
-        }
 
     }
 

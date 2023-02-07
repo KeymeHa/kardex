@@ -85,7 +85,7 @@ class TablaRegistros
 
 						if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
 						{
-							$fecha_respuesta = "";
+							$fecha_respuesta = "Pendiente por Responder";
 						}
 						else
 						{
@@ -125,7 +125,10 @@ class TablaRegistros
 							$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div><div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div></div>";
 						}
 
-						
+						$fInicial = date_create($radicado["fecha"]);
+						$fechaActual = date('d-m-Y');
+						$fActual = date_create($fechaActual);
+						$iniActual = date_diff($fInicial, $fActual);//fecha
 
 						//concatenar al json
 
@@ -139,7 +142,7 @@ class TablaRegistros
 				    		"'.$usuarioNombre["nombre"].'",
 				    		"'.$fecha_respuesta.'",
 				    		"'.$fecha_vencimiento.'",
-				    		"'.$registrosPQR[$i]["dias_contados"].'/'.$registrosPQR[$i]["dias_habiles"].'",
+				    		"'.$iniActual->format('%a').'/'.$registrosPQR[$i]["dias_habiles"].'",
 				    		"'.$acciones.'"
 				    		],';
 

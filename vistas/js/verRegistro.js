@@ -192,7 +192,7 @@ function listarRemitentes(){
     console.log(listarRemitentesArray);
 
     $("#listadoRemitentes").val(JSON.stringify(listarRemitentesArray)); 
-
+    
 }
 
 

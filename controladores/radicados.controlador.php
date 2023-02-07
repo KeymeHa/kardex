@@ -960,6 +960,34 @@ class ControladorRadicados
 	}
 
 
+	static public function ctrIntervaloFechas($fI, $ff, $diash)
+	{
+
+		$respuesta = [];
+
+		$fInicial = date_create($fI);
+		$fFinal = date_create($ff);
+		$fechaActual = date('d-m-Y');
+		$fActual = date_create($fechaActual);
+
+		$iniFin = date_diff($fInicial, $fFinal);//fecha inicio fecha fin
+		$actFin = date_diff($fActual, $fFinal);//fecha actual fecha fin
+		$iniActual = date_diff($fInicial, $fActual);//fecha
+
+		if ( $iniActual->format('%a') <= $iniFin->format('%a') ) 
+		{
+			$porcentaje = ((float)$iniActual->format('%a')  /  $diash)*100; // Regla de tres
+			$respuesta["contador"] = round($porcentaje, 0);  // Quitar los decimales
+		}
+		else
+		{
+			$respuesta = 100;
+		}
+
+		$respuesta["diascontados"] = $iniActual->format('%a')-1;
+
+    	return $respuesta ;
+	}
 
 
 	static public function ctrAccesoRapidoRegistros($idRegistro, $sw)
@@ -991,24 +1019,8 @@ class ControladorRadicados
 			$radicado["contador"] = 100;
 		}
 
-
-		/*if ($interval2->format('%a') <= $interval->format('%a') ) 
-		{
-			if($interval->format('%a') != 0 && $interval2->format('%a') != 0)
-			{
-			}
-			else
-			{
-				$registro["contador"] = 100;
-				$radicado["contador"] = 100;
-			}
-		}
-		else
-		{
-			$registro["contador"] = 100;
-			$radicado["contador"] = 100;
-		}*/
 		$registro["diascontados"] = $iniActual->format('%a')-1;
+		$radicado["diascontados"] = $registro["diascontados"];
 		$hora = new DateTime($registro["fecha"]);
     	$registro["hora"] = $hora->format('h:i a');
 
@@ -1033,259 +1045,269 @@ class ControladorRadicados
 			{
 				$traer = new ControladorRadicados;
 				$registro = $traer->ctrAccesoRapidoRegistros($_POST["idRegistro"], 0);
-
-				$dJsonAcc = '[';
+				$error = 0;
+				$dJsonAcc = '';
 				$tipoSW = '';
 				$titleSW = '';	
-				$dJsonObs_usr ='[';
+				$dJsonObs_usr ='';
 				$fechaActual = "";
 				$horaActual = "";
+				$idAccion = $_POST["accionReg"];
 				$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]);
 
-				if (isset($_GET["idRegistro"])) 
+				if (is_null($registro)) 
 				{
-					$urlSW = 'index.php?ruta=verRegistro&idRegistro='.$_GET["idRegistro"];
+					$error = "No se encontro el registro a modificar";
 				}
 				else
 				{
-					$urlSW = 'registro';
-				}
+					$id_Area_Encargado = $registro["id_area"];
+					$id_Encargado = $registro["id_usuario"];
 
-				if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
-				{
-					$fechaActual = $_POST["fechaReg"];
-				}
-				else
-				{
-					$fechaActual = date('d-m-Y');
-				}
-
-				if( isset($_POST["horaReg"]) && (!is_null($_POST["horaReg"]) || !empty($_POST["horaReg"])) )
-				{
-					$horaActual = $_POST["horaReg"];
-				}
-				else
-				{
-					$horaActual = date('h:i a');
-				}
-
-				//observaciones
-
-				if (!is_null($registro["observacion_usuario"])) 
-				{
-				 	try {
-				 			$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
-
-
-					 		if (!is_null($observaciones_usuario_his) && !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-					 		{
-					 			foreach ($observaciones_usuario_his as $key => $value) 
-					 			{
-					 				$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
-					 			}//foreach ($observaciones_usuario_his as $key => $value) 
-
-					 			$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observacion_usuario.'"}]';
-
-					 		}//if (!is_null($observaciones_usuario_his) && !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-					 		else
-					 		{
-					 			$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observacion_usuario.'"}]';
-					 		}//else
-
-					 	//try 
-					 	} catch (Exception $e) {
-					 		
-					 	}//catch (Exception $error)
-
-				}
-				else
-				{
-				 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observacion_usuario.'"}]';
-				}
-				/*}
-				else
-				{
-					$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
-
-
-						if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-						{
-							foreach ($observaciones_usuario_his as $key => $value) 
-							{
-								$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
-							}
-
-						}
-						else
-						{
-							$dJsonObs_usr = null;
-						}
-
-				}*/
-
-					
-
-					if ($_POST["accionReg"] == 1) 
+					if (isset($_GET["idRegistro"])) 
 					{
+						$urlSW = 'index.php?ruta=verRegistro&idRegistro='.$_GET["idRegistro"];
+					}
+					else
+					{
+						$urlSW = 'registro';
+					}
 
-						$estadoPQR = 5;
+					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
+					{
+						$fechaActual = $_POST["fechaReg"];
+					}
+					else
+					{
+						$fechaActual = date('d-m-Y');
+					}
+
+					if( isset($_POST["horaReg"]) && (!is_null($_POST["horaReg"]) || !empty($_POST["horaReg"])) )
+					{
+						$horaActual = $_POST["horaReg"];
+					}
+					else
+					{
+						$horaActual = date('h:i a');
+					}
+
+					//observaciones
+
+					if (!is_null($registro["observacion_usuario"])) 
+					{
+			 			$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
+				 		if (!is_null($observaciones_usuario_his) && !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+				 		{
+				 			if (!empty($registro["observacion_usuario"])) 
+				 			{
+				 				$dJsonObs_usr = substr($dJsonObs_usr, 0 ,-1);
+				 				$dJsonObs_usr .=',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observacion_usuario.'"}]';
+				 			}
+				 			else
+				 			{
+				 				$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observacion_usuario.'"}]';
+				 			}
+				 		}//if (!is_null($observaciones_usuario_his) && !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
+				 		else
+				 		{
+
+				 			if (empty($registro["observacion_usuario"])) 
+				 			{
+				 				$dJsonObs_usr = "";
+				 			}
+				 			else
+				 			{
+				 				$dJsonObs_usr ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","obs":"'.$observacion_usuario.'"}]';
+				 			}
+
+				 			
+				 		}//else
+
+					}
+					else
+					{
+					 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observacion_usuario.'"}]';
+					}
+					/*}
+					else
+					{
+						$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
 
 
-						# interno...
-
-						if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"])) 
-						{
-							//VALIDAR QUE NO ESTE VACIO LOS ENCARGADOS
-							$encargados = json_decode($_POST["listadoEngargadoReg"], true);	
-
-							$id_Encargado = $encargados[0]["id"];
-							$nombre_Encargado = $encargados[0]["nom"];
-							$id_Area_Encargado = $encargados[0]["idA"];
-
-							if ($registro["id_estado"] == 5) 
+							if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
 							{
-								$estadoPQR = 2;
-							}
-							elseif ($registro["id_estado"] == 3) 
-							{
-								$estadoPQR = $registro["id_estado"];
-							}
+								foreach ($observaciones_usuario_his as $key => $value) 
+								{
+									$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
+								}
 
-							if ($id_Encargado == $registro["id_usuario"]) 
-							{
-								$idAccion = $_POST["accionReg"];
 							}
 							else
 							{
-								$idAccion = 3;
+								$dJsonObs_usr = null;
 							}
 
-							
+					}*/
 
-							if (count($encargados) > 0) 
+						
+
+						if ($_POST["accionReg"] == 1) 
+						{
+							$estadoPQR = $registro["id_estado"];
+							# interno...
+							if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"])) 
 							{
-								if (is_null($registro["acciones"])) 
+								//VALIDAR QUE NO ESTE VACIO LOS ENCARGADOS
+								$encargados = json_decode($_POST["listadoEngargadoReg"], true);	
+								$id_Encargado = $encargados[0]["id"];
+								$nombre_Encargado = $encargados[0]["nom"];
+								$id_Area_Encargado = $encargados[0]["idA"];
+								if ($registro["id_estado"] == 5) 
 								{
-
-									 $dJsonAcc ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'",}}]';
-
+									$estadoPQR = 2;
 								}
-								else
+
+								if ($id_Encargado != $registro["id_usuario"]) 
 								{
+									$idAccion = 2;
+								}
 
-									$encargadosHistoria = json_decode($registro["acciones"], true);	 
-
-
-									if (!empty($encargadosHistoria) && count($encargadosHistoria) > 0 ) 
-									{
-										//registrados
-
-										for ($y=0; $y < count($encargadosHistoria); $y++) 
-										{ 
-											 $dJsonAcc .='{"fe":"'.$encargadosHistoria[$y]["fe"].'","hr":"'.$encargadosHistoria[$y]["hr"].'","acc":"'.$encargadosHistoria[$y]["acc"].'","da":{"id":"'.$encargadosHistoria[$y]["da"]["id"].'","nom":"'.$encargadosHistoria[$y]["da"]["nom"].'","idA":"'.$encargadosHistoria[$y]["da"]["idA"].'"}},';
-										}
-
-										 $dJsonAcc .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
-
-										//encargados
-									}
-									else
+								if (count($encargados) > 0) 
+								{
+									if (is_null($registro["acciones"])) 
 									{
 										 $dJsonAcc ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
 									}
-									
+									else
+									{
 
-								}
-
-			 					$datos = array( 
-									'id_usuario' => $id_Encargado,
-									'id_area' => $id_Area_Encargado,
-									'id_estado' => $estadoPQR,
-									'fecha_asignacion' => $fechaActual.' '.$horaActual,
-									'acciones' => $dJsonAcc,
-									'observacion_usuario' => $dJsonObs_usr,
-									'id' => $_POST["idRegistro"]);
-
-		 						$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad("registropqr", $datos);
-
-		 						if($respuesta == "ok")
-								{
-
-									$tipoSW = 'success';
-									$titleSW = 'Acción Realizada';
-
-								}
+										$encargadosHistoria = json_decode($registro["acciones"], true);	 
+										if (!empty($encargadosHistoria) && count($encargadosHistoria) > 0 ) 
+										{
+											//registrados
+											$dJsonAcc = substr($registro["acciones"], 0 ,-1);
+											$dJsonAcc .=',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
+											//encargados
+										}
+										else
+										{
+											 $dJsonAcc ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"}}]';
+										}
+									}
+								}//if (count($encargados) > 0) 
 								else
 								{
-									$tipoSW = 'error';
-									$titleSW = 'Ha Ocurrido un error';
-									
+									$error = "Lista de encargados vacia." ; 
 								}
-
-								
-
-							}//if (count($encargados) > 0) 
+							}//if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"]))	
 							else
 							{
-								$error = "Lista de encargados vacia." ; 
+								$error = 'se encontraron no se encontro un encargado en este registro';
 							}
-								
+						}//if ($_POST["accionReg"] == 1) 	
+						elseif ($_POST["accionReg"] == 2) 
+						{
+							/*
+							listadoRemitentesReg
+							fechaReg
+							horaReg
+							idRegistro
+							accionReg
+							editarArchivo
+							observacionesReg
+							listadoRemitentesReg
+							*/
+							if (isset($_POST["listadoRemitentesReg"]) && !is_null($_POST["listadoRemitentesReg"])) 
+							{
+								$estadoPQR = 6;
+								$remitentes = json_decode($_POST["listadoRemitentesReg"], true);	
 
-							//$acciones = json_decode($_POST["q"], true);	
-							
-						}//if (isset($_POST["listadoEngargadoReg"]) && !is_null($_POST["listadoEngargadoReg"]))	
+								if (!is_null($remitentes) && count($remitentes) > 0) 
+								{
+										$dJsonAcc = substr($registro["acciones"], 0 ,-1);
+										$dJsonAccTemp = "";
+
+										for ($i=0; $i < count($remitentes); $i++) 
+										{ 
+											$dJsonAccTemp.= '"'.$i.'":{"id":"'.$remitentes[$i]["id"].'","rem":"'.$remitentes[$i]["rem"].'"},';
+										}
+
+										$dJsonAccTemp = substr($dJsonAccTemp, 0 ,-1);
+										$dJsonAcc .= ',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'}}]';
+
+								}//if (count($encargados) > 0) 
+								else
+								{
+									$error = "Lista de remitentes vacia." ; 
+								}
+							}//if (isset($_POST["listadoRemitentesReg"]) && !is_null($_POST["listadoRemitentesReg"]))	
+							else
+							{
+								$error = 'se encontraron no se encontro al menos un remitente en este registro';
+							}
+						}
+						elseif ($_POST["accionReg"] == 3) 
+						{
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+						elseif ($_POST["accionReg"] == 4) 
+						{
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+						elseif ($_POST["accionReg"] == 5) 
+						{
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+						elseif ($_POST["accionReg"] == 6) 
+						{
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+						elseif ($_POST["accionReg"] == 7) 
+						{
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+				}//registro encontrado
+
+					if(is_int($error))
+					{
+
+						$datos = array( 
+						'id_usuario' => $id_Encargado,
+						'id_area' => $id_Area_Encargado,
+						'id_estado' => $estadoPQR,
+						'fecha_asignacion' => $fechaActual.' '.$horaActual,
+						'acciones' => $dJsonAcc,
+						'observacion_usuario' => $dJsonObs_usr,
+						'id' => $_POST["idRegistro"]);
+
+						$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad("registropqr", $datos);
+
+							if($respuesta == "ok")
+						{
+
+							$tipoSW = 'success';
+							$titleSW = 'Acción Realizada';
+
+						}
 						else
 						{
 							$tipoSW = 'error';
-							$titleSW = 'se encontraron no se encontro un encargado en este registro';
+							$titleSW = 'Ha Ocurrido un error';
+							
 						}
-						
+					}
+					else
+					{
+						$tipoSW = 'error';
+						$titleSW = $error;
+					}
 
-					}//if ($_POST["accionReg"] == 1) 	
-					elseif ($_POST["accionReg"] == 2) 
-					{
-						/*
-
-						[{"id":"4","rem":"ALCALDÍA DE B/QUILLA : CONTROL URBANO Y ESPACIO PÚBLICO "},{"id":"7","rem":"ALCALDIA DE BARRANQUILLA / SECRETARIO DE OBRAS PUBLICAS"},{"id":"9","rem":"AVP"}]
-
-						listadoRemitentesReg
-						fechaReg
-						horaReg
-						idRegistro
-						accionReg
-						editarArchivo
-						observacionesReg
-						listadoRemitentesReg
-
-						*/
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
-					elseif ($_POST["accionReg"] == 3) 
-					{
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
-					elseif ($_POST["accionReg"] == 4) 
-					{
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
-					elseif ($_POST["accionReg"] == 5) 
-					{
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
-					elseif ($_POST["accionReg"] == 6) 
-					{
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
-					elseif ($_POST["accionReg"] == 7) 
-					{
-						$tipoSW = 'success';
-						$titleSW = 'Faltan parametros';
-					}
+					
 
 				echo'<script>
 
@@ -1305,10 +1327,7 @@ class ControladorRadicados
 				</script>';
 
 			}//	if ( isset($_POST["idRegistro"]) && isset($_POST["accionReg"]) ) 
-
-
-
-	}//function
+	}//ctrActualizarRegistro()
 
 
 	
