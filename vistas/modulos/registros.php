@@ -95,14 +95,25 @@
 
     }//!is_null($estados_pqr)
 
-    echo ' <div class="box">
-      <div class="box-header with-border">
+    /*
+    echo ' 
         <?php 
-            include "anios.php";
+           
         ?>
         &nbsp;
          <button style="color: white;" class="btn btn-success"><i class="fa fa-search"></i>  Busqueda Avanzada</button>
-       <button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
+       
+
+    */
+    echo '<div class="box">
+      <div class="box-header with-border">';
+    ?>
+
+    <?php
+
+     include "anios.php";
+
+    echo '<button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha
             </span>
@@ -110,6 +121,7 @@
         </button>
       </div><!--box-header with-border-->
     </div><!--box box-success-->';
+
 
     //Por Asignar
     if ( isset($porcentaje[5]) ) 

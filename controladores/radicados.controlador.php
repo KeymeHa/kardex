@@ -832,11 +832,6 @@ class ControladorRadicados
 					$anio = $r->anioActual($anio);
 					$query = $anio;
 				}
-				else
-				{
-					$query = "WHERE ";
-				}
-
 				
 			}
 
@@ -845,27 +840,43 @@ class ControladorRadicados
 				//si existe estado enviar, sino no enviar solo pendientes y vencidas
 				
 
+				if ($fI == null) 
+				{
+					if ($anio == 0) 
+					{
+						$query.= "WHERE ";
+					}
+					else
+					{
+						$query.= " AND ";
+					}
+				}
+				else
+				{
+					$query.= " AND ";
+				}
+
 				if ( is_int($es) ) 
 				{
-					$query.= " AND id_estado = ".$es;
+					$query.= "id_estado = ".$es;
 				}
 				else
 				{
 					if ( $es == "c1" ) 
 					{
-						$query.= " AND id_estado = 1 or id_estado = 6";
+						$query.= "id_estado = 1 or id_estado = 6";
 
 					}elseif ( $es == "c2" ) {
 
-						$query.= " AND id_estado = 4";
+						$query.= "id_estado = 4";
 					}
 					elseif ( $es == "c3" ) {
 
-						$query.= " AND id_estado = 2 or id_estado = 5";
+						$query.= "id_estado = 2 or id_estado = 5";
 					}
 					else
 					{
-						$query.= " AND id_estado = 3";
+						$query.= "id_estado = 3";
 					}
 				}
 
