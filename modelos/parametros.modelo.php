@@ -635,12 +635,12 @@ class ModeloParametros
 
 	}
 
-	static public function mdlContarEstados($tabla, $item, $valor, $anio)
+	static public function mdlContarEstados()
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla $anio $item = :$item ");
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado GROUP BY(estado_pqr.nombre)");
+
 		$stmt -> execute();
-		return $stmt -> fetch();
+		return $stmt -> fetchAll();
 		$stmt -> close();
 
 		$stmt = null;

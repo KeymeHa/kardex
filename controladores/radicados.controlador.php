@@ -1162,15 +1162,25 @@ class ControladorRadicados
 								$id_Encargado = $encargados[0]["id"];
 								$nombre_Encargado = $encargados[0]["nom"];
 								$id_Area_Encargado = $encargados[0]["idA"];
-								if ($registro["id_estado"] == 5) 
+
+								if ($registro["id_estado"] == 3) 
 								{
-									$estadoPQR = 2;
+									$estadoPQR = $registro["id_estado"];
+								}
+								else
+								{
+									if ($registro["id_estado"] == 5) 
+									{
+										$estadoPQR = 2;
+									}
+
+									if ($id_Encargado != $registro["id_usuario"]) 
+									{
+										$idAccion = 2;
+									}
 								}
 
-								if ($id_Encargado != $registro["id_usuario"]) 
-								{
-									$idAccion = 2;
-								}
+								
 
 								if (count($encargados) > 0) 
 								{
@@ -1219,7 +1229,17 @@ class ControladorRadicados
 							*/
 							if (isset($_POST["listadoRemitentesReg"]) && !is_null($_POST["listadoRemitentesReg"])) 
 							{
-								$estadoPQR = 6;
+
+								if ($registro["id_estado"] == 3) 
+								{
+									$estadoPQR = $registro["id_estado"];
+								}
+								else
+								{
+									$estadoPQR = 6;
+								}
+								
+								
 								$remitentes = json_decode($_POST["listadoRemitentesReg"], true);	
 
 								if (!is_null($remitentes) && count($remitentes) > 0) 

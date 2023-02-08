@@ -29,29 +29,71 @@
 
     <?php
 
-    $estados_pqr = [];
-    $porcentaje = [];
+    $porcentaje = [[]];
     $sumatoria = 0;
+    $cuad1 = 0 ; // 1 resuelto, 6trasladado
+    $cuad2 = 0 ; //4 extemporaneo
+    $cuad3 = 0 ; //2 pendiente, 5 por asignar 
+    $cuad4 = 0 ; //3 vencido
 
-    for ($i = 1; $i <= 5; $i++) 
-    { 
-        $estados_pqr[$i] = ControladorParametros::ctrContarEstados("id_estado", $i);
-        $sumatoria+=$estados_pqr[$i];
+    $estados_pqr = ControladorParametros::ctrContarEstados();
+
+
+    if (!is_null($estados_pqr)) 
+    {
+
+      for ($i=0; $i < count($estados_pqr) ; $i++) 
+      { 
+        $sumatoria+=$estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+      }
+
+      for ($i=0; $i < count($estados_pqr); $i++) 
+      { 
+        $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
+        $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+        $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv(($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria)*100, '1', 2) ;
+      }
+
+    $percentCuad1 = 0;
+    $percentCuad3 = 0;
+
+
+    //cuadrante 1
+    if (isset($porcentaje[1])) 
+    {
+      if (isset($porcentaje[6])) 
+      {$cuad1 = $porcentaje[1]["contar"] + $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[1]["per"]+$porcentaje[6]["per"];}
+      else
+      {$cuad1 = $porcentaje[1]["contar"];$percentCuad1+=$porcentaje[1]["per"];}
     }
+    elseif (isset($porcentaje[6])) 
+    {$cuad1 = $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[6]["per"];}
 
-    for ($i = 1; $i <= 5; $i++) 
-    {   
-        if ($sumatoria != 0) 
-        {
-          $porcentaje[$i] = bcdiv(($estados_pqr[$i]/$sumatoria)*100, '1', 2) ;
-        }
-        else
-        {
-          $porcentaje[$i] = 0;
-        }
+    //cuadrante 2
+    if (isset($porcentaje[4])) 
+    {$cuad2 = $porcentaje[4]["contar"];}
+
+    //cuadrante 3
+    if (isset($porcentaje[2])) 
+    {
+      if (isset($porcentaje[5])) 
+      {$cuad3 = $porcentaje[2]["contar"] + $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[2]["per"]+$porcentaje[5]["per"];}
+      else
+      {$cuad3 = $porcentaje[2]["contar"];$percentCuad3+=$porcentaje[2]["per"];}
     }
+    elseif (isset($porcentaje[5])) 
+    {$cuad3 = $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[5]["per"];}
 
-  
+    //cuadrante 4
+    if (isset($porcentaje[1])) 
+    {$cuad4 = $porcentaje[3]["contar"];}
+
+    
+    $contarCuadSu = $cuad3 + $cuad4;
+    $contarCuadIn = $cuad1 + $cuad2;
+
+    }//!is_null($estados_pqr)
+
     echo ' <div class="box">
       <div class="box-header with-border">
         <?php 
@@ -69,20 +111,20 @@
     </div><!--box box-success-->';
 
     //Por Asignar
-    if ($estados_pqr[5] > 0) 
+    if ( isset($porcentaje[5]) ) 
     {
       echo '<div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-             <h4 class="banner-pendientes" style="cursor:pointer;" es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-info"></i>Hay <strong>('.$estados_pqr[5].')</strong> Oficio(s) por validar a su encargado para su tramite. ver Listado.
+             <h4 class="banner-pendientes" style="cursor:pointer;" es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-info"></i>Hay <strong>('.$porcentaje[5]["contar"].')</strong> Oficio(s) por validar a su encargado para su tramite. ver Listado.
              </h4>
             </div>';
     }//vencidas
     
-    if ($estados_pqr[3] > 0) 
+    if (isset( $porcentaje[3] ) ) 
     {
       echo '<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-danger"></i> >Se encuentran Vencidos <strong>('.$estados_pqr[3].')</strong>   Oficios </h4>
+            <h4><i class="icon fa fa-danger"></i> >Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong>   Oficios </h4>
             </div>';
     }
 
@@ -92,14 +134,16 @@
 
     <?php echo '<input type="hidden" readonly es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'" id="inputVar">'?>
     <div class="row">
+       
        <div class="col-lg-6">
+
            <div class="col-lg-6 box-semaforo" idEstado="2" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-warning" style="background-color:#F7F733;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(3)Pendientes</span>
-                <span class="info-box-number"><?php echo $estados_pqr[5]+$estados_pqr[2] ;?></span>
-                <span class="info-box-number"><small><?php echo $porcentaje[5]+$porcentaje[2]; ?> %</small></span>
+                <span class="info-box-number"><?php echo $cuad3 ;?></span>
+                <span class="info-box-number"><small><?php  echo $percentCuad3; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -109,8 +153,8 @@
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(4)Vencidas</span>
-                <span class="info-box-number"><?php echo $estados_pqr[3] ;?></span>
-                <span class="info-box-number"><small><?php echo $porcentaje[3] ; ?> %</small></span>
+                <span class="info-box-number"><?php echo $cuad4 ;?></span>
+                <span class="info-box-number"><small><?php echo (isset($porcentaje[3])) ? $porcentaje[3]["count"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -120,8 +164,8 @@
               <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-ok-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(1)Resueltas</span>
-                <span class="info-box-number"><?php echo $estados_pqr[1] ;?></span>
-                <span class="info-box-number"><small><?php echo $porcentaje[1] ; ?> %</small></span>
+                <span class="info-box-number"><?php echo $cuad1 ;?></span>
+                <span class="info-box-number"><small><?php echo $percentCuad1  ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -131,13 +175,20 @@
               <span class="info-box-icon bg-orange"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(2)Extemporaneas</span>
-                <span class="info-box-number"><?php echo $estados_pqr[4] ;?></span>
-                <span class="info-box-number"><small><?php echo $porcentaje[4] ; ?> %</small></span>
+                <span class="info-box-number"><?php echo $cuad2 ;?></span>
+                <span class="info-box-number"><small><?php echo (isset($porcentaje[4])) ? $porcentaje[4]["count"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-md-2 col-sm-6 col-xs-12"-->
 
-        </div>
+      </div>
+      <div class="col-lg-6">
+        <?php
+
+          include "reportes/kpiGrafica.php";
+
+        ?>
+      </div><!--col-lg-6-->
 
     </div>
 

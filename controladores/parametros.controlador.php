@@ -1182,12 +1182,10 @@ class ControladorParametros
 	}
 
 
-	static public function ctrContarEstados($item, $estado)
+	static public function ctrContarEstados()
 	{
-		$tabla = "registropqr";
-		$anio = ($_SESSION["anioActual"] == 0) ? 'WHERE ' : 'WHERE YEAR(fecha) = '.$_SESSION["anioActual"].' AND ';
-		$respuesta = ModeloParametros::mdlContarEstados($tabla, $item, $estado, $anio);
-		return $respuesta['COUNT(*)'];
+		$respuesta = ModeloParametros::mdlContarEstados();
+		return $respuesta;
 	}
 
 	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip)
