@@ -148,7 +148,13 @@
         ?>
      
     </div><!--BOX-->
-    <div class="box box-<?php echo $estado['html'];?>">
+
+    <?php
+
+    if($registro["id_estado"] != 1 && $registro["id_estado"] != 4 && $registro["id_estado"] != 6)
+    {
+      echo '<div class="box box-'.$estado['html'].'">
+
       <div class="box-header">
        <h3 class="box-title">Acciones</h3>
        <div class="box-tools pull-right">
@@ -156,175 +162,173 @@
           </button>
         </div>
       </div>
+
        <form role="form" method="post" enctype="multipart/form-data" class="formularioModalRegistros">
+
           <div class="box-body">
        
-        <div class="row">
-          <div class="col-md-6"><p>Fecha</p><input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" /></div>
-          <div class="col-md-6"><p>Hora</p><input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/></div>
-        </div>
+            <div class="row">
+              <div class="col-md-6"><p>Fecha</p><input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" /></div>
+              <div class="col-md-6"><p>Hora</p><input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/></div>
+            </div>
 
-        <div class="row">
-          <br>
-          <div class="col-md-6">
-            <p>Seleccione una acción rapida para este oficio.</p>
-                    <!-- ENTRADA PARA EL NOMBRE -->         
-              <div class="form-group">   
-                <input type="hidden" id="id_Registro_accion" name="idRegistro" value="<?php echo $_GET['idRegistro'];?>">    
-                <select class="form-control" id="select_accion" required name="accionReg">
-                  <?php
-
-                  $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
-                  echo '<option value="">Seleccione una Acción</option>';
-                  foreach ($accion_pqr as $key => $value) 
-                  {
-                    echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
-                  }
-
-                  ?>
-                </select>
-              </div>
-          </div>
-        </div>
-
-         <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-               <div class="panel">Detalles</div>
+            <div class="row">
+              <br>
+              <div class="col-md-6">
+                <p>Seleccione una acción rapida para este oficio.</p>
+                        <!-- ENTRADA PARA EL NOMBRE -->         
+                  <div class="form-group">   
+                    <input type="hidden" id="id_Registro_accion" name="idRegistro" value="'.$_GET['idRegistro'].'"> <select class="form-control" id="select_accion" required name="accionReg"></select>
+                  </div>
               </div>
             </div>
-          </div>
 
-         <div class="row">
-             <div id="contenido-modal-accion" class="col-md-8"></div>
-             <div id="contenido-modal-detalles" class="col-md-4"></div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-               <div class="panel">Constancia</div>
-                  <input type="file" name="editarArchivo">
+             <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                   <div class="panel">Detalles</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" rows="10" placeholder="Observaciones" name="observacionesReg" style="resize: none;"></textarea>
+             <div class="row">
+                 <div id="contenido-modal-accion" class="col-md-8"></div>
+                 <div id="contenido-modal-detalles" class="col-md-4"></div>
               </div>
-            </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                   <div class="panel">Constancia</div>
+                      <input type="file" name="editarArchivo">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Observaciones</label>
+                    <textarea class="form-control" rows="3" rows="10" placeholder="Observaciones" name="observacionesReg" style="resize: none;"></textarea>
+                  </div>
+                </div>
+              </div>';
+
+               $actualizarReg = new ControladorRadicados();
+              $actualizarReg -> ctrActualizarRegistro();
+
+      echo ' </div><!--box-body-->
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-success btn-GuardarRegistro pull-right">Grabar</button>
           </div>
-        <?php
-          $actualizarReg = new ControladorRadicados();
-          $actualizarReg -> ctrActualizarRegistro();
-        ?>
-       
-      </div>
-      <div class="box-footer">
-        <button type="submit" class="btn btn-success btn-GuardarRegistro pull-right">Grabar</button>
-      </div>
        </form>
-    </div>
-
-    <div class="row">
-<div class="col-md-12">
-  <ul class="timeline">
-
-    <li class="time-label">
-      <span class="bg-green">
-      <?php echo $fechaRad;?>
-      </span>
-    </li>
-
-
-    <li>
-      <i class="fa fa-envelope bg-blue"></i>
-      <div class="timeline-item">
-        <span class="time"><i class="fa fa-clock-o"></i> <?php echo $registro["hora"];?></span>
-          <h3 class="timeline-header">Radicación del documento.</h3>
-      </div>
-    </li>
-
-    <?php
-
-     $grupoFechas = [];
-
-    if ($registro["acciones"] != null) 
-    {
-
-        $accionesPQR = json_decode($registro["acciones"], true);
-
-           foreach ($accionesPQR as $key => $value) 
-           {
-      
-              if (!in_array($value["fe"], $grupoFechas)) 
-              {
-                $grupoFechas[] = $value["fe"];
-              }
-
-           }
-
-
-           for ($y=0; $y < count($grupoFechas) ; $y++) 
-           { 
-
-            $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$y], 0);
-
-              echo '<li class="time-label">
-                      <span class="bg-green">
-                 '.$fechaTemp.'
-                  </span>
-                </li>';
-
-             for ($x=0; $x < count($accionesPQR); $x++) 
-             { 
-
-                if ($grupoFechas[$y] == $accionesPQR[$x]["fe"]) 
-                {
-                   $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
-                   $horaR = $horaTemp->format('h:i a');
-
-                   if ( isset($accionesPQR[$x]["da"]["nom"]) ) 
-                   {
-                      $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
-
-                      echo '<li>
-                      <i class="fa fa-share bg-yellow"></i>
-                      <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                          <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
-                      </div>
-                    </li>';
-                   }elseif ($accionesPQR[$x]["acc"] == 2) 
-                   {
-                      $remitentes = "";
-
-                      for ($i=0; $i < count($accionesPQR[$x]["da"]); $i++) 
-                      { 
-                        $remitentes .= "(".$accionesPQR[$x]["da"][$i]["rem"].")";
-                      }
-
-                     echo '<li>
-                      <i class="fa fa-share bg-yellow"></i>
-                      <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                          <h3 class="timeline-header">Traslado por Compentencia a '.$remitentes.'.</h3>
-                      </div>
-                     </li>';
-                   }
-
-                }
-             }
-           }
-
+    </div><!--box-->';
     }
 
-    
-
     ?>
+
+
+
+
+
+
+  <div class="row">
+  <div class="col-md-12">
+    <ul class="timeline">
+
+      <li class="time-label">
+        <span class="bg-green">
+        <?php echo $fechaRad;?>
+        </span>
+      </li>
+
+
+      <li>
+        <i class="fa fa-envelope bg-blue"></i>
+        <div class="timeline-item">
+          <span class="time"><i class="fa fa-clock-o"></i> <?php echo $registro["hora"];?></span>
+            <h3 class="timeline-header">Radicación del documento.</h3>
+        </div>
+      </li>
+
+      <?php
+
+       $grupoFechas = [];
+
+      if ($registro["acciones"] != null) 
+      {
+
+          $accionesPQR = json_decode($registro["acciones"], true);
+
+             foreach ($accionesPQR as $key => $value) 
+             {
+        
+                if (!in_array($value["fe"], $grupoFechas)) 
+                {
+                  $grupoFechas[] = $value["fe"];
+                }
+
+             }
+
+
+             for ($y=0; $y < count($grupoFechas) ; $y++) 
+             { 
+
+              $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$y], 0);
+
+                echo '<li class="time-label">
+                        <span class="bg-green">
+                   '.$fechaTemp.'
+                    </span>
+                  </li>';
+
+               for ($x=0; $x < count($accionesPQR); $x++) 
+               { 
+
+                  if ($grupoFechas[$y] == $accionesPQR[$x]["fe"]) 
+                  {
+                     $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
+                     $horaR = $horaTemp->format('h:i a');
+
+                     if ( isset($accionesPQR[$x]["da"]["nom"]) ) 
+                     {
+                        $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
+
+                        echo '<li>
+                        <i class="fa fa-share bg-yellow"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                            <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
+                        </div>
+                      </li>';
+                     }elseif ($accionesPQR[$x]["acc"] == 2) 
+                     {
+                        $remitentes = "";
+
+                        for ($i=0; $i < count($accionesPQR[$x]["da"]); $i++) 
+                        { 
+                          $remitentes .= "(".$accionesPQR[$x]["da"][$i]["rem"].")";
+                        }
+
+                       echo '<li>
+                        <i class="fa fa-envelope bg-green"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                            <h3 class="timeline-header">Traslado por Compentencia a '.$remitentes.'.</h3>
+                        </div>
+                       </li>';
+                     }
+
+                  }
+               }
+             }
+
+      }
+
+      
+
+      ?>
 
     <!--
   

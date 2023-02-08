@@ -13,6 +13,30 @@ $(document).ready(function() {
     	ahora(elemento2);
     }
 
+    var datosDos = new FormData();
+        datosDos.append("verAcciones", 1);
+        $.ajax({
+            url:"ajax/parametros.ajax.php",
+            method: "POST",
+            data: datosDos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(resp)
+            {   
+
+                $("#select_accion").append('<option value="">Seleccione una acción</option>');
+
+                for (var i = 0; i < resp.length; i++) 
+                {
+                    $("#select_accion").append('<option value="'+resp[i]['id']+'">'+resp[i]['nombre']+'</option>');
+                }
+            }
+        });
+
+   
+
 });
 
 
