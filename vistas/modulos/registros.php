@@ -113,6 +113,20 @@
 
      include "anios.php";
 
+    
+     $fechaActu = ControladorParametros::ctrMostrarParametros(32);
+
+     $hoymismo = date('y-m-d');
+
+     if ($fechaActu["codigo"] != $hoymismo) 
+     {
+       echo ' <button type="button" class="btn btn-info" id="btn-actualizarParamRegis">    
+            <span>
+              <i class="fa fa-exchange"></i> Actualizar Tabla
+            </span>
+        </button>';
+     }
+
     echo '<button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha
@@ -156,7 +170,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(3)Pendientes</span>
                 <span class="info-box-number"><?php echo $cuad3 ;?></span>
-                <span class="info-box-number"><small><?php  echo $percentCuad3; ?> %</small></span>
+                <span class="info-box-number"><small><?php  echo $percentCuad3."% , por asignar ".isset($porcentaje[5]["contar"]); ?></small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -206,6 +220,15 @@
     </div>
 
      <div class="box box-success">
+
+      <?php 
+
+      $prueba = ControladorRadicados::ctractualizarRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"]);
+
+
+      var_dump($prueba);
+
+      ?>
 
       <div class="box-header with-border">
         <h3 class="box-title">

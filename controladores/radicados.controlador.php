@@ -12,7 +12,7 @@ class ControladorRadicados
 	public static function ctrMostrarRadicadoRango($fechaInicial, $fechaFinal, $id_area, $sw)
 	{
 		$tabla = "radicados";
-		$r = new ControladorFacturas;
+		$r = new ControladorRadicados;
 		$anio = $r->anioActual($anio);
 		$respuesta = ModeloRadicados::mdlMostrarRadicadoRango($tabla, $fechaInicial, $fechaFinal, $anio, $id_area, $sw);
 		return $respuesta;
@@ -1375,6 +1375,28 @@ class ControladorRadicados
 	}//ctrActualizarRegistro()
 
 
+	static public function ctractualizarRegistros($idUsuario, $idPerfil, $anio)
+	{
+		$traer = new ControladorRadicados ;
+		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null);
+
+		$fechaActual = date("y-m-d");
+
+		foreach ($registrosPQR as $key => $value) 
+		{
+			if ($value["id_estado"] != 1 && $value["id_estado"] != 4 && $value["id_estado"] != 6) 
+			{
+				if ($value["fecha_actualizacion"]->format("y-m-d") != $fechaActual ) 
+				{
+					//contar dias y enviar
+
+					//marcar como vencido de la fecha radicado es menor a fecha_vencimiento
+				}
+			}
+
+		}
+		return $registrosPQR;
+	}
 	
 }
 

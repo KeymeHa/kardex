@@ -148,6 +148,28 @@ $("h4.banner-asignar").click(function(){
 	realizarActualizaciones(es);
 })
 
+$("btn-actualizarParamRegis").click(function()
+{
+  var registro = new FormData();
+  registro.append("actRegis", 1);
+
+  $.ajax({
+
+    url:"ajax/registros.ajax.php",
+    method: "POST",
+    data: registro,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success: function(respuesta)
+    {
+       window.location = "registros";
+    }
+  });
+
+})
+
 $("h4.banner-vencidos").click(function(){
   var es = $(this).attr("es");
   realizarActualizaciones(es);

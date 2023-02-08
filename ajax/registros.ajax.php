@@ -24,20 +24,16 @@ class AjaxRegistros
 		$respuesta["responsable"] = ControladorParametros::ctrmostrarRegistroEspecifico('usuarios', $item, $responsable, $item2);
 		$respuesta["area_responsable"] = ControladorParametros::ctrmostrarRegistroEspecifico('areas', $item, $respuesta["id_area"], $item2);
 		
-		
-
-/*
-		$datetime1 = date_create($respuesta["fecha"]);
-		$datetime2 = date_create($respuesta["fecha_vencimiento"]);
-		$interval = date_diff($datetime1, $datetime2);
-
-		$fechaActual = date('d-m-Y');
-		$respuesta["contador"] = $interval->format('%a');*/
-
-		
 		$id_estado = ControladorParametros::ctrmostrarRegistroEspecifico("registropqr", "id", $idRegistro, "id_estado");
 		$respuesta["estado"] = ControladorParametros::ctrmostrarRegistroEspecifico('estado_pqr', $item, $id_estado, $item2);
 
+		echo json_encode($respuesta);
+	}
+
+
+	static public function actualizarRegistros()
+	{
+		$respuesta = ControladorRadicados::ctractualizarRegistros();
 		echo json_encode($respuesta);
 	}
 
@@ -46,4 +42,9 @@ class AjaxRegistros
 if(isset($_POST["idRegistro"]))
 {	$generar = new AjaxRegistros();
 	$generar -> accesoRapidoRegistros($_POST["idRegistro"], $_POST["sw"]);}
+
+
+if(isset($_POST["actRegis"]))
+{	$actualizar = new AjaxRegistros();
+	$actualizar -> actualizarRegistros();}
 	

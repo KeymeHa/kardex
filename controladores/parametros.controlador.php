@@ -58,8 +58,7 @@ class ControladorParametros
 					  case 27:
 					    $r = $radicar->corte($respuesta[$val], $ActualCor);
 					    break;
-					  default:
-					    echo "0";
+					 
 				}
 
 				$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
