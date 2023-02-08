@@ -48,7 +48,8 @@
       }
 
       for ($i=0; $i < count($estados_pqr); $i++) 
-      { 
+      {
+        $porcentaje[ $estados_pqr[$i]["id"] ]["id"] = $estados_pqr[$i]["id"]; 
         $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
         $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
         $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv(($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria)*100, '1', 2) ;
@@ -115,7 +116,7 @@
     {
       echo '<div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-             <h4 class="banner-pendientes" style="cursor:pointer;" es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-info"></i>Hay <strong>('.$porcentaje[5]["contar"].')</strong> Oficio(s) por validar a su encargado para su tramite. ver Listado.
+             <h4 class="banner-asignar" style="cursor:pointer;" es="'.$porcentaje[5]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-info"></i>Hay <strong>('.$porcentaje[5]["contar"].')</strong> Oficio(s) por validar a su encargado para su tramite. ver Listado.
              </h4>
             </div>';
     }//vencidas
@@ -124,7 +125,7 @@
     {
       echo '<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-danger"></i> >Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong>   Oficios </h4>
+            <h4 class="banner-vencidos" style="cursor:pointer;" es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i> >Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong> Oficios. ver Listado. </h4>
             </div>';
     }
 
@@ -137,7 +138,7 @@
        
        <div class="col-lg-6">
 
-           <div class="col-lg-6 box-semaforo" idEstado="2" style="cursor:pointer;">
+           <div class="col-lg-6 box-semaforo" cuadrante="c3" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-warning" style="background-color:#F7F733;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
               <div class="info-box-content">
@@ -148,7 +149,7 @@
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
 
-           <div class="col-lg-6 box-semaforo" idEstado="3" style="cursor:pointer;">
+           <div class="col-lg-6 box-semaforo" cuadrante="c4" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
@@ -159,7 +160,7 @@
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
 
-             <div class="col-lg-6 box-semaforo" idEstado="1" style="cursor:pointer;">
+             <div class="col-lg-6 box-semaforo" cuadrante="c1" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-ok-circle"></i></span>
               <div class="info-box-content">
@@ -170,7 +171,7 @@
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
 
-           <div class="col-lg-6 box-semaforo" idEstado="4" style="cursor:pointer;">
+           <div class="col-lg-6 box-semaforo" cuadrante="c2" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-orange"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">

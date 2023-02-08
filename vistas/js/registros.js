@@ -136,22 +136,26 @@ function aparecertablaRegistros()
 }
 */
 
+function realizarActualizaciones(es)
+{
+  validarTablaRegistro();
+  aparecerTablaRegistros();
+  envioParametros(es);
+}
 
-$("h4.banner-pendientes").click(function(){
-	var es = $("#inputVar").attr("es");
-	validarTablaRegistro();
-	aparecerTablaRegistros();
-	envioParametros(es);
+$("h4.banner-asignar").click(function(){
+	var es = $(this).attr("es");
+	realizarActualizaciones(es);
+})
 
+$("h4.banner-vencidos").click(function(){
+  var es = $(this).attr("es");
+  realizarActualizaciones(es);
 })
 
 $("div.box-semaforo").click(function() {
-
-	var es = $(this).attr("idEstado");
-	validarTablaRegistro();
-	aparecerTablaRegistros();
-	envioParametros(es);
-	
+	var cuadrante = $(this).attr("cuadrante");
+	realizarActualizaciones(cuadrante);
 });
 
 $("table.tablaRegistros").on('click', '.btnVerRegistro', function() {

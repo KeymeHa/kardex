@@ -673,7 +673,8 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 
 			variable = "?idusr="+id+"&p="+per;
 
-			if(dato != 0 )
+
+			if( dato !== 0 )
 			{
 				variable+= "&es="+dato;
 			}
