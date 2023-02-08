@@ -1054,6 +1054,7 @@ class ControladorRadicados
 				$horaActual = "";
 				$idAccion = $_POST["accionReg"];
 				$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]);
+				$urlSW = "";
 
 				if (is_null($registro)) 
 				{
@@ -1070,7 +1071,7 @@ class ControladorRadicados
 					}
 					else
 					{
-						$urlSW = 'registro';
+						$urlSW = 'registros';
 					}
 
 					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
@@ -1128,29 +1129,6 @@ class ControladorRadicados
 					{
 					 	$dJsonObs_usr .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""obs":"'.$observacion_usuario.'"}]';
 					}
-					/*}
-					else
-					{
-						$observaciones_usuario_his = json_decode($registro["observacion_usuario"], true);
-
-
-							if ( !empty($observaciones_usuario_his) && count($observaciones_usuario_his) > 0) 
-							{
-								foreach ($observaciones_usuario_his as $key => $value) 
-								{
-									$dJsonObs_usr .='{"fe":"'.$value["fe"].'","hr":"'.$value["hr"].'","id":"'.$value["id"].'","nom":"'.$value["nom"].'","obs":"'.$value["obs"].'"},';
-								}
-
-							}
-							else
-							{
-								$dJsonObs_usr = null;
-							}
-
-					}*/
-
-						
-
 						if ($_POST["accionReg"] == 1) 
 						{
 							$estadoPQR = $registro["id_estado"];
