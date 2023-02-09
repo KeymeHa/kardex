@@ -232,5 +232,5 @@
 
 <?php
   $anularRad = new ControladorRadicados();
-  $anularRad -> ctrAnularRadicado();
+  $anularRad -> ctrAnularRadicado($_SESSION["id"]);
 ?>
