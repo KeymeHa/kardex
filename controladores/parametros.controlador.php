@@ -1254,9 +1254,30 @@ class ControladorParametros
 	}
 
 
-	static public function ctrContarEstados()
+	static public function ctrContarEstados($id_perfil)
 	{
-		$respuesta = ModeloParametros::mdlContarEstados();
+		$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", $id_perfil);
+
+		$query = "";
+
+		if ($traer_filtro["id_pqr"] != null) 
+		{
+			$id_pqr = json_decode($traer_filtro["id_pqr"], true);
+
+
+			$query = ($_SESSION["anioActual"] == 0) ? 'WHERE' : 'WHERE YEAR(fecha) = '.$_SESSION["anioActual"]." AND";
+
+			foreach ($id_pqr as $key => $value) 
+			{
+				$query .= " registropqr.id_pqr = ".$value["id"]." or";
+			}
+
+			$query = substr($query, 0 ,-2);
+		}
+
+
+
+		$respuesta = ModeloParametros::mdlContarEstados($query);
 		return $respuesta;
 	}
 

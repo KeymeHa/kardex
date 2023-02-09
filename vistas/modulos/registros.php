@@ -36,7 +36,7 @@
     $cuad3 = 0 ; //2 pendiente, 5 por asignar 
     $cuad4 = 0 ; //3 vencido
 
-    $estados_pqr = ControladorParametros::ctrContarEstados();
+    $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"]);
 
 
     if (!is_null($estados_pqr)) 
@@ -86,7 +86,7 @@
     {$cuad3 = $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[5]["per"];}
 
     //cuadrante 4
-    if (isset($porcentaje[1])) 
+    if (isset($porcentaje[3])) 
     {$cuad4 = $porcentaje[3]["contar"];}
 
     
@@ -160,7 +160,6 @@
     <div class="row">
        
        <div class="col-lg-6">
-
            <div class="col-lg-6 box-semaforo" cuadrante="c3" style="cursor:pointer;">
             <div class="info-box">
               <span class="info-box-icon bg-warning" style="background-color:#F7F733;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
@@ -177,8 +176,8 @@
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(4)Vencidas</span>
-                <span class="info-box-number"><?php echo $porcentaje[3]["per"] ;?></span>
-                <span class="info-box-number"><small><?php echo ($porcentaje[3]["contar"]) ? $porcentaje[3]["contar"] : 0 ; ?> %</small></span>
+                <span class="info-box-number"><?php echo (isset($porcentaje[3]["per"])) ? $porcentaje[3]["per"] : 0  ;?></span>
+                <span class="info-box-number"><small><?php echo (isset($porcentaje[3]["contar"])) ? $porcentaje[3]["contar"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
