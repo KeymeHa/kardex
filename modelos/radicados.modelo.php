@@ -379,7 +379,7 @@ class ModeloRadicados
 
 	static public function mdlNuevoRegistro($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado, id_area, id_usuario,	id_estado,	id_pqr, fecha_vencimiento, fecha_actualizacion, fecha, dias_habiles, dias_restantes) VALUES (:id_radicado, :id_area, :id_usuario, :id_estado, :id_pqr, :fecha_vencimiento, :fecha_actualizacion, :fecha, :dias_habiles, :dias_restantes)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_radicado, id_area, id_usuario,	id_estado,	id_pqr, fecha_vencimiento, fecha_actualizacion, fecha, dias_habiles, dias_contados) VALUES (:id_radicado, :id_area, :id_usuario, :id_estado, :id_pqr, :fecha_vencimiento, :fecha_actualizacion, :fecha, :dias_habiles, :dias_contados)");
 
 		$stmt->bindParam(":id_radicado", $datos["id_radicado"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
@@ -390,7 +390,7 @@ class ModeloRadicados
 		$stmt->bindParam(":fecha_actualizacion", $datos["fecha_actualizacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":dias_habiles", $datos["dias_habiles"], PDO::PARAM_STR);
-		$stmt->bindParam(":dias_restantes", $datos["dias_restantes"], PDO::PARAM_STR);
+		$stmt->bindParam(":dias_contados", $datos["dias_contados"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
