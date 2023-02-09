@@ -421,6 +421,30 @@ class ModeloRadicados
 	}
 
 
+	static public function mdlActualizarRegistros($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET dias_contados = :dias_contados, id_estado = :id_estado, fecha_actualizacion = :fecha_actualizacion WHERE id = :id");
+
+		$stmt->bindParam(":dias_contados", $datos["dias_contados"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_actualizacion", $datos["fecha_actualizacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+
 	static public function mdlAcualizarTrazabilidad($tabla, $datos)
 	{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_area = :id_area, id_estado = :id_estado, fecha_asignacion = :fecha_asignacion, acciones = :acciones, observacion_usuario = :observacion_usuario  WHERE id = :id");

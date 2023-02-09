@@ -61,7 +61,7 @@
               <dt>Fecha Vencimiento:</dt>
               <dd><?php echo $fecha_vencimiento; ?></dd>
               <dt>Días de Retención:</dt>
-              <dd><?php echo $registro["diascontados"]." / ".$registro["dias_habiles"]." días habiles"; ?></dd>
+              <dd><?php echo $registro["dias_contados"]." / ".$registro["dias_habiles"]." días habiles"; ?></dd>
               <dt>Estado:</dt>
               <dd><button type="button" class="btn btn-<?php echo $estado['html'];?>" ><?php echo $estado["nombre"]; ?></button></dd>
             </dl>

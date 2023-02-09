@@ -1043,16 +1043,45 @@ class ControladorRadicados
 		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
 
+
+		if ( $registro["dias_contados"] <= $registro["dias_habiles"] ) 
+		{
+			$porcentaje = ((float)$registro["dias_contados"] /  $registro["dias_habiles"])*100; // Regla de tres
+			$radicado["contador"] = round($porcentaje, 0);  // Quitar los decimales
+			$registro["contador"] = $radicado["contador"];
+		}
+		else
+		{
+			$registro["contador"] = 100;
+			$radicado["contador"] = 100;
+		}
+
+		$radicado["diascontados"] = $registro["dias_contados"];
+		$hora = new DateTime($registro["fecha"]);
+    	$registro["hora"] = $hora->format('h:i a');
+    	$radicado["hora"] = $registro["hora"];
+
+		if ($sw == 1) 
+		{
+			return $radicado;
+		}
+		else
+		{
+			return $registro;
+		}
+
+
+/*
 		$fInicial = date_create($registro["fecha"]);
 		$fFinal = date_create($registro["fecha_vencimiento"]);
 		$fechaActual = date('d-m-Y');
 		$fActual = date_create($fechaActual);
+		
 
 		$iniFin = date_diff($fInicial, $fFinal);//fecha inicio fecha fin
 		$actFin = date_diff($fActual, $fFinal);//fecha actual fecha fin
 		$iniActual = date_diff($fInicial, $fActual);//fecha
 
-		
 
 		if ( $iniActual->format('%a') <= $iniFin->format('%a') ) 
 		{
@@ -1066,7 +1095,7 @@ class ControladorRadicados
 			$radicado["contador"] = 100;
 		}
 
-		$registro["diascontados"] = $iniActual->format('%a')-1;
+		$registro["diascontados"] = $iniActual->format('%a');
 		$radicado["diascontados"] = $registro["diascontados"];
 		$hora = new DateTime($registro["fecha"]);
     	$registro["hora"] = $hora->format('h:i a');
@@ -1082,7 +1111,7 @@ class ControladorRadicados
 			return $registro;
 		}
 
-		
+		*/
 	}
 
 	static public function ctrActualizarRegistro()
@@ -1109,6 +1138,87 @@ class ControladorRadicados
 				}
 				else
 				{
+
+					/*
+					 date_default_timezone_set('America/Bogota');
+					$actualY = date("Y");
+					$actualM = date("m");
+					$actualD = date("d");
+					try {
+
+					$directorio = "";
+				
+					if ( isset($_FILES["soporteRadicado"]["tmp_name"]) ) 
+					{
+						if ( !$_FILES["soporteRadicado"]["tmp_name"] == null )
+						{
+								
+							$directorio = "vistas/radicados/".strval($actualY)."/".strval($actualM)."/".strval($actualD);
+
+							if (!file_exists($directorio)) 
+							{
+							    mkdir($directorio, 0755, true);
+							}
+
+							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
+							{
+								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
+								$nombre =  intval($res[29]) + 1;
+								$nombreArchivo = $nombre.'.pdf';
+
+								$respuesta = ControladorParametros::ctrNombreArchivo("nameRad", $nombre);
+
+								if ( !$respuesta == "ok" )
+								{
+									echo '<script>
+
+										console.log("Error al actualizar nombre en DB");
+
+									</script>';
+
+									return ;	
+								}
+
+								$directorio.='/'.$nombreArchivo;
+								$error = $_FILES['soporteRadicado']['error'];
+
+									if($error)
+									{
+										echo '<script>
+
+										console.log("Error al copiar el archivo");
+									
+
+										</script>';
+
+										return ;	
+									}
+									else
+									{
+											if(!file_exists($directorio))
+											{
+												copy($tmp_name,$directorio);
+											}
+									}
+							}
+						}//si exite algo
+		
+							
+					}
+					
+				} catch (Exception $e) {
+					echo '<script>
+
+						console.log("Error Validar formato en el archivo");
+					
+
+						</script>';
+
+						return ;	
+					
+				}
+					*/
+
 					$id_Area_Encargado = $registro["id_area"];
 					$id_Encargado = $registro["id_usuario"];
 
@@ -1380,21 +1490,37 @@ class ControladorRadicados
 		$traer = new ControladorRadicados ;
 		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null);
 
-		$fechaActual = date("y-m-d");
+		$fechaActual = date("Y-m-d");
 
 		foreach ($registrosPQR as $key => $value) 
 		{
+								//resuelto					//extemporaneo					//trasladado
 			if ($value["id_estado"] != 1 && $value["id_estado"] != 4 && $value["id_estado"] != 6) 
 			{
-				if ($value["fecha_actualizacion"]->format("y-m-d") != $fechaActual ) 
+
+				$fecha_act = new DateTime($value["fecha_actualizacion"]);
+
+				if ($fecha_act->format("Y-m-d") != $fechaActual ) 
 				{
 					//contar dias y enviar
-
+					$diascontados = ControladorParametros::ctrContarDias($value["fecha"],$value["fecha_vencimiento"], $value["id_estado"]);
 					//marcar como vencido de la fecha radicado es menor a fecha_vencimiento
+
+					$datos = array( 
+						'dias_contados' => $diascontados["dias_contados"],
+						'id_estado' => $diascontados["id_estado"],
+						'fecha_actualizacion' => $fechaActual,
+						'id' => $value["id"]);
+
+					$respuesta = ModeloRadicados::mdlActualizarRegistros("registropqr", $datos);
+
+
+
 				}
 			}
 
 		}
+		$resp = ControladorParametros::ctrFechaRegistrosActualizada($fechaActual);
 		return $registrosPQR;
 	}
 	

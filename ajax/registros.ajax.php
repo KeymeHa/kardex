@@ -31,9 +31,9 @@ class AjaxRegistros
 	}
 
 
-	static public function actualizarRegistros()
+	static public function actualizarRegistros($idUsuario, $idPerfil, $anio)
 	{
-		$respuesta = ControladorRadicados::ctractualizarRegistros();
+		$respuesta = ControladorRadicados::ctractualizarRegistros($idUsuario, $idPerfil, $anio);
 		echo json_encode($respuesta);
 	}
 
@@ -44,7 +44,7 @@ if(isset($_POST["idRegistro"]))
 	$generar -> accesoRapidoRegistros($_POST["idRegistro"], $_POST["sw"]);}
 
 
-if(isset($_POST["actRegis"]))
+if(isset($_POST["actRegis"]) && isset($_POST["anio"]) && isset($_POST["idUser"]) && isset($_POST["per"]))
 {	$actualizar = new AjaxRegistros();
-	$actualizar -> actualizarRegistros();}
+	$actualizar -> actualizarRegistros($_POST["idUser"], $_POST["per"], $_POST["anio"]);}
 	

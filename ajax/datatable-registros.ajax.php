@@ -143,7 +143,7 @@ class TablaRegistros
 				    		"'.$usuarioNombre["nombre"].'",
 				    		"'.$fecha_respuesta.'",
 				    		"'.$fecha_vencimiento.'",
-				    		"'.$iniActual->format('%a').'/'.$registrosPQR[$i]["dias_habiles"].'",
+				    		"'.$registrosPQR[$i]["dias_contados"].'/'.$registrosPQR[$i]["dias_habiles"].'",
 				    		"'.$acciones.'"
 				    		],';
 

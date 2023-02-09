@@ -11,6 +11,13 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrMostrarFechaRegis()
+	{
+		$tabla = "parametros";
+		$respuesta = ModeloParametros::mdlMostrarFechaRegis($tabla);
+		return $respuesta["fechaRegistroPqr"];
+	}
+
 	static public function ctrMostrarParametros($val)
 	{
 		if($val != null)
@@ -498,6 +505,12 @@ class ControladorParametros
 		$item = "id";
 		$respuesta = ModeloParametros::mdlMostrarParamentros($tabla, $item);
 		return $respuesta;
+	}
+
+	static public function ctrFechaRegistrosActualizada($fecha)
+	{
+		$tabla = "parametros";
+		$respuesta = ModeloParametros::mdlFechaRegistrosActualizada($tabla, $fecha);
 	}
 
 	static public function ctrIncrementarCodigo($indice)
@@ -1158,6 +1171,66 @@ class ControladorParametros
         return $respuesta;
 
 	}//ctrValidarTermino($fecha, $id)
+
+
+	//cuenta los dias desde que fue radicado hasta el dia de hoy
+	static public function ctrContarDias($fechaRad, $fechaVencimiento, $id_estado)
+	{
+          $festivo = ModeloParametros::mdlmostrarFestivos();
+          $fechaR = new DateTime($fechaRad);
+          $fechaV = new DateTime($fechaVencimiento);
+          $count = 0;
+          
+          $fechaActual = date("Y-m-d");
+
+		if($fechaR == $fechaActual)
+		{
+			$respuesta = ["dias" => $count, "sw" => $sw];
+		}
+		else
+		{
+			while ( $fechaR->format("Y-m-d") != $fechaActual) 
+			{
+				$sws = false;
+				$fechaR->add(new DateInterval('P1D'));
+
+				if ($fechaV->format("Y-m-d") <= $fechaActual) 
+				{
+					$id_estado = 3;
+				}
+
+				if ($fechaR->format('l') != "Saturday" && $fechaR->format('l') != "Sunday") 
+	            {
+	                 foreach ($festivo as $key => $value) 
+	                  {
+	                    if ($value["fecha"] == $fechaR->format('Y-m-d')) 
+	                    {
+	                      $sws = true;
+	                    }
+	                  }
+
+	                  if ($sws != true) 
+	                  {
+	                    $count++;
+	                  }
+	            }
+	            else
+	            {
+	              if ( $fechaR->format('l') == "Saturday" ) 
+	              {
+	                 $fechaR->add(new DateInterval('P1D'));
+	              }
+	            }
+
+			}//while
+
+			$respuesta = ["dias_contados" => $count, "id_estado" => $id_estado];
+		}
+
+        return $respuesta;
+
+	}//ctrValidarTermino($fecha, $id)
+
 
 	static public function ctrImportarFestivos()
 	{

@@ -64,7 +64,14 @@ class ModeloParametros
 		;
 	}
 
-	
+	static public function mdlMostrarFechaRegis($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT fechaRegistroPqr FROM $tabla WHERE id = 1");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}	
 
 	static public function mdlmostrarRegistrosEspecifico($tabla, $item, $valor)
 	{
@@ -379,6 +386,28 @@ class ModeloParametros
 			$stmt -> close();
 			$stmt = null;
 		}
+	}
+
+
+	static public function mdlFechaRegistrosActualizada($tabla, $fecha)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET fechaRegistroPqr = :fechaRegistroPqr WHERE id = 1");
+
+		$stmt -> bindParam(":fechaRegistroPqr", $fecha, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
 	}
 
 

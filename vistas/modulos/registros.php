@@ -113,20 +113,17 @@
 
      include "anios.php";
 
-    
-     $fechaActu = ControladorParametros::ctrMostrarParametros(32);
+     $fechaActu = new DateTime(ControladorParametros::ctrMostrarFechaRegis());
+     $hoymismo = date('Y-m-d');
 
-     $hoymismo = date('y-m-d');
 
-     if ($fechaActu["codigo"] != $hoymismo) 
-     {
        echo ' <button type="button" class="btn btn-info" id="btn-actualizarParamRegis">    
             <span>
-              <i class="fa fa-exchange"></i> Actualizar Tabla
+              <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("m-d-Y h:m a").')
             </span>
         </button>';
-     }
 
+        
     echo '<button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha
@@ -151,7 +148,7 @@
     {
       echo '<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4 class="banner-vencidos" style="cursor:pointer;" es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i> >Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong> Oficios. ver Listado. </h4>
+            <h4 class="banner-vencidos" style="cursor:pointer;" es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i>Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong> Oficios. ver Listado. </h4>
             </div>';
     }
 
@@ -181,7 +178,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(4)Vencidas</span>
                 <span class="info-box-number"><?php echo $cuad4 ;?></span>
-                <span class="info-box-number"><small><?php echo (isset($porcentaje[3])) ? $porcentaje[3]["count"] : 0 ; ?> %</small></span>
+                <span class="info-box-number"><small><?php echo ($porcentaje[3]["contar"]) ? $porcentaje[3]["contar"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -222,11 +219,12 @@
      <div class="box box-success">
 
       <?php 
+/*
+      $conteo = ControladorParametros::ctrContarDias("2023-01-27", "2023-02-10");
 
-      $prueba = ControladorRadicados::ctractualizarRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"]);
+      var_dump($conteo);*/
 
-
-      var_dump($prueba);
+     // $prueba = ControladorRadicados::ctractualizarRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"]);
 
       ?>
 
