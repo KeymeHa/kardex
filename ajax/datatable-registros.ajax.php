@@ -60,16 +60,13 @@ class TablaRegistros
 					$sw = 0; //dejar de buscar el id_pqr
 					$x = 0;
 
-					 while ( $x <= count($id_pqr) && $sw == 0) 
+					 while ( $x < count($id_pqr) && $sw == 0) 
 			          {
 			              if ($id_pqr[$x]["id"] == $registrosPQR[$i]["id_pqr"] ) 
 			              {
 			                $sw = 1;
 			              }
-			              else
-			              {
-			                $x++;
-			              }
+			              $x++;
 			          }//while
 
 					if ($sw == 1) 
