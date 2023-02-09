@@ -1365,15 +1365,8 @@ class ControladorRadicados
 							if (isset($_POST["listadoRemitentesReg"]) && !is_null($_POST["listadoRemitentesReg"])) 
 							{
 
-								if ($registro["id_estado"] == 3) 
-								{
-									$estadoPQR = $registro["id_estado"];
-								}
-								else
-								{
-									$estadoPQR = 6;
-								}
-								
+							
+								$estadoPQR = 6;
 								
 								$remitentes = json_decode($_POST["listadoRemitentesReg"], true);	
 
