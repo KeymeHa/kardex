@@ -167,7 +167,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(3)Pendientes</span>
                 <span class="info-box-number"><?php echo $cuad3 ;?></span>
-                <span class="info-box-number"><small><?php  echo $percentCuad3."% , por asignar ".isset($porcentaje[5]["contar"]); ?></small></span>
+                <span class="info-box-number"><small><?php  echo $percentCuad3."% ,"; echo (isset($porcentaje[5]["contar"])) ? " por asignar ".$porcentaje[5]["contar"] : ""; ?></small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
