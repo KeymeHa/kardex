@@ -159,6 +159,7 @@ $(".tablaRadicados").on("click", "button.btnVerRadicado", function(){
 
 function enviarRemitente(remitente)
 {
+
 	$("#inputRemitenteId").val(remitente);
 	//$("#inputRemitente").val(remitente);
 
@@ -180,7 +181,7 @@ function enviarRemitente(remitente)
 			$("#inputRemitente").val(respuesta["nombre"]);
 
 		}//respuesta
-	});//ajax
+	});
 
 }
 

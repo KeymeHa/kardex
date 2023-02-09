@@ -111,7 +111,8 @@ for ($i=0; $i < count($porcion); $i++)
                        <button type="button" id="btnRemitente" class="btn btn-success" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button>
                       </div>
 
-                      <input type="text" class="form-control" id="inputRemitente" title="Digite o seleccione un remitente" required>
+                      <input type="text" name="remitente" class="form-control pull-right" id="inputRemitente" title="Digite o seleccione un remitente" required value="">
+                       <input type="hidden" name="remitenteID" id="inputRemitenteId" value="0" required>
                     </div>
 
                 </div><!--col-lg-2 col-md-6 col-xs-12-->

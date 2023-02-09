@@ -57,7 +57,7 @@ if(isset($_GET["sw"]))
 }
 else
 {
-	$verRemitentes -> sw = 0;
+	$verRemitentes -> sw = null;
 }
 
 $verRemitentes -> mostrarTablaRemitentes();

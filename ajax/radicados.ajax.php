@@ -71,10 +71,10 @@ if(isset($_POST["objt"]))
 if(isset($_POST["remitente"]))
 {	$generar = new AjaxRadicados();
 	$generar -> addRemitente($_POST["remitente"]);}
-
+/*
 if(isset($_POST["verRemitente"]))
 {	$verR = new AjaxRadicados();
-	$verR -> verRemitente($_POST["id"]);}
+	$verR -> verRemitente($_POST["id"]);}*/
 
 if(isset($_POST["verRemitente"]))
 {	$verR = new AjaxRadicados();

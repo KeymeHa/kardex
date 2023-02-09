@@ -589,7 +589,7 @@ class ControladorRadicados
 			$tabla = "cortes";
 			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
 			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
-			$indice = ControladorParametros::ctrIncrementarCodigo("nameRad");
+			$indice = ControladorParametros::ctrIncrementarCodigo("codCorte");
 			$tabla = "radicados";
 			
 			$radicados = $countRad->ctrMostrarRadicados("id_corte", 0);
