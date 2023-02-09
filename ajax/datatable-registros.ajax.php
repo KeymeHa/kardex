@@ -130,6 +130,15 @@ class TablaRegistros
 
 						//concatenar al json
 
+							if ($registrosPQR[$i]["dias_contados"] <= $registrosPQR[$i]["dias_habiles"]) 
+							{
+								$htmldias = $registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"];
+							}
+							else
+							{
+								$htmldias = "<strong>".$registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"]."</strong>";
+							}
+
 							$dJson .='[
 				    		"'.$radicado["fecha"].'",
 				    		"'.$radicado["radicado"].'",
@@ -140,7 +149,7 @@ class TablaRegistros
 				    		"'.$usuarioNombre["nombre"].'",
 				    		"'.$fecha_respuesta.'",
 				    		"'.$fecha_vencimiento.'",
-				    		"'.$registrosPQR[$i]["dias_contados"].'/'.$registrosPQR[$i]["dias_habiles"].'",
+				    		"'.$htmldias.'",
 				    		"'.$acciones.'"
 				    		],';
 
