@@ -703,7 +703,7 @@ class ControladorRadicados
 								'fecha_actualizacion' => $value["fecha"],
 								'fecha' => $value["fecha"],
 								'dias_habiles' => $value["dias"],
-								'dias_restantes' => $value["dias"]);
+								'dias_contados' => 0);
 
 				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
 
@@ -1491,6 +1491,7 @@ class ControladorRadicados
 		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null);
 
 		$fechaActual = date("Y-m-d");
+		$fechaHoraActual = date("Y-m-d h:m");
 
 		foreach ($registrosPQR as $key => $value) 
 		{
@@ -1520,7 +1521,7 @@ class ControladorRadicados
 			}
 
 		}
-		$resp = ControladorParametros::ctrFechaRegistrosActualizada($fechaActual);
+		$resp = ControladorParametros::ctrFechaRegistrosActualizada($fechaHoraActual);
 		return $registrosPQR;
 	}
 	
