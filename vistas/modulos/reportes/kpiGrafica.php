@@ -1,9 +1,22 @@
 <?php
 
-	$pri_pendi  = bcdiv( ($cuad3/($cuad3+$cuad4)) *100, '1', 2);              
-	$pri_venci = bcdiv( ($cuad4/($cuad3+$cuad4)) *100, '1', 2);               
-	$his_resuelta = bcdiv( ($cuad1/($cuad1+$cuad2)) *100, '1', 2);              
-	$his_extemporanea = bcdiv( ($cuad2/($cuad1+$cuad2)) *100, '1', 2); 
+  $pri_pendi = 0;
+  $pri_venci = 0;
+  $his_resuelta = 0;
+  $his_extemporanea = 0;
+
+  if (($cuad3+$cuad4) != 0) 
+  {
+      $pri_pendi  = bcdiv( ($cuad3/($cuad3+$cuad4)) *100, '1', 2);              
+      $pri_venci = bcdiv( ($cuad4/($cuad3+$cuad4)) *100, '1', 2);    
+  }
+
+   if (($cuad1+$cuad2) != 0) 
+  {
+      $his_resuelta = bcdiv( ($cuad1/($cuad1+$cuad2)) *100, '1', 2);              
+      $his_extemporanea = bcdiv( ($cuad2/($cuad1+$cuad2)) *100, '1', 2); 
+  }
+
 ?>
 
 <div class="box box-success">
