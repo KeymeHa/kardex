@@ -42,7 +42,7 @@ for ($i=0; $i < count($porcion); $i++)
           </div>
           <div class="box-body">     
             <form role="form" method="post" enctype="multipart/form-data">
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Num. Radicado</label>
                     <?php
@@ -52,15 +52,15 @@ for ($i=0; $i < count($porcion); $i++)
                        echo ' <input type="hidden" class="form-control" name="idUsuario" required value="'.$_SESSION["id"].'" readonly required>';
                     ?>
                   </div><!--form-group-->
-                </div><!--col-lg-2 col-md-2 col-xs-2-->
+                </div><!--col-lg-2 col-md-2 col-xs-12-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Fecha Actual</label>
                     <input type="text" class="form-control pull-right" id="datepicker" title="Fecha y Hora Actual" value="<?php echo $fechaCorregida;?>" disabled>
                     <input type="hidden" name="fechaRad" value="<?php echo $fechaActual;?>" required>
                   </div><!--form-group-->
-                </div><!--col-lg-2 col-md-2 col-xs-2-->
+                </div><!--col-lg-2 col-md-6 col-xs-12-->
 
                 <?php
 
@@ -77,7 +77,7 @@ for ($i=0; $i < count($porcion); $i++)
                       if (count($response) != 0) 
                       {
 
-                        echo '<div class="col-lg-2 col-md-2 col-xs-2">
+                        echo '<div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">'.$tablasRad[$i][1].'</label>
                       <select class="form-control" name="id_'.$tablasRad[$i][0].'" required>
@@ -96,24 +96,27 @@ for ($i=0; $i < count($porcion); $i++)
                   }
                 ?>
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                <div class="col-lg-6 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Asunto</label>
                     <input type="text" name="asunto" class="form-control pull-right" id="datepicker" title="Digite Asunto" required>
                   </div><!--form-group-->
-                </div><!--col-lg-2 col-md-2 col-xs-2-->
+                </div><!--col-lg-2 col-md-6 col-xs-12-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
-                   <div class="form-group">
-                    <label for="exampleInputEmail1">Remitente</label>
-                    <div class="col-lg-4 col-md-4 col-xs-4"><button type="button" id="btnRemitente" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button></div>
-                    <div class="col-lg-12"><input type="text" name="remitente" class="form-control pull-right" id="inputRemitente" title="Digite o seleccione un remitente" required>
-                    <input type="hidden" name="remitenteID" id="inputRemitenteId" value="0" required></div>
-                    
-                  </div><!--form-group-->
-                </div><!--col-lg-2 col-md-2 col-xs-2-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                 <div class="col-lg-2 col-md-6 col-xs-12">
+                  <label for="exampleInputEmail1">Remitente</label>
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                       <button type="button" id="btnRemitente" class="btn btn-success" data-toggle="modal" data-target="#modalRemitentes"><i class="fa fa-plus"></i></button>
+                      </div>
+
+                      <input type="text" class="form-control" id="inputRemitente" title="Digite o seleccione un remitente" required>
+                    </div>
+
+                </div><!--col-lg-2 col-md-6 col-xs-12-->
+
+                <div class="col-lg-2 col-md-6 col-xs-12">
                     <label for="exampleInputEmail1">Área</label>
                       <select class="form-control" name="id_area" required>
                         <option value="">Seleccione área</option>
@@ -133,42 +136,42 @@ for ($i=0; $i < count($porcion); $i++)
                       </select>
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Cantidad</label>
                        <input type="number" name="cantidad" class="form-control pull-right" id="datepicker" title="Cantidad de articulos" min="1" value="1" required>
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
+                <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Recibido Por</label>
                        <input type="text" name="recibido" class="form-control pull-right" id="datepicker" title="Cantidad de articulos" value="<?php echo $recibido;?>" required>
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                <div class="col-lg-2 col-md-2 col-xs-2">
-                   <div class="form-group">
-                    <label for="exampleInputEmail1">Observaciones</label>
-                       <input type="text" name="observaciones" class="form-control pull-right" id="datepicker" title="Observaciones">
-                  </div><!--form-group-->
-                </div><!--col-lg-3 col-md-3 col-xs-3-->
+                
 
-                  <div class="col-lg-2 col-md-2 col-xs-2">
+                  <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Dirección Fisica</label>
                        <input type="text" name="direccion" class="form-control pull-right" title="Dirección Domicilio">
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-                 <div class="col-lg-2 col-md-2 col-xs-2">
+                 <div class="col-lg-2 col-md-6 col-xs-12">
                    <div class="form-group">
                     <label for="exampleInputEmail1">Correo Electrónico</label>
                        <input type="email" name="correoE" class="form-control pull-right" id="datepicker" title="Observaciones">
                   </div><!--form-group-->
                 </div><!--col-lg-3 col-md-3 col-xs-3-->
 
-              
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Observaciones</label>
+                       <input type="text" name="observaciones" class="form-control pull-right" id="datepicker" title="Observaciones">
+                  </div><!--form-group-->
+                </div><!--col-lg-3 col-md-3 col-xs-3-->
                 
           </div><!--box-body-->
           <div class="box-footer">
