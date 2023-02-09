@@ -52,7 +52,7 @@
         $porcentaje[ $estados_pqr[$i]["id"] ]["id"] = $estados_pqr[$i]["id"]; 
         $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
         $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
-        $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv(($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria)*100, '1', 2) ;
+        $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv( ($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria) *100, '1', 2) ;
       }
 
     $percentCuad1 = 0;
@@ -177,7 +177,7 @@
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(4)Vencidas</span>
-                <span class="info-box-number"><?php echo $cuad4 ;?></span>
+                <span class="info-box-number"><?php echo $porcentaje[3]["per"] ;?></span>
                 <span class="info-box-number"><small><?php echo ($porcentaje[3]["contar"]) ? $porcentaje[3]["contar"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->

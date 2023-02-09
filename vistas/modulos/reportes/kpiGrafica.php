@@ -1,9 +1,9 @@
 <?php
 
-	$pri_pendi  = ( ( $cuad3 ) / $contarCuadSu)*100;
-	$pri_venci = ( ( $cuad4) / $contarCuadSu)*100 ;
-	$his_resuelta = ( ( $cuad1) / $contarCuadIn)*100 ;
-	$his_extemporanea = ( ( $cuad2) / $contarCuadIn)*100 ;
+	$pri_pendi  = bcdiv( ($cuad3/($cuad3+$cuad4)) *100, '1', 2);              
+	$pri_venci = bcdiv( ($cuad4/($cuad3+$cuad4)) *100, '1', 2);               
+	$his_resuelta = bcdiv( ($cuad1/($cuad1+$cuad2)) *100, '1', 2);              
+	$his_extemporanea = bcdiv( ($cuad2/($cuad1+$cuad2)) *100, '1', 2); 
 ?>
 
 <div class="box box-success">
