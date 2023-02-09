@@ -139,18 +139,7 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
 
                   ?>
               </tbody>
-            </table>  
-            <?php
-
-            $traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", 7);
-            $id_pqr = json_decode($traer_filtro["id_pqr"], true);
-
-            echo $id_pqr[2]["id"];            
-
-            //var_dump($id_pqr);
-
-            ?>
-              
+            </table>                
           </div><!--<div class="box-body">-->
           
         </div>
