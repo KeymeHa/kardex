@@ -139,7 +139,7 @@
         <?php
 
          echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
-                  <div class="col-md-1">
+                  <div class="col-md-6 col-md-5 col-xs-12">
                   <a href="'.$radicado["soporte"].'"; target="_blank">
                       <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
                     </a>
