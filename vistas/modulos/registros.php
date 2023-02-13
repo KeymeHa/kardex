@@ -114,12 +114,13 @@
      include "anios.php";
 
      $fechaActu = new DateTime(ControladorParametros::ctrMostrarFechaRegis());
+     date_default_timezone_set('America/Bogota');
      $hoymismo = date('Y-m-d');
 
 
        echo ' <button type="button" class="btn btn-info" id="btn-actualizarParamRegis">    
             <span>
-              <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("m-d-Y h:m a").')
+              <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("h:m a d-m-Y").')
             </span>
         </button>';
 

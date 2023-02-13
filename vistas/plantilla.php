@@ -8,6 +8,8 @@
   .replace(/&quot/gi,'"')     convertir de quot a comillas
   .replace(/"/gi,'&quot')   convertir comillas a quot
     */
+
+
 ?>
 <!DOCTYPE html>
 <html>

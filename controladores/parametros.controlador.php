@@ -30,9 +30,9 @@ class ControladorParametros
 			    date_default_timezone_set('America/Bogota');
 			} catch (Exception $e){	}
 
-			$ActualY = date("Y");//año
-			$ActualRad = date("Ym");//año dia
-			$ActualCor = date("ymd");//año mes dia
+			$ActualY = date("Y");
+			$ActualRad = date("Ym");
+			$ActualCor = date("ymd");
 			$radicar = new ControladorParametros;
 
 			if( $respuesta[8] == $ActualY)
@@ -62,10 +62,11 @@ class ControladorParametros
 					  case 28:
 					    $r = $radicar->radicar($respuesta[$val], $ActualRad);
 					    break;
-					  case 27:
+					  case 29:
 					    $r = $radicar->corte($respuesta[$val], $ActualCor);
 					    break;
-					 
+					  default:
+					    echo "0";
 				}
 
 				$parametro = array('codigo' => $r, 'indice' => $respuesta[$val]);
@@ -113,7 +114,7 @@ class ControladorParametros
 					  case 28:
 					    $r = $radicar->radicar($i, $ActualRad);
 					    break;
-					  case 27:
+					  case 29:
 					    $r = $radicar->corte($i, $ActualCor);
 					    break;
 					  default:
@@ -405,7 +406,48 @@ class ControladorParametros
 		$respuesta = ModeloParametros::mdlJs_Terms($tabla);
 	}
 
-	function radicar($val, $ActualY)
+
+	static public function ctrradicacion()
+	{
+		$r = ModeloParametros::mdlradicacion();
+		
+		$fechaActual = date("Ym");
+
+		$val = $r["codRad"];
+
+		//20230100001
+		if($val == 0)
+		{
+			$val = $fechaActual."00001";
+		}
+		else
+		{
+			if ($val < 10) 
+			{
+				$val = $fechaActual."0000".$val;
+			}
+			elseif($val >= 10 && $val < 100)
+			{
+				$val = $fechaActual."000".$val;
+			}
+			elseif($val >= 100 && $val < 1000)
+			{
+				$val = $fechaActual."00".$val;
+			}
+			elseif($val >= 1000 && $val < 10000)
+			{
+				$val = $fechaActual."0".$val;
+			}
+			elseif($val >= 10000)
+			{
+				$val = $fechaActual.$val;
+			}
+		}
+		return $val;
+	}
+
+
+	static public function radicar($val, $ActualY)
 	{
 		if($val == 0)
 		{
@@ -436,7 +478,7 @@ class ControladorParametros
 		}
 	}
 
-	function corte($val, $ActualY)
+	static public function corte($val, $ActualY)
 	{
 		if($val == 0)
 		{

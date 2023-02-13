@@ -64,6 +64,16 @@ class ModeloParametros
 		;
 	}
 
+
+	static public function mdlradicacion()
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT codRad FROM parametros WHERE id = 1");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	static public function mdlMostrarFechaRegis($tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT fechaRegistroPqr FROM $tabla WHERE id = 1");
