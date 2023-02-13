@@ -844,7 +844,7 @@ class ControladorRadicados
 				{
 					if ($anio == 0) 
 					{
-						$query.= "WHERE ";
+						$query = "WHERE ";
 					}
 					else
 					{
@@ -873,6 +873,10 @@ class ControladorRadicados
 					elseif ( $es == "c3" ) {
 
 						$query.= "id_estado = 2 or id_estado = 5";
+					}
+					elseif ( $es == "c6" ) {//por asignar
+
+						$query.= "id_estado = 5";
 					}
 					else
 					{

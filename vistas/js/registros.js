@@ -107,7 +107,7 @@ $(".daterangepicker.opensleft .ranges li").on("click", function(){
 })
 
 
-$(".tablaRegistros").on("click", "button.btnVerRegistro", function(){
+$("div.div-tablaRegistros").on("click", "button.btnVerRegistro", function(){
 	var idRegistro = $(this).attr("idRegistro");
 	window.location = "index.php?ruta=correspondencia&idRegistro="+idRegistro;
 })
@@ -236,7 +236,7 @@ $("div.box-semaforo").click(function() {
 	realizarActualizaciones(cuadrante);
 });
 
-$("table.tablaRegistros").on('click', '.btnVerRegistro', function() {
+$("div.div-tablaRegistros").on('click', '.btnVerRegistro', function() {
 	var idRegistro = $(this).attr("idRegistro");
 	window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
 });
