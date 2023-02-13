@@ -40,25 +40,22 @@
 
 
 <script type="text/javascript">
+
+
 	
 var donut = new Morris.Donut({
   element: 'kpi-chart1',
   resize: true,
   colors: ["#F7F733", "#FF3300"],
   data: [
-
   	<?php
-
   		echo '{label: "Pendientes", value: '.$pri_pendi.' }';
   		echo ',';
     	echo '{label: "Vencidas", value: '.$pri_venci.'}';
-
   	?>
-
-
-    
   ],
-  hideHover: 'auto'
+  hideHover: 'auto',
+  formatter: function (y, data) { return y + '%'  }
 });
 
 
@@ -82,7 +79,8 @@ var donut = new Morris.Donut({
 
   	?>
   ],
-  hideHover: 'auto'
+  hideHover: 'auto',
+  formatter: function (y, data) { return y + '%'  }
 });
 
 
