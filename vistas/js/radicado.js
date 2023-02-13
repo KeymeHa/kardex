@@ -107,7 +107,7 @@ $(".btn-corte").click(function(){
 					var tipo = ""; 
 					var url = "";
 
-					if (respuesta == "ok") 
+					if (respuesta == "ok" || respuesta == 0 || respuesta == "0ok") 
 					{
 						titulo = "¡Se ha generado un nuevo corte!"; 
 						tipo = "success"; 

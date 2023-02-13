@@ -516,7 +516,7 @@ class ControladorRadicados
 					
 
 					$url = (isset($_GET["idCorte"])) ? "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"] : "radicado";  
-/*
+
 					if (isset($_GET["idCorte"])) 
 					{
 						$url = "index.php?ruta=verCorte&idCorte=".$_GET["idCorte"];
@@ -526,7 +526,7 @@ class ControladorRadicados
 					{
 						$url = "radicado";
 					}
-*/
+
 				}
 				else
 				{
@@ -733,6 +733,8 @@ class ControladorRadicados
 		{
 			return "e3";
 		}
+
+		
 			
 	}//ctrGenerarCorte()
 

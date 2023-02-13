@@ -241,7 +241,7 @@ $("div.div-tablaRegistros").on('click', '.btnVerRegistro', function() {
 	window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
 });
 
-$("table.tablaRegistros").on('click', '.btnFastRegistro', function() 
+$("div.div-tablaRegistros").on('click', '.btnFastRegistro', function() 
 {
 
 	var elemento = $("#fechaReg");
