@@ -113,15 +113,24 @@ class TablaRegistros
 			
 						*/
 
+						$acciones = "<div class='btn-group'>";
+
 						 if($registrosPQR[$i]["id_estado"] != 1 && $registrosPQR[$i]["id_estado"] != 4 && $registrosPQR[$i]["id_estado"] != 6)
 						{
-							$acciones = "<div class='btn-group'><div class='col-md-5'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div> <div class='col-md-5'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div></div>";
-							
+							$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div> <div class='col-md-4'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
 						}
 						else
 						{
-							$acciones = "<div class='btn-group'><div class='col-md-5'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div></div>";
+
+							$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
 						}
+
+						if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
+						{
+							$acciones .= "<div class='col-md-4'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
+						}
+
+						$acciones .= "</div>";
 
 						$fInicial = date_create($radicado["fecha"]);
 						$fechaActual = date('d-m-Y');

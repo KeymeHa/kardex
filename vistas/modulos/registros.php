@@ -279,7 +279,7 @@
            <th>Fecha Respuesta</th>
            <th>Fecha Vencimiento</th>
            <th>días</th> 
-           <th style="width: 100px">Acciones</th>
+           <th style="width: 120px">Acciones</th>
          </tr> 
         </thead>
         </table>
