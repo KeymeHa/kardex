@@ -674,16 +674,67 @@ class ModeloParametros
 
 	}
 
-	static public function mdlContarEstados($query)
+	static public function mdlContarEstados($query, $fechaInicial, $fechaFinal)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado $query GROUP BY(estado_pqr.nombre)");
+		/*$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado $query GROUP BY(estado_pqr.nombre)");
 
 		$stmt -> execute();
 		return $stmt -> fetchAll();
 		$stmt -> close();
 
+		$stmt = null;*/
+
+
+
+		if($fechaInicial == null)
+		{
+
+			$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado $query GROUP BY(estado_pqr.nombre)");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado WHERE DATE_FORMAT(registropqr.fecha, '%Y %m %d') = DATE_FORMAT('$fechaInicial', '%Y %m %d') $query GROUP BY(estado_pqr.nombre)");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado  WHERE registropqr.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' $query GROUP BY(estado_pqr.nombre)");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT estado_pqr.id, estado_pqr.nombre, COUNT(registropqr.id_estado) FROM estado_pqr INNER JOIN registropqr ON estado_pqr.id = registropqr.id_estado WHERE registropqr.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $query GROUP BY(estado_pqr.nombre)");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
 		$stmt = null;
 
 
-	}
+
+	}// mdlContarEstados($query, $fechaInicial, $fechaFinal)
 }

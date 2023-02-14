@@ -34,8 +34,7 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
           <div class="box-header with-border">
             <h3 class="box-title">Listado de parametros del Sistema</h3>
           </div>
-          <div class="box-body">   
-
+          <div class="box-body">  
             <table class="table table-bordered table-striped dt-responsive tablas" width="100%" >
               <thead>
                <tr>

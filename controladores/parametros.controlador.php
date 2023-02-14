@@ -1296,31 +1296,50 @@ class ControladorParametros
 	}
 
 
-	static public function ctrContarEstados($id_perfil)
+	function validateDate($date, $format = 'Y-m-d')
 	{
-		$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", $id_perfil);
+	    $d = DateTime::createFromFormat($format, $date);
+	    return $d && $d->format($format) == $date;
+	}
 
+	static public function ctrContarEstados($id_perfil, $anio, $fechaInicial, $fechaFinal)
+	{
 		$query = "";
+		$validar = new ControladorParametros;
+		$traer_filtro = $validar->ctrMostrarFiltroPQR("id_per", $id_perfil);
+
+		$respuesta = 0;
+
+		if ($fechaInicial != null) 
+		{
+			$query.= "AND";
+
+			
+			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+				$query .= ($anio == 0) ? 'WHERE' : "WHERE YEAR(registropqr.fecha) = '".$anio."' AND";
+		}
 
 		if ($traer_filtro["id_pqr"] != null) 
 		{
 			$id_pqr = json_decode($traer_filtro["id_pqr"], true);
-
-
-			$query = ($_SESSION["anioActual"] == 0) ? 'WHERE' : 'WHERE YEAR(fecha) = '.$_SESSION["anioActual"]." AND";
-
 			foreach ($id_pqr as $key => $value) 
 			{
 				$query .= " registropqr.id_pqr = ".$value["id"]." or";
 			}
 
 			$query = substr($query, 0 ,-2);
+
+			$respuesta = ModeloParametros::mdlContarEstados($query, $fechaInicial, $fechaFinal);
 		}
 
-
-
-		$respuesta = ModeloParametros::mdlContarEstados($query);
 		return $respuesta;
+
 	}
 
 	static public function ctrAlmacenarAccion($tabla, $id_mensaje, $valor, $ip)

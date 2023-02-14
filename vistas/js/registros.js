@@ -609,7 +609,7 @@ function aparecerTablaRegistros()
            '<th>Fecha Respuesta</th>'+
            '<th>Fecha Vencimiento</th>'+
            '<th>días</th>'+ 
-           '<th>Acciones</th>'+
+           '<th style="width: 100px">Acciones</th>'+
          '</tr>'+
         '</thead>'+
         '</table>'

@@ -36,65 +36,73 @@
     $cuad3 = 0 ; //2 pendiente, 5 por asignar 
     $cuad4 = 0 ; //3 vencido
 
-    $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"]);
+     $fechaInicial = null;
+     $fechaFinal = null;
+
+     if (isset($_GET["fechaInicial"])) 
+      {
+        $fechaInicial = $_GET["fechaInicial"];
+        $fechaFinal = $_GET["fechaFinal"];
+      }
+
+    $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 
 
     if (!is_null($estados_pqr)) 
     {
 
-      for ($i=0; $i < count($estados_pqr) ; $i++) 
-      { 
-        $sumatoria+=$estados_pqr[$i]["COUNT(registropqr.id_estado)"];
-      }
+        for ($i=0; $i < count($estados_pqr) ; $i++) 
+        { 
+          $sumatoria+=$estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+        }
 
-      for ($i=0; $i < count($estados_pqr); $i++) 
+        for ($i=0; $i < count($estados_pqr); $i++) 
+        {
+          $porcentaje[ $estados_pqr[$i]["id"] ]["id"] = $estados_pqr[$i]["id"]; 
+          $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
+          $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+          $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv( ($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria) *100, '1', 2) ;
+        }
+
+      $percentCuad1 = 0;
+      $percentCuad3 = 0;
+
+
+      //cuadrante 1
+      if (isset($porcentaje[1])) 
       {
-        $porcentaje[ $estados_pqr[$i]["id"] ]["id"] = $estados_pqr[$i]["id"]; 
-        $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
-        $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
-        $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv( ($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria) *100, '1', 2) ;
+        if (isset($porcentaje[6])) 
+        {$cuad1 = $porcentaje[1]["contar"] + $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[1]["per"]+$porcentaje[6]["per"];}
+        else
+        {$cuad1 = $porcentaje[1]["contar"];$percentCuad1+=$porcentaje[1]["per"];}
       }
+      elseif (isset($porcentaje[6])) 
+      {$cuad1 = $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[6]["per"];}
 
-    $percentCuad1 = 0;
-    $percentCuad3 = 0;
+      //cuadrante 2
+      if (isset($porcentaje[4])) 
+      {$cuad2 = $porcentaje[4]["contar"];}
 
+      //cuadrante 3
+      if (isset($porcentaje[2])) 
+      {
+        if (isset($porcentaje[5])) 
+        {$cuad3 = $porcentaje[2]["contar"] + $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[2]["per"]+$porcentaje[5]["per"];}
+        else
+        {$cuad3 = $porcentaje[2]["contar"];$percentCuad3+=$porcentaje[2]["per"];}
+      }
+      elseif (isset($porcentaje[5])) 
+      {$cuad3 = $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[5]["per"];}
 
-    //cuadrante 1
-    if (isset($porcentaje[1])) 
-    {
-      if (isset($porcentaje[6])) 
-      {$cuad1 = $porcentaje[1]["contar"] + $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[1]["per"]+$porcentaje[6]["per"];}
-      else
-      {$cuad1 = $porcentaje[1]["contar"];$percentCuad1+=$porcentaje[1]["per"];}
-    }
-    elseif (isset($porcentaje[6])) 
-    {$cuad1 = $porcentaje[6]["contar"];$percentCuad1+=$porcentaje[6]["per"];}
+      //cuadrante 4
+      if (isset($porcentaje[3])) 
+      {$cuad4 = $porcentaje[3]["contar"];}
 
-    //cuadrante 2
-    if (isset($porcentaje[4])) 
-    {$cuad2 = $porcentaje[4]["contar"];}
-
-    //cuadrante 3
-    if (isset($porcentaje[2])) 
-    {
-      if (isset($porcentaje[5])) 
-      {$cuad3 = $porcentaje[2]["contar"] + $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[2]["per"]+$porcentaje[5]["per"];}
-      else
-      {$cuad3 = $porcentaje[2]["contar"];$percentCuad3+=$porcentaje[2]["per"];}
-    }
-    elseif (isset($porcentaje[5])) 
-    {$cuad3 = $porcentaje[5]["contar"];$percentCuad3+=$porcentaje[5]["per"];}
-
-    //cuadrante 4
-    if (isset($porcentaje[3])) 
-    {$cuad4 = $porcentaje[3]["contar"];}
-
-    
-    $contarCuadSu = $cuad3 + $cuad4;
-    $contarCuadIn = $cuad1 + $cuad2;
+      
+      $contarCuadSu = $cuad3 + $cuad4;
+      $contarCuadIn = $cuad1 + $cuad2;
 
     }//!is_null($estados_pqr)
-
     /*
     echo ' 
         <?php 
