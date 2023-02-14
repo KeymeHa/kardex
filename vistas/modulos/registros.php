@@ -129,7 +129,7 @@
      $hoymismo = date('Y-m-d');
 
 
-       echo ' <button type="button" class="btn btn-info" id="btn-actualizarParamRegis">    
+       echo ' <button type="button" class="btn btn-primary" id="btn-actualizarParamRegis">    
             <span>
               <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("H:m a d-m-Y").')
             </span>
