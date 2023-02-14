@@ -123,7 +123,7 @@
               $tipoProgress = "danger";
             }
 
-            echo '<div class="col-lg-12"><div class="row"><div class="pull-left">'.$radicado["fecha"].'</div><div class="pull-right">'.$radicado["fecha_vencimiento"].'</div></div></div><p>'.$radicado["contador"].'%</p><div class="progress progress-sm active">
+            echo '<div class="col-lg-12"><div class="row"><div class="pull-left">'.$fechaRad.'</div><div class="pull-right">'.$fecha_vencimiento.'</div></div></div><p>'.$radicado["contador"].'%</p><div class="progress progress-sm active">
                   <div class="progress-bar progress-bar-'.$tipoProgress.' progress-bar-striped" role="progressbar" style="width: '.$radicado["contador"].'%" title="">
                   <span class="sr-only">20% Complete</span>
                   </div>
@@ -139,7 +139,7 @@
         <?php
 
          echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
-                  <div class="col-md-6 col-md-5 col-xs-12">
+                  <div class="col-lg-2 col-md-3 col-xs-6">
                   <a href="'.$radicado["soporte"].'"; target="_blank">
                       <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
                     </a>
