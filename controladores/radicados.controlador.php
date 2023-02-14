@@ -777,132 +777,61 @@ class ControladorRadicados
 	}//ctrNuevoRegistro*/
 
 	#							id del usuario 
-	static public function ctrVerRegistrosPQR($id, $per, $fI, $fF, $es, $anio, $item, $valor)
+
+	function validateDate($date, $format = 'Y-m-d')
+	{
+	    $d = DateTime::createFromFormat($format, $date);
+	    return $d && $d->format($format) == $date;
+	}
+
+
+	static public function ctrVerRegistrosPQR($id, $per, $fechaInicial, $fechaFinal, $es, $anio, $item, $valor)
 	{
 		$query = "";
 		$tabla = "registropqr";
 
-		if (is_null($valor)) 
+		if ($fechaInicial != null) 
 		{
+			$query.= ( !is_null($es) ) ? "AND " : "";
 
-			if ($fI != null) 
+			$validar = new ControladorRadicados;
+			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
 			{
-
-				if ( validateDate($fI) && validateDate($fF) ) 
-				{
-					if($fI == $fF)
-					{
-						$query = "WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('".$fF."', '%Y %m %d') ";
-						#ORDER BY fecha DESC
-					}
-					else
-					{
-						$fechaActual = new DateTime();
-						$fechaActual ->add(new DateInterval("P1D"));
-						$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-						$fechaFinal2 = new DateTime($fF);
-						$fechaFinal2 ->add(new DateInterval("P1D"));
-						$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-						if($fechaFinalMasUno == $fechaActualMasUno){
-
-							$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fechaFinalMasUno."'");
-
-						}else{
-
-							$query = Conexion::conectar()->prepare("WHERE fecha BETWEEN '".$fI."' AND '".$fF."'");
-
-						}
-					
-					}
-				}
-				else
-				{
-					$r = new ControladorRadicados;
-					$anio = $r->anioActual($anio);
-					$query = $anio;
-				}
-
-			}//$fI != null
-			else
-			{
-
-				if ($anio != 0) 
-				{
-					$r = new ControladorRadicados;
-					$anio = $r->anioActual($anio);
-					$query = $anio;
-				}
-				
+				return 0;
 			}
-
-			if ( !is_null($es) ) 
-			{
-				//si existe estado enviar, sino no enviar solo pendientes y vencidas
-				
-
-				if ($fI == null) 
-				{
-					if ($anio == 0) 
-					{
-						$query = "WHERE ";
-					}
-					else
-					{
-						$query.= " AND ";
-					}
-				}
-				else
-				{
-					$query.= " AND ";
-				}
-
-				if ( is_int($es) ) 
-				{
-					$query.= "id_estado = ".$es;
-				}
-				else
-				{
-					if ( $es == "c1" ) 
-					{
-						$query.= "id_estado = 1 or id_estado = 6";
-
-					}elseif ( $es == "c2" ) {
-
-						$query.= "id_estado = 4";
-					}
-					elseif ( $es == "c3" ) {
-
-						$query.= "id_estado = 2 or id_estado = 5";
-					}
-					elseif ( $es == "c6" ) {//por asignar
-
-						$query.= "id_estado = 5";
-					}
-					else
-					{
-						$query.= "id_estado = 3";
-					}
-				}
-
-
-
-			}
-			
-
-			$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $item);
 		}
 		else
 		{
-
-			$query = "WHERE ".$item." = ".$valor;
-			$respuesta = ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $item);
+			if ($anio != 0) 
+			{
+				$r = new ControladorRadicados;
+				$query = $r->anioActual($anio);
+				$query.= ( !is_null($es) ) ? " AND " : "";
+			}
 		}
 
-	
-		return $respuesta;
+		if ( $es == "c1" ) 
+		{
+			$query.= "id_estado = 1 or id_estado = 6";
 
+		}elseif ( $es == "c2" ) {
+
+			$query.= "id_estado = 4";
+		}
+		elseif ( $es == "c3" ) {
+
+			$query.= "id_estado = 2 or id_estado = 5";
+		}
+		elseif ( $es == "c6" ) {//por asignar
+
+			$query.= "id_estado = 5";
+		}
+		elseif ( $es == "c4" ) 
+		{
+			$query.= "id_estado = 3";
+		}
+
+		return ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal);
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 
 
@@ -1489,8 +1418,9 @@ class ControladorRadicados
 		$traer = new ControladorRadicados ;
 		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null);
 
+		date_default_timezone_set('America/Bogota');
 		$fechaActual = date("Y-m-d");
-		$fechaHoraActual = date("Y-m-d h:m");
+		$fechaHoraActual = date("Y-m-d H:i:s");
 
 		foreach ($registrosPQR as $key => $value) 
 		{
@@ -1513,9 +1443,6 @@ class ControladorRadicados
 						'id' => $value["id"]);
 
 					$respuesta = ModeloRadicados::mdlActualizarRegistros("registropqr", $datos);
-
-
-
 				}
 			}
 

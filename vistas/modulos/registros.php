@@ -120,18 +120,17 @@
 
        echo ' <button type="button" class="btn btn-info" id="btn-actualizarParamRegis">    
             <span>
-              <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("h:m a d-m-Y").')
+              <i class="fa fa-exchange"></i> Actualizar Tabla (Ultima actualización: '.$fechaActu->format("H:m a d-m-Y").')
             </span>
         </button>';
 
         
-    echo '<button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
+   echo '<button type="button" class="btn btn-success pull-right" id="btn-RangoRegistroPQR">    
             <span>
               <i class="fa fa-calendar"></i> Rango de fecha
             </span>
             <i class="fa fa-caret-down"></i>
-        </button>
-      </div><!--box-header with-border-->
+        </button></div><!--box-header with-border-->
     </div><!--box box-success-->';
 
 
@@ -167,7 +166,9 @@
               <div class="info-box-content">
                 <span class="info-box-text">(3)Pendientes</span>
                 <span class="info-box-number"><?php echo $cuad3 ;?></span>
-                <span class="info-box-number"><small><?php  echo $percentCuad3."% ,"; echo (isset($porcentaje[5]["contar"])) ? " por asignar ".$porcentaje[5]["contar"] : ""; ?></small></span>
+                <span class="info-box-number"><small><?php  echo $percentCuad3."%";
+                //echo (isset($porcentaje[5]["contar"])) ? " por asignar ".$porcentaje[5]["contar"] : ""; 
+                 ?></small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
@@ -217,16 +218,38 @@
     </div>
 
      <div class="box box-success">
+      <div class="box-header">
+        <h3 class="box-title">Resumen Asignaciones</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          </div>
+      </div>
+      <div class="box-body">
+        <table  class="table table-bordered table-striped dt-responsive tabla" width="100%">
+          <thead>
+            <tr>
+              <th rowspan="2"  style="text-align: center;">Área</th>
+              <th class="bg-red"  style="text-align: center;"><i class="glyphicon glyphicon-ban-circle"></i></th>
+              <th class="bg-yellow" style="text-align: center;"><i class="glyphicon glyphicon-exclamation-sign"></i></th>
+              <th class="bg-red disabled" style="text-align: center;"><i class="glyphicon glyphicon-remove-circle"></i></th>
+              <th class="bg-green" style="text-align: center;"><i class="glyphicon glyphicon-ok"></i></th>
+              <th class="bg-gray" style="text-align: center;">Total</th>
+            </tr>
+            <tr>
+              <th id="th-r"></th>
+              <th id="th-y"></th>
+              <th id="th-rd"></th>
+              <th id="th-g"></th>
+              <th id="th-gr"></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+       
+     </div>
 
-      <?php 
-/*
-      $conteo = ControladorParametros::ctrContarDias("2023-01-27", "2023-02-10");
-
-      var_dump($conteo);*/
-
-     // $prueba = ControladorRadicados::ctractualizarRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"]);
-
-      ?>
+     <div class="box box-success">
 
       <div class="box-header with-border">
         <h3 class="box-title">

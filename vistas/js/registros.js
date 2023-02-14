@@ -136,6 +136,15 @@ function aparecertablaRegistros()
 }
 */
 
+$( document ).ready(function() 
+{/*
+  var idUser = $("#inputVar").attr("idUser");
+  var per = $("#inputVar").attr("per");
+  var anio = $("#inputVar").attr("anio");
+  paginaCargada(39, idUser, per, anio, es);*/
+});
+
+
 function realizarActualizaciones(es)
 {
   validarTablaRegistro();
@@ -174,56 +183,7 @@ $("#btn-actualizarParamRegis").click(function()
     {
        window.location = "registros";
     }
-  }).fail( function( jqXHR, textStatus, errorThrown ) {
-
-        var msgError = "";
-
-        if (jqXHR.status === 0) {
-
-          msgError ='Sin conexión a Internet.';
-
-        } else if (jqXHR.status == 404) {
-
-           msgError ='Requerimiento en pagina no encontrada [404]';
-
-        } else if (jqXHR.status == 500) {
-
-           msgError ='Error de Servidor Interno [500].';
-
-        } else if (textStatus === 'parsererror') {
-
-           msgError ='Fallo la respuesta en JSON';
-
-        } else if (textStatus === 'timeout') {
-
-           msgError ='Tiempo Agotado para la respuesta.';
-
-        } else if (textStatus === 'abort') {
-
-           msgError ='Requerimiento de ajax Cancelado';
-
-        } else {
-
-           msgError ='Uncaught Error: ' + jqXHR.responseText;
-
-        }
-
-        swal({
-          type: "error",
-          title:  msgError,
-          text: "Contacte al Usuario root.",
-          showCancelButton: false,
-          showConfirmButton: true,
-          confirmButtonText: "Listo",
-          confirmButtonColor: '#149243',
-        }).then((result)=>{
-          if (result.value) 
-          {
-            window.location = "index.php";
-          }
-        })
-
-      });
+  });
 })
 
 $("h4.banner-vencidos").click(function(){

@@ -131,8 +131,58 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
-	static public function mdlmostrarRegistrosPQR($tabla, $query, $item)
+	static public function mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal)
 	{
+
+		if($fechaInicial == null)
+		{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('$fechaInicial', '%Y %m %d') $query");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' $query");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $query");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+		/*
 
 		if (is_null($item)) 
 		{
@@ -149,7 +199,7 @@ class ModeloRadicados
 
 		
 		$stmt -> close();
-		$stmt = null;
+		$stmt = null;*/
 	}
 
 	static public function mdlMostrarCortesRango($tabla, $fechaInicial, $fechaFinal, $anio)
