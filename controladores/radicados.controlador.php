@@ -784,7 +784,7 @@ class ControladorRadicados
 	    return $d && $d->format($format) == $date;
 	}
 
-
+	//										   0,   0,        0,           null,      0,     0, "id",   $idRegistro
 	static public function ctrVerRegistrosPQR($id, $per, $fechaInicial, $fechaFinal, $es, $anio, $item, $valor)
 	{
 		$query = "";
@@ -831,7 +831,7 @@ class ControladorRadicados
 			$query.= "id_estado = 3";
 		}
 
-		return ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal);
+		return ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor);
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 
 
@@ -977,7 +977,6 @@ class ControladorRadicados
 		$traer = new ControladorRadicados;
 		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
-
 
 		if ( $registro["dias_contados"] <= $registro["dias_habiles"] ) 
 		{

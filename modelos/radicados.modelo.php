@@ -130,19 +130,26 @@ class ModeloRadicados
 		$stmt -> close();
 		$stmt = null;
 	}
-
-	static public function mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal)
+	//											 $tabla, $query, $fechaInicial, $fechaFinal, $item, $valor
+	static public function mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor)
 	{
 
 		if($fechaInicial == null)
 		{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
-
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();	
-
+			if (is_null($item)) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query");
+				$stmt -> execute();
+				return $stmt -> fetchAll();	
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();	
+			}
 
 		}else if($fechaInicial == $fechaFinal){
 
