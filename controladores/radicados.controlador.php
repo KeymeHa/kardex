@@ -584,7 +584,7 @@ class ControladorRadicados
 		
 		if ($count > 0)//si existe al menos un registro
 		{
-			$corte = ControladorParametros::ctrMostrarParametros(27);
+			$corte = ControladorParametros::ctrMostrarParametros(29);
 			//actualizar todos los radicados con id_corte 0 a el numero de corte
 			$tabla = "cortes";
 			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
@@ -624,52 +624,6 @@ class ControladorRadicados
 				{ 
 					$sw = 0; //dejar de buscar el id_pqr
 					$x = 0; // movimiento de elemento 
-					 /*
-			                 Y
-			                          x
-			          "idpqr"  0 {1, 2, 3 }
-			                            ["id"]
-			                 1
-
-			          id_per array(3) 
-			          { 
-			            [0]=> int(7)
-			            [1]=> int(8) 
-			            [2]=> int(6) 
-			          } 
-
-			          id_pqr array(3) 
-			          { 
-			            [0]=> array(1) { ["id_pqr"]=> array(4) 
-			            { 
-			                [0]=> array(1) 
-			                { ["id"]=> string(1) "1" } 
-			                [1]=> array(1) 
-			                  { ["id"]=> string(1) "2" }
-			                [2]=> array(1) 
-			                  { ["id"]=> string(1) "3" } 
-			                [3]=> array(1) 
-			                  { ["id"]=> string(1) "4" } } 
-			            } 
-
-			            [1]=> array(1)  { ["id_pqr"]=> array(2) 
-			            { 
-			                [0]=> array(1) 
-			                  { ["id"]=> string(1) "6" } 
-			                [1]=> array(1) 
-			                  { ["id"]=> string(1) "5" } } 
-			            } 
-
-			            [2]=> array(1)  { ["id_pqr"]=> array(2) 
-			            { 
-			                [0]=> array(1) 
-			                    { ["id"]=> string(1) "8" } 
-			                  [1]=> array(1) 
-			                    { ["id"]=> string(1) "7" } } 
-			            } 
-			          }
-
-			          */
 
 					 while ( $x <= count($id_pqr[$y]["id_pqr"]) && $sw == 0) 
 			          {
@@ -737,46 +691,6 @@ class ControladorRadicados
 		
 			
 	}//ctrGenerarCorte()
-
-/*
-	static public function ctrNuevoRegistro()
-	{#INCOMPLETO
-		if (isset($_POST["actualizacion"])) 
-		{
-			$id_radicado = "";
-		
-			//Trae el ultimo indicativo de un radicado para aumentar y actualizar
-			$registro = ModeloRadicados::mdlVerIndicativo("registro", $id_radicado);
-
-			$id_indicativo = ($registro["id_indicativo"]+1);
-
-			$datosD = array( 'id_indicativo' => $id_indicativo,
-							 'sw' => 1,
-							 'id_radicado' => $id_radicado);
-
-			$actualizar = ModeloRadicados::mdlAcualizarTrazabilidad("registro", $datosD);
-
-			$datos = array( 'dias' => 0,
-							'id_corte' => "",
-							'id_radicado' => 0,
-							'id_area_o' => 0,
-							'id_usuario_o' => 0,
-							'id_area_d' => 0,
-							'id_usuario_d' => 0,
-							'id_accion' => 2,
-							'fecha' => 0,
-						 	'vigencia' => 1,
-						 	'observacion' => "",
-						 	'vigencia' => 1,
-						 	'soporte' => "",
-						 	'sw' => 1,
-						 	'indicativo' => $id_indicativo);
-
-			$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
-		}//if isset
-	}//ctrNuevoRegistro*/
-
-	#							id del usuario 
 
 	function validateDate($date, $format = 'Y-m-d')
 	{

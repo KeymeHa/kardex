@@ -107,15 +107,8 @@ $(".btn-corte").click(function(){
 					var tipo = ""; 
 					var url = "";
 
-					if (respuesta == "ok" || respuesta == 0 || respuesta == "0ok") 
-					{
-						titulo = "¡Se ha generado un nuevo corte!"; 
-						tipo = "success"; 
-						url = "cortes";
-					}
-					else
-					{
-						if (respuesta != "e1" && respuesta != "e2") 
+
+						if (respuesta == "e1" && respuesta == "e2") 
 						{
 							titulo = "¡No hay correspondencias pendientes!"; 
 							tipo = "error"; 
@@ -123,11 +116,10 @@ $(".btn-corte").click(function(){
 						}
 						else
 						{
-							titulo = "¡Ha ocurrido un error!"; 
-							tipo = "error"; 
-							url = "radicado";
+							titulo = "¡Se ha generado un nuevo corte!"; 
+							tipo = "success"; 
+							url = "cortes";
 						}
-					}
 
 					swal({
 					      title: titulo,
