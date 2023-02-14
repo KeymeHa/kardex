@@ -136,20 +136,24 @@
 
       </div><!--BOX BODY-->
       
-        <?php
-
-         echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box-footer">
-                  <div class="col-lg-2 col-md-3 col-xs-6">
-                  <a href="'.$radicado["soporte"].'"; target="_blank">
-                      <button type="button" class="btn btn-block btn-primary"><i class="fa fa-external-link-square"></i> Soporte</button>
-                    </a>
-                  </div></div>' : '';
-
-        ?>
+        
      
     </div><!--BOX-->
 
     <?php
+
+         echo ( $radicado["soporte"] != "" && file_exists($radicado["soporte"]) ) ? '<div class="box box-'.$estado["html"].'"><div class="box-header">
+       <h3 class="box-title">Soporte</h3>
+       <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div><div class="box-body"><div class="col-lg-12">
+                  <embed src="'.$radicado["soporte"].'" width="100%" height="700px"  type="application/pdf"> 
+                     
+                    </a>
+                  </div></div></div>' : '';
+
 
     if($registro["id_estado"] != 1 && $registro["id_estado"] != 4 && $registro["id_estado"] != 6)
     {
