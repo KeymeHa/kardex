@@ -73,9 +73,14 @@ function ahora(elemento)
 
 $("#selectAnio").on("click", "li a", function(){
 
-location.reload();
+	if (localStorage.getItem("capturarRango")) 
+	{
+		localStorage.removeItem("capturarRango");
+		localStorage.clear();
+	}
 
-
+	
+	
 	var anio = $(this).attr("anio");
 	var actual = $(this).attr("actual");
 
@@ -94,7 +99,7 @@ location.reload();
 			processData: false,
 			dataType: "json",
 			success: function(respuesta){
-				 
+				 location.reload();
 			}
 
 		});
