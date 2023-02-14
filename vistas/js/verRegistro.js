@@ -28,6 +28,8 @@ $(document).ready(function() {
 
                 $("#select_accion").append('<option value="">Seleccione una acción</option>');
 
+                
+
                 for (var i = 0; i < resp.length; i++) 
                 {
                     $("#select_accion").append('<option value="'+resp[i]['id']+'">'+resp[i]['nombre']+'</option>');
