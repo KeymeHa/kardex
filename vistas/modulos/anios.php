@@ -1,5 +1,5 @@
 <?php
-  $anio = ControladorParametros::ctrVerAnio(false);
+  $anio = ControladorParametros::ctrVerAnio();
 ?>
 
 
@@ -11,7 +11,7 @@
   </button>
   <ul class="dropdown-menu" role="menu" id="selectAnio">
     <?php 
-    for($i = 1; $i < count($anio); $i++)
+    for($i = 0; $i < count($anio); $i++)
     {
       echo'<li><a href="#" anio="'.$anio[$i]["anio"].'" actual="'.$_SESSION["anioActual"].'">'.$anio[$i]["anio"].'</a></li>';
     }

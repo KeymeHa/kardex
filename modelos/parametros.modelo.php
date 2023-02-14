@@ -148,17 +148,17 @@ class ModeloParametros
 
 	}
 
-	static public function mdlVerAnio($tabla, $valor)
+	static public function mdlVerAnio($tabla)
 	{
-
+/*
 		if( $valor == false )
-		{
+		{*/
 			$stmt = Conexion::conectar()->prepare("SELECT anio FROM $tabla");
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
 			$stmt -> close();
-			$stmt = null;
+			$stmt = null;/*
 		}
 		elseif( $valor == true )
 		{
@@ -177,12 +177,12 @@ class ModeloParametros
 			return $stmt -> fetch();
 			$stmt -> close();
 			$stmt = null;
-		}
+		}*/
 
 		
 	}
 
-	static public function mdlActualizaranio($tabla, $item, $valor)
+	/*static public function mdlActualizaranio($tabla, $item, $valor)
 	{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = :$item WHERE id = 1");
 
@@ -201,7 +201,7 @@ class ModeloParametros
 		$stmt -> close();
 
 		$stmt = null;
-	}
+	}*/
 
 	static public function mdlNuevoyear($tabla, $ActualY)
 	{

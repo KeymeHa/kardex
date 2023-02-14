@@ -662,20 +662,20 @@ class ControladorParametros
 	}
 
 
-	static public function ctrVerAnio($valor)
+	static public function ctrVerAnio()
 	{
 		$tabla = "anios";
-		$respuesta = ModeloParametros::mdlVerAnio($tabla, $valor);
+		$respuesta = ModeloParametros::mdlVerAnio($tabla);
 		return $respuesta;
 	}
 
 	static public function ctrActualizarAnio($item, $valor)
 	{
-		$tabla = "anios";
+		//$tabla = "anios";
 		session_start();
 		$_SESSION["anioActual"] = $valor;
-		$respuesta = ModeloParametros::mdlActualizaranio($tabla, $item, $valor);
-		return $respuesta;
+		//$respuesta = ModeloParametros::mdlActualizaranio($tabla, $item, $valor);
+		return "ok";
 	}
 
 
@@ -1322,7 +1322,7 @@ class ControladorParametros
 		}
 		else
 		{
-				$query .= ($anio == 0) ? 'WHERE' : "WHERE YEAR(registropqr.fecha) = '".$anio."' AND";
+			$query .= ($anio == 0) ? 'WHERE' : "WHERE YEAR(registropqr.fecha) = '".$anio."' AND";
 		}
 
 		if ($traer_filtro["id_pqr"] != null) 

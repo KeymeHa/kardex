@@ -64,6 +64,7 @@ if(isset($_POST["paramIns"]))
 	$limIns -> paramIns = $_POST["paramIns"];
 	$limIns -> ajaxEditarParametros();}
 
+
 if(isset($_POST["anio"]))
 {	$limIns = new AjaxParametros();
 	$limIns -> anio = $_POST["anio"];

@@ -29,12 +29,7 @@
 
     <?php
 
-    $porcentaje = [[]];
-    $sumatoria = 0;
-    $cuad1 = 0 ; // 1 resuelto, 6trasladado
-    $cuad2 = 0 ; //4 extemporaneo
-    $cuad3 = 0 ; //2 pendiente, 5 por asignar 
-    $cuad4 = 0 ; //3 vencido
+   
 
      $fechaInicial = null;
      $fechaFinal = null;
@@ -47,9 +42,17 @@
 
     $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 
+    $porcentaje = [[]];
+    $sumatoria = 0;
+    $cuad1 = 0 ; // 1 resuelto, 6trasladado
+    $cuad2 = 0 ; //4 extemporaneo
+    $cuad3 = 0 ; //2 pendiente, 5 por asignar 
+    $cuad4 = 0 ; //3 vencido
+
 
     if (!is_null($estados_pqr)) 
     {
+        $sumatoria = 0;
 
         for ($i=0; $i < count($estados_pqr) ; $i++) 
         { 

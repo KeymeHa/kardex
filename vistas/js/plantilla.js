@@ -70,7 +70,11 @@ function ahora(elemento)
 	$(elemento).val(time);
 }
 
+
 $("#selectAnio").on("click", "li a", function(){
+
+location.reload();
+
 
 	var anio = $(this).attr("anio");
 	var actual = $(this).attr("actual");
@@ -90,9 +94,7 @@ $("#selectAnio").on("click", "li a", function(){
 			processData: false,
 			dataType: "json",
 			success: function(respuesta){
-
-				 location.reload();
-
+				 
 			}
 
 		});
