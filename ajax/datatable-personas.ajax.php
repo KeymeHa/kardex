@@ -50,14 +50,17 @@ class Tablapersonas
            $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
 		   $acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarPer'  title='Editar persona' data-toggle='modal' data-target='#modalEditarPersona' idper='".$personas[$i]["id"]."' idAr='".$personas[$i]["id_area"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarPer' title='Eliminar' idper='".$personas[$i]["id"]."' nomper='".$usuario["nombre"]."'><i class='fa fa-times'></i></button></div></div>";
 
-		   $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"], $this->anioActual);
+		    $rq = ControladorRequisiciones::ctrContarRqdeArea("id_persona", $personas[$i]["id"], $this->anioActual);
+
+		    $usrDefinido = ControladorUsuarios::ctrValidarEncargado("id_usuario", $personas[$i]["id"] );
+		    $usr_predeterminado = ( $usrDefinido == 0 ) ? $usuario["nombre"] : "<strong>".$usuario["nombre"]."</strong>(Encargado predeterminado)" ;
 
 
 		   if ($sw == 0) 
 		   {
 		   		$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$usuario["nombre"].'",
+	    		"'.$usr_predeterminado.'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$rq[0].'",
 	    		"'.$acciones.'"

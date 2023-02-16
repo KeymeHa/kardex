@@ -555,9 +555,9 @@ class ControladorUsuarios
 		return $respuesta["perfil"];
 	}
 
-	static public function ctrValidarEncargado($valor)
+	static public function ctrValidarEncargado($item, $valor)
 	{
-		$respuesta = ModeloUsuarios::mdlValidarEncargado($valor);
+		$respuesta = ModeloUsuarios::mdlValidarEncargado($item, $valor);
 		
 		if (isset($respuesta["id"]) && !is_null($respuesta["id"]))
 		{
@@ -574,9 +574,9 @@ class ControladorUsuarios
 
 	static public function ctrActualizarEncargado($item1, $valor1, $item2, $valor2)
 	{
-		/*$item1, id_area campo
-		$valor1,   id_area valor
-		$item2,   id_usr campo
-		$valor2  id_usr valor*/
+		$tabla = "personas";
+		$respuesta = ModeloUsuarios::mdlLimpiarEncargado($tabla, $item1, $valor1);
+		$respuesta = ModeloUsuarios::mdlActualizarEncargado($tabla, $item2, $valor2);
+		return $respuesta;
 	}
 }

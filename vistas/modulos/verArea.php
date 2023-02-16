@@ -70,7 +70,7 @@
           <div class="col-sm-3 col-xs-3">
             <div class="description-block border-right">
               <h5 class="description-header">Encargado Predeterminado</h5>
-              <span class="description-text"><?php $usrDefinido = ControladorUsuarios::ctrValidarEncargado($valor);
+              <span class="description-text"><?php $usrDefinido = ControladorUsuarios::ctrValidarEncargado("id_area", $valor);
               $usr_predeterminado = ( $usrDefinido == 0 ) ? "Sin Encargado." : $usrDefinido["nombre"] ; echo $usr_predeterminado; ?></span>
             </div>
           </div>

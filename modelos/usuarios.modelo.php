@@ -233,11 +233,11 @@ class ModeloUsuarios
 		}
 	}
 
-	static public function mdlValidarEncargado($valor)
+	static public function mdlValidarEncargado($item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT usuarios.id, usuarios.nombre FROM personas INNER JOIN usuarios ON personas.id_usuario = usuarios.id WHERE personas.id_area = :id_area AND sw = 1");
+		$stmt = Conexion::conectar()->prepare("SELECT usuarios.id, usuarios.nombre FROM personas INNER JOIN usuarios ON personas.id_usuario = usuarios.id WHERE personas.$item = :$item AND sw = 1");
 
-		$stmt -> bindParam(":id_area", $valor, PDO::PARAM_INT);
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
 		{
@@ -249,13 +249,21 @@ class ModeloUsuarios
 		}
 	}
 
-	static public function mdlActualizarEncargado($tabla, $item1, $valor1, $item2, $valor2){
+	static public function mdlLimpiarEncargado($tabla, $item1, $valor1){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET sw = 0 WHERE $item1 = :$item1 AND sw = 1");
 		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
-		$stmt -> execute();
+		if($stmt -> execute())
+		{return "ok";
+		}else{
+			return "error";	
+		}
 		$stmt -> close();
 		$stmt = null;
+
+	}
+
+	static public function mdlActualizarEncargado($tabla, $item2, $valor2){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET sw = 1 WHERE $item2 = :$item2");
 		$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);

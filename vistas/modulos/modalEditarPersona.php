@@ -44,6 +44,17 @@
 
               </div>
 
+                <div class="form-group">
+
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="0" name="editarEncargadoAreaP">
+                  Marcar Como Usuario Predeterminado Para el área Perteneciente.
+                  </label>
+                </div>
+
+              </div>
+
               <!-- ENTRADA PARA LA NOMBRE -->
               <p class="help-block">* Para Modificar los datos basicos del encargado/a debe hacerse desde el modulo de usuarios.</p>  
               

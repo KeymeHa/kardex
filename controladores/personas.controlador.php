@@ -167,11 +167,13 @@ class ControladorPersonas
 
 			$datos = array("id_area" => $_POST["editarAreaP"],
 							"id_usuario" => $_POST["editarId"]);
-
 			$respuesta = ModeloPersonas::mdlEditarPersona($tabla, $datos);
-
 			if($respuesta == "ok")
 			{	
+				if (isset($_POST["editarEncargadoAreaP"])) 
+				{
+					$respeusta2 = ControladorUsuarios::ctrActualizarEncargado("id_area", $_POST["editarAreaP"], "id_usuario", $_POST["editarId"]);  
+				}
 					if( isset($_GET["idArea"]) )
 					{
 						echo'<script>

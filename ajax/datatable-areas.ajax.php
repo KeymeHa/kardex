@@ -45,14 +45,14 @@ class Tablaareas
 
 				    $countPer = ControladorPersonas::ctrContarPersonas("id_area", $areas[$i]["id"]);
 
-				     if ($countPer == 0) 
+				    if ($countPer == 0) 
 				    {
 				    	$usr_predeterminado = "Sin Encargado.";
 				    }
 				    else
 				    {
 				    	//buscar el usuario por el id en usuarioDefinido
-				    	$usrDefinido = ControladorUsuarios::ctrValidarEncargado($areas[$i]["id"]);
+				    	$usrDefinido = ControladorUsuarios::ctrValidarEncargado("id_area", $areas[$i]["id"]);
 				    	$usr_predeterminado = ( $usrDefinido == 0 ) ? "Sin Encargado." : $usrDefinido["nombre"] ;
 				    	//traer el nombre del usuario
 				    }
