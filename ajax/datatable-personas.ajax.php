@@ -70,7 +70,7 @@ class Tablapersonas
 		   {
 		   		$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$personas[$i]["nombre"].'",
+	    		"'.$usr_predeterminado.'",
 	    		"'.$rq[0].'",
 	    		"'.$acciones.'"
 	    		],';
@@ -82,7 +82,7 @@ class Tablapersonas
 
 		   		$dJson .='[
 	    		"'.($i + 1).'",
-	    		"'.$personas[$i]["nombre"].'",
+	    		"'.$usr_predeterminado.'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$acciones.'"
 	    		],';
