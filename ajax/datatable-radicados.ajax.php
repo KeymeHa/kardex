@@ -53,6 +53,18 @@ class TablaRadicados
 		    $areas = ControladorAreas::ctrMostrarAreas("id", $radicados[$i]["id_area"]);
 
 
+		    $countPer = ControladorPersonas::ctrContarEncargado("id_area", $radicados[$i]["id_area"]);
+
+		    if ($countPer != 0) 
+		    {
+		    	$areasNombre = $areas["nombre"];
+		    }
+		    else
+		    {
+		    	$areasNombre = "<strong class='text-danger' title='Sin encargados'>".$areas["nombre"]."</strong>";
+		    }
+
+
 		    $accion = ControladorParametros::ctrmostrarRegistros("accion", "id", $radicados[$i]["id_accion"]);
 		    $pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $radicados[$i]["id_pqr"]);
 		    $objeto = ControladorParametros::ctrmostrarRegistros("objeto", "id", $radicados[$i]["id_objeto"]);
@@ -67,7 +79,7 @@ class TablaRadicados
 	    		"'.$objeto["nombre"].'",
 	    		"'.$radicados[$i]["asunto"].'",
 	    		"'.$remitente.'",
-	    		"'.$areas["nombre"].'",
+	    		"'.$areasNombre.'",
 	    		"'.$acciones.'"
 	    		],';
 		}//For

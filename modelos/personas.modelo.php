@@ -105,6 +105,29 @@ class ModeloPersonas
 		$stmt = null;
 	}
 
+	static public function mdlContarEncargado($tabla, $item, $valor)
+	{
+		if (!$item == null) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND sw = 1");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla");
+
+			$stmt -> execute();
+		}
+			return $stmt -> fetch();
+
+			$stmt -> close();
+
+			$stmt = null;
+	}
+
 	static public function mdlContarPerArea($tabla, $item, $valor)
 	{
 		if (!$item == null) 

@@ -151,6 +151,15 @@ class ControladorPersonas
 		return $respuesta;
 	}
 
+	//valida que existe al menos un encargado
+	static public function ctrContarEncargado($item, $valor)
+	{
+		$tabla = "personas";
+		$consulta = ModeloPersonas::mdlContarEncargado($tabla, $item, $valor);
+		$respuesta = $consulta[0];
+		return $respuesta;
+	}
+
 
 	static public function ctrContarPersonasArea()
 	{
