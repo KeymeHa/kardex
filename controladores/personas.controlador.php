@@ -18,7 +18,15 @@ class ControladorPersonas
 	{
 		$tabla = "personas";
 		$res = ModeloPersonas::mdlMostrarIdPersonaPerfil($tabla, $item, $valor, $perfil);
-		return $res["id_usuario"];
+
+		if ( isset( $res["id_usuario"] ) && !is_null($res["id_usuario"]) ) 
+		{
+			return $res["id_usuario"];
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 
