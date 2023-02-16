@@ -554,4 +554,29 @@ class ControladorUsuarios
 		$respuesta = ModeloUsuarios::mdMostrarPerfil($tabla,$item, $valor);
 		return $respuesta["perfil"];
 	}
+
+	static public function ctrValidarEncargado($valor)
+	{
+		$respuesta = ModeloUsuarios::mdlValidarEncargado($valor);
+		
+		if (isset($respuesta["id"]) && !is_null($respuesta["id"]))
+		{
+			return $respuesta;
+		}
+		else
+		{
+			return 0;
+		}
+
+		
+	}
+
+
+	static public function ctrActualizarEncargado($item1, $valor1, $item2, $valor2)
+	{
+		/*$item1, id_area campo
+		$valor1,   id_area valor
+		$item2,   id_usr campo
+		$valor2  id_usr valor*/
+	}
 }

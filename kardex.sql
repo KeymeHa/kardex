@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `cortes` (
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `corte` (`corte`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla kardex.cortes: ~35 rows (aproximadamente)
 INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
@@ -281,7 +281,8 @@ INSERT INTO `cortes` (`id`, `corte`, `fecha`) VALUES
 	(71, '-013-2023', '2023-02-13 14:55:16'),
 	(72, '-014-2023', '2023-02-13 15:02:10'),
 	(73, '-015-2023', '2023-02-14 21:03:11'),
-	(74, '2302140021', '2023-02-14 21:08:58');
+	(74, '2302140021', '2023-02-14 21:08:58'),
+	(75, '2302160021', '2023-02-16 13:25:31');
 
 -- Volcando estructura para tabla kardex.estado_pqr
 CREATE TABLE IF NOT EXISTS `estado_pqr` (
@@ -329,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `exeption_usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_exeption_usuarios_exepcion_mensajes` (`id_mensaje`),
   CONSTRAINT `FK_exeption_usuarios_exepcion_mensajes` FOREIGN KEY (`id_mensaje`) REFERENCES `exepcion_mensajes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='guarda las exepciones y mantiene un registro de los intentos e inicio de sesión';
 
 -- Volcando datos para la tabla kardex.exeption_usuarios: ~118 rows (aproximadamente)
 INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`, `ip_cliente`) VALUES
@@ -458,7 +459,10 @@ INSERT INTO `exeption_usuarios` (`id`, `id_mensaje`, `fecha`, `valor`, `ip_clien
 	(123, 2, '2023-02-14 15:10:54', '#ycantillo', '192.168.1.206'),
 	(124, 5, '2023-02-14 16:39:15', '1', '::1'),
 	(125, 5, '2023-02-14 20:59:57', '1', '::1'),
-	(126, 5, '2023-02-14 21:10:42', '12', '::1');
+	(126, 5, '2023-02-14 21:10:42', '12', '::1'),
+	(127, 5, '2023-02-15 16:45:15', '1', '::1'),
+	(128, 5, '2023-02-15 16:50:38', '11', '::1'),
+	(129, 5, '2023-02-16 13:24:17', '1', '::1');
 
 -- Volcando estructura para tabla kardex.facturas
 CREATE TABLE IF NOT EXISTS `facturas` (
@@ -846,7 +850,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
   UNIQUE KEY `page` (`page`)
 ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
--- Volcando datos para la tabla kardex.js_data: ~65 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.js_data: ~64 rows (aproximadamente)
 INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `pOcho`, `sw`, `ver`, `file`, `habilitado`, `descripcion`) VALUES
 	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 0, 0, 1, 1, 1, 0, 'Muestra las categorias de las que seran asociados '),
 	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 0, 0, 1, 1, 1, 0, 'Permite Ver los insumos pertenecientes a una categ'),
@@ -1038,9 +1042,9 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
--- Volcando datos para la tabla kardex.parametros: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.parametros: ~0 rows (aproximadamente)
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`, `modomanto`, `fechaRegistroPqr`) VALUES
-	(1, 10, 20, 30, 2, 1, 1, 1, 2023, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 17, 17, 21, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]', 0, '2023-02-14 15:57:27');
+	(1, 10, 20, 30, 2, 1, 1, 1, 2023, 2, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 0, 18, 19, 21, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]', 0, '2023-02-14 15:57:27');
 
 -- Volcando estructura para tabla kardex.perfiles
 CREATE TABLE IF NOT EXISTS `perfiles` (
@@ -1080,6 +1084,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
   `id_usuario` int NOT NULL DEFAULT '0',
   `id_area` int NOT NULL,
   `id_perfil` int NOT NULL DEFAULT '3' COMMENT 'Permite visualizar los usuarios segun el modulo: ejemplo 7 es perfil juridica, con esto permitira que el usuario de un area pueda ver juridica',
+  `sw` int NOT NULL DEFAULT '0' COMMENT 'Usuario principal del área ',
   PRIMARY KEY (`id`),
   KEY `FK_personas_usuarios` (`id_usuario`),
   KEY `FK_personas_areas` (`id_area`),
@@ -1089,20 +1094,20 @@ CREATE TABLE IF NOT EXISTS `personas` (
   CONSTRAINT `FK_personas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
--- Volcando datos para la tabla kardex.personas: ~13 rows (aproximadamente)
-INSERT INTO `personas` (`id`, `id_usuario`, `id_area`, `id_perfil`) VALUES
-	(5, 9, 7, 3),
-	(6, 1, 1, 7),
-	(7, 12, 4, 7),
-	(9, 11, 1, 3),
-	(10, 18, 2, 7),
-	(11, 17, 3, 7),
-	(12, 41, 5, 7),
-	(13, 15, 6, 7),
-	(14, 21, 8, 7),
-	(15, 24, 9, 7),
-	(16, 13, 10, 7),
-	(17, 23, 11, 8);
+-- Volcando datos para la tabla kardex.personas: ~12 rows (aproximadamente)
+INSERT INTO `personas` (`id`, `id_usuario`, `id_area`, `id_perfil`, `sw`) VALUES
+	(5, 9, 7, 3, 0),
+	(6, 1, 1, 7, 1),
+	(7, 12, 4, 7, 0),
+	(9, 11, 1, 3, 0),
+	(10, 18, 2, 7, 0),
+	(11, 17, 3, 7, 0),
+	(12, 41, 5, 7, 0),
+	(13, 15, 6, 7, 0),
+	(14, 21, 8, 7, 0),
+	(15, 24, 9, 7, 0),
+	(16, 13, 10, 7, 0),
+	(17, 23, 11, 8, 0);
 
 -- Volcando estructura para tabla kardex.pqr
 CREATE TABLE IF NOT EXISTS `pqr` (
@@ -1131,14 +1136,15 @@ CREATE TABLE IF NOT EXISTS `pqr_filtro` (
   PRIMARY KEY (`id`),
   KEY `FK_pqr_filtro_perfiles` (`id_per`),
   CONSTRAINT `FK_pqr_filtro_perfiles` FOREIGN KEY (`id_per`) REFERENCES `perfiles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla kardex.pqr_filtro: ~3 rows (aproximadamente)
 INSERT INTO `pqr_filtro` (`id`, `id_pqr`, `id_per`) VALUES
 	(1, '[{"id":"1"},{"id":"2"},{"id":"3"},{"id":"4"}]', 7),
 	(2, '[{"id":"6"},{"id":"5"}]', 8),
 	(3, '[{"id":"8"},{"id":"7"}]', 6),
-	(10, NULL, 3);
+	(10, NULL, 3),
+	(14, NULL, 4);
 
 -- Volcando estructura para tabla kardex.proveedores
 CREATE TABLE IF NOT EXISTS `proveedores` (
@@ -1230,7 +1236,7 @@ CREATE TABLE IF NOT EXISTS `radicados` (
   CONSTRAINT `FK_radicados_objeto` FOREIGN KEY (`id_objeto`) REFERENCES `objeto` (`id`),
   CONSTRAINT `FK_radicados_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`),
   CONSTRAINT `FK_radicados_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla kardex.radicados: ~48 rows (aproximadamente)
 INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id_pqr`, `id_objeto`, `id_usr`, `asunto`, `id_remitente`, `id_area`, `observaciones`, `id_articulo`, `cantidad`, `recibido`, `dias`, `fecha_vencimiento`, `sw`, `soporte`, `correo`, `direccion`) VALUES
@@ -1297,7 +1303,9 @@ INSERT INTO `radicados` (`id`, `id_corte`, `fecha`, `radicado`, `id_accion`, `id
 	(64, 71, '2023-02-13 09:54:45', '20230200013', 1, 1, 6, 1, 'PETICION DE PAGO', '36', 4, '', 3, 1, 'KBA', 5, '2023-02-20', 0, '', '', ''),
 	(65, 72, '2023-02-13 10:01:30', '20230200014', 1, 1, 7, 1, 'PETICION REALIZADA A LA ENTIDAD', '34', 4, '', 2, 1, 'KBA', 12, '2023-03-01', 0, '', '', ''),
 	(66, 73, '2023-02-14 16:02:04', '20230200015', 1, 2, 3, 1, 'PETICION GENERADA POR SUPUESTO ALGO RECLARO', '27', 4, '', 2, 1, 'KBA', 5, '2023-02-21', 0, '', '', ''),
-	(67, 74, '2023-02-14 16:07:32', '20230200016', 1, 4, 8, 1, 'tutela', '27', 4, '', 1, 1, 'KBA', 12, '2023-03-02', 0, '', '', '');
+	(67, 74, '2023-02-14 16:07:32', '20230200016', 1, 4, 8, 1, 'tutela', '27', 4, '', 1, 1, 'KBA', 12, '2023-03-02', 0, '', '', ''),
+	(68, 0, '2023-02-16 08:24:25', '20230200017', 1, 6, 3, 1, 'PRUEBA FACTURA', '27', 6, '', 2, 1, 'KBA', 5, '2023-02-23', 0, '', '', ''),
+	(69, 0, '2023-02-16 08:24:49', '20230200018', 2, 2, 6, 1, 'PRUEBA QUEJA', '15', 3, '', 2, 1, 'KBA', 5, '2023-02-23', 0, '', '', '');
 
 -- Volcando estructura para tabla kardex.registropqr
 CREATE TABLE IF NOT EXISTS `registropqr` (
@@ -1329,9 +1337,9 @@ CREATE TABLE IF NOT EXISTS `registropqr` (
   CONSTRAINT `FK__registro_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `FK_registropqr_estado_pqr` FOREIGN KEY (`id_estado`) REFERENCES `estado_pqr` (`id`),
   CONSTRAINT `FK_registropqr_pqr` FOREIGN KEY (`id_pqr`) REFERENCES `pqr` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kardex.registropqr: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla kardex.registropqr: ~17 rows (aproximadamente)
 INSERT INTO `registropqr` (`id`, `id_radicado`, `id_area`, `id_usuario`, `id_estado`, `id_pqr`, `acciones`, `observacion_usuario`, `observacion_encargado`, `fecha_asignacion`, `fecha_respuesta`, `fecha_vencimiento`, `dias_habiles`, `dias_contados`, `soporte`, `fecha_actualizacion`, `fecha`) VALUES
 	(3, 54, 9, 24, 6, 2, '[{"fe":"2023-02-07","hr":"15:56","acc":"2","da":{"id":"15","nom":"Diana Romero Solano","idA":"3"}},{"fe":"2023-02-07","hr":"15:57","acc":"2","da":{"id":"24","nom":"Cesar Ibañez Marquez","idA":"9"}},{"fe":"2023-02-07","hr":"15:58","acc":"2","da":{"0":{"id":"9","rem":"AVP"}}}]', ',{"fe":"2023-02-07","hr":"15:58","id":"12","nom":"Yesid Cantillo Consuegra","obs":""}]', NULL, '2023-02-07 15:58:00', NULL, '2023-02-14 00:00:00', 12, 5, NULL, '2023-01-27 08:29:12', '2023-01-27 08:29:12'),
 	(4, 53, 3, 17, 6, 3, '[{"fe":"2023-02-08","hr":"11:42","acc":"2","da":{"id":"1","nom":"Kevin Bolaño Ariza","idA":"1"}},{"fe":"2023-02-08","hr":"12:12","acc":"2","da":{"id":"41","nom":"Kimberly Cervantes","idA":"5"}},{"fe":"2023-02-08","hr":"12:45","acc":"2","da":{"id":"9","nom":"Edna Suarez Restrepo","idA":"7"}},{"fe":"2023-02-08","hr":"12:47","acc":"2","da":{"id":"21","nom":"Ricardo Perez Donado","idA":"8"}},{"fe":"2023-02-09","hr":"09:23","acc":"1","da":{"id":"17","nom":"Isabella Diaz Londoño","idA":"3"}},{"fe":"2023-02-09","hr":"09:24","acc":"2","da":{"0":{"id":"3","rem":"ALCALDÍA : B/QUILLA VERDE"}}}]', '[{"fe":"2023-02-09","hr":"09:24","id":"12","nom":"Yesid Cantillo Consuegra","obs":""}]', NULL, '2023-02-09 09:24:00', NULL, '2023-02-03 00:00:00', 5, 9, NULL, '2023-02-09 00:00:00', '2023-01-27 08:28:18'),
@@ -1349,7 +1357,8 @@ INSERT INTO `registropqr` (`id`, `id_radicado`, `id_area`, `id_usuario`, `id_est
 	(16, 64, 4, 12, 5, 1, NULL, NULL, NULL, NULL, NULL, '2023-02-20 00:00:00', 5, 1, NULL, '2023-02-14 00:00:00', '2023-02-13 09:54:45'),
 	(17, 65, 4, 12, 5, 1, NULL, NULL, NULL, NULL, NULL, '2023-03-01 00:00:00', 12, 1, NULL, '2023-02-14 00:00:00', '2023-02-13 10:01:30'),
 	(18, 66, 4, 12, 5, 2, NULL, NULL, NULL, NULL, NULL, '2023-02-21 00:00:00', 5, 0, NULL, '2023-02-14 16:02:04', '2023-02-14 16:02:04'),
-	(19, 67, 4, 12, 5, 4, NULL, NULL, NULL, NULL, NULL, '2023-03-02 00:00:00', 12, 0, NULL, '2023-02-14 16:07:32', '2023-02-14 16:07:32');
+	(19, 67, 4, 12, 5, 4, NULL, NULL, NULL, NULL, NULL, '2023-03-02 00:00:00', 12, 0, NULL, '2023-02-14 16:07:32', '2023-02-14 16:07:32'),
+	(20, 69, 3, 17, 5, 2, NULL, NULL, NULL, NULL, NULL, '2023-02-23 00:00:00', 5, 0, NULL, '2023-02-16 08:24:49', '2023-02-16 08:24:49');
 
 -- Volcando estructura para tabla kardex.remitente
 CREATE TABLE IF NOT EXISTS `remitente` (
@@ -1508,12 +1517,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 -- Volcando datos para la tabla kardex.usuarios: ~54 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
-	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2023-02-14 15:59:57', '2021-02-11 10:06:49', 'a9davph8eir5gh17ubi5kigdht', '00b41321c4392232fa2c11759d553e53bbab888e', 0, 0, 1),
+	(1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevin.bolano@edubar.com.co', 1, '2023-02-16 08:24:17', '2021-02-11 10:06:49', 'nf7a88ihjcg46o4g6bcddv5vpk', '339049c70f36fb36acbdbbccf6a738724da5d549', 0, 0, 1),
 	(2, 'Carmen Rebolledo', 'carmenr', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 3, NULL, 'carmen.rebolledo@edubar.com.co', 1, '2022-09-19 10:05:50', '2021-08-19 11:12:33', 'oho1qf3bfejuhvhrrqbpe0drbt', '8aeac4f855c50abf9960bd423dc16a80cd60e130', 0, 0, 0),
 	(3, 'Karelly Moreno Llorente', 'kmoreno', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 3, NULL, 'karelly.moreno@edubar.com.co', 1, '2023-01-30 18:04:33', '2021-08-19 11:12:39', '4cmimrb08dq4hatpqes8o09dc4', 'db2cbd286ad47de3caef2d9fe1b990b67ae01d5e', 0, 0, 0),
 	(9, 'Edna Suarez Restrepo', 'ednasuarez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'edna.suarez@edubar.com.co', 1, '2022-08-23 10:37:42', '2022-06-23 21:03:37', 'me1ke295ilip8imleg14g668c3', NULL, 0, 0, 1),
 	(10, 'Peter Zahn Colmenares', 'peterz', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, 'peter.zahn@edubar.com.co', 1, '2022-06-24 08:01:42', '2022-06-23 22:06:28', 'fd94agrc2l1isi90r49kcjo6k6', NULL, 0, 0, 1),
-	(11, 'Fernando Barcelo Bercelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5audhKBwo8xk9XJMPoAAiZTYGH13ARqu8O', 4, NULL, 'fernando.barcelo@edubar.com.co', 1, '0000-00-00 00:00:00', '2022-06-24 13:07:00', NULL, NULL, 0, 0, 1),
+	(11, 'Fernando Barcelo Bercelo', 'fbarcelo', '$2a$07$asxx54ahjppf45sd87a5auFuIwlfJLphOvP9e1fjwMhkIma7jyw0i', 4, NULL, 'fernando.barcelo@edubar.com.co', 1, '2023-02-15 11:50:38', '2022-06-24 13:07:00', 'aiq8aaf2709ocvjdppv8n46c6b', '145ed27e6099de0c9056a63eaa8c722d3727c1a0', 0, 0, 1),
 	(12, 'Yesid Cantillo Consuegra', 'ycantillo', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 7, NULL, 'yesid.cantillo@edubar.com.co', 1, '2023-02-14 16:10:42', '2022-07-12 19:14:55', 'bm98cjpgg3hohn56ge2eo86svm', 'bc1792d24df58207a830273338a3fc46d6c3e9b5', 0, 0, 1),
 	(13, 'Angelly Criales Anibal', 'angelly.criales@edubar.com.co', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 4, '', 'angelly.criales@edubar.com.co', 1, '0000-00-00 00:00:00', '2022-08-29 15:41:46', NULL, NULL, 0, 0, 1),
 	(14, 'Belkys Perez', 'belkysperez', '$2a$07$asxx54ahjppf45sd87a5au17Rma8fBHqQFNXNkob6Rm32TKek6HLK', 6, NULL, 'belkys.perez@edubar.com.co', 1, '2022-09-08 14:07:36', '2022-09-08 19:04:17', 'clrbjocccm4e3837ckgvspqfml', NULL, 0, 0, 0),
