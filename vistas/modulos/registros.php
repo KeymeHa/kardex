@@ -189,8 +189,8 @@
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">(4)Vencidas</span>
-                <span class="info-box-number"><?php echo (isset($porcentaje[3]["per"])) ? $porcentaje[3]["per"] : 0  ;?></span>
-                <span class="info-box-number"><small><?php echo (isset($porcentaje[3]["contar"])) ? $porcentaje[3]["contar"] : 0 ; ?> %</small></span>
+                <span class="info-box-number"><?php echo (isset($porcentaje[3]["contar"])) ? $porcentaje[3]["contar"] : 0  ;?></span>
+                <span class="info-box-number"><small><?php echo (isset($porcentaje[3]["per"])) ? $porcentaje[3]["per"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
