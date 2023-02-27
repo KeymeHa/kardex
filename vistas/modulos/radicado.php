@@ -35,6 +35,7 @@ for ($i=0; $i < count($porcion); $i++)
   <section class="content">
 
     <div class="row">
+
       <div class="col-lg-12">
          <div class="box box-success">
           <div class="box-header with-border">
@@ -196,10 +197,9 @@ for ($i=0; $i < count($porcion); $i++)
       <div class="col-lg-12">
          <div class="box box-success">
           <div class="box-header with-border">
-           <h3 class="box-title">Listado de Radicados Para Corte: <b># <?php  $val = 29;
-                     $parametro = ControladorParametros::ctrMostrarParametros($val); echo $parametro["codigo"];?></b></h3> 
+           <h3 class="box-title">Listado de Radicados Para Corte: <b># <?php echo ControladorParametros::ctrCodigocorte();?></b></h3> 
           </div>
-          <div class="box-body">       
+          <div class="box-body"> 
              <table class="table table-bordered table-striped dt-responsive tablaRadicados" width="100%">
               <thead>
                <tr>

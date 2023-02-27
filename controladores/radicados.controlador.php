@@ -133,8 +133,7 @@ class ControladorRadicados
 					{
 						if ( !$_FILES["soporteRadicado"]["tmp_name"] == null )
 						{
-								
-							$directorio = "vistas/radicados/".strval($actualY)."/".strval($actualM)."/".strval($actualD);
+							$directorio = "vistas/radicados/".strval($actualY)."/".$_POST["codigoInterno"];
 
 							if (!file_exists($directorio)) 
 							{
@@ -144,23 +143,10 @@ class ControladorRadicados
 							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
 							{
 								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
-								$nombre =  intval($res[29]) + 1;
-								$nombreArchivo = $nombre.'.pdf';
+								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR ;
 
-								$respuesta = ControladorParametros::ctrNombreArchivo("nameRad", $nombre);
-
-								if ( !$respuesta == "ok" )
-								{
-									echo '<script>
-
-										console.log("Error al actualizar nombre en DB");
-
-									</script>';
-
-									return ;	
-								}
-
-								$directorio.='/'.$nombreArchivo;
+								$directorio.='/'.$nombre.'.pdf';
 								$error = $_FILES['soporteRadicado']['error'];
 
 									if($error)
@@ -578,18 +564,21 @@ class ControladorRadicados
 
 	static public function ctrGenerarCorte($id_usuario_o)
 	{
-		//traer el ultimo numero de corte
+		//contar cuantos radicados tienen id_corte = 0
 		$countRad = new ControladorRadicados;
 		$count = $countRad->ctrContarRadicados("id_corte", 0);#solo pude generar corte si existe al menos un registro o más
 		
 		if ($count > 0)//si existe al menos un registro
 		{
-			$corte = ControladorParametros::ctrMostrarParametros(29);
+
+			$corte = ControladorParametros::ctrCodigocorte();
+			#$corte = ControladorParametros::ctrMostrarParametros(29);
 			//actualizar todos los radicados con id_corte 0 a el numero de corte
 			$tabla = "cortes";
-			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte["codigo"]);
-			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte["codigo"]);
-			$indice = ControladorParametros::ctrIncrementarCodigo("codCorte");
+			$genCorte = ModeloRadicados::mdlIngresarCorte($tabla, $corte);
+			$id_corte = ModeloRadicados::mdlmostrarCorte($tabla, "corte", $corte);
+			
+
 			$tabla = "radicados";
 			
 			$radicados = $countRad->ctrMostrarRadicados("id_corte", 0);
@@ -618,15 +607,29 @@ class ControladorRadicados
             //perfil para buscar una persona encargada de esa correspondencia
             $per = 3;
 
+            //toma todos los radicados y para validar su id a que juridicción pertenece
+            //juridica
+
+            $id_area = 0;
+
+            // al encenderse este sw enviara la información al regitrospqr
+            $registrar = 0;
+
 			foreach ($radicados as $key => $value) 
 			{
+				$registrar = 0;
+
+				$id_area = $value["id_area"];
+
 				for ($y=0; $y < count($id_per); $y++) 
 				{ 
 					$sw = 0; //dejar de buscar el id_pqr
 					$x = 0; // movimiento de elemento 
 
-					 while ( $x <= count($id_pqr[$y]["id_pqr"]) && $sw == 0) 
+					//genera un ciclo hasta encontrar a que juridiccion pertenece dependiendo si el id_pqr es igual al radicado
+					 while ( $x < count($id_pqr[$y]["id_pqr"]) && $sw == 0) 
 			          {
+			          	//si existe la llave valor x puede validar si el id_pqr es igual
 			            if (array_key_exists($x, $id_pqr[$y]["id_pqr"])) 
 			            {
 			              if ($id_pqr[$y]["id_pqr"][$x]["id"] == $value["id_pqr"] ) 
@@ -646,10 +649,41 @@ class ControladorRadicados
 
 				}//for
 
-			    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $value["id_area"], $per);
-				
-				$datos = array( 'id_radicado' => $value["id"],
-								'id_area' => $value["id_area"],
+				//buscar el id del usuario que peternecezca a un área y sea el encargado predeterminado de ella
+			    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $id_area, $per);
+
+			   
+
+			    if ($id_usuario != 0 )
+			    {
+					$registrar = 1; 
+			    }
+			    else
+			    {
+					//buscar todos los usuarios con perfil juridica,
+			    	$usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+
+
+			    	if (count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+			    	{
+			    		//buscar a que área pertenecen
+				    	foreach ($usuarioContigente as $k => $val) 
+				    	{
+				    		$id_area = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_usuario", $val["id"], $per);
+
+				    		if ($id_area != 0) 
+				    		{
+				    			$registrar = 1;
+				    		}
+				    	}
+				    	//validar que sea el predeterminado
+			    	}
+			    }
+
+			    if ($registrar == 1) 
+			    {
+			    	$datos = array( 'id_radicado' => $value["id"],
+								'id_area' => $id_area,
 								'id_usuario' => $id_usuario,
 								'id_estado' => 5,
 								'id_pqr' => $value["id_pqr"],
@@ -658,12 +692,14 @@ class ControladorRadicados
 								'fecha' => $value["fecha"],
 								'dias_habiles' => $value["dias"],
 								'dias_contados' => 0);
-
-				$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
-
+			    	$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos);
+			    }
+				
 			}//foreach ($radicados as $key => $value)
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
+			$indiceCodigo = "nameRad";
+			$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
 			
 
 			if ($genCorte == "ok" && $respuesta == "ok")
@@ -969,6 +1005,7 @@ class ControladorRadicados
 			{
 				$traer = new ControladorRadicados;
 				$registro = $traer->ctrAccesoRapidoRegistros($_POST["idRegistro"], 0);
+				$radicado = $traer->ctrMostrarRadicados( "id" , $registro["id_radicado"] );
 				$error = 0;
 				$dJsonAcc = '';
 				$tipoSW = '';
@@ -987,48 +1024,34 @@ class ControladorRadicados
 				else
 				{
 
-					/*
-					 date_default_timezone_set('America/Bogota');
-					$actualY = date("Y");
-					$actualM = date("m");
-					$actualD = date("d");
+
+					$dJsonsoporte = ( !is_null($registro["soporte"]) ) ? $registro["soporte"] : null ; 
 					try {
 
+					date_default_timezone_set('America/Bogota');
+					$actualY = date("Y");
 					$directorio = "";
 				
-					if ( isset($_FILES["soporteRadicado"]["tmp_name"]) ) 
+					if ( isset($_FILES["editarArchivo"]["tmp_name"]) ) 
 					{
-						if ( !$_FILES["soporteRadicado"]["tmp_name"] == null )
+						if ( !$_FILES["editarArchivo"]["tmp_name"] == null )
 						{
-								
-							$directorio = "vistas/radicados/".strval($actualY)."/".strval($actualM)."/".strval($actualD);
+							$anio = new DateTime($radicado["fecha"]);
+							$directorio = "vistas/radicados/".strval($anio->format("Y"))."/".$radicado["radicado"];
 
 							if (!file_exists($directorio)) 
 							{
 							    mkdir($directorio, 0755, true);
 							}
 
-							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
+							if($_FILES["editarArchivo"]["type"] == "application/pdf")
 							{
-								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
-								$nombre =  intval($res[29]) + 1;
-								$nombreArchivo = $nombre.'.pdf';
+								$tmp_name = $_FILES['editarArchivo']['tmp_name'];
+								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR ;
 
-								$respuesta = ControladorParametros::ctrNombreArchivo("nameRad", $nombre);
-
-								if ( !$respuesta == "ok" )
-								{
-									echo '<script>
-
-										console.log("Error al actualizar nombre en DB");
-
-									</script>';
-
-									return ;	
-								}
-
-								$directorio.='/'.$nombreArchivo;
-								$error = $_FILES['soporteRadicado']['error'];
+								$directorio.='/'.$nombre.'.pdf';
+								$error = $_FILES['editarArchivo']['error'];
 
 									if($error)
 									{
@@ -1046,6 +1069,43 @@ class ControladorRadicados
 											if(!file_exists($directorio))
 											{
 												copy($tmp_name,$directorio);
+
+												if (!is_null($registro["soporte"])) 
+												{
+										 			$soporte_his = json_decode($registro["soporte"], true);
+											 		if (!is_null($soporte_his) && !empty($soporte_his) && count($soporte_his) > 0) 
+											 		{
+											 			if (!empty($registro["soporte"])) 
+											 			{
+											 				$dJsonsoporte = substr($dJsonsoporte, 0 ,-1);
+											 				$dJsonsoporte .=',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 			}
+											 			else
+											 			{
+											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 			}
+											 		}//if (!is_null($soporte_his) && !empty($soporte_his) && count($soporte_his) > 0) 
+											 		else
+											 		{
+
+											 			if (empty($registro["soporte"])) 
+											 			{
+											 				$dJsonsoporte = "";
+											 			}
+											 			else
+											 			{
+											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 			}
+
+											 			
+											 		}//else
+
+												}
+												else
+												{
+												 	$dJsonsoporte .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""sop":"'.$nombre.'.pdf"}]';
+												}
+
 											}
 									}
 							}
@@ -1053,6 +1113,9 @@ class ControladorRadicados
 		
 							
 					}
+
+
+					
 					
 				} catch (Exception $e) {
 					echo '<script>
@@ -1065,7 +1128,6 @@ class ControladorRadicados
 						return ;	
 					
 				}
-					*/
 
 					$id_Area_Encargado = $registro["id_area"];
 					$id_Encargado = $registro["id_usuario"];
@@ -1212,8 +1274,6 @@ class ControladorRadicados
 							*/
 							if (isset($_POST["listadoRemitentesReg"]) && !is_null($_POST["listadoRemitentesReg"])) 
 							{
-
-							
 								$estadoPQR = 6;
 								
 								$remitentes = json_decode($_POST["listadoRemitentesReg"], true);	
@@ -1267,6 +1327,19 @@ class ControladorRadicados
 							$tipoSW = 'success';
 							$titleSW = 'Faltan parametros';
 						}
+						elseif ($_POST["accionReg"] == 8) 
+						{
+
+							$estadoPQR = 1;
+							$tipoSW = 'success';
+							$titleSW = 'Faltan parametros';
+						}
+						else
+						{
+							$tipoSW = 'error';
+							$error = "No se encontro la acción asociada." ; 
+							$titleSW = 'No se encontro la acción asociada.';
+						}
 				}//registro encontrado
 
 					if(is_int($error))
@@ -1277,13 +1350,14 @@ class ControladorRadicados
 						'id_area' => $id_Area_Encargado,
 						'id_estado' => $estadoPQR,
 						'fecha_asignacion' => $fechaActual.' '.$horaActual,
+						'soporte' => $dJsonsoporte,
 						'acciones' => $dJsonAcc,
 						'observacion_usuario' => $dJsonObs_usr,
 						'id' => $_POST["idRegistro"]);
 
 						$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad("registropqr", $datos);
 
-							if($respuesta == "ok")
+						if($respuesta == "ok")
 						{
 
 							$tipoSW = 'success';

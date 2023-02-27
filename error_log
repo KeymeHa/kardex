@@ -1,0 +1,27 @@
+[13-Jan-2023 09:55:29 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[13-Jan-2023 09:55:29 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[01-Feb-2023 09:48:36 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[14-Feb-2023 09:08:07 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[15-Feb-2023 09:54:04 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[15-Feb-2023 10:40:21 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[15-Feb-2023 10:40:36 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[15-Feb-2023 10:40:47 America/Bogota] PHP Notice:  Undefined index: editarFoto in /home/edubarco/kardex.edubar.com.co/controladores/usuarios.controlador.php on line 386
+[15-Feb-2023 11:05:57 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[15-Feb-2023 11:05:57 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:16:49 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:16:49 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:22:16 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:22:16 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:24:09 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:24:09 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:36:58 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 15:36:58 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 16:08:01 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 16:08:01 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 17:26:05 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[22-Feb-2023 17:26:05 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/requisiciones.controlador.php on line 191
+[23-Feb-2023 17:44:33 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/vistas/modulos/correspondencia.php on line 8
+[23-Feb-2023 17:44:33 America/Bogota] PHP Notice:  Undefined variable: radicado in /home/edubarco/kardex.edubar.com.co/vistas/modulos/correspondencia.php on line 43
+[23-Feb-2023 17:44:33 America/Bogota] PHP Notice:  Trying to access array offset on value of type null in /home/edubarco/kardex.edubar.com.co/vistas/modulos/correspondencia.php on line 43
+[23-Feb-2023 17:44:33 America/Bogota] PHP Notice:  Undefined variable: radicado in /home/edubarco/kardex.edubar.com.co/vistas/modulos/correspondencia.php on line 48
+[23-Feb-2023 17:44:33 America/Bogota] PHP Notice:  Trying to access array offset on value of type null in /home/edubarco/kardex.edubar.com.co/vistas/modulos/correspondencia.php on line 48

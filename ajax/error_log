@@ -1,0 +1,351 @@
+[16-Jan-2023 17:33:18 America/Bogota] PHP Notice:  Trying to access array offset on value of type bool in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 636
+[14-Feb-2023 09:09:01 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorRadicados::anioActual(), 0 passed in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 749 and exactly 1 expected in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php:5
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php(749): ControladorRadicados->anioActual()
+#1 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(35): ControladorRadicados::ctrVerRegistrosPQR('12', '7', 7, NULL, NULL, '1', '2023')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(289): TablaRegistros->mostrarTabla()
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 5
+[14-Feb-2023 09:09:01 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorRadicados::anioActual(), 0 passed in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 749 and exactly 1 expected in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php:5
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php(749): ControladorRadicados->anioActual()
+#1 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(35): ControladorRadicados::ctrVerRegistrosPQR('12', '7', 7, NULL, NULL, '1', '2023')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(289): TablaRegistros->mostrarTabla()
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 5
+[15-Feb-2023 10:01:37 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorRadicados::anioActual(), 0 passed in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 749 and exactly 1 expected in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php:5
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php(749): ControladorRadicados->anioActual()
+#1 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(57): ControladorRadicados::ctrVerRegistrosPQR('11', '2', 7, NULL, NULL, '1', '2023')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(289): TablaRegistros->mostrarTabla()
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 5
+[15-Feb-2023 10:01:37 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorRadicados::anioActual(), 0 passed in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 749 and exactly 1 expected in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php:5
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php(749): ControladorRadicados->anioActual()
+#1 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(57): ControladorRadicados::ctrVerRegistrosPQR('11', '2', 7, NULL, NULL, '1', '2023')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/datatable-registros.ajax.php(289): TablaRegistros->mostrarTabla()
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/controladores/radicados.controlador.php on line 5
+[22-Feb-2023 15:39:55 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('14', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:55 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('14', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:55 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('14', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:56 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('14', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:57 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('16', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:57 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('16', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:58 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('19', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:59 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('19', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:39:59 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('22', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:00 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('22', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:01 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:02 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:02 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:03 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:03 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:04 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('23', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:05 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('24', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:05 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('24', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:06 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('2', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:08 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('2', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:09 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('34', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:10 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('37', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:10 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('37', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:11 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('34', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:13 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('45', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:13 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('45', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:15 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('49', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:16 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('49', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:17 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('58', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:17 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('58', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:18 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('40', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:18 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('40', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:19 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('10', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:19 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('10', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:21 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('61', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:21 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('61', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:22 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('62', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:22 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('62', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:23 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('63', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:24 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('63', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:25 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('64', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:25 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('64', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:26 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('65', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:26 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('65', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:27 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(58): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(15): ControladorAsignaciones::ctrDeshabilitarUsuario('66', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('0')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22
+[22-Feb-2023 15:40:27 America/Bogota] PHP Fatal error:  Uncaught Error: Cannot pass parameter 2 by reference in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php:22
+Stack trace:
+#0 /home/edubarco/kardex.edubar.com.co/controladores/asignaciones.controlador.php(37): ModeloHistorial::mdlInsertarHistorial('historial', Array)
+#1 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(19): ControladorAsignaciones::ctrHabilitarUsuario('66', '7')
+#2 /home/edubarco/kardex.edubar.com.co/ajax/asignaciones.ajax.php(33): AjaxAsignacion->ajaxHabilitar('1')
+#3 {main}
+  thrown in /home/edubarco/kardex.edubar.com.co/modelos/historial.modelo.php on line 22

@@ -63,7 +63,7 @@ class ControladorParametros
 					    $r = $radicar->radicar($respuesta[$val], $ActualRad);
 					    break;
 					  case 29:
-					    $r = $radicar->corte($respuesta[$val], $ActualCor);
+					    $r = "none";
 					    break;
 					  default:
 					    echo "0";
@@ -115,7 +115,7 @@ class ControladorParametros
 					    $r = $radicar->radicar($i, $ActualRad);
 					    break;
 					  case 29:
-					    $r = $radicar->corte($i, $ActualCor);
+					    $r = "none";
 					    break;
 					  default:
 					    echo "0";
@@ -478,8 +478,60 @@ class ControladorParametros
 		}
 	}
 
-	static public function corte($val, $ActualY)
+
+	static public function ctrcontarArchivosEn ( $path, $extensionArchivo ) 
 	{
+	   $matches = glob ( $path . "*." . $extensionArchivo );
+	   $numDirectories = 0;
+
+	   if ( $matches ) {
+	      $numDirectories = count( $matches );
+	   }
+
+	   return $numDirectories;
+	}
+
+	static public function ctrCodigocorte()
+	#static public function corte($val, $ActualY)
+	{
+		$tabla = "parametros";
+		$item = "nameRad";
+
+		$res = ModeloParametros::mdlTraerParametro($tabla, $item);
+
+		date_default_timezone_set('America/Bogota');
+		$ActualCor = date("ymd");
+
+		if($res[$item] == 0)
+		{
+			$res[$item] = "0001";
+		}
+		else
+		{
+			if ($res[$item] < 10) 
+			{
+				$res[$item] = "000".$res[$item];
+			}
+			elseif($res[$item] > 10 && $res[$item] < 100)
+			{
+				$res[$item] = "00".$res[$item];
+			}
+			elseif($res[$item] >= 100 && $res[$item] < 1000)
+			{
+				$res[$item] = "0".$res[$item];
+			}
+			elseif($res[$item] >= 1000)
+			{
+				$res[$item] = $res[$item];
+			}
+		}
+
+		$codigo = $ActualCor.$res[$item];
+
+		return $codigo;
+
+		/*
+
 		if($val == 0)
 		{
 			return $ActualY."0001";
@@ -502,7 +554,7 @@ class ControladorParametros
 			{
 				return $ActualY.$val;
 			}
-		}
+		}*/
 	}
 
 	function radicarNuevaFac($val, $ActualY)
