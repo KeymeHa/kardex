@@ -13,7 +13,6 @@ class ModeloHistorial
 		$stmt->bindParam(":valorAnt", $datos["valorAnt"], PDO::PARAM_STR);
 		$stmt->bindParam(":valorNew", $datos["valorNew"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_usr", $datos["id_usr"], PDO::PARAM_INT);
-		
 		if (isset($datos["id_otro"])) 
 		{
 			$stmt->bindParam(":id_otro", $datos["id_otro"], PDO::PARAM_INT);

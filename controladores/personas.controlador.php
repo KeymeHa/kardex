@@ -21,7 +21,7 @@ class ControladorPersonas
 
 		if ( isset( $res["id_usuario"] ) && !is_null($res["id_usuario"]) ) 
 		{
-			return $res["id_usuario"];
+			return ($item == "id_usuario") ? $res["id_area"] : $res["id_usuario"] ;
 		}
 		else
 		{

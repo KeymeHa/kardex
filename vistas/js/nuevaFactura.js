@@ -307,7 +307,7 @@ function sumarPreciosNF(){
 
 	var valorIva = ( iva / 100 ) * sumaSubT;
 	sumaSubT+= sumaSubTo;
- 	var totalconIVA = valorIva + sumaSubTo + IMPSubTo;
+ 	var totalconIVA = valorIva + sumaSubT + IMPSubTo;
 
  	//Valor sub total
  	//valor iva del subtotal

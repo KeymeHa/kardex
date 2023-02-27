@@ -11,11 +11,11 @@ $(".tablaRadicados").on("click", "button.btnImpRadicado", function(){
 		  showCancelButton: true,
 		  cancelButtonText: 'Cancelar',
 		  confirmButtonText: 'Posición 1',
-		  denyButtonText: `Posición 2`,
+		  denyButtonText: `Posición 3`,
 		  confirmButtonColor: '#149243',
 		  denyButtonColor: '#149500',
 		  cancelButtonColor: '#d33',
-		  imageUrl: 'vistas/img/plantilla/sticker.jpg',
+		  imageUrl: 'vistas/img/plantilla/sticker.png',
 		  imageWidth: 200,
 		  imageHeight: 200,
 		  imageAlt: 'posición impresion'

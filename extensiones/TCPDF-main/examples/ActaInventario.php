@@ -1,75 +1,4 @@
 <?php
-//============================================================+
-// File name   : example_003.php
-// Begin       : 2008-03-04
-// Last Update : 2013-05-14
-//
-// Description : Example 003 for TCPDF class
-//               Custom Header and Footer
-//
-// Author: Nicola Asuni
-//
-// (c) Copyright:
-//               Nicola Asuni
-//               Tecnick.com LTD
-//               www.tecnick.com
-//               info@tecnick.com
-//============================================================+
-
-/**
- * Creates an example PDF TEST document using TCPDF
- * @package com.tecnick.tcpdf
- * @abstract TCPDF - Example: Custom Header and Footer
- * @author Nicola Asuni
- * @since 2008-03-04
- */
-
-// Include the main TCPDF library (search for installation path).
-require_once('tcpdf_include.php');
-require_once "../../../controladores/radicados.controlador.php";
-require_once "../../../modelos/radicados.modelo.php";
-
-require_once "../../../controladores/parametros.controlador.php";
-require_once "../../../modelos/parametros.modelo.php";
-
-require_once "../../../controladores/areas.controlador.php";
-require_once "../../../modelos/areas.modelo.php";
-
-
-// Extend the TCPDF class to create custom Header and Footer
-class MYPDF extends TCPDF {
-
-    //Page header
-    public function Header() {
-
-        $headerText = '<table>
-<tr style="border: 1px black solid; margin: 0px">
-<td style="width:150px; border: 1px black solid;"><img src="images/logoEdubar.png"></td>
-<td style="background-color:white; width:280px; border: 1px black solid;">
-<div style="font-size:8.5px; text-align:center; line-height:15px;">
-<br>
-ACTA DE INVENTARIO DE BODEGA
-</div>
-</td>
-<td style="background-color:white; width:108px; text-align:left; font-size:8px; border: 1px black solid; padding-left: px;">  Acta Nº: 01<br>  Fecha: 15 mayo  2019<br>  Versión: 01<br>  Paginas: '.$this->getAliasNumPage().' de '.$this->getAliasNbPages().'      
-</td>
-</tr>
-<tr>
-<td style="width:540px"><div style="height: 25px; width: 100%; background-color: white"></div></td>
-</tr>
-</table>
-';
-        // Logo
-        $this->SetFont('helvetica', 'B', 20);
-
-        $this->writeHTML($headerText, false, true, false, true); 
-        // Title
-        //$this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }
-}
-
-// create new PDF document
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 require_once "../../../controladores/insumos.controlador.php";
 require_once "../../../controladores/parametros.controlador.php";
@@ -77,7 +6,15 @@ require_once "../../../modelos/insumos.modelo.php";
 require_once "../../../controladores/parametros.controlador.php";
 require_once "../../../modelos/parametros.modelo.php";
 
-$nombreResponsable = $_GET["responsable"];
+class generarActaInsumos{
+
+public $responsable;
+
+public function actaInventarioPDF(){
+
+//TRAEMOS LA INFORMACIÓN DE LA VENTA
+
+$nombreResponsable = $this->responsable;
 $item = null;
 $valor = null;
 $insumos = ControladorInsumos::ctrMostrarInsumos($item, $valor);
@@ -91,53 +28,35 @@ $hora = date("G");
 $minutos = date("i");
 
 $mes = ControladorParametros::nombreMes($meses);
-// set document information
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Acta de Inventario');
-$pdf->SetSubject('TCPDF Tutorial');
-$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
-// set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
-// set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+require_once('tcpdf_include.php');
 
-// set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-// set margins
-$pdf->SetMargins(30, 30, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+$pdf->startPageGroup();
 
-// set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-// set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-// set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-    require_once(dirname(__FILE__).'/lang/eng.php');
-    $pdf->setLanguageArray($l);
-}
+$pdf->AddPage();
 
 // ---------------------------------------------------------
 
-$pdf->SetFont('dejavusans', '', 10);
-$pdf->setPageOrientation('P');
-
-// add a page
-$pdf->AddPage();
-
-// set some text to print
-
-$bloque6 = <<<EOF
+$bloque1 = <<<EOF
 
 <table>
+<tr style="border: 1px black solid; margin: 0px">
+<td style="width:150px; border: 1px black solid;"><img src="images/logoEdubar.png" style="height: auto; margin-left: 10%;"></td>
+<td style="background-color:white; width:280px; border: 1px black solid;">
+<div style="font-size:8.5px; text-align:center; line-height:15px;">
+<br>
+ACTA DE INVENTARIO DE BODEGA
+</div>
+</td>
+<td style="background-color:white; width:108px; text-align:left; font-size:8px; border: 1px black solid; padding-left: px;">  Acta Nº: 01<br>  Fecha: 15 mayo  2019<br>  Versión: 01<br>  Paginas: 1 de 1		
+</td>
+</tr>
+<tr>
+<td style="width:540px"><div style="height: 5px; width: 100%; background-color: white"></div></td>
+</tr>
 <tr>
 
 <td style="background-color:white; width:540px; font-size:9px;">
@@ -159,7 +78,7 @@ $bloque6 = <<<EOF
 
 EOF;
 
-$pdf->writeHTML($bloque6, false, false, false, false, '');
+$pdf->writeHTML($bloque1, false, false, false, false, '');
 
 if( !$insumos == null )
 {
@@ -189,40 +108,72 @@ $pdf->writeHTML($bloque5, false, false, false, false, '');
 }
 
 }
+else
+{
+
+$bloque5 = <<<EOF
+
+<table style="font-size:10px; padding:5px 10px;">
+
+<tr>
+
+<td style="border: 1px solid black; background-color:white; width:540px; text-align:center">
+<center>No hay Insumos Registrados.</center>
+</td>
+
+</tr>
+
+</table>
+
+
+EOF;
+
+$pdf->writeHTML($bloque5, false, false, false, false, '');
+
+}
+
+
 
 $bloque6 = <<<EOF
 
 <table style="font-size:8.5px; padding:5px 10px;">
-    <tr>
-        <td style="width:540px"><div style="height: 40px; width: 100%; background-color: white"></div></td>
-    </tr>
+	<tr>
+		<td style="width:540px"><div style="height: 40px; width: 100%; background-color: white"></div></td>
+	</tr>
 
-    <tr>    
-        <td style="background-color:white; width:540px; font-size:9px; text-align: justify;">Mediante esta acta se toma nota y se da fe de la existencia de los productos mencionados en la misma, y que los mismos se encuentran en excelentes condiciones, sin que se hayan pasado las fechas de caducidad.<br><br>Hecho lo anterior y siendo las $hora horas con $minutos minutos del día $dia de $mes de $anio, se cierra el presente inventario para todos los efectos a que haya lugar.</td>
+	<tr>	
+		<td style="background-color:white; width:540px; font-size:9px; text-align: justify;">Mediante esta acta se toma nota y se da fe de la existencia de los productos mencionados en la misma, y que los mismos se encuentran en excelentes condiciones, sin que se hayan pasado las fechas de caducidad.<br><br>Hecho lo anterior y siendo las $hora horas con $minutos minutos del día $dia de $mes de $anio, se cierra el presente inventario para todos los efectos a que haya lugar.</td>
 
-    </tr>
+	</tr>
 
-    <tr>
-        <td style="width:540px"><div style="height: 40px; width: 100%; background-color: white"></div></td>
-    </tr>
-    <tr>
-        <td style="width: 160px; text-align:center; border-top: 1px solid black; padding-top: 5px;">ENCARGADO ALMACÉN</td>
-        <td style="width: 20px;"></td>
-        <td style="width: 160px; text-align:center; border-top: 1px solid black; padding-top: 5px;">REVISÓ</td>
-        <td style="width: 20px;"></td>
-        <td style="width: 170px; text-align:center; border-top: 1px solid black; padding-top: 5px;">JEFE DE COMPRAS</td>
-    </tr>
+	<tr>
+		<td style="width:540px"><div style="height: 40px; width: 100%; background-color: white"></div></td>
+	</tr>
+	<tr>
+		<td style="width: 160px; text-align:center; border-top: 1px solid black; padding-top: 5px;">ENCARGADO ALMACÉN</td>
+		<td style="width: 20px;"></td>
+		<td style="width: 160px; text-align:center; border-top: 1px solid black; padding-top: 5px;">REVISÓ</td>
+		<td style="width: 20px;"></td>
+		<td style="width: 170px; text-align:center; border-top: 1px solid black; padding-top: 5px;">JEFE DE COMPRAS</td>
+	</tr>
 </table>
 
 EOF;
 
 $pdf->writeHTML($bloque6, false, false, false, false, '');
 
+
 // ---------------------------------------------------------
+//SALIDA DEL ARCHIVO 
 
-//Close and output PDF document
-$pdf->Output('ActadeInventario.pdf', 'I');
+//$pdf->Output('factura.pdf', 'D');
+$pdf->Output('ActadeInventario.pdf');
 
-//============================================================+
-// END OF FILE
-//============================================================+
+}
+}
+
+$genActaPDF = new generarActaInsumos();
+$genActaPDF -> responsable = $_GET["responsable"];
+$genActaPDF -> actaInventarioPDF();
+
+?>

@@ -467,6 +467,21 @@ class ModeloParametros
 
 	}
 
+	static public function  mdlTraerParametro($tabla, $item)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT $item FROM $tabla WHERE id = 1");
+
+		#$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlActualizarDatosFAC($tabla, $datos)
 	{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET razonSocial = :razonSocial, nit = :nit, direccion = :direccion, tel = :tel, correo = :correo, direccionEnt = :direccionEnt, repLegal = :repLegal WHERE id = :id");

@@ -49,6 +49,11 @@ class Tablapersonas
 			if ($personas[$i]["id"] != $this->idUsuario) 
 			{
 				$permiso = ControladorAsignaciones::ctrVerAsignado($personas[$i]["id"], $valor);
+	           $areas = ControladorAreas::ctrMostrarAreas("id", $personas[$i]["id_area"]);
+	           $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
+
+				 $usrDefinido = ControladorUsuarios::ctrValidarEncargado("id_usuario", $personas[$i]["id"] );
+		    	 $usr_predeterminado = ( $usrDefinido == 0 ) ? $usuario["nombre"] : "<strong>".$usuario["nombre"]."</strong>(Encargado predeterminado)" ;
 
 				if (isset($permiso["modulo"])) 
 				{
@@ -60,14 +65,12 @@ class Tablapersonas
 					$acciones = "<button class='btn btn-danger btn-xs btnActivarUsr' estadoUsuario='1' idUsuario='".$personas[$i]["id"]."'>Desactivado</button>";
 				}
 
-	           $areas = ControladorAreas::ctrMostrarAreas("id", $personas[$i]["id_area"]);
-	           $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
 
 	          
 
 		   		$dJson .='[
 	    		"'.($i+1).'",
-	    		"'.$usuario["nombre"].'",
+	    		"'.$usr_predeterminado.'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$acciones.'"
 	    		],';

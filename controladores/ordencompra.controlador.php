@@ -5,13 +5,29 @@ class ControladorOrdenCompra
 
 	function anioActual($anio)
 	{
-	    $respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
+	    if ($anio == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(fecha) = '.$anio;
+	    }
+
+
 		return $respuesta;
 	}
 
 	function anioActualProv($anio)
 	{
-		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(ordenCompra.fecha) = '.$anio;
+	    if ($anio == 0) 
+	    {
+	    	$respuesta = '';
+	    }
+	    else
+	    {
+	    	$respuesta = 'WHERE YEAR(ordenCompra.fecha) = '.$anio;
+	    }
 		return $respuesta;
 	}
 

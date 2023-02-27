@@ -9,7 +9,7 @@
     {
       $item = "id";
       $valor = $_GET["idOC"];
-      $ordenCompra = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor, $_SESSION["anioActual"]);
+      $ordenCompra = ControladorOrdenCompra::ctrMostrarOrdenesdeCompras($item, $valor);
 
        $item ="id";
        $valor = $ordenCompra['id_proveedor'];

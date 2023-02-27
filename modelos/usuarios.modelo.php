@@ -8,7 +8,7 @@ class ModeloUsuarios
 	{
 		if($item != null)
 		{
-			if ($item == "id_area") 
+			if ($item == "id_area" || $item == "perfil") 
 			{
 				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0");
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);

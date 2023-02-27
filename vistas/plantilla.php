@@ -8,8 +8,6 @@
   .replace(/&quot/gi,'"')     convertir de quot a comillas
   .replace(/"/gi,'&quot')   convertir comillas a quot
     */
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,7 +84,7 @@
             {
                 $paginaCargada = '<script type="text/javascript">
                   $( document ).ready(function() {var pagina = '.$js_data["num"].';
-                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].',0);});</script>';
+                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].');});</script>';
 
                 echo $paginaCargada;
 

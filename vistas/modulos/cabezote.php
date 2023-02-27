@@ -86,7 +86,7 @@
 						<img src="<?php if($_SESSION["foto"] != ""){ echo $_SESSION["foto"]; }else{ echo'vistas/img/usuarios/default/anonymous.png'; }?>"  class="user-image">
 						<span class="hidden-xs">
 							<?php
-							echo $_SESSION["usuario"];
+							echo $_SESSION["nombre"];
 							?>
 						</span>
 					</a>

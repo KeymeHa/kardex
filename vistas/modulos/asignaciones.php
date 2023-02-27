@@ -30,9 +30,9 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-          <p>Esta lista es generada, si anteriormente se ha creado el usuario y enlazado a una área, en caso de no aparecer, debe contactarse con el administrador para que cree dicho usuario y lo enlace a una área específica.</p>
-          <br>
-          <p>Al habilitar un usuario, este puede ingresar al módulo correspondiente para su autogestión.</p>
+          <!--<button class="btn btn-success" id="btn-nuevaPersona" data-toggle="modal" data-target="#modalAgregarPersona"><i class="fa fa-user-plus"></i>
+          Asignar Encargado
+        </button>-->
       </div>
       <div class="box-body">
         <input type="hidden" id="idsession" value="<?php echo $_SESSION['id'];?>"> 

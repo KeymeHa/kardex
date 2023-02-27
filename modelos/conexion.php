@@ -2,7 +2,9 @@
 
 class Conexion
 {
-	private $database = "kardex";
+	private $database = "edubarco_kardex";
+	#private $userDB = "edubarco_admin";
+	#private $passDB = "Casio$13bT";
 	private $userDB = "root";
 	private $passDB = "1994";
 	
