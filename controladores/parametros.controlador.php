@@ -1288,7 +1288,7 @@ class ControladorParametros
 				$sws = false;
 				$fechaR->add(new DateInterval('P1D'));
 
-				if ($fechaV->format("Y-m-d") <= $fechaActual) 
+				if ($fechaV->format("Y-m-d") > $fechaActual) 
 				{
 					$id_estado = 3;
 				}
