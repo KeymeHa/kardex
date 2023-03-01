@@ -214,7 +214,7 @@ if (isset($_GET["idusr"]))
 
 	if (isset($_GET["es"]) && $_GET["es"] != "null"  ) 
 	{
-		if (is_integer($_GET["es"]) ) 
+		if (is_string($_GET["es"]) && $_GET["es"] != 'undefined' ) 
 		{
 			$mostrar -> estado = $_GET["es"];
 		}
