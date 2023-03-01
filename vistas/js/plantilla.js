@@ -736,6 +736,11 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 			tablaElegida =  $('.tablaModulos');
 			tablaAjax = 'modulos';
 		}
+		else if(pagina == 42)
+		{
+			tablaElegida =  $('.tablaPQR');
+			tablaAjax = 'pqr';
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {
