@@ -13,7 +13,10 @@
     <?php 
     for($i = 0; $i < count($anio); $i++)
     {
-      echo'<li><a href="#" anio="'.$anio[$i]["anio"].'" actual="'.$_SESSION["anioActual"].'">'.$anio[$i]["anio"].'</a></li>';
+      if ($_SESSION["anioActual"] != $anio[$i]["anio"]) 
+      {
+        echo'<li><a href="#" anio="'.$anio[$i]["anio"].'" actual="'.$_SESSION["anioActual"].'">'.$anio[$i]["anio"].'</a></li>';
+      } 
     }
 
       echo'<li><a href="#" anio="0" actual="'.$_SESSION["anioActual"].'">Todos</a></li>';
