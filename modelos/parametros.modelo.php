@@ -83,6 +83,36 @@ class ModeloParametros
 		$stmt = null;
 	}	
 
+
+	static public function mdlVerRutaApp($tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT rutaScan FROM $tabla WHERE id = 1");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}	
+
+	static public function mdlEditarRutaApp($tabla, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET rutaScan = '$valor' WHERE id = 1");
+
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
 	static public function mdlmostrarRegistrosEspecifico($tabla, $item, $valor)
 	{
 	

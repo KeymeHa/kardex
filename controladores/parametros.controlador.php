@@ -1211,6 +1211,62 @@ class ControladorParametros
 		return $respuesta;
 	}
 
+	static public function ctrVerRutaApp()
+	{
+		$respuesta = ModeloParametros::mdlVerRutaApp("parametros");
+		return $respuesta;
+	}
+
+	static public function ctrVerApp()
+	{
+		$respuesta = ModeloParametros::mdlVerRutaApp("parametros");
+		if ( isset($respuesta["rutaScan"]) && !is_null($respuesta["rutaScan"])  ) 
+		{
+			if (!empty($respuesta["rutaScan"])) 
+			{
+				if(file_exists($respuesta["rutaScan"]))
+				{
+					shell_exec($respuesta["rutaScan"]);
+				}	
+			}
+		}
+	}
+
+	static public function ctrEditarRutaApp()
+	{
+		if (isset($_POST["editarRutaApp"])) 
+		{
+			$respuesta = ModeloParametros::mdlEditarRutaApp("parametros", $_POST["editarRutaApp"]);
+		    $pagina = "parametros";
+		    $tipo = "";
+		    $titulo = "";
+
+		    if ($respuesta == "ok") 
+		    {
+		    	$tipo = "success";
+		    	$titulo = "¡Ruta Modificada!";		    
+		    }
+		    else
+		    {
+		    	$tipo = "error";
+		    	$titulo = "ha Ocurrido un error al actualizar.";
+		    }
+
+		    echo '<script>
+				swal({
+					type: "'.$tipo.'",
+					title: "'.$titulo.'",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				}).then(function(result){
+					if(result.value){
+						window.location = "'.$pagina.'";
+					}
+				});
+				</script>';
+		}
+	}
+
 	static public function ctrmostrarRegistroEspecifico($tabla, $item1, $valor, $item2)
 	{
 		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor);

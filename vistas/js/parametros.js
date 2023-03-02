@@ -114,6 +114,31 @@ function verPQR()
 	
 }
 
+function verRutaApp()
+{
+	limpiarcontenidobox();
+
+	var perfiles = new FormData();
+	perfiles.append("rutaApp", 1);
+
+	$.ajax({
+		url:"ajax/parametros.ajax.php",
+		method: "POST",
+		data: perfiles,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res)
+		{
+			$("#editarRutaApp").val(res["rutaScan"]);
+		}
+
+	});
+
+	
+}
+
 function tablacat(per)
 {
 	$('#tabla-Div-Tab-FiltroPQR').append(

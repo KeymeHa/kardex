@@ -102,6 +102,19 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
                           </div>
                         </div>
                     </td>
+                  </tr>
+                  <tr>
+                    <td>Ruta App escaner</td>
+                    <td>Ruta donde esta almacenado el archivo .exe para ejecutar la aplicación del escaner.</td>
+                    <td>  
+                        <div class="btn-group">
+                          <div class="col-md-4">
+                            <button class="btn btn-warning" title="Ver y Editar" onclick="verRutaApp()" data-toggle="modal" data-target="#modalRutaApp">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </td>
                   </tr>';
                   }
                   elseif ($_SESSION["perfil"] == '3') {
@@ -178,4 +191,58 @@ if ($_SESSION["perfil"] != '1' && $_SESSION["perfil"] != '2' && $_SESSION["perfi
 
  
   </section>
+</div>
+
+<div id="modalRutaApp" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+    <div class="modal-content">
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+        <div class="modal-header" style="background:#00A65A; color:white">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Crear usuario</h4>
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">         
+              <div class="input-group">          
+                <label>Ruta Aplicativo</label>
+                <input type="text" class="form-control input-lg" name="editarRutaApp" id="editarRutaApp" placeholder="Ingresar nombre" required>
+              </div>
+            </div>
+
+          <p>Si La ruta incluye barra invertida debe colocarse doble EJ: C:\ seria C:\\ </p>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+          <button type="submit" class="btn btn-success">Editar</button>
+        </div>
+
+        <?php
+          $editarRuta = new ControladorParametros();
+          $editarRuta -> ctrEditarRutaApp();
+        ?>
+
+      </form>
+    </div>
+  </div>
 </div>

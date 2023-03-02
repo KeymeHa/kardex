@@ -69,6 +69,53 @@ function elimTabla()
 	)
 }
 
+$(".form_pqr").change(function() 
+{
+
+	var elemento = $(this).val();
+
+	$('.div-alerta').children().remove();
+
+	if (elemento == 1 || elemento == 2 || elemento == 3 || elemento == 4) 
+	{
+		swal({
+		type: "warning",
+		title: "¡Desea Escaner El documento!",
+		showCancelButton: true,
+		showConfirmButton: true,
+		confirmButtonText: "Si",
+		cancelButtonText: "No",
+		confirmButtonColor: '#149243',
+		cancelButtonColor: '#d33',
+	}).then((result)=>{
+
+		if (result.value) 
+		{
+			var datos = new FormData();
+			datos.append("app", 1);
+
+			$.ajax({
+
+				url:"ajax/parametros.ajax.php",
+				method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function(respuesta)
+				{
+					console.log("ok app");
+				}
+
+			});
+		}
+
+	})
+	}
+
+});
+
 
 $(".btn-corte").click(function(){
 

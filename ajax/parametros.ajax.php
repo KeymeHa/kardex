@@ -57,6 +57,19 @@ class AjaxParametros
 		$respuesta = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
 		echo json_encode($respuesta);
 	}
+
+	public function ajaxVerRutaApp()
+	{
+		$respuesta = ControladorParametros::ctrVerRutaApp();
+		echo json_encode($respuesta);
+	}
+
+
+	public function ajaxVerApp()
+	{
+		$respuesta = ControladorParametros::ctrVerApp();
+		echo json_encode($respuesta);
+	}
 }
 
 if(isset($_POST["paramIns"]))
@@ -103,4 +116,17 @@ if(isset($_POST["verAcciones"]))
 {
 	$accionespqr = new AjaxParametros();
 	$accionespqr -> ajaxVerAcciones();
+}
+
+if(isset($_POST["rutaApp"]))
+{
+	$rutaApp = new AjaxParametros();
+	$rutaApp -> ajaxVerRutaApp();
+}
+
+
+if(isset($_POST["app"]))
+{
+	$verApp = new AjaxParametros();
+	$verApp -> ajaxVerApp();
 }
