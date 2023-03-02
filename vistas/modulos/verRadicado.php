@@ -64,10 +64,12 @@
   <section class="content">
     <div class="box box-success">
       <div class="box-header with-border">
-         <button class="btn btn-success" onclick="history.back()">
+        <a href="radicado">
+         <button class="btn btn-success">
           <i class="fa fa-arrow-left" ></i>
           Regresar
         </button>
+        </a>
       </div>
     </div>
 
