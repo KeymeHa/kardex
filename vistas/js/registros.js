@@ -331,6 +331,21 @@ $('#select_accion').change(function() {
     {
         
     }
+    else if(valor == 7)
+    {
+      //traer objetos de pqr
+      //nombre y termino
+      //permita editar el termino   
+
+       $("#contenido-modal-detalles").append('<input type="hidden" name="listadoPQR" id="listadoPQR" value>'+
+            '<div class="form-group nuevopqrAgregado"></div>');
+        tablaPQR();
+        paginaCargada(42, 0, 0, 0, 0);
+
+
+
+
+    }
 
 
 });
@@ -573,6 +588,130 @@ function listarencargados(){
 }
 
 //--------------------------------------------FIN TABLA ENCARGADOS INTERNOS------------------------------------------------
+
+
+//--------------------------------------------------TABLA PQR----------------------------------------------------------
+
+function tablaPQR()
+{
+    $("#contenido-modal-accion").append(
+    '<table class="table table-bordered table-striped dt-responsive tablaPQR" width="100%">'+
+        '<thead>'+
+         '<tr>'+
+           '<th style="width:10px">#</th>'+
+           '<th>Tipo PQR</th>'+
+           '<th>Termino</th>'+
+           '<th style="width: 50px;">Acciones</th>'+
+         '</tr>'+ 
+        '</thead>'+
+    '</table>');
+}
+
+
+$(".formularioModalRegistros").on("click", "button.agregarPQR", function(){
+
+
+    var idPQR = $(this).attr("idPQR");
+    var pqr = $(this).attr("pqr");
+    var termino = $(this).attr("termino");
+
+    //$(this).removeClass('btn-success agregarPQR');
+
+    //$(this).addClass('btn-default');
+
+    if ( $(".nuevopqrAgregado").children().length > 0 ) 
+    {
+        $(".nuevopqrAgregado").children().remove();
+    }
+
+    $(".nuevopqrAgregado").append(
+        '<div class="row">'+
+                '<div class="col-xs-8" style="padding-right:0px">'+
+                 ' <p class="help-block">Tipo PQR Seleccionado:</p>'+ 
+                '</div>'+
+                '<div class="col-xs-4" style="padding-right:0px">'+
+                 ' <p class="help-block">Termino:</p>'+ 
+                '</div>'+
+                '<br>'+
+              '</div>'+
+        '<div class="row" style="padding:5px 15px">'+
+           ' <div class="input-group">'+
+            '  <span class="input-group-addon">'+
+             '   <button type="button" class="btn btn-danger btn-xs quitarPQR" idPQR="'+idPQR+'"><i class="fa fa-times"></i></button>'+
+             ' </span>'+
+            '<div class="col-xs-8"><input type="text" class="form-control nuevoPQRRegistro" idPQR="'+idPQR+'" value="'+pqr+'" readonly></div>'+
+            '<div class="col-xs-4"><input type="text" class="form-control nuevoPQRTermino" idPQR="'+idPQR+'" value="'+termino+'" min="1"></div>'+
+            '</div>'+
+        '</div>')
+
+    listarPqr();
+
+
+});
+
+
+$(".tablaPQR").on("draw.dt", function(){
+    if(localStorage.getItem("quitarPQR") != null){
+        var listaidObjetos = JSON.parse(localStorage.getItem("quitarPQR"));
+        for(var i = 0; i < listaidObjetos.length; i++)
+        {
+            $("button.RegresarBotonPQR[idPQR='"+listaidPQRs[i]["idPQR"]+"']").removeClass('btn-default');
+            $("button.RegresarBotonPQR[idPQR='"+listaidPQRs[i]["idPQR"]+"']").addClass('btn-success agregarPQR'); 
+        }
+    }
+})
+
+var idquitarPQR = [];
+localStorage.removeItem("quitarPQR");
+
+$(".formularioModalRegistros").on("click", "button.quitarPQR", function(){
+
+    $(this).parent().parent().parent().remove();
+
+    var idPQR = $(this).attr("idPQR");
+
+    if(localStorage.getItem("quitarPQR") == null)
+    { idquitarPQR = []; 
+    }
+    else
+    { idquitarPQR.concat(localStorage.getItem("quitarPQR"));}
+
+    idquitarPQR.push({"idPQR":idPQR});
+    localStorage.setItem("quitarPQR", JSON.stringify(idquitarPQR));
+
+    $("button.RegresarBotonPQR[idPQR='"+idPQR+"']").removeClass("btn-default");
+    $("button.RegresarBotonPQR[idPQR='"+idPQR+"']").addClass("btn-success agregarPQR");
+
+    listarPqr();
+
+})
+
+$(".formularioModalRegistros").on("change", "input.nuevoPQRTermino", function(){
+  listarPqr();
+})
+
+function listarPqr(){
+
+    var listarPQRArray = [];
+    var pqr = $(".nuevoPQRRegistro");
+    var termino = $(".nuevoPQRTermino");
+
+
+    for(var i = 0; i < pqr.length; i++){
+        listarPQRArray.push({ "id" : $(pqr[i]).attr("idPQR"), 
+                              "pqr" : $(pqr[i]).val(),
+                              "ter" : $(termino[i]).val()
+                            })
+    }
+
+    console.log(listarPQRArray);
+
+    $("#listadoPQR").val(JSON.stringify(listarPQRArray)); 
+
+}
+
+
+//-------------------------------------------------FIN TABLA OBJETOS-------------------------------------------------------
 
 //mostrar registro seleccionado
 function envioParametros(es)

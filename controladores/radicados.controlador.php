@@ -143,7 +143,7 @@ class ControladorRadicados
 							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
 							{
 								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
-								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
 								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR ;
 
 								$directorio.='/'.$nombre.'.pdf';
@@ -368,10 +368,11 @@ class ControladorRadicados
 			$recibido = ControladorParametros::ctrValidarCaracteres($_POST["recEdit"]);
 			$correo = ControladorParametros::ctrValidarCaracteres($_POST["correoEe"]);
 			$direccion = ControladorParametros::ctrValidarCaracteres($_POST["direccionE"]);
-			
+			$soporte = "";
 			#26
 			$titulo = "";
 			$tipo = "";
+			$directorio = "";
 			
 			$objeto = ControladorParametros::ctrValidarTermino($_POST["fechaEdit"], $_POST["objetoEdit"]);
 
@@ -383,13 +384,107 @@ class ControladorRadicados
 				$remitente = $remit["id"];
 			}
 
-			/*
+			$traer = new ControladorRadicados;
+			$radicado = $traer->ctrMostrarRadicados( "id" , $_POST["id_radEdit"] );
 
-				soporteEdit traido de la bd
+			if (isset($radicado["id"]) && !is_null($radicado["id"])) 
+			{
+				if (!is_null( $radicado["soporte"] ) && !empty($radicado["soporte"]) ) 
+				{
+					$soporte = $radicado["soporte"];
 
-				soporteRadicadoEdit files
+					if ( isset($_FILES["soporteRadicadoEdit"]["tmp_name"]) ) 
+						{
+							if ( !$_FILES["soporteRadicadoEdit"]["tmp_name"] == null )
+							{
+								$tmp_name = $_FILES['soporteRadicadoEdit']['tmp_name'];
 
-			*/
+								
+								if (file_exists($soporte)) 
+								{
+									unlink($soporte);
+								}
+
+								copy($tmp_name,$soporte);
+							}
+						}
+
+
+				}//radicado soporte no esta vacio ni es nulo
+				else
+				{
+					try {
+
+						//date_default_timezone_set('America/Bogota');
+						//$anio = date($radicado["fecha"]);
+						
+					
+						if ( isset($_FILES["soporteRadicadoEdit"]["tmp_name"]) ) 
+						{
+							if ( !$_FILES["soporteRadicadoEdit"]["tmp_name"] == null )
+							{
+								$anio = new DateTime($radicado["fecha"]);
+								$directorio = "vistas/radicados/".strval($anio->format("Y"))."/".$radicado["radicado"];
+
+								if (!file_exists($directorio)) 
+								{
+								    mkdir($directorio, 0755, true);
+								}
+
+								if($_FILES["soporteRadicadoEdit"]["type"] == "application/pdf")
+								{
+									$tmp_name = $_FILES['soporteRadicadoEdit']['tmp_name'];
+									$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+
+									$CONTADOR +=1;
+
+									$directorio.='/'.$CONTADOR.'.pdf';
+
+									$error = $_FILES['soporteRadicadoEdit']['error'];
+
+										if($error)
+										{
+											echo '<script>
+
+											console.log("Error al copiar el archivo");
+										
+
+											</script>';
+
+											return ;	
+										}
+										else
+										{
+												if(!file_exists($directorio))
+												{
+													copy($tmp_name,$directorio);
+												}
+
+												$soporte = $directorio;
+										}
+								}
+							}//si exite algo
+			
+								
+						}
+
+
+						
+						
+					} catch (Exception $e) {
+						echo '<script>
+
+							console.log("Error Validar formato en el archivo");
+						
+
+							</script>';
+
+							return ;	
+						
+					}
+				}// soporte si esta vacio o es nulo
+			}
+
 
 			try {
 
@@ -405,11 +500,13 @@ class ControladorRadicados
 							'recibido' => $recibido,
 							'dias' => $objeto["dias"],
 							'fecha_vencimiento' => $objeto["fecha_vencimiento"],
-							'soporte' => "",
+							'soporte' => $soporte,
 							'observaciones' => $observacion,
 							'correo' => $correo,
 							'direccion' => $direccion,
 							'id' => $_POST["id_radEdit"]);
+
+			//	var_dump($datos);
 
 			//historial
 
@@ -1014,6 +1111,7 @@ class ControladorRadicados
 				$fechaActual = "";
 				$horaActual = "";
 				$idAccion = $_POST["accionReg"];
+				$dJsonsoporte = "";
 				$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]);
 				$urlSW = "";
 
@@ -1028,8 +1126,8 @@ class ControladorRadicados
 					$dJsonsoporte = ( !is_null($registro["soporte"]) ) ? $registro["soporte"] : null ; 
 					try {
 
-					date_default_timezone_set('America/Bogota');
-					$actualY = date("Y");
+					//date_default_timezone_set('America/Bogota');
+					//$actualY = date("Y");
 					$directorio = "";
 				
 					if ( isset($_FILES["editarArchivo"]["tmp_name"]) ) 
@@ -1047,10 +1145,10 @@ class ControladorRadicados
 							if($_FILES["editarArchivo"]["type"] == "application/pdf")
 							{
 								$tmp_name = $_FILES['editarArchivo']['tmp_name'];
-								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
-								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR ;
+								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
+								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR+1 ;
 
-								$directorio.='/'.$nombre.'.pdf';
+								$directorio.='/'.strval($nombre).'.pdf';
 								$error = $_FILES['editarArchivo']['error'];
 
 									if($error)
@@ -1078,11 +1176,11 @@ class ControladorRadicados
 											 			if (!empty($registro["soporte"])) 
 											 			{
 											 				$dJsonsoporte = substr($dJsonsoporte, 0 ,-1);
-											 				$dJsonsoporte .=',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 				$dJsonsoporte .=',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'"}]';
 											 			}
 											 			else
 											 			{
-											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'"}]';
 											 			}
 											 		}//if (!is_null($soporte_his) && !empty($soporte_his) && count($soporte_his) > 0) 
 											 		else
@@ -1094,7 +1192,7 @@ class ControladorRadicados
 											 			}
 											 			else
 											 			{
-											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
+											 				$dJsonsoporte ='[{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'"}]';
 											 			}
 
 											 			
@@ -1103,9 +1201,13 @@ class ControladorRadicados
 												}
 												else
 												{
-												 	$dJsonsoporte .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'""sop":"'.$nombre.'.pdf"}]';
+												 	$dJsonsoporte .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$nombre.'.pdf"}]';
 												}
 
+											}
+											else
+											{
+												//$dJsonsoporte .='{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","id":"'.$_SESSION["id"].'","nom":"'.$_SESSION["nombre"].'","sop":"'.$directorio.'"}]';
 											}
 									}
 							}
@@ -1324,15 +1426,60 @@ class ControladorRadicados
 						}
 						elseif ($_POST["accionReg"] == 7) 
 						{
+							if (isset($_POST["listadoPQR"]) && !is_null($_POST["listadoPQR"])) 
+							{
+								$estadoPQR = $registro["id_estado"];
+								
+								$accionesPQR = json_decode($_POST["listadoPQR"], true);	
+
+								if (!is_null($accionesPQR) && count($accionesPQR) > 0) 
+								{
+										$dJsonAcc = substr($registro["acciones"], 0 ,-1);
+										$dJsonAccTemp = "";
+
+										// id = id del pqr elegido
+										// pqr = nombre del pqr elegido
+										// ter = termino del pqr elegido
+										// pqra = nombre del pqr anterior
+										// tera = termino del pqr anterior
+
+										for ($i=0; $i < count($accionesPQR); $i++) 
+										{ 
+											$dJsonAccTemp.= '"'.$i.'":{"id":"'.$accionesPQR[$i]["id"].'","pqr":"'.$accionesPQR[$i]["pqr"].'","ter":"'.$accionesPQR[$i]["ter"].'","ida":"'.$registro["id_pqr"].'","tera":"'.$registro["dias_habiles"].'"},';
+										}
+
+										$dJsonAccTemp = substr($dJsonAccTemp, 0 ,-1);
+										$dJsonAcc .= ',{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"7","da":{'.$dJsonAccTemp.'}}]';
+
+								}//if (count($encargados) > 0) 
+								else
+								{
+									$error = "Lista de remitentes vacia." ; 
+								}
+							}//if (isset($_POST["listadoPQR"]) && !is_null($_POST["listadoPQR"]))	
+							else
+							{
+								$error = 'se encontraron no se encontro al menos un remitente en este registro';
+							}
+
+
 							$tipoSW = 'success';
 							$titleSW = 'Faltan parametros';
 						}
 						elseif ($_POST["accionReg"] == 8) 
 						{
 
-							$estadoPQR = 1;
+							if ($registro["id_estado"] == 3) 
+							{
+								$estadoPQR = 4;
+							}
+							else
+							{
+								$estadoPQR = 1;
+							}
+
 							$tipoSW = 'success';
-							$titleSW = 'Faltan parametros';
+							$titleSW = 'Se Ha Marcado el oficio Radicado con #'.$radicado["radicado"].'  Como Resuelto';
 						}
 						else
 						{
@@ -1356,6 +1503,7 @@ class ControladorRadicados
 						'id' => $_POST["idRegistro"]);
 
 						$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad("registropqr", $datos);
+						var_dump($datos);
 
 						if($respuesta == "ok")
 						{
