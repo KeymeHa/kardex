@@ -117,7 +117,7 @@ class TablaRegistros
 
 						 if($registrosPQR[$i]["id_estado"] != 1 && $registrosPQR[$i]["id_estado"] != 4 && $registrosPQR[$i]["id_estado"] != 6)
 						{
-							$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div> <div class='col-md-4'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
+							$acciones .= "<div class='col-lg-4 col-md-3'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div> <div class='col-lg-4 col-md-3'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
 						}
 						else
 						{
@@ -127,7 +127,7 @@ class TablaRegistros
 
 						if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
 						{
-							$acciones .= "<div class='col-md-4'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
+							$acciones .= "<div class='col-lg-3 col-md-4 col-xs-2'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
 						}
 
 						$acciones .= "</div>";
