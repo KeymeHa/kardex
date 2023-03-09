@@ -43,16 +43,23 @@ class TablaRegistros
 
 				$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual, null , null);
 
-				if ( count($registrosPQR) == 0 || count($registrosPQR[0]) == 0) 
-	    		{  	echo'{"data": []}';	return; }
-
+				if (is_null($registrosPQR)) 
+				{
+					echo'{"data": []}';	return;
+				}
+				elseif ( !is_countable($registrosPQR) )
+				{
+					echo'{"data": []}';	return;
+				
+				}
+				elseif (count($registrosPQR) == 0 || count($registrosPQR[0]) == 0)
+				{
+					echo'{"data": []}';	return;
+				}
 
 				//traer los pqr filtrados
-
 				$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", $usuario["perfil"]);
 				$id_pqr = json_decode($traer_filtro["id_pqr"], true);
-
-				
 
 				for ($i=0; $i < count($registrosPQR) ; $i++) 
 				{ 
