@@ -69,6 +69,7 @@ function elimTabla()
 	)
 }
 
+/*
 $(".form_pqr").change(function() 
 {
 
@@ -105,7 +106,39 @@ $(".form_pqr").change(function()
 				dataType: "json",
 				success: function(respuesta)
 				{
-					console.log("ok app");
+					if (respuesta) 
+					{
+						if(respuesta["rutaScan"] == "error")
+						{
+							Swal({
+							  position: 'top-end',
+							  icon: 'danger',
+							  title: 'Your work has been saved',
+							  showConfirmButton: false,
+							  timer: 1500
+							})
+						}
+						else
+						{
+							Swal({
+							  position: 'top-end',
+							  icon: 'success',
+							  title: 'Your work has been saved',
+							  showConfirmButton: false,
+							  timer: 1500
+							})
+						}
+					}
+					else
+					{
+						Swal({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Your work has been saved',
+						  showConfirmButton: false,
+						  timer: 1500
+						})
+					}
 				}
 
 			});
@@ -115,7 +148,7 @@ $(".form_pqr").change(function()
 	}
 
 });
-
+*/
 
 $(".btn-corte").click(function(){
 
