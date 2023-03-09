@@ -4,7 +4,7 @@
 			<b>S</b>M
 		</span>
 		<span class="logo-lg">
-			<b>S</b>ITMI<em style="font-size: 12px !important;">Versión 1.8 Beta</em>
+			<b>S</b>ITMI<em style="font-size: 12px !important;">Versión 2.3 Beta</em>
 		</span>
 	</a>
 	<nav class="navbar navbar-static-top" role="navigation">
