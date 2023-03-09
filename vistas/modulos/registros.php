@@ -50,7 +50,7 @@
     $cuad4 = 0 ; //3 vencido
 
 
-    if (!is_null($estados_pqr)) 
+    if (!is_null($estados_pqr) && is_countable($estados_pqr) ) 
     {
         $sumatoria = 0;
 
@@ -176,7 +176,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(3)Pendientes</span>
                 <span class="info-box-number"><?php echo $cuad3 ;?></span>
-                <span class="info-box-number"><small><?php  echo $percentCuad3."%";
+                <span class="info-box-number"><small><?php echo ( isset($percentCuad3) )? $percentCuad3."%" : "0%" ;
                 //echo (isset($porcentaje[5]["contar"])) ? " por asignar ".$porcentaje[5]["contar"] : ""; 
                  ?></small></span>
               </div><!--class="info-box-content"-->
@@ -200,7 +200,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(1)Resueltas</span>
                 <span class="info-box-number"><?php echo $cuad1 ;?></span>
-                <span class="info-box-number"><small><?php echo $percentCuad1  ; ?> %</small></span>
+                <span class="info-box-number"><small><?php echo ( isset($percentCuad1) ) ? $percentCuad1 : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-lg-6"-->
