@@ -1226,7 +1226,16 @@ class ControladorParametros
 			{
 				if(file_exists($respuesta["rutaScan"]))
 				{
-					shell_exec($respuesta["rutaScan"]);
+					//shell_exec($respuesta["rutaScan"]);
+
+					exec($respuesta["rutaScan"]);
+
+					return $respuesta["rutaScan"];
+
+				}
+				else
+				{
+					return $respuesta["rutaScan"] = "error";
 				}	
 			}
 		}
@@ -1277,6 +1286,48 @@ class ControladorParametros
 	{
 		$respuesta = ModeloParametros::mdlTraerCampo($tabla, $item, $valor, $item2);
 		return $respuesta["$item2"];
+	}
+
+	static public function ctrValidarTerminoPQR($fecha, $id)
+	{
+		 $response = ModeloParametros::mdlmostrarRegistros("pqr","id", $id);
+          $festivo = ModeloParametros::mdlmostrarFestivos();
+          $fecha_v = new DateTime($fecha);
+          $count = $response["termino"];
+          
+          while ($count != 0 && $count >= 0) 
+          {
+            $sws = false;
+            $fecha_v->add(new DateInterval('P1D'));
+
+            if ($fecha_v->format('l') != "Saturday" && $fecha_v->format('l') != "Sunday") 
+            {
+                 foreach ($festivo as $key => $value) 
+                  {
+                    if ($value["fecha"] == $fecha_v->format('Y-m-d')) 
+                    {
+                      $sws = true;
+                    }
+                  }
+
+                  if ($sws != true) 
+                  {
+                    $count--;
+                  }
+            }
+            else
+            {
+              if ( $fecha_v->format('l') == "Saturday" ) 
+              {
+                 $fecha_v->add(new DateInterval('P1D'));
+              }
+            }
+          }//while
+
+          $respuesta = ["dias" => $response["termino"],
+                 "fecha_vencimiento" => $fecha_v->format('Y-m-d')];
+
+        return $respuesta;
 	}
 
 	static public function ctrValidarTermino($fecha, $id)
@@ -1344,7 +1395,7 @@ class ControladorParametros
 				$sws = false;
 				$fechaR->add(new DateInterval('P1D'));
 
-				if ($fechaV->format("Y-m-d") > $fechaActual) 
+				if ($fechaV->format("Y-m-d") < $fechaActual) 
 				{
 					$id_estado = 3;
 				}
