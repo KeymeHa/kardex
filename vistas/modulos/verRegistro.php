@@ -13,7 +13,7 @@
       $area_responsable = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $registro["id_area"], "nombre");
       $responsable = ControladorParametros::ctrmostrarRegistroEspecifico('usuarios', "id", $registro["id_usuario"], "nombre");
       $estado = ControladorParametros::ctrmostrarRegistros('estado_pqr', "id", $registro["id_estado"]);
-
+      $anio = new DateTime($radicado["fecha"]);
       $fechaRad = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
       $fecha_vencimiento = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);
 
@@ -150,9 +150,15 @@
         </div>
       </div><div class="box-body"><div class="col-lg-12">
                   <embed src="'.$radicado["soporte"].'" width="100%" height="700px"  type="application/pdf"> 
-                     
-                    </a>
-                  </div></div></div>' : '';
+                  </div></div></div>' : '<div class="box box-'.$estado["html"].'"><div class="box-header">
+       <h3 class="box-title">Soporte</h3>
+       <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div><div class="box-body"><div class="col-lg-12">
+        <i class="fa fa-file-o"></i> <cite title="Source Title">Sin Soportes Adjuntos.</cite>           
+                  </div></div></div>';
 
 
     if($registro["id_estado"] != 1 && $registro["id_estado"] != 4 && $registro["id_estado"] != 6)
@@ -219,7 +225,7 @@
               </div>';
 
                $actualizarReg = new ControladorRadicados();
-              $actualizarReg -> ctrActualizarRegistro();
+              $actualizarReg -> ctrActualizarRegistro($_SESSION["id"]);
 
       echo ' </div><!--box-body-->
 
@@ -268,7 +274,7 @@
                   $grupoFechas[] = $value["fe"];
                 }
 
-             }
+             }// foreach ($accionesPQR as $key => $value) 
 
 
              for ($y=0; $y < count($grupoFechas) ; $y++) 
@@ -287,43 +293,132 @@
 
                   if ($grupoFechas[$y] == $accionesPQR[$x]["fe"]) 
                   {
+
                      $horaTemp = new DateTime($accionesPQR[$x]["hr"]);
                      $horaR = $horaTemp->format('h:i a');
 
-                     if ( isset($accionesPQR[$x]["da"]["nom"]) ) 
-                     {
+                    switch ($accionesPQR[$x]["acc"]) 
+                    {
+                      case 1:
+                        
                         $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
 
                         echo '<li>
-                        <i class="fa fa-share bg-yellow"></i>
-                        <div class="timeline-item">
+                          <i class="fa fa-share bg-yellow"></i>
+                          <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                            <h3 class="timeline-header">Asignado a '.$accionesPQR[$x]["da"]["nom"].' del área '.$areaR.'.</h3>
-                        </div>
-                      </li>';
-                     }elseif ($accionesPQR[$x]["acc"] == 2) 
-                     {
+                          <h3 class="timeline-header">Asignado a <strong>'.$accionesPQR[$x]["da"]["nom"].'</strong>, perteneciente a <strong>'.$areaR.'</strong>.</h3>';
+
+                          if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
+                          {
+                             echo '<div class="timeline-body">'.$accionesPQR[$x]["obs"].'</div>';
+                          }
+
+                          if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
+                          {
+                             echo '<div class="timeline-footer">
+                              <a href="vistas/radicados/'.strval($anio->format("Y")).'/'.$radicado["radicado"].'/'.$accionesPQR[$x]["sop"].'.pdf" class="btn btn-primary btn-xs"><i class="fa fa-paperclip"></i> Anexo</a>
+                              </div>';
+                          }
+
+                          echo '
+                          </div>
+                          </li>';
+
+                        break;
+                      case 2:
+                        
                         $remitentes = "";
 
                         for ($i=0; $i < count($accionesPQR[$x]["da"]); $i++) 
                         { 
-                          $remitentes .= "(".$accionesPQR[$x]["da"][$i]["rem"].")";
+                          $remitentes .= " ".$accionesPQR[$x]["da"][$i]["rem"].",";
                         }
 
-                       echo '<li>
-                        <i class="fa fa-envelope bg-green"></i>
-                        <div class="timeline-item">
+                        $remitentes = substr($remitentes, 0 ,-1);
+
+                        echo '<li>
+                          <i class="fa fa-envelope bg-green"></i>
+                          <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                            <h3 class="timeline-header">Traslado por Compentencia a '.$remitentes.'.</h3>
-                        </div>
-                       </li>';
-                     }
+                          <h3 class="timeline-header">Traslado por Compentencia a <strong>'.$remitentes.'</strong>.</h3>';
 
-                  }
-               }
-             }
+                          if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
+                          {
+                             echo '<div class="timeline-body">'.$accionesPQR[$x]["obs"].'</div>';
+                          }
 
-      }
+                          if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
+                          {
+                             echo '<div class="timeline-footer">
+                              <a href="vistas/radicados/'.strval($anio->format("Y")).'/'.$radicado["radicado"].'/'.$accionesPQR[$x]["sop"].'.pdf" class="btn btn-primary btn-xs"><i class="fa fa-paperclip"></i> Anexo</a>
+                              </div>';
+                          }
+
+                          echo '
+                          </div>
+                          </li>';
+
+
+                        break;
+                      case 3:
+                        # code...
+                        break;
+                      case 4:
+                        # code...
+                        break;
+                      case 5:
+                        # code...
+                        break;
+                      case 6:
+                        # code...
+                        break;
+                      case 7:
+                        # code...
+                        break;
+                      case 8:
+
+                        echo '<li>
+                          <i class="fa fa-share bg-yellow"></i>
+                          <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                          <h3 class="timeline-header">Marcado como <strong>Resuelto</strong></h3>';
+
+                          if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
+                          {
+                             echo '<div class="timeline-body">'.$accionesPQR[$x]["obs"].'</div>';
+                          }
+
+                          if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
+                          {
+
+                            $direccion = 'vistas/radicados/'.strval($anio->format("Y")).'/'.$radicado["radicado"].'/'.$accionesPQR[$x]["sop"].'.pdf';
+
+                            if (file_exists($direccion)) 
+                            {
+                              echo '<div class="timeline-footer">
+                              <a href="'.$direccion.'" class="btn btn-primary btn-xs"><i class="fa fa-paperclip"></i> Anexo</a>
+                              </div>';
+                            }
+                          }
+
+                          echo '
+                          </div>
+                          </li>';
+
+                        break;
+                      
+                      default:
+                        # code...
+                        break;
+                    }//switch ($accionesPQR[$x]["acc"])
+
+
+                  }//if ($grupoFechas[$y] == $accionesPQR[$x]["fe"]) 
+               }//for
+              }//for             
+
+      }//if ($registro["acciones"] != null) 
 
       
 
