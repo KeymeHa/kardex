@@ -411,7 +411,7 @@
 
         <?php
           $actualizarReg = new ControladorRadicados();
-          $actualizarReg -> ctrActualizarRegistro();
+          $actualizarReg -> ctrActualizarRegistro($_SESSION["id"]);
         ?>
 
       </form>
