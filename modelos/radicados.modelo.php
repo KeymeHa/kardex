@@ -151,7 +151,7 @@ class ModeloRadicados
 				return $stmt -> fetch();	
 			}
 
-		}else if($fechaInicial == $fechaFinal){
+		}elseif($fechaInicial == $fechaFinal){
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('$fechaInicial', '%Y %m %d') $query");
 
