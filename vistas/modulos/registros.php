@@ -211,7 +211,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">(2)Extemporaneas</span>
                 <span class="info-box-number"><?php echo $cuad2 ;?></span>
-                <span class="info-box-number"><small><?php echo (isset($porcentaje[4])) ? $porcentaje[4]["count"] : 0 ; ?> %</small></span>
+                <span class="info-box-number"><small><?php echo (isset($porcentaje[4])) ? $porcentaje[4]["per"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
             </div><!--class="info-box"-->
           </div><!--class="col-md-2 col-sm-6 col-xs-12"-->
