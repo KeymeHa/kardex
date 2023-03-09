@@ -157,9 +157,9 @@
     
     if (isset( $porcentaje[3] ) ) 
     {
-      echo '<div class="alert alert-danger alert-dismissible">
+      echo '<div class="alert alert-danger alert-dismissible box-semaforo" cuadrante="c4">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4 class="banner-vencidos" style="cursor:pointer;" es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i>Se encuentran Vencidos <strong>('.$porcentaje[3]["contar"].')</strong> Oficios. ver Listado. </h4>
+            <h4 style="cursor:pointer;"  es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i>Oficios Vencidos :<strong>('.$porcentaje[3]["contar"].')</strong> ver Listado. </h4>
             </div>';
     }
 
