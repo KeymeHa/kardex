@@ -54,10 +54,10 @@
       <div class="row">
         <div class="box">
           <div class="box-header with-border">
-            <h2>TÉRMINOS DE LICENCIA DEL SOFTWARE SITMI</h2>
+            <h2>TÉRMINOS DE LICENCIA DEL SOFTWARE SICOR</h2>
               <p style="text-align: justify;">
 
-SISTEMA DE MANEJO DE INVENTARIO Y KARDEX SITMI Sistema integrado Totalizado de movimientos de Inventario
+SISTEMA DE MANEJO DE INVENTARIO Y KARDEX SICOR Sistema integrado Totalizado de movimientos de Inventario
 
 En el presente contrato se describen sus derechos y las condiciones de uso del este software. Debe revisar el contrato completo, incluidos los términos de licencia complementarios que acompañan al software y cualquier término vinculado, ya que todos los términos son importantes y en su conjunto conforman este contrato que se aplica a su caso.
 
@@ -72,13 +72,13 @@ b. Términos adicionales. Es posible que se apliquen términos adicionales por p
 
 2. Instalación y Derechos de uso.
 
-a. Licencia. El software se cede bajo licencia y no es objeto de venta. En virtud del presente contrato y siempre y cuando cumpla con todos los términos del mismo, le otorgamos el derecho de instalar y ejecutar una instancia del software en su dispositivo (el dispositivo con licencia), para que lo utilice el contrayente. Si utiliza el software SITMI de orígenes no autorizados, en ese caso, no dispondrá de una licencia para utilizar el software.
+a. Licencia. El software se cede bajo licencia y no es objeto de venta. En virtud del presente contrato y siempre y cuando cumpla con todos los términos del mismo, le otorgamos el derecho de instalar y ejecutar una instancia del software en su dispositivo (el dispositivo con licencia), para que lo utilice el contrayente. Si utiliza el software SICOR de orígenes no autorizados, en ese caso, no dispondrá de una licencia para utilizar el software.
 
 b.Dispositivo. En este contrato, “dispositivo” se refiere a un sistema hardware (ya sea físico o virtual) como un computador personal o un servidor.
 
 c.Contrayente. En este contrato, “Contrayente” se refiere a la persona natural o juridica con quien se concreto el uso suscrito más no vendido del software. 
 
-d.Restricciones. El Desarrollador e instalador del software SITMI se reserva todos los derechos (como los posibles derechos en virtud de determinadas leyes de propiedad intelectual e industrial) no concedidos expresamente en este contrato. Por ejemplo, esta licencia no le concede ningún derecho con respecto a las siguientes operaciones; específicamente, usted no puede:
+d.Restricciones. El Desarrollador e instalador del software SICOR se reserva todos los derechos (como los posibles derechos en virtud de determinadas leyes de propiedad intelectual e industrial) no concedidos expresamente en este contrato. Por ejemplo, esta licencia no le concede ningún derecho con respecto a las siguientes operaciones; específicamente, usted no puede:
 
 
 (i) publicar, copiar (excepto en el caso de la copia de seguridad permitida por parte del desarrollador, esto se hace de manera escrita), alquilar, arrendar o dar en préstamo el software;

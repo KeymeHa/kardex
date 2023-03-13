@@ -8,7 +8,7 @@
 
   </div>
 
-    <h1>SITMI</h1><em style="font-size: 12px !important; color: red;">Versión 2.3 Beta</em>
+    <h1>SICOR</h1><em style="font-size: 12px !important; color: red;">Versión 3.9 Beta</em>
 
   </div>
 
