@@ -40,7 +40,14 @@
         $fechaFinal = $_GET["fechaFinal"];
       }
 
-    $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+    if ($_SESSION["perfil"] == 11) 
+    {
+    $estados_pqr = ControladorParametros::ctrContarEstados(7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+    }
+    else
+    {
+      $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+    }
 
     $porcentaje = [[]];
     $sumatoria = 0;
@@ -154,15 +161,15 @@
              </h4>
             </div>';
     }//vencidas
-    
+    /*
     if (isset( $porcentaje[3] ) ) 
     {
       echo '<div class="alert alert-danger alert-dismissible box-semaforo" cuadrante="c4">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4 style="cursor:pointer;"  es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i>Oficios Vencidos :<strong>('.$porcentaje[3]["contar"].')</strong> ver Listado. </h4>
+            <h4 style="cursor:pointer;"  es="'.$porcentaje[3]["id"].'" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'"><i class="icon fa fa-danger"></i>Oficios Vencidos : <strong>'.$porcentaje[3]["contar"].'</strong> ver Listado. </h4>
             </div>';
     }
-
+*/
     ?>
 
    
