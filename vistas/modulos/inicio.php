@@ -237,38 +237,47 @@
 
                 }
 
-                $idmodulo = 7;
-                $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
-
-                if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
+                if ($_SESSION["perfil"] == '11') 
                 {
-                     echo'<div class="col-lg-6 col-md-6 col-xs-12">
-                          <!-- small box -->
-                          <div class="small-box bg-blue">
-                            <div class="inner">
-                              <h3>Base de Datos</h3>
+                  echo'<script> window.location="registros";</script>';
+                }
+                else
+                {
+                    $idmodulo = 7;
+                    $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
 
-                              <p>Registros de PQR tramitadas o por tramitar.</p>
-                            </div>
-                            <div class="icon">
-                              <i class="fa fa-balance-scale"></i>
-                            </div>
-                            <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
-                          </div>
-                        </div><!--col-lg-6 col-md-6 col-xs-12-->';
+                    if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
+                    {
+                         echo'<div class="col-lg-6 col-md-6 col-xs-12">
+                              <!-- small box -->
+                              <div class="small-box bg-blue">
+                                <div class="inner">
+                                  <h3>Base de Datos</h3>
 
-                 $swmod = 1;
+                                  <p>Registros de PQR tramitadas o por tramitar.</p>
+                                </div>
+                                <div class="icon">
+                                  <i class="fa fa-balance-scale"></i>
+                                </div>
+                                <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
+                              </div>
+                            </div><!--col-lg-6 col-md-6 col-xs-12-->';
 
+                     $swmod = 1;
+
+                    }
                 }
 
-                if ( $swmod == 0 && $_SESSION["perfil"] == 4) 
+                
+
+                if ( $swmod == 0 ) 
                 {
                   echo '<br><div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="info-box">
                         <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
                         <div class="info-box-content">
                         <span class="info-box-text">Modulos</span>
-                        <span class="info-box-number">Si te aparece este mensaje, solicita que te asignen a un módulo para su gestión.</span>
+                        <span class="info-box-number">Si te aparece este mensaje, solicita que te asignen un módulo para su gestión.</span>
                         </div>
 
                         </div>
