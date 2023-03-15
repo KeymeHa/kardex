@@ -28,7 +28,6 @@ class TablaRegistros
 	{	  
 
 		//traer todo los registrospqr solo si su id_pqr es el mismo que al registro con el id_perfil
-
 		$usuario = ControladorUsuarios::ctrMostrarUsuarios("id", $this->idUsuario);
 
 		if (isset($usuario["perfil"])) 
@@ -36,11 +35,9 @@ class TablaRegistros
 
 			$dJson = '{"data": [';
 
-			if ($this->perfil == 7 || $this->perfil == 3 || $this->perfil == 8) 
+			if ($usuario["perfil"] == 7 || $usuario["perfil"] == 3 || $usuario["perfil"] == 8 || $usuario["perfil"] == 11) 
 			{
-
 				//traer la correspondencia de registrospqr
-
 				$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual, null , null);
 
 				if (is_null($registrosPQR)) 
@@ -58,8 +55,18 @@ class TablaRegistros
 				}
 
 				//traer los pqr filtrados
-				$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", $usuario["perfil"]);
+
+				$per = $usuario["perfil"];
+
+				if ($per == 11) 
+				{
+					$per = 7;
+				}
+
+				$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR("id_per", $per);
 				$id_pqr = json_decode($traer_filtro["id_pqr"], true);
+
+
 
 				for ($i=0; $i < count($registrosPQR) ; $i++) 
 				{ 
@@ -67,109 +74,123 @@ class TablaRegistros
 					$sw = 0; //dejar de buscar el id_pqr
 					$x = 0;
 
-					 while ( $x < count($id_pqr) && $sw == 0) 
-			          {
-			              if ($id_pqr[$x]["id"] == $registrosPQR[$i]["id_pqr"] ) 
-			              {
-			                $sw = 1;
-			              }
-			              $x++;
-			          }//while
-
-					if ($sw == 1) 
+					if( !is_countable($id_pqr) )
 					{
-						//traer información del radicado
-						$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR[$i]["id_radicado"]);
-						$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $registrosPQR[$i]["id_estado"]);
+						echo'{"data": []}';	return;
+					}
+					else
+					{
+						while ( $x < count($id_pqr) && $sw == 0) 
+				          {
+				              if ($id_pqr[$x]["id"] == $registrosPQR[$i]["id_pqr"] ) 
+				              {
+				                $sw = 1;
+				              }
+				              $x++;
+				          }//while
 
-						$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
-
-						$areaNombre = ControladorAreas::ctrMostrarNombreAreas("id", $registrosPQR[$i]["id_area"]);
-						$usuarioNombre = ControladorUsuarios::ctrMostrarNombre("id", $registrosPQR[$i]["id_usuario"]);
-
-						if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
+						if ($sw == 1) 
 						{
-							$fecha_respuesta = "Pendiente por Responder";
-						}
-						else
-						{
-							$fecha_respuesta = ControladorParametros::ctrOrdenFecha($registrosPQR[$i]["fecha_respuesta"], 0);
-						}
+							//traer información del radicado
+							$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR[$i]["id_radicado"]);
+							$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $registrosPQR[$i]["id_estado"]);
 
-							$fecha_vencimiento  = ControladorParametros::ctrOrdenFecha($registrosPQR[$i]["fecha_vencimiento"], 0);
+							$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
 
+							$areaNombre = ControladorAreas::ctrMostrarNombreAreas("id", $registrosPQR[$i]["id_area"]);
+							$usuarioNombre = ControladorUsuarios::ctrMostrarNombre("id", $registrosPQR[$i]["id_usuario"]);
 
-						//traer información del registropqr
-
-						//buscar estad
-
-						//buscar nombre id_usuario QUIEN RECIBE
-
-						/**
-
-							fecha registropqr    			ok
-							numero radicado      			ok
-							estado registropqr   			ok
-							asunto radicado      			ok
-							id_area registroqpr  			ok
-							id_usuario registropqr 		    ok	
-							fecha_respuesta registropqr     ok
-							fecha_vencimiento registropqr   ok
-							dias_restantes registropqr      ok
-							acciones                        ok
-			
-						*/
-
-						$acciones = "<div class='btn-group'>";
-
-						 if($registrosPQR[$i]["id_estado"] != 1 && $registrosPQR[$i]["id_estado"] != 4 && $registrosPQR[$i]["id_estado"] != 6)
-						{
-							$acciones .= "<div class='col-lg-4 col-md-3'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div> <div class='col-lg-4 col-md-3'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
-						}
-						else
-						{
-
-							$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
-						}
-
-						if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
-						{
-							$acciones .= "<div class='col-lg-3 col-md-4 col-xs-2'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
-						}
-
-						$acciones .= "</div>";
-
-						$fInicial = date_create($radicado["fecha"]);
-						$fechaActual = date('d-m-Y');
-						$fActual = date_create($fechaActual);
-						$iniActual = date_diff($fInicial, $fActual);//fecha
-
-						//concatenar al json
-
-							if ($registrosPQR[$i]["dias_contados"] <= $registrosPQR[$i]["dias_habiles"]) 
+							if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
 							{
-								$htmldias = $registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"];
+								$fecha_respuesta = "Pendiente por Responder";
 							}
 							else
 							{
-								$htmldias = "<strong>".$registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"]."</strong>";
+								$fecha_respuesta = ControladorParametros::ctrOrdenFecha($registrosPQR[$i]["fecha_respuesta"], 0);
 							}
 
-							$dJson .='[
-				    		"'.$radicado["fecha"].'",
-				    		"'.$radicado["radicado"].'",
-				    		"'.$estado.'",
-				    		"'.$radicado["asunto"].'",
-				    		"'.$radicado["id_remitente"].'",
-				    		"'.$areaNombre["nombre"].'",
-				    		"'.$usuarioNombre["nombre"].'",
-				    		"'.$fecha_respuesta.'",
-				    		"'.$fecha_vencimiento.'",
-				    		"'.$htmldias.'",
-				    		"'.$acciones.'"
-				    		],';
+								$fecha_vencimiento  = ControladorParametros::ctrOrdenFecha($registrosPQR[$i]["fecha_vencimiento"], 0);
 
-					}//if ($sw == 1)
+
+							//traer información del registropqr
+
+							//buscar estad
+
+							//buscar nombre id_usuario QUIEN RECIBE
+
+							/**
+
+								fecha registropqr    			ok
+								numero radicado      			ok
+								estado registropqr   			ok
+								asunto radicado      			ok
+								id_area registroqpr  			ok
+								id_usuario registropqr 		    ok	
+								fecha_respuesta registropqr     ok
+								fecha_vencimiento registropqr   ok
+								dias_restantes registropqr      ok
+								acciones                        ok
+				
+							*/
+
+							$acciones = "<div class='btn-group'>";
+
+							 if($registrosPQR[$i]["id_estado"] != 1 && $registrosPQR[$i]["id_estado"] != 4 && $registrosPQR[$i]["id_estado"] != 6)
+							{
+								$acciones .= "<div class='col-lg-4 col-md-3'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
+							}
+							else
+							{
+
+								$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
+							}
+
+							if ($this->perfil == 7) 
+							{
+								$acciones .= "<div class='col-lg-4 col-md-3'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR[$i]["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
+							}
+
+							if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
+							{
+								$acciones .= "<div class='col-lg-3 col-md-4 col-xs-2'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
+							}
+
+							$acciones .= "</div>";
+
+							$fInicial = date_create($radicado["fecha"]);
+							$fechaActual = date('d-m-Y');
+							$fActual = date_create($fechaActual);
+							$iniActual = date_diff($fInicial, $fActual);//fecha
+
+							//concatenar al json
+
+								if ($registrosPQR[$i]["dias_contados"] <= $registrosPQR[$i]["dias_habiles"]) 
+								{
+									$htmldias = $registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"];
+								}
+								else
+								{
+									$htmldias = "<strong>".$registrosPQR[$i]["dias_contados"]."/".$registrosPQR[$i]["dias_habiles"]."</strong>";
+								}
+
+								$dJson .='[
+					    		"'.$radicado["fecha"].'",
+					    		"'.$radicado["radicado"].'",
+					    		"'.$estado.'",
+					    		"'.$radicado["asunto"].'",
+					    		"'.$radicado["id_remitente"].'",
+					    		"'.$areaNombre["nombre"].'",
+					    		"'.$usuarioNombre["nombre"].'",
+					    		"'.$fecha_respuesta.'",
+					    		"'.$fecha_vencimiento.'",
+					    		"'.$htmldias.'",
+					    		"'.$acciones.'"
+					    		],';
+
+						}//if ($sw == 1)
+					}//si es contable
+
+					 
 				}//for
 
 				$dJson = substr($dJson, 0 ,-1);
