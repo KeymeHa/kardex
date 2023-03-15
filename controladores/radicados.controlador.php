@@ -1337,14 +1337,16 @@ class ControladorRadicados
 				{
 					if (is_null($registro["acciones"])) 
 					{
-						 $dJsonAcc ='[';
+						 $dJsonAcc ='[{"id":"1"';
 					}
 					else
 					{
 						$dJsonAcc = substr($registro["acciones"], 0 ,-1);
-						$dJsonAcc .= ',';		
+						$arrayacciones = json_decode($registro["acciones"], true);
+
+						$dJsonAcc .= ',{"id":"'.(count($arrayacciones)+1).'"';		
 					}
-						$dJsonAcc .= '{"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'"}]';
+						$dJsonAcc .= ',"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'","sw":"1"}]';
 
 					$datos = array( 
 					'id_usuario' => $id_Encargado,
