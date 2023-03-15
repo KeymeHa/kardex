@@ -143,10 +143,9 @@ class ControladorRadicados
 							if($_FILES["soporteRadicado"]["type"] == "application/pdf")
 							{
 								$tmp_name = $_FILES['soporteRadicado']['tmp_name'];
-								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
-								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR ;
-
-								$directorio.='/'.$nombre.'.pdf';
+								/*$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
+								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR */
+								$directorio.='/soporte'.strval($_POST["codigoInterno"]).'.pdf';
 								$error = $_FILES['soporteRadicado']['error'];
 
 									if($error)
@@ -1110,6 +1109,7 @@ class ControladorRadicados
 				$directorio = '';
 				$error = 0;
 				$soporte = '';
+				$contar = 1; //id para cada nueva accion
 				$dJsonAcc = '';//json para almacenar en DB
 				$dJsonAccTemp = ""; //almacena una cadena tipo json para luego ser insertado en otro json
 				$tipoSW = '';
@@ -1126,6 +1126,10 @@ class ControladorRadicados
 				}
 				else
 				{//registro encontrado
+
+					#
+					
+
 					#fecha y hora
 					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
 					{	$fechaActual = $_POST["fechaReg"];	}
@@ -1136,6 +1140,17 @@ class ControladorRadicados
 					{	$horaActual = $_POST["horaReg"];     }
 					else
 					{	$horaActual = date('h:i a');		}
+
+					if (is_null($registro["acciones"])) 
+					{
+						 $soporte = 1 ;
+					}
+					else
+					{
+						$arrayacciones = json_decode($registro["acciones"], true);
+						$soporte = count($arrayacciones) + 1;	
+						$contar = $soporte;
+					}
 
 					#soporte
 					if ( isset($_FILES["editarArchivo"]["tmp_name"]) ) 
@@ -1153,10 +1168,10 @@ class ControladorRadicados
 							if($_FILES["editarArchivo"]["type"] == "application/pdf")
 							{
 								$tmp_name = $_FILES['editarArchivo']['tmp_name'];
-								$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
-								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR + 1 ;
+								/*$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
+								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR + 1 ;*/
 
-								$directorio.='/'.strval($nombre).'.pdf';
+								$directorio.='/'.strval($soporte).'.pdf';
 								$error = $_FILES['editarArchivo']['error'];
 
 									if($error)
@@ -1175,15 +1190,18 @@ class ControladorRadicados
 											if(!file_exists($directorio))
 											{
 												copy($tmp_name,$directorio);
-												if (file_exists($directorio)) 
-												{
-													$soporte = $nombre;
-												}
 											}
 									}
 							}
-						}//si exite algo		
+						}//si exite algo	
+						else{
+							$soporte = '';
+						}	
 					}//if ( isset($_FILES["editarArchivo"]["tmp_name"]) ) 
+					else
+					{
+						$soporte = '';
+					}
 
 					switch ($idAccion) 
 					{//switch ($_POST["accionReg"])
@@ -1337,14 +1355,12 @@ class ControladorRadicados
 				{
 					if (is_null($registro["acciones"])) 
 					{
-						 $dJsonAcc ='[{"id":"1"';
+						 $dJsonAcc ='[{"id":"'.$contar.'"';
 					}
 					else
 					{
 						$dJsonAcc = substr($registro["acciones"], 0 ,-1);
-						$arrayacciones = json_decode($registro["acciones"], true);
-
-						$dJsonAcc .= ',{"id":"'.(count($arrayacciones)+1).'"';		
+						$dJsonAcc .= ',{"id":"'.$contar.'"';
 					}
 						$dJsonAcc .= ',"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'","sw":"1"}]';
 
