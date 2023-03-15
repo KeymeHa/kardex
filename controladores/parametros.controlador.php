@@ -950,7 +950,10 @@ class ControladorParametros
 						5 => "pCinco",
 						6 => "pSeis",
 						7 => "pSiete",
-						8 => "pOcho");
+						8 => "pOcho",
+						9 => "pNueve",
+						10 => "pDiez",
+						11 => "pOnce");
 
 		if (isset($jdata[$permiso[$perfil]])) 
 		{
@@ -1073,7 +1076,7 @@ class ControladorParametros
 		}
 
 	}
-
+/*
 	public static function ctrValidarPermisoDos($id_usuario, $ruta)
 	{
 		$tabla = "permisos";
@@ -1090,7 +1093,7 @@ class ControladorParametros
 		}
 		
 		return $sw;
-	}
+	}*/
 
 	static public function ctrVerImpuestos($valor)
 	{
