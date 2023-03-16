@@ -39,6 +39,10 @@
 		              		<span class="label label-warning">'.$noti.'</span>';
 		              	}
 		              }
+		              elseif ($_SESSION["perfil"] == 7) 
+		              {
+		              	# code...
+		              }
 		              ?>
 		              
 		            </a>
@@ -79,8 +83,105 @@
 
 		              ?>
 		              <!--<li class="footer"><a href="#">Ver Todos</a></li>-->
-		            </ul>
-		          </li>							
+		            </ul>		            
+		          </li>	
+
+		         <?php
+
+		         if ($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11) 
+		         {
+		         	$fechaInicial = null;
+				     $fechaFinal = null;
+
+				     if (isset($_GET["fechaInicial"])) 
+				      {
+				        $fechaInicial = $_GET["fechaInicial"];
+				        $fechaFinal = $_GET["fechaFinal"];
+				      }
+
+				       $porcentaje = ControladorRadicados::ctrCuadrantesRegistros($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+
+				      if (isset($porcentaje)) 
+				         {
+				         	echo '<li class="dropdown tasks-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-flag-o"></i>
+								<span class="label label-danger">!</span>	
+							</a>
+
+							<ul class="dropdown-menu">
+								<li class="header">Progreso Cuadrantes <strong>PQR</strong> </li>
+								<li>
+									<ul class="menu">
+										<li>';
+
+
+								//vencidas
+
+								echo (isset($porcentaje[3]["per"])) ? '<a href="#">
+												<h3>
+												Vencidas
+												<small class="pull-right">'.$porcentaje[3]["per"].'%</small>
+												</h3>
+												<div class="progress xs">
+												<div class="progress-bar progress-bar-red" style="width: '.$porcentaje[3]["per"].'%" role="progressbar" aria-valuenow="'.$porcentaje[3]["per"].'" aria-valuemin="0" aria-valuemax="100">
+												</div>
+											</div>
+											</a>' : '' ;
+
+								//pendientes
+
+								echo ( isset($porcentaje["percentCuad3"][0]) )? '<a href="#">
+												<h3>
+												Pendientes
+												<small class="pull-right">'.$porcentaje["percentCuad3"][0].'%</small>
+												</h3>
+												<div class="progress xs">
+												<div class="progress-bar progress-bar-yellow" style="width: '.$porcentaje["percentCuad3"][0].'%" role="progressbar" aria-valuenow="'.$porcentaje["percentCuad3"][0].'" aria-valuemin="0" aria-valuemax="100">
+												</div>
+											</div>
+											</a>' : "0%" ;
+
+								//extemporaneas
+
+								echo (isset($porcentaje[4])) ? '<a href="#">
+												<h3>
+												Extemporaneas
+												<small class="pull-right">'.$porcentaje[4]["per"].'%</small>
+												</h3>
+												<div class="progress xs">
+												<div class="progress-bar progress-bar-orange" style="width: '.$porcentaje[4]["per"].'%" role="progressbar" aria-valuenow="'.$porcentaje[4]["per"].'" aria-valuemin="0" aria-valuemax="100">
+												</div>
+											</div>
+											</a>' : '' ;
+
+								//Resueltas
+
+								echo ( isset($porcentaje["percentCuad1"][0]) ) ? '<a href="#">
+												<h3>
+												Reueltas
+												<small class="pull-right">'.$porcentaje["percentCuad1"][0].'%</small>
+												</h3>
+												<div class="progress xs">
+												<div class="progress-bar progress-bar-green" style="width: '.$porcentaje["percentCuad1"][0].'%" role="progressbar" aria-valuenow="'.$porcentaje["percentCuad1"][0].'" aria-valuemin="0" aria-valuemax="100">
+												</div>
+											</div>
+											</a>' : '' ;
+
+									echo '
+										</li><!--<ul class="menu">-->
+									</ul>
+								</li>
+							</ul>
+						</li>';
+				         }
+
+		         }//if ($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11) 
+
+
+		         ?>
+
+				<!---		MENU DEL USUARIO 		--->						
 				<li class="dropdown user user-menu">				
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">				
 						<img src="<?php if($_SESSION["foto"] != ""){ echo $_SESSION["foto"]; }else{ echo'vistas/img/usuarios/default/anonymous.png'; }?>"  class="user-image">
