@@ -97,9 +97,6 @@
 */
     ?>
 
-   
-
-    <?php echo '<input type="hidden" readonly es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'" id="inputVar">'?>
     <div class="row">      
        <div class="col-lg-6">
            <div class="col-lg-6 box-semaforo" cuadrante="c3" style="cursor:pointer;">

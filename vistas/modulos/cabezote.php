@@ -16,10 +16,11 @@
 				<li class="dropdown notifications-menu">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 		              <i class="fa fa-bell-o"></i>
+
 		              <?php 
 		              	$noti = 0;
 
-		              
+		              echo '<input type="hidden" readonly es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'" id="inputVar">';
 
 		              if ($_SESSION["perfil"] == 3) {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
@@ -33,16 +34,32 @@
 		              	if($solicitud != 0)
 		              	{$noti+= 1;}
 
-		              	if ($noti > 0) {
+		              	
+		              }
+		              elseif ($_SESSION["perfil"] == 7) 
+		              {
+		              	
+		              	$notiVencidos = ControladorParametros::ctrContarEstadosEspecifico(3);
+		              	$notiPendientes = ControladorParametros::ctrContarEstadosEspecifico(2);
+		              	if ($notiVencidos != 0) 
+		              	{
+		              		$noti+=1;
+		              	}
+		              	if ($notiPendientes != 0) 
+		              	{
+		              		$noti+=1;
+		              	}
+
+		              }
+
+
+		              if ($noti > 0) {
 
 		              		echo '
 		              		<span class="label label-warning">'.$noti.'</span>';
 		              	}
-		              }
-		              elseif ($_SESSION["perfil"] == 7) 
-		              {
-		              	# code...
-		              }
+
+
 		              ?>
 		              
 		            </a>
@@ -70,6 +87,19 @@
 				                    		echo'<li><a href="requisiciones"><i class="fa fa-shopping-cart text-green"></i>Hay '.$solicitud.' Solicitud(es) de insumos</a></li>';
 				                    	}
 		                    		}
+		                    		elseif($_SESSION["perfil"] == 7)
+		                    		{
+										if($notiVencidos != 0)
+				                    	{
+				                    		echo'<li><a href="index.php?ruta=registros&es=c3"><i class="fa fa-warning text-red"></i>Hay '.$notiVencidos.' Oficio(s) <strong>Vencido(s)</strong></a></li>';
+				                    	}
+
+				                    	if($notiPendientes != 0)
+				                    	{
+				                    		echo'<li><a href="index.php?ruta=registros&es=c3"><i class="fa fa-warning text-yellow"></i>Hay '.$notiPendientes.' Oficio(s) <strong>Pendiente(s)</strong></a></li>';
+				                    	}
+		                    		}
+
 		                    	?>
 		                    
 		                </ul>
@@ -118,7 +148,7 @@
 
 								//vencidas
 
-								echo (isset($porcentaje[3]["per"])) ? '<a href="#">
+								echo (isset($porcentaje[3]["per"])) ? '<a class="a-semaforo" cuadrante="c4" href="#">
 												<h3>
 												Vencidas
 												<small class="pull-right">'.$porcentaje[3]["per"].'%</small>
@@ -131,7 +161,7 @@
 
 								//pendientes
 
-								echo ( isset($porcentaje["percentCuad3"][0]) )? '<a href="#">
+								echo ( isset($porcentaje["percentCuad3"][0]) )? '<a class="a-semaforo" cuadrante="c3" href="#">
 												<h3>
 												Pendientes
 												<small class="pull-right">'.$porcentaje["percentCuad3"][0].'%</small>
@@ -144,7 +174,7 @@
 
 								//extemporaneas
 
-								echo (isset($porcentaje[4])) ? '<a href="#">
+								echo (isset($porcentaje[4])) ? '<a class="a-semaforo" cuadrante="c2" href="#">
 												<h3>
 												Extemporaneas
 												<small class="pull-right">'.$porcentaje[4]["per"].'%</small>
@@ -157,7 +187,7 @@
 
 								//Resueltas
 
-								echo ( isset($porcentaje["percentCuad1"][0]) ) ? '<a href="#">
+								echo ( isset($porcentaje["percentCuad1"][0]) ) ? '<a class="a-semaforo" cuadrante="c1" href="#">
 												<h3>
 												Reueltas
 												<small class="pull-right">'.$porcentaje["percentCuad1"][0].'%</small>

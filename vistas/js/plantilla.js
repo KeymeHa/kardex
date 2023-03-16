@@ -880,3 +880,13 @@ $("a#btn-sidebar-toggle").click(function(){
 	}
 
 })*/
+
+
+
+$("a.a-semaforo").click(function() {
+	var cuadrante = $(this).attr("cuadrante");
+	var idUser = $("#inputVar").attr("idUser");
+	var per = $("#inputVar").attr("per");
+	var anio = $("#inputVar").attr("anio");
+	paginaCargada(39, idUser, per, anio, cuadrante);
+});
