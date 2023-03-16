@@ -1,23 +1,3 @@
-<?php
-
-  $pri_pendi = 0;
-  $pri_venci = 0;
-  $his_resuelta = 0;
-  $his_extemporanea = 0;
-
-  if (($cuad3+$cuad4) != 0) 
-  {
-      $pri_pendi  = bcdiv( ($cuad3/($cuad3+$cuad4)) *100, '1', 2);              
-      $pri_venci = bcdiv( ($cuad4/($cuad3+$cuad4)) *100, '1', 2);    
-  }
-
-   if (($cuad1+$cuad2) != 0) 
-  {
-      $his_resuelta = bcdiv( ($cuad1/($cuad1+$cuad2)) *100, '1', 2);              
-      $his_extemporanea = bcdiv( ($cuad2/($cuad1+$cuad2)) *100, '1', 2); 
-  }
-
-?>
 
 <div class="box box-success">
 	<div class="box-body">
@@ -33,8 +13,6 @@
 			</div>
 		</div>
 
-
-		
 	</div>
 </div>
 
@@ -49,9 +27,9 @@ var donut = new Morris.Donut({
   colors: ["#F7F733", "#FF3300"],
   data: [
   	<?php
-  		echo '{label: "Pendientes", value: '.$pri_pendi.' }';
+  		echo '{label: "Pendientes", value: '.$porcentaje["pri_pendi"][0].' }';
   		echo ',';
-    	echo '{label: "Vencidas", value: '.$pri_venci.'}';
+    	echo '{label: "Vencidas", value: '.$porcentaje["pri_venci"][0].'}';
   	?>
   ],
   hideHover: 'auto',
@@ -73,9 +51,9 @@ var donut = new Morris.Donut({
   data: [
   	<?php
 
-  		echo '{label: "Resueltas", value: '.$his_resuelta.' }';
+  		echo '{label: "Resueltas", value: '.$porcentaje["his_resuelta"][0].' }';
   		echo ',';
-    	echo'{label: "Extemporaneas", value: '.$his_extemporanea.'}';
+    	echo'{label: "Extemporaneas", value: '.$porcentaje["his_extemporanea"][0].'}';
 
   	?>
   ],

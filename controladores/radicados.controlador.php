@@ -1459,6 +1459,104 @@ class ControladorRadicados
 		$resp = ControladorParametros::ctrFechaRegistrosActualizada($fechaHoraActual);
 		return $registrosPQR;
 	}
+
+
+	static public function ctrCuadrantesRegistros($perfil, $anio, $fechaInicial, $fechaFinal)
+	{
+		if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
+	    {
+	    	$estados_pqr = ControladorParametros::ctrContarEstados(7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	    }
+	    else
+	    {
+	      $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	    }
+
+	    $porcentaje = [[]];
+	    $sumatoria = 0;
+	    $porcentaje["cuad1"][0] = 0 ; // 1 resuelto, 6trasladado
+	    $porcentaje["cuad2"][0] = 0 ; //4 extemporaneo
+	    $porcentaje["cuad3"][0] = 0 ; //2 pendiente, 5 por asignar 
+	    $porcentaje["cuad4"][0] = 0 ; //3 vencido
+	    $porcentaje["contarCuadSu"][0] = 0 ;
+		$porcentaje["contarCuadIn"][0] = 0 ;
+
+		//kpi
+		$porcentaje["pri_pendi"][0] = 0;
+		$porcentaje["pri_venci"][0] = 0;
+		$porcentaje["his_resuelta"][0] = 0;
+		$porcentaje["his_extemporanea"][0] = 0;
+
+	    if (!is_null($estados_pqr) && is_countable($estados_pqr) ) 
+	    {
+	        $sumatoria = 0;
+
+	        for ($i=0; $i < count($estados_pqr) ; $i++) 
+	        { 
+	          $sumatoria+=$estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+	        }
+
+	        for ($i=0; $i < count($estados_pqr); $i++) 
+	        {
+	          $porcentaje[ $estados_pqr[$i]["id"] ]["id"] = $estados_pqr[$i]["id"]; 
+	          $porcentaje[ $estados_pqr[$i]["id"] ]["nombre"] = $estados_pqr[$i]["nombre"];
+	          $porcentaje[ $estados_pqr[$i]["id"] ]["contar"] = $estados_pqr[$i]["COUNT(registropqr.id_estado)"];
+	          $porcentaje[ $estados_pqr[$i]["id"] ]["per"] = bcdiv( ($estados_pqr[$i]["COUNT(registropqr.id_estado)"]/$sumatoria) *100, '1', 2) ;
+	        }
+
+	      $porcentaje["percentCuad1"][0] = 0;
+	      $porcentaje["percentCuad3"][0] = 0;
+
+	      //cuadrante 1
+	      if (isset($porcentaje[1])) 
+	      {
+	        if (isset($porcentaje[6])) 
+	        {$porcentaje["cuad1"][0] = $porcentaje[1]["contar"] + $porcentaje[6]["contar"];$porcentaje["percentCuad1"][0]+=$porcentaje[1]["per"]+$porcentaje[6]["per"];}
+	        else
+	        {$porcentaje["cuad1"][0] = $porcentaje[1]["contar"];$porcentaje["percentCuad1"][0]+=$porcentaje[1]["per"];}
+	      }
+	      elseif (isset($porcentaje[6])) 
+	      {$porcentaje["cuad1"][0] = $porcentaje[6]["contar"];$porcentaje["percentCuad1"][0]+=$porcentaje[6]["per"];}
+
+	      //cuadrante 2
+	      if (isset($porcentaje[4])) 
+	      {$porcentaje["cuad2"][0] = $porcentaje[4]["contar"];}
+
+	      //cuadrante 3
+	      if (isset($porcentaje[2])) 
+	      {
+	        if (isset($porcentaje[5])) 
+	        {$porcentaje["cuad3"][0] = $porcentaje[2]["contar"] + $porcentaje[5]["contar"];$porcentaje["percentCuad3"][0]+=$porcentaje[2]["per"]+$porcentaje[5]["per"];}
+	        else
+	        {$porcentaje["cuad3"][0] = $porcentaje[2]["contar"];$porcentaje["percentCuad3"][0]+=$porcentaje[2]["per"];}
+	      }
+	      elseif (isset($porcentaje[5])) 
+	      {$porcentaje["cuad3"][0] = $porcentaje[5]["contar"];$porcentaje["percentCuad3"][0]+=$porcentaje[5]["per"];}
+
+	      //cuadrante 4
+	      if (isset($porcentaje[3])) 
+	      {$porcentaje["cuad4"][0] = $porcentaje[3]["contar"];}
+
+	      $porcentaje["contarCuadSu"][0] = $porcentaje["cuad3"][0] + $porcentaje["cuad4"][0];
+	      $porcentaje["contarCuadIn"][0] = $porcentaje["cuad1"][0] + $porcentaje["cuad2"][0];
+
+	      if (($porcentaje["cuad3"][0]+$porcentaje["cuad4"][0]) != 0) 
+		  {
+		      $porcentaje["pri_pendi"][0]  = bcdiv( ($porcentaje["cuad3"][0]/($porcentaje["cuad3"][0]+$porcentaje["cuad4"][0])) *100, '1', 2);              
+		      $porcentaje["pri_venci"][0] = bcdiv( ($porcentaje["cuad4"][0]/($porcentaje["cuad3"][0]+$porcentaje["cuad4"][0])) *100, '1', 2);    
+		  }
+
+		   if (($porcentaje["cuad1"][0]+$porcentaje["cuad2"][0]) != 0) 
+		  {
+		      $porcentaje["his_resuelta"][0] = bcdiv( ($porcentaje["cuad1"][0]/($porcentaje["cuad1"][0]+$porcentaje["cuad2"][0])) *100, '1', 2);              
+		      $porcentaje["his_extemporanea"][0] = bcdiv( ($porcentaje["cuad2"][0]/($porcentaje["cuad1"][0]+$porcentaje["cuad2"][0])) *100, '1', 2); 
+		  }
+
+	     // $contarCuadSu = $cuad3 + $cuad4;
+	     // $contarCuadIn = $cuad1 + $cuad2;
+	  	}
+	      return $porcentaje;
+	}
 	
 }
 
