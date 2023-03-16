@@ -782,4 +782,14 @@ class ModeloParametros
 
 
 	}// mdlContarEstados($query, $fechaInicial, $fechaFinal)
+
+	static public function mdlContarEstadosEspecifico($idEstado)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(registropqr.id_estado) FROM registropqr WHERE id_estado = $idEstado ");
+		$stmt -> execute();
+		return $stmt -> fetch();	
+		$stmt -> close();
+		$stmt = null;
+
+	}
 }
