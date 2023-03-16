@@ -1464,6 +1464,22 @@ class ControladorParametros
 	    return $d && $d->format($format) == $date;
 	}
 
+	static public function ctrContarEstadosEspecifico($idEstado)
+	{
+		$respuesta = ModeloParametros::mdlContarEstadosEspecifico($idEstado);
+
+		if (isset($respuesta["COUNT(registropqr.id_estado)"]) && $respuesta["COUNT(registropqr.id_estado)"] != 0 ) 
+		{
+			return $respuesta["COUNT(registropqr.id_estado)"];
+			# code...
+		}
+		else
+		{
+			return 0;
+		}
+
+	}
+
 	static public function ctrContarEstados($id_perfil, $anio, $fechaInicial, $fechaFinal)
 	{
 		$query = "";
