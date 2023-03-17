@@ -108,7 +108,7 @@
                       <p>Contiene la base de datos de todos los PQR registrados en sistema.</p>
                     </div>
                     <div class="icon">
-                      <i class="ion ion-person"></i>
+                      <i class="fa fa-balance-scale"></i>
                     </div>
                     <a href="registros" class="small-box-footer">Administrar <i class="fa fa-arrow-circle-right"></i></a>
                   </div>
