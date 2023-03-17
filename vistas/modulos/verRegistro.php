@@ -60,6 +60,8 @@
               <dd><?php echo $fechaRad; ?></dd>
               <dt>Fecha Vencimiento:</dt>
               <dd><?php echo $fecha_vencimiento; ?></dd>
+              <dt>Tipo de Oficio (PQR)</dt>
+              <dd><?php $tipoPQR = ControladorParametros::ctrmostrarRegistros("pqr", "id", $registro["id_pqr"]); echo $tipoPQR["nombre"]; ?></dd>
               <dt>Días de Retención:</dt>
               <dd><?php echo $registro["dias_contados"]." / ".$registro["dias_habiles"]." días habiles"; ?></dd>
               <dt>Estado:</dt>
@@ -374,7 +376,27 @@
                         # code...
                         break;
                       case 7:
-                        # code...
+
+                        $fechaVPQR = new DateTime($accionesPQR[$x]["da"]["fechav"]);
+                        $fechaVAPQR = new DateTime($accionesPQR[$x]["da"]["fechaVa"]);
+                         echo '<li>
+                          <i class="fa fa-share bg-yellow"></i>
+                          <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                          <h3 class="timeline-header">Se Modifico el Tipo de Oficio</h3><div class="timeline-body">Paso de ser <strong>'.$accionesPQR[$x]["da"]["pqra"].'</strong> con <strong>'.$accionesPQR[$x]["da"]["tera"].'</strong> días habiles, fecha de vencimiento <strong>'.$fechaVAPQR->format('d-m-Y').'</strong> y se actualizo a <strong>'.$accionesPQR[$x]["da"]["pqr"].'</strong> con <strong>'.$accionesPQR[$x]["da"]["ter"].'</strong> días habiles y nueva fecha de vencimiento <strong>'.$fechaVPQR->format('d-m-Y').'</strong>. <br>';
+
+
+                          if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
+                          {
+                             echo $accionesPQR[$x]["obs"];
+                          }
+
+
+                          echo '
+
+                          </div>
+                          </div>
+                          </li>';
                         break;
                       case 8:
 
