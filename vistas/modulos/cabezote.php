@@ -36,7 +36,7 @@
 
 		              	
 		              }
-		              elseif ($_SESSION["perfil"] == 7) 
+		              elseif ($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11) 
 		              {
 		              	
 		              	$notiVencidos = ControladorParametros::ctrContarEstadosEspecifico(3);
@@ -87,7 +87,7 @@
 				                    		echo'<li><a href="requisiciones"><i class="fa fa-shopping-cart text-green"></i>Hay '.$solicitud.' Solicitud(es) de insumos</a></li>';
 				                    	}
 		                    		}
-		                    		elseif($_SESSION["perfil"] == 7)
+		                    		elseif($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11)
 		                    		{
 										if($notiVencidos != 0)
 				                    	{
