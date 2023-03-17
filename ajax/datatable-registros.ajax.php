@@ -102,7 +102,7 @@ class TablaRegistros
 
 							if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
 							{
-								$fecha_respuesta = "Pendiente por Responder";
+								$fecha_respuesta = "<strong>Pendiente por Responder</strong>";
 							}
 							else
 							{
