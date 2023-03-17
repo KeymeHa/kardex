@@ -1288,28 +1288,40 @@ class ControladorRadicados
 
 								if (!is_null($accionesPQR) && count($accionesPQR) > 0) 
 								{
-									$pqrTermino = ControladorParametros::ctrValidarTerminoPQR($_POST["fechaRad"], $accionesPQR[$i]["id"]);
-									$dJsonAccTemp = '"id":"'.$accionesPQR[$i]["id"].'","pqr":"'.$accionesPQR[$i]["pqr"].'","ter":"'.$accionesPQR[$i]["ter"].'","ida":"'.$registro["id_pqr"].'","tera":"'.$registro["dias_habiles"].'","fechaVa":"'.$registro["fecha_vencimiento"].'","fechav":"'.$pqrTermino["fecha_vencimiento"].'"';
 
-									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "dias_habiles", $pqrTermino["dias"] );
-									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_vencimiento", $pqrTermino["fecha_vencimiento"] );
-
-									$hoy = date('Y-m-d');
-									$fechaV = new DateTime($pqrTermino["fecha_vencimiento"]);
-
-									//fecha Actual es menor a fecha vencimiento y es estado vencido
-									if ($hoy->format("Y-m-d") < $fechaV && $estadoPQR == 3) 
+									if ($registro["id_pqr"] != $accionesPQR[0]["id"]) 
 									{
-										$estadoPQR = 2;
-										//estado pendiente
+										$pqr = ControladorParametros::ctrmostrarRegistros("pqr", "id", $registro["id_pqr"]);
+
+										$pqrTermino = ControladorParametros::ctrValidarTerminoPQR($registro["fecha"], $accionesPQR[0]["id"]);
+										$dJsonAccTemp = '"id":"'.$accionesPQR[0]["id"].'","pqr":"'.$accionesPQR[0]["pqr"].'","pqra":"'.$pqr["nombre"].'","ter":"'.$accionesPQR[0]["ter"].'","ida":"'.$registro["id_pqr"].'","tera":"'.$registro["dias_habiles"].'","fechaVa":"'.$registro["fecha_vencimiento"].'","fechav":"'.$pqrTermino["fecha_vencimiento"].'"';
+
+										$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "dias_habiles", $pqrTermino["dias"] );
+										$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_vencimiento", $pqrTermino["fecha_vencimiento"] );
+
+										$hoy = date('Y-m-d');
+										$fechaV = new DateTime($pqrTermino["fecha_vencimiento"]);
+
+										//fecha Actual es menor a fecha vencimiento y es estado vencido
+										if ($hoy < $fechaV->format('Y-m-d')  && $estadoPQR == 3) 
+										{
+											$estadoPQR = 2;
+											//estado pendiente
+										}
+										elseif($hoy > $fechaV->format('Y-m-d') )
+										{
+											$estadoPQR = 3;
+										}
 									}
-									elseif($hoy->format("Y-m-d") > $fechaV)
+									else
 									{
-										$estadoPQR = 3;
+										$error = "No se efectuo algun cambio" ; 
+										$tipoSW = "success"; 
 									}
 
 										// id = id del pqr elegido
 										// pqr = nombre del pqr elegido
+										// pqra = Anterior nombre del pqr
 										// ter = termino del pqr elegido
 										// ida = Anterior termino
 										// tera = Anterior termino del pqr 
