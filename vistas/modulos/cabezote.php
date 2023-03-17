@@ -41,11 +41,16 @@
 		              	
 		              	$notiVencidos = ControladorParametros::ctrContarEstadosEspecifico(3);
 		              	$notiPendientes = ControladorParametros::ctrContarEstadosEspecifico(2);
+		              	$notiAsignar = ControladorParametros::ctrContarEstadosEspecifico(5);
 		              	if ($notiVencidos != 0) 
 		              	{
 		              		$noti+=1;
 		              	}
 		              	if ($notiPendientes != 0) 
+		              	{
+		              		$noti+=1;
+		              	}
+		              	if ($notiAsignar != 0) 
 		              	{
 		              		$noti+=1;
 		              	}
@@ -97,6 +102,11 @@
 				                    	if($notiPendientes != 0)
 				                    	{
 				                    		echo'<li><a href="index.php?ruta=registros&es=c3"><i class="fa fa-warning text-yellow"></i>Hay '.$notiPendientes.' Oficio(s) <strong>Pendiente(s)</strong></a></li>';
+				                    	}
+
+				                    	if($notiAsignar != 0)
+				                    	{
+				                    		echo'<li><a href="index.php?ruta=registros&es=c3"><i class="glyphicon glyphicon-exclamation-sign text-blue"></i>Hay '.$notiAsignar.' Oficio(s) <strong>por asignar</strong></a></li>';
 				                    	}
 		                    		}
 
