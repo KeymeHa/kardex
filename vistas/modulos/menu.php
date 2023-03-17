@@ -292,7 +292,18 @@
 
 				echo'><a href="registros">
 						<i class="fa fa-balance-scale"></i>
-						<span>Registros de PQR</span>
+						<span>Registros de PQR';
+
+                    	if($notiPendientes != 0)
+                    	{
+                    		echo'<small class="label pull-right bg-yellow">'.$notiPendientes.'</small>';
+                    	}
+
+						if($notiVencidos != 0)
+                    	{
+                    		echo'<small class="label pull-right bg-red">'.$notiVencidos.'</small>';
+                    	}
+						echo '</span>
 					</a>
 				</li>
 			
@@ -346,7 +357,6 @@
 
 			if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
 			{
-
 			echo '<li';
 
 			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
