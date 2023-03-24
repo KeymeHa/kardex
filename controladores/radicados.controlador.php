@@ -1139,15 +1139,10 @@ class ControladorRadicados
 					else
 					{	$horaActual = date('h:i a');		}
 
-					if (is_null($registro["acciones"])) 
-					{
-						 $soporte = 1 ;
-					}
-					else
+					if (!is_null($registro["acciones"])) 
 					{
 						$arrayacciones = json_decode($registro["acciones"], true);
-						$soporte = count($arrayacciones) + 1;	
-						$contar = $soporte;
+						$contar = count($arrayacciones) + 1;
 					}
 
 					#soporte
@@ -1168,6 +1163,8 @@ class ControladorRadicados
 								$tmp_name = $_FILES['editarArchivo']['tmp_name'];
 								/*$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio."/", 'pdf' );
 								$nombre = ( $CONTADOR == 0 ) ? "1" : $CONTADOR + 1 ;*/
+
+								$soporte = $contar;
 
 								$directorio.='/'.strval($soporte).'.pdf';
 								$error = $_FILES['editarArchivo']['error'];
