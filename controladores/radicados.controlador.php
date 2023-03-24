@@ -1633,6 +1633,85 @@ class ControladorRadicados
 		return $resultado;
 
 	}
+
+
+
+	static public function ctrContarAsignaciones($anio, $fechaInicial, $fechaFinal)
+	{
+
+		$respuesta = [[]];
+
+		$r = new ControladorRadicados;
+		$anio = $r->anioActual($anio);
+
+		if (!is_null($fechaInicial)) 
+		{
+			if ( !$r->validateDate($fechaInicial , 'Y-m-d') && !$r->validateDate($fechaFinal , 'Y-m-d') ) 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			$tabla = "registropqr";
+			$count  = 0;
+			//el limite es 4, haciendo referencia de los 4 cuadrantes
+			for ($i=1; $i <= 4; $i++) 
+			{ 
+				$consulta = ModeloRadicados::mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal);
+
+				for ($x=0; $x < count($consulta); $x++) 
+				{ 
+
+					if (is_null($respuesta)) 
+					{
+						$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
+						$respuesta [$count][1] = 0;
+						$respuesta [$count][2] = 0;
+						$respuesta [$count][3] = 0;
+						$respuesta [$count][4] = 0;
+						$respuesta [$count][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+					}
+					else
+					{
+						$sw = 0;
+						$key = 0;
+
+						for ($k=0; $k < count($respuesta) ; $k++) 
+						{ 
+
+							if (array_key_exists("nombre", $respuesta [$k])) 
+							{
+								if ($respuesta [$k]["nombre"] == $consulta[$x]["nombre"] && $sw == 0) 
+								{
+									$key = $k;
+									$sw = 1;
+								}
+							}
+						}
+
+						if ($sw == 0) 
+						{
+							$count++;
+							$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
+							$respuesta [$count][1] = 0;
+							$respuesta [$count][2] = 0;
+							$respuesta [$count][3] = 0;
+							$respuesta [$count][4] = 0;
+							$respuesta [$count][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+						}
+						else
+						{
+							$respuesta [$key][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+						}
+					}
+				}
+
+			}
+			return $respuesta;
+		}	
+
+	}//ctrContarAsignaciones
 	
 }
 

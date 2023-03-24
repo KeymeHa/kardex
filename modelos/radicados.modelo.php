@@ -674,4 +674,65 @@ class ModeloRadicados
 		}
 	}//mdlContarRad
 
+
+	static public function mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal)
+	{
+
+		if($fechaInicial == null){
+
+			if ($anio != "") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt -> execute();
+				//INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt -> execute();
+			}
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND $tabla.id_estado = $i GROUP BY(areas.nombre) ");
+
+			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+
+	}//mdlContarAreaRegistros
+
 }

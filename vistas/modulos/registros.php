@@ -156,7 +156,43 @@
 
     </div>
 
-     <div class="box box-success">
+     
+
+            <?php
+
+            if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
+            {
+
+            $contarPorArea = ControladorRadicados::ctrContarAsignaciones($_SESSION["anioActual"], $fechaInicial, $fechaFinal); 
+            $tcuadrante = [];
+            $tt = 0;
+            if (!is_null($contarPorArea) && is_countable($contarPorArea) && count($contarPorArea) > 0 ) 
+            {
+              
+              for ($i=1; $i < 5 ; $i++) 
+              { 
+
+                $tcuadrante[$i] = 0;
+
+                for ($k=0; $k < count($contarPorArea); $k++) 
+                { 
+                  if (array_key_exists($i, $contarPorArea[$k])) 
+                  {
+                    $tcuadrante[$i] += $contarPorArea[$k][$i];
+                  }
+                }//for k
+              }// for i
+
+              for ($i=1; $i < 5 ; $i++) 
+              { 
+                $tt+= $tcuadrante[$i];
+              }
+
+            }
+
+            
+
+              echo '<div class="box box-success">
       <div class="box-header">
         <h3 class="box-title">Resumen Asignaciones</h3>
         <div class="box-tools pull-right">
@@ -165,7 +201,7 @@
           </div>
       </div>
       <div class="box-body">
-        <table  class="table table-bordered table-striped dt-responsive tabla" width="100%">
+        <table  class="table table-bordered table-striped dt-responsive tabla" width="100%" style="text-align: center" >
           <thead>
             <tr>
               <th rowspan="2"  style="text-align: center;">Área</th>
@@ -176,17 +212,52 @@
               <th class="bg-gray" style="text-align: center;">Total</th>
             </tr>
             <tr>
-              <th id="th-r"></th>
-              <th id="th-y"></th>
-              <th id="th-rd"></th>
-              <th id="th-g"></th>
-              <th id="th-gr"></th>
+              <th id="th-r" style="text-align: center">'.$tcuadrante[3].'</th>
+              <th id="th-y" style="text-align: center">'.$tcuadrante[2].'</th>
+              <th id="th-rd" style="text-align: center">'.$tcuadrante[4].'</th>
+              <th id="th-g" style="text-align: center">'.$tcuadrante[1].'</th>
+              <th id="th-gr" style="text-align: center">'.$tt.'</th>
             </tr>
           </thead>
+          <tbody>';
+
+  
+
+             if (!is_null($contarPorArea)) 
+             {
+               foreach ($contarPorArea as $key => $value) 
+               {
+
+                if (array_key_exists("nombre", $value)) {
+
+                  $total = $value["1"] + $value["2"]  + $value["3"] + $value["4"];
+
+                 echo '<tr>
+                    <td>'.$value["nombre"].'</td>
+                    <td>'.$value["3"].'</td>
+                    <td>'.$value["2"].'</td>
+                    <td>'.$value["4"].'</td>
+                    <td>'.$value["1"].'</td>
+                    <td>'.$total.'</td>
+                 </tr>';
+                }
+
+                
+               }
+             }
+
+            echo '
+          </tbody>
         </table>
       </div>
        
-     </div>
+     </div>';
+
+            }
+
+            ?>
+
+           
 
      <div class="box box-success">
 
