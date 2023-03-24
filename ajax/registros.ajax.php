@@ -37,9 +37,16 @@ class AjaxRegistros
 		echo json_encode($respuesta);
 	}
 
+
+	static public function asignarRegistro($idRegistro, $idUser)
+	{
+		$respuesta = ControladorRadicados::ctrAsignarRegistro($idRegistro, $idUser);
+		echo json_encode($respuesta);
+	}
+
 }
 
-if(isset($_POST["idRegistro"]))
+if(isset($_POST["idRegistro"]) && !isset($_POST["asignar"]) )
 {	$generar = new AjaxRegistros();
 	$generar -> accesoRapidoRegistros($_POST["idRegistro"], $_POST["sw"]);}
 
@@ -47,4 +54,7 @@ if(isset($_POST["idRegistro"]))
 if(isset($_POST["actRegis"]) && isset($_POST["anio"]) && isset($_POST["idUser"]) && isset($_POST["per"]))
 {	$actualizar = new AjaxRegistros();
 	$actualizar -> actualizarRegistros($_POST["idUser"], $_POST["per"], $_POST["anio"]);}
-	
+
+if( isset($_POST["asignar"]) && isset($_POST["idRegistro"]) && isset($_POST["idUser"]) )
+{	$actualizar = new AjaxRegistros();
+	$actualizar -> asignarRegistro($_POST["idRegistro"], $_POST["idUser"]);}	

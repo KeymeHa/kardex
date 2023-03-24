@@ -95,10 +95,22 @@ class TablaRegistros
 							$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR[$i]["id_radicado"]);
 							$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $registrosPQR[$i]["id_estado"]);
 
-							$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
-
 							$areaNombre = ControladorAreas::ctrMostrarNombreAreas("id", $registrosPQR[$i]["id_area"]);
 							$usuarioNombre = ControladorUsuarios::ctrMostrarNombre("id", $registrosPQR[$i]["id_usuario"]);
+
+							$estado = "";
+
+							//si es por asignar
+							if ($registrosPQR[$i]["id_estado"] == 5) 
+							{
+								$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$registrosPQR[$i]["id"]."' nombre='".$usuarioNombre["nombre"]."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+							}
+							else
+							{
+								$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+							}
+
+							
 
 							if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
 							{

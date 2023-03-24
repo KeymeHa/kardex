@@ -754,3 +754,81 @@ function aparecerTablaRegistros()
         '</table>'
 		);
 }
+
+
+$("div.div-tablaRegistros").on('click', 'button.btn-agr', function() 
+{
+  var idRegistro = $(this).attr("idReg");
+  var nombre = $(this).attr("nombre");
+  var rad = $(this).attr("rad");
+
+  var idUser = $("#inputVar").attr("idUser");
+
+  swal({
+    type: "warning",
+    title: "¡Confirmación de asignación, Oficio Rad#"+rad+" a "+nombre,
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: "Asignar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: '#149243',
+    cancelButtonColor: '#d33',
+  }).then((result)=>{
+
+    if (result.value) 
+    {
+    
+       var registro = new FormData();
+        registro.append("asignar", 1);
+        registro.append("idRegistro", idRegistro);
+        registro.append("idUser", idUser);
+
+        $.ajax({
+
+          url:"ajax/registros.ajax.php",
+          method: "POST",
+          data: registro,
+          cache: false,
+          contentType: false,
+          processData: false,
+          dataType: "json",
+          success: function(respuesta)
+          {
+            
+
+            if (respuesta["tipo"] == "ok") 
+            {
+
+              $("button.btn-agr").removeClass('btn-info');
+
+              if (respuesta["estado"] == 3) 
+              {
+                $("button.btn-agr").html("Vencida");
+                $("button.btn-agr").addClass('btn-danger');
+              }
+              else
+              {
+                $("button.btn-agr").html("Pendiente");
+                $("button.btn-agr").addClass('btn-warning');
+              }
+
+              $("button.btn-agr").removeClass('btn-agr');
+
+            }//
+            else
+            {
+                swal({
+                  type: "error",
+                  title: "Ha Ocurrido un error",
+                  showConfirmButton: true,
+                  confirmButtonText: "Cerrar"
+                });
+            }
+          }
+        });
+
+    }//if
+
+  })//swal eliminar
+
+})

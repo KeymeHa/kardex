@@ -1128,8 +1128,6 @@ class ControladorRadicados
 				{//registro encontrado
 
 					#
-					
-
 					#fecha y hora
 					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
 					{	$fechaActual = $_POST["fechaReg"];	}
@@ -1568,6 +1566,75 @@ class ControladorRadicados
 	     // $contarCuadIn = $cuad1 + $cuad2;
 	  	}
 	      return $porcentaje;
+	}
+
+
+	static public function ctrAsignarRegistro($idRegistro, $idUser)
+	{
+		$resultado = array('tipo' => "error",
+						   'estado' => 2);
+
+			$traer = new ControladorRadicados;
+			$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
+
+			if ( isset($registro["id"]) && !is_null($registro["id"]) ) 
+			{
+				if(is_null($registro["acciones"]))
+				{	
+					$tabla = "registropqr";
+					$fechaActual = date('Y-m-d');
+					$horaActual = date('h:i a');
+					$usuarioNombre = ControladorUsuarios::ctrMostrarNombre("id", $registro["id_usuario"]);
+					$fechacompleta = date ('Y-m-d H:i:s');
+
+					$estadoPQR = $registro["id_estado"];
+					if ($registro["id_estado"] == 3) 
+					{
+						$estadoPQR = $registro["id_estado"];
+					}
+					else
+					{
+						if ($registro["id_estado"] == 5) 
+						{
+							$estadoPQR = 2;
+						}
+						elseif ($registro["id_estado"] == 3) 
+						{
+							$estadoPQR = 3;
+						}
+					}
+
+					$resultado["estado"] = $estadoPQR;
+
+					$dJsonAccTemp = '"id":"'.$registro["id_usuario"].'","nom":"'.$usuarioNombre["nombre"].'","idA":"'.$registro["id_area"].'"';
+
+					$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $idRegistro, "fecha_asignacion", $fechacompleta );
+
+					$dJsonAcc = '[{"id":"1","fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"1","da":{'.$dJsonAccTemp.'},"obs":"","sop":"","idS":"'.$idUser.'","sw":"1"}]';
+
+					$datos = array( 
+					'id_usuario' => $registro["id_usuario"],
+					'id_area' => $registro["id_area"],
+					'id_estado' => $estadoPQR,
+					'acciones' => $dJsonAcc,
+					'id' => $idRegistro);
+
+					#var_dump($datos);
+
+					//var_dump($datos);
+					$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad($tabla, $datos);
+
+					$respuesta = "ok";
+
+					if ($respuesta == "ok") 
+					{
+						$resultado["tipo"] = $respuesta;
+					}
+				}
+			}
+
+		return $resultado;
+
 	}
 	
 }
