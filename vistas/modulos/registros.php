@@ -103,7 +103,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-warning" style="background-color:#F7F733;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">(3)Pendientes</span>
+                <span class="info-box-text">Pendientes</span>
                 <span class="info-box-number"><?php echo $porcentaje["cuad3"][0] ;?></span>
                 <span class="info-box-number"><small><?php echo ( isset($porcentaje["percentCuad3"][0]) )? $porcentaje["percentCuad3"][0]."%" : "0%" ;
                 //echo (isset($porcentaje[5]["contar"])) ? " por asignar ".$porcentaje[5]["contar"] : ""; 
@@ -116,7 +116,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">(4)Vencidas</span>
+                <span class="info-box-text">Vencidas</span>
                 <span class="info-box-number"><?php echo (isset($porcentaje[3]["contar"])) ? $porcentaje[3]["contar"] : 0  ;?></span>
                 <span class="info-box-number"><small><?php echo (isset($porcentaje[3]["per"])) ? $porcentaje[3]["per"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
@@ -127,7 +127,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-ok-circle"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">(1)Resueltas</span>
+                <span class="info-box-text">Resueltas</span>
                 <span class="info-box-number"><?php echo $porcentaje["cuad1"][0] ;?></span>
                 <span class="info-box-number"><small><?php echo ( isset($porcentaje["percentCuad1"][0]) ) ? $porcentaje["percentCuad1"][0] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
@@ -138,7 +138,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-orange"><i class="glyphicon glyphicon-remove-circle"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">(2)Extemporaneas</span>
+                <span class="info-box-text">Extemporaneas</span>
                 <span class="info-box-number"><?php echo $porcentaje["cuad2"][0] ;?></span>
                 <span class="info-box-number"><small><?php echo (isset($porcentaje[4])) ? $porcentaje[4]["per"] : 0 ; ?> %</small></span>
               </div><!--class="info-box-content"-->
@@ -205,18 +205,18 @@
           <thead>
             <tr>
               <th rowspan="2"  style="text-align: center;">Área</th>
-              <th class="bg-red"  style="text-align: center;"><i class="glyphicon glyphicon-ban-circle"></i></th>
-              <th class="bg-yellow" style="text-align: center;"><i class="glyphicon glyphicon-exclamation-sign"></i></th>
-              <th class="bg-red disabled" style="text-align: center;"><i class="glyphicon glyphicon-remove-circle"></i></th>
-              <th class="bg-green" style="text-align: center;"><i class="glyphicon glyphicon-ok"></i></th>
-              <th class="bg-gray" style="text-align: center;">Total</th>
+              <th class="bg-red"  style="text-align: center;" title="Vencidas"><i class="glyphicon glyphicon-ban-circle"></i></th>
+              <th class="bg-yellow" style="text-align: center;" title="Pendientes"><i class="glyphicon glyphicon-exclamation-sign"></i></th>
+              <th class="bg-red disabled" style="text-align: center;" title="Extemporaneas"><i class="glyphicon glyphicon-remove-circle"></i></th>
+              <th class="bg-green" style="text-align: center;" title="Resueltas"><i class="glyphicon glyphicon-ok"></i></th>
+              <th class="bg-gray" style="text-align: center;" title="Total">Total</th>
             </tr>
             <tr>
-              <th id="th-r" style="text-align: center">'.$tcuadrante[3].'</th>
-              <th id="th-y" style="text-align: center">'.$tcuadrante[2].'</th>
-              <th id="th-rd" style="text-align: center">'.$tcuadrante[4].'</th>
-              <th id="th-g" style="text-align: center">'.$tcuadrante[1].'</th>
-              <th id="th-gr" style="text-align: center">'.$tt.'</th>
+              <th id="th-r" style="text-align: center" title="Vencidas">'.$tcuadrante[3].'</th>
+              <th id="th-y" style="text-align: center" title="Pendientes">'.$tcuadrante[2].'</th>
+              <th id="th-rd" style="text-align: center" title="Extemporaneas">'.$tcuadrante[4].'</th>
+              <th id="th-g" style="text-align: center" title="Resueltas">'.$tcuadrante[1].'</th>
+              <th id="th-gr" style="text-align: center" title="Total">'.$tt.'</th>
             </tr>
           </thead>
           <tbody>';
@@ -234,11 +234,11 @@
 
                  echo '<tr>
                     <td>'.$value["nombre"].'</td>
-                    <td>'.$value["3"].'</td>
-                    <td>'.$value["2"].'</td>
-                    <td>'.$value["4"].'</td>
-                    <td>'.$value["1"].'</td>
-                    <td>'.$total.'</td>
+                    <td title="'.$value["3"].' Vencidas en '.$value["nombre"].'">'.$value["3"].'</td>
+                    <td title="'.$value["2"].' Pendientes en '.$value["nombre"].'">'.$value["2"].'</td>
+                    <td title="'.$value["4"].'  Extemporaneas en '.$value["nombre"].'">'.$value["4"].'</td>
+                    <td title="'.$value["1"].'  Resueltas en '.$value["nombre"].'">'.$value["1"].'</td>
+                    <td title="Total '.$total.' en '.$value["nombre"].'">'.$total.'</td>
                  </tr>';
                 }
 
