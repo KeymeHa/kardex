@@ -518,3 +518,7 @@ function aparecerTablaRegistros()
         );
 }
 
+$(".btnImpCorte").click( function(){
+    var idC = $(this).attr("idCorte");
+    window.open("extensiones/TCPDF-main/examples/corte.php?idC="+idC, "_blank");
+});

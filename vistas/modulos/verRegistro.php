@@ -17,6 +17,8 @@
       $fechaRad = ControladorParametros::ctrOrdenFecha($registro["fecha"], 0);
       $fecha_vencimiento = ControladorParametros::ctrOrdenFecha($registro["fecha_vencimiento"], 0);
 
+      $corte = ( $radicado["id_corte"] != 0 ) ? ControladorRadicados::ctrMostrarCortes("id", $radicado["id_corte"]) : "Sin Número de Corte" ;
+
     }
   }
   else
@@ -95,7 +97,19 @@
               <dd><?php echo $responsable; ?></dd>
                <dt>Recibido por:</dt>
               <dd><?php echo $radicado["recibido"]; ?></dd>
-              <?php
+              <dt>Número de Corte:</dt>
+              
+                <?php
+                echo '<dd ';
+                if ($radicado["id_corte"] == 0) 
+                {
+                  echo '>'.$corte;
+                }
+                else
+                {
+                  echo ' class="btnImpCorte" idCorte="'.$corte["id"].'" corte="'.$corte["corte"].'" title="Ver Corte '.$corte["corte"].'"><a href="#">'.$corte["corte"].'</a>';
+                }
+                 echo '</dd>';
 
               if (!is_null($radicado["observaciones"]) && $radicado["observaciones"] != "" ) {
                 echo ' <dt>Observaciones (Gral):</dt>
