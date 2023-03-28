@@ -746,35 +746,63 @@ class ControladorRadicados
 				}//for
 
 				//buscar el id del usuario que peternecezca a un área y sea el encargado predeterminado de ella
-			    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $id_area, $per);
+			    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $id_area, $per);       
 
-			   
+		          if ($id_usuario != 0 )
+		          {
+		          $registrar = 1; 
+		          }
+		          else
+		          {
+		          //buscar todos los usuarios con perfil juridica,
+		            $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
 
-			    if ($id_usuario != 0 )
-			    {
-					$registrar = 1; 
-			    }
-			    else
-			    {
-					//buscar todos los usuarios con perfil juridica,
-			    	$usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+		             if ($per == 7) 
+		              {
+		                if ($id_usuario != 0 )
+		                {
+		                  $registrar = 1; 
+		                }
+		                else
+		                {
+		                //buscar todos los usuarios con perfil juridica, tesoreria o correspondencia
+		                  $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+		                  var_dump($usuarioContigente);
 
+		                  if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+		                  {
+		                    //buscar a que área pertenecen
+		                    foreach ($usuarioContigente as $k => $val) 
+		                    {
+		                      $id_area = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_usuario", $val["id"], $per);
 
-			    	if (count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
-			    	{
-			    		//buscar a que área pertenecen
-				    	foreach ($usuarioContigente as $k => $val) 
-				    	{
-				    		$id_area = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_usuario", $val["id"], $per);
+		                      if ($id_area != 0) 
+		                      {
+		                        $registrar = 1;
+		                      }
+		                    }
+		                    //validar que sea el predeterminado
+		                  }
+		                }
+		              }
+		              else
+		              {
+		                 $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
 
-				    		if ($id_area != 0) 
-				    		{
-				    			$registrar = 1;
-				    		}
-				    	}
-				    	//validar que sea el predeterminado
-			    	}
-			    }
+		                 if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+		                  {
+		                      if (array_key_exists(0, $usuarioContigente)) 
+		                      {
+		                         $id_area_temp = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $usuarioContigente[0]["id"]);
+		                         $id_area = $id_area_temp["id_area"];
+		                         $id_usuario = $usuarioContigente[0]["id"];
+		                         $registrar = 1;
+		                      }
+		                  }
+		              }
+
+		            
+		          }
 
 			    if ($registrar == 1) 
 			    {
