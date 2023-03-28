@@ -35,6 +35,8 @@ class TablaRegistros
 
 			$dJson = '{"data": [';
 
+			$sw2 = 0;
+
 			if ($usuario["perfil"] == 7 || $usuario["perfil"] == 3 || $usuario["perfil"] == 8 || $usuario["perfil"] == 11) 
 			{
 				//traer la correspondencia de registrospqr
@@ -70,7 +72,6 @@ class TablaRegistros
 
 				for ($i=0; $i < count($registrosPQR) ; $i++) 
 				{ 
-
 					$sw = 0; //dejar de buscar el id_pqr
 					$x = 0;
 
@@ -85,6 +86,7 @@ class TablaRegistros
 				              if ($id_pqr[$x]["id"] == $registrosPQR[$i]["id_pqr"] ) 
 				              {
 				                $sw = 1;
+				                $sw2 = 1;
 				              }
 				              $x++;
 				          }//while
@@ -109,8 +111,6 @@ class TablaRegistros
 							{
 								$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
 							}
-
-							
 
 							if (is_null($registrosPQR[$i]["fecha_respuesta"])) 
 							{
@@ -205,11 +205,20 @@ class TablaRegistros
 					 
 				}//for
 
-				$dJson = substr($dJson, 0 ,-1);
-			    $dJson.= ']
-				}';
+				if ($sw2 != 0) 
+				{
+					$dJson = substr($dJson, 0 ,-1);
+				    $dJson.= ']
+					}';
 
-				echo $dJson;
+					echo $dJson;
+				}
+				else
+				{
+					echo'{"data": []}';	return;
+				}
+
+				
 
 			}
 			else
