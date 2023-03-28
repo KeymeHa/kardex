@@ -1249,6 +1249,11 @@ class ControladorRadicados
 										$dJsonAccTemp.= '"'.$i.'":{"id":"'.$remitentes[$i]["id"].'","rem":"'.$remitentes[$i]["rem"].'"},';
 									}
 									$dJsonAccTemp = substr($dJsonAccTemp, 0 ,-1);
+
+
+									$fecha_respuesta = $fechaActual.' '.$horaActual;
+									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_respuesta",$fecha_respuesta );
+
 								}//if (count($encargados) > 0) 
 								else
 								{
@@ -1662,7 +1667,6 @@ class ControladorRadicados
 
 				for ($x=0; $x < count($consulta); $x++) 
 				{ 
-
 					if (is_null($respuesta)) 
 					{
 						$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
