@@ -66,6 +66,17 @@
               <dd><?php echo $registro["dias_contados"]." / ".$registro["dias_habiles"]." días habiles"; ?></dd>
               <dt>Estado:</dt>
               <dd><button type="button" class="btn btn-<?php echo $estado['html'];?>" ><?php echo $estado["nombre"]; ?></button></dd>
+              <?php
+
+              if (!is_null($registro["fecha_respuesta"])) 
+              {
+                $fecha_respuesta = new DateTime($registro["fecha_respuesta"]);
+
+                echo '<dt>Fecha de Respuesta:</dt>
+                <dd>'.$fecha_respuesta->format('d-m-Y h:i a').'</dd>';
+              }
+
+              ?>
             </dl>
 
 
