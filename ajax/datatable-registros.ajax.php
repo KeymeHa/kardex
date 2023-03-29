@@ -23,6 +23,7 @@ class TablaRegistros
 	public $fechaInicial;
 	public $fechaFinal;
 	public $estado;
+	public $idA;
 	public $anioActual;
 	public function mostrarTabla()
 	{	  
@@ -40,7 +41,7 @@ class TablaRegistros
 			if ($usuario["perfil"] == 7 || $usuario["perfil"] == 3 || $usuario["perfil"] == 8 || $usuario["perfil"] == 11) 
 			{
 				//traer la correspondencia de registrospqr
-				$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual, null , null);
+				$registrosPQR = ControladorRadicados::ctrVerRegistrosPQR($this->idUsuario, $usuario["perfil"], $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual, null , null, $this->idA);
 
 				if (is_null($registrosPQR)) 
 				{
@@ -275,6 +276,22 @@ if (isset($_GET["idusr"]))
 	else
 	{
 		$mostrar -> estado = null;
+	}
+
+	if (isset($_GET["idA"]) && $_GET["idA"] != "null"  ) 
+	{
+		if (is_string($_GET["idA"]) && $_GET["idA"] != 'undefined' ) 
+		{
+			$mostrar -> idA = $_GET["idA"];
+		}
+		else
+		{
+			$mostrar -> idA = null;
+		}
+	}
+	else
+	{
+		$mostrar -> idA = null;
 	}
 }
 else

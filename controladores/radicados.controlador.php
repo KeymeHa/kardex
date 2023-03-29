@@ -756,6 +756,7 @@ class ControladorRadicados
 		          {
 		          //buscar todos los usuarios con perfil juridica,
 		            $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+		            $id_estado = 5;
 
 		             if ($per == 7) 
 		              {
@@ -768,6 +769,7 @@ class ControladorRadicados
 		                //buscar todos los usuarios con perfil juridica, tesoreria o correspondencia
 		                  $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
 		                  var_dump($usuarioContigente);
+
 
 		                  if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
 		                  {
@@ -797,6 +799,7 @@ class ControladorRadicados
 		                         $id_area = $id_area_temp["id_area"];
 		                         $id_usuario = $usuarioContigente[0]["id"];
 		                         $registrar = 1;
+		                         $id_estado = 2;
 		                      }
 		                  }
 		              }
@@ -809,7 +812,7 @@ class ControladorRadicados
 			    	$datos = array( 'id_radicado' => $value["id"],
 								'id_area' => $id_area,
 								'id_usuario' => $id_usuario,
-								'id_estado' => 5,
+								'id_estado' => $id_estado,
 								'id_pqr' => $value["id_pqr"],
 								'fecha_vencimiento' => $value["fecha_vencimiento"],
 								'fecha_actualizacion' => $value["fecha"],
@@ -859,7 +862,7 @@ class ControladorRadicados
 	}
 
 	//										   0,   0,        0,           null,      0,     0, "id",   $idRegistro
-	static public function ctrVerRegistrosPQR($id, $per, $fechaInicial, $fechaFinal, $es, $anio, $item, $valor)
+	static public function ctrVerRegistrosPQR($id, $per, $fechaInicial, $fechaFinal, $es, $anio, $item, $valor, $idA)
 	{
 		$query = "";
 		$tabla = "registropqr";
@@ -881,6 +884,14 @@ class ControladorRadicados
 				$r = new ControladorRadicados;
 				$query = $r->anioActual($anio);
 				$query.= ( !is_null($es) ) ? " AND " : "";
+			}
+			else
+			{
+				if ( !is_null($es) ) 
+				{
+					$query .="WHERE ";
+				}
+				
 			}
 		}
 
@@ -904,6 +915,41 @@ class ControladorRadicados
 		{
 			$query.= "id_estado = 3";
 		}
+
+		
+		if (!is_null($idA) ) 
+		{
+			if ($anio != 0) 
+			{
+				$query.= " AND id_area = ".$idA;
+
+			}elseif ( $anio == 0 && is_null($es) ) {
+
+				$query.= "WHERE id_area = ".$idA;
+			}
+			else{
+				$query.= " AND id_area = ".$idA;
+			}
+		}
+
+		/*
+	
+		idusr: 
+				12
+		p: 
+				7
+		es: 
+				null
+		idA: 
+				null
+		p: 
+				7
+		fechaInicial: 
+				null
+		actual: 
+				2023
+
+		*/
 
 		return ModeloRadicados::mdlmostrarRegistrosPQR($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor);
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
@@ -1049,7 +1095,7 @@ class ControladorRadicados
 	static public function ctrAccesoRapidoRegistros($idRegistro, $sw)
 	{
 		$traer = new ControladorRadicados;
-		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
+		$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro, null);
 		$radicado = $traer->ctrMostrarRadicados("id", $registro["id_radicado"]);
 
 		if ( $registro["dias_contados"] <= $registro["dias_habiles"] ) 
@@ -1605,7 +1651,7 @@ class ControladorRadicados
 						   'estado' => 2);
 
 			$traer = new ControladorRadicados;
-			$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro);
+			$registro = $traer->ctrVerRegistrosPQR(0, 0, 0, null, 0, 0, "id", $idRegistro, null);
 
 			if ( isset($registro["id"]) && !is_null($registro["id"]) ) 
 			{
@@ -1693,38 +1739,14 @@ class ControladorRadicados
 			{ 
 				$consulta = ModeloRadicados::mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal);
 
-				for ($x=0; $x < count($consulta); $x++) 
-				{ 
-					if (is_null($respuesta)) 
-					{
-						$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
-						$respuesta [$count][1] = 0;
-						$respuesta [$count][2] = 0;
-						$respuesta [$count][3] = 0;
-						$respuesta [$count][4] = 0;
-						$respuesta [$count][$i] = $consulta[$x]["COUNT(areas.nombre)"];
-					}
-					else
-					{
-						$sw = 0;
-						$key = 0;
-
-						for ($k=0; $k < count($respuesta) ; $k++) 
-						{ 
-
-							if (array_key_exists("nombre", $respuesta [$k])) 
-							{
-								if ($respuesta [$k]["nombre"] == $consulta[$x]["nombre"] && $sw == 0) 
-								{
-									$key = $k;
-									$sw = 1;
-								}
-							}
-						}
-
-						if ($sw == 0) 
+				if (is_countable($consulta) && count($consulta) > 0 ) 
+				{
+					# code...
+					for ($x=0; $x < count($consulta); $x++) 
+					{ 
+						if (is_null($respuesta)) 
 						{
-							$count++;
+							$respuesta [$count]["id"] = $consulta[$x]["id_area"];
 							$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
 							$respuesta [$count][1] = 0;
 							$respuesta [$count][2] = 0;
@@ -1734,11 +1756,43 @@ class ControladorRadicados
 						}
 						else
 						{
-							$respuesta [$key][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+							$sw = 0;
+							$key = 0;
+
+							for ($k=0; $k < count($respuesta) ; $k++) 
+							{ 
+
+								if (array_key_exists("nombre", $respuesta [$k])) 
+								{
+									if ($respuesta [$k]["nombre"] == $consulta[$x]["nombre"] && $sw == 0) 
+									{
+										$key = $k;
+										$sw = 1;
+									}
+								}
+							}
+
+							if ($sw == 0) 
+							{
+								$count++;
+								$respuesta [$count]["id"] = $consulta[$x]["id_area"];
+								$respuesta [$count]["nombre"] = $consulta[$x]["nombre"];
+								$respuesta [$count][1] = 0;
+								$respuesta [$count][2] = 0;
+								$respuesta [$count][3] = 0;
+								$respuesta [$count][4] = 0;
+								$respuesta [$count][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+							}
+							else
+							{
+								$respuesta [$key][$i] = $consulta[$x]["COUNT(areas.nombre)"];
+							}
 						}
 					}
-				}
 
+				}//is conuntable
+
+				
 			}
 			return $respuesta;
 		}	
