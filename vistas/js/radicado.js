@@ -1,7 +1,7 @@
 $("#btnRemitente").click(function(){
 	var anioActual = $('#inputPagCarAnioActual').val();
 		elimTabla();
-		paginaCargada(37, 0, 0, anioActual, 0);
+		paginaCargada(37, 0, 0, anioActual, 0, 0);
 })
 
 $("#addRemitente").click(function(){
@@ -33,7 +33,7 @@ $("#addRemitente").click(function(){
 				});
 
 			elimTabla();
-			paginaCargada(37, 0, 0, anioActual, 0);
+			paginaCargada(37, 0, 0, anioActual, 0, 0);
 		}
 		else
 		{

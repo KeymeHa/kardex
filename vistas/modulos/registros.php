@@ -163,33 +163,32 @@
             if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
             {
 
-            $contarPorArea = ControladorRadicados::ctrContarAsignaciones($_SESSION["anioActual"], $fechaInicial, $fechaFinal); 
-            $tcuadrante = [];
-            $tt = 0;
-            if (!is_null($contarPorArea) && is_countable($contarPorArea) && count($contarPorArea) > 0 ) 
-            {
-              
-              for ($i=1; $i < 5 ; $i++) 
-              { 
-
-                $tcuadrante[$i] = 0;
-
-                for ($k=0; $k < count($contarPorArea); $k++) 
+              $contarPorArea = ControladorRadicados::ctrContarAsignaciones($_SESSION["anioActual"], $fechaInicial, $fechaFinal); 
+              $tcuadrante = [];
+              $tt = 0;
+              if (!is_null($contarPorArea) && is_countable($contarPorArea) && count($contarPorArea) > 0 ) 
+              {
+                
+                for ($i=1; $i < 5 ; $i++) 
                 { 
-                  if (array_key_exists($i, $contarPorArea[$k])) 
-                  {
-                    $tcuadrante[$i] += $contarPorArea[$k][$i];
-                  }
-                }//for k
-              }// for i
 
-              for ($i=1; $i < 5 ; $i++) 
-              { 
-                $tt+= $tcuadrante[$i];
-              }
+                  $tcuadrante[$i] = 0;
 
-            }
+                  for ($k=0; $k < count($contarPorArea); $k++) 
+                  { 
+                    if (array_key_exists($i, $contarPorArea[$k])) 
+                    {
+                      $tcuadrante[$i] += $contarPorArea[$k][$i];
+                    }
+                  }//for k
+                }// for i
 
+                for ($i=1; $i < 5 ; $i++) 
+                { 
+                  $tt+= $tcuadrante[$i];
+                }
+
+                
             
 
               echo '<div class="box box-success">
@@ -233,7 +232,7 @@
                   $total = $value["1"] + $value["2"]  + $value["3"] + $value["4"];
 
                  echo '<tr>
-                    <td>'.$value["nombre"].'</td>
+                    <td class="td_area" idA="'.$value["id"].'"><a href="#">'.$value["nombre"].'</a></td>
                     <td title="'.$value["3"].' Vencidas en '.$value["nombre"].'">'.$value["3"].'</td>
                     <td title="'.$value["2"].' Pendientes en '.$value["nombre"].'">'.$value["2"].'</td>
                     <td title="'.$value["4"].'  Extemporaneas en '.$value["nombre"].'">'.$value["4"].'</td>
@@ -252,6 +251,9 @@
       </div>
        
      </div>';
+
+              }
+
 
             }
 

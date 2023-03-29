@@ -54,9 +54,6 @@
    <?php
     if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
     {
-
-     
-
       if (isset($modoManto["modomanto"]) && $modoManto["modomanto"] == 1) 
       {
         include "modulos/salir.php";
@@ -84,7 +81,7 @@
             {
                 $paginaCargada = '<script type="text/javascript">
                   $( document ).ready(function() {var pagina = '.$js_data["num"].';
-                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].');});</script>';
+                  paginaCargada(pagina, '.$_SESSION["id"].', '.$_SESSION["perfil"].', '.$_SESSION["anioActual"].', 0 , 0);});</script>';
 
                 echo $paginaCargada;
 

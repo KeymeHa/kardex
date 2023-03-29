@@ -171,7 +171,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(12, 0, 0, anioActual, 0);
+		paginaCargada(12, 0, 0, anioActual, 0, 0, 0);
 	}
 	else if(valor == 2)
 	{
@@ -199,7 +199,7 @@ $(".btnNotificaciones").click(function(){
 			'</table>'
 		)
 
-		paginaCargada(13, 0, 0, anioActual, 0);
+		paginaCargada(13, 0, 0, anioActual, 0, 0);
 		
 	}
 
@@ -212,7 +212,7 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
 });
 
 
-function paginaCargada(pagina, id, per, anioActual, dato){
+function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 
 	if(pagina != 0)
 	{
@@ -677,6 +677,7 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 			var fechaInicial = urlParams.get('fechaInicial');
 			var fechaFinal = urlParams.get('fechaFinal');
 			var estado = urlParams.get('es');
+			var idA = urlParams.get('idA');
 
 			variable = "?idusr="+id+"&p="+per;
 
@@ -692,6 +693,19 @@ function paginaCargada(pagina, id, per, anioActual, dato){
 			else
 			{
 				variable+= "&es=null";
+			}
+
+			if( dato2 !== 0 )
+			{
+				variable+= "&idA="+dato2;
+			}
+			else if(idA != null)
+			{
+				variable+= "&idA="+idA;
+			}
+			else
+			{
+				variable+= "&idA=null";
 			}
 
 			variable+= "&p="+per;
@@ -888,5 +902,5 @@ $("a.a-semaforo").click(function() {
 	var idUser = $("#inputVar").attr("idUser");
 	var per = $("#inputVar").attr("per");
 	var anio = $("#inputVar").attr("anio");
-	paginaCargada(39, idUser, per, anio, cuadrante);
+	paginaCargada(39, idUser, per, anio, cuadrante, 0);
 });

@@ -152,7 +152,7 @@ function tablacat(per)
        '</tr>'+
       '</thead>'+
     '</table>')
-	paginaCargada(41, 0, per, 0, "pqr_filtro");
+	paginaCargada(41, 0, per, 0, "pqr_filtro",0);
 }
 
 $("#selectPer").on('change', function() {
@@ -239,7 +239,7 @@ function verTerminos()
     '</table>')
 
 	//paginaCargada(pagina, id, per, anioActual, dato)
-    paginaCargada(41, 0, 0, 0, "objeto");
+    paginaCargada(41, 0, 0, 0, "objeto",0 );
 /*
 	$("span.titulo-box").html("Modificar Objetos y sus Terminos");
 

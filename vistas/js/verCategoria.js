@@ -145,7 +145,7 @@ $("#activarTablaPCat").click(function(){
 	if ( $(this).hasClass("fa-plus") ) 
 	{
 		aparecerTablaPermisoCat();
-		paginaCargada(40, 0, 0, 0, 0);
+		paginaCargada(40, 0, 0, 0, 0, 0);
 	}
 	else
 	{

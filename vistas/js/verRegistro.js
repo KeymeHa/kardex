@@ -56,7 +56,7 @@ $('#select_accion').change(function() {
         $("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEngargadoReg" value>'+
             '<div class="form-group nuevoencargadoAgregado"></div>');
         tablaEncargadosInternos();
-        paginaCargada(16, 0, 0, 0, 4);
+        paginaCargada(16, 0, 0, 0, 4, 0);
     }
     //traslado externo
     else if(valor == 2)
@@ -77,7 +77,7 @@ $('#select_accion').change(function() {
                 '<br>'+
               '</div></div>');
         tablaRemitentesExternos();
-        paginaCargada(37, 0, 0, 0, 1);
+        paginaCargada(37, 0, 0, 0, 1, 0 );
     }
     
     //Respondido por evaluar
@@ -105,7 +105,7 @@ $('#select_accion').change(function() {
        $("#contenido-modal-detalles").append('<input type="hidden" name="listadoPQR" id="listadoPQR" value>'+
             '<div class="form-group nuevopqrAgregado"></div>');
         tablaPQR();
-        paginaCargada(42, 0, 0, 0, 0);
+        paginaCargada(42, 0, 0, 0, 0, 0);
 
 
 
@@ -482,7 +482,7 @@ function envioParametros(es)
     var idUser = $("#inputVar").attr("idUser");
     var per = $("#inputVar").attr("per");
     var anio = $("#inputVar").attr("anio");
-    paginaCargada(39, idUser, per, anio, es);
+    paginaCargada(39, idUser, per, anio, es, 0);
 
     
 }
