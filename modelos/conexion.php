@@ -27,6 +27,14 @@ class Conexion
 		$link = new PDO("mysql:host=localhost;dbname=".$credc->getDatabase(),$credc->getUserDB(),$credc->getPassDB());
 		$link->exec("set names utf8");
 
+		if ($link->errorInfo()) 
+		{
+			$file = fopen("error_log.txt", "w");
+			fwrite($file, $link->errorCode() . PHP_EOL);
+			#fwrite($file, "Otra más" . PHP_EOL);
+			fclose($file);
+		}
+
 		return $link;
 	}
 	 
