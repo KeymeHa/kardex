@@ -190,10 +190,46 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
-	static public function mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal)
+	static public function mdlInsertarRegistrosPQREncargado($tabla, $datos)
 	{
 
-		if($fechaInicial == null)
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_registro, id_usuario, fecha, sw, id_estado) VALUES ( :id_registro, :id_usuario, :fecha, :sw, :id_estado)");
+
+			$stmt->bindParam(":id_registro", $datos["id_registro"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+			$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+			$stmt->bindParam(":sw", $datos["sw"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal, $idRegistro, $idUsuario)
+	{
+		if (!is_null($idRegistro)) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_registro = :id_registro AND id_usuario = :id_usuario;");
+
+			$stmt->bindParam(":id_registro", $idRegistro, PDO::PARAM_INT);
+			$stmt->bindParam(":id_usuario", $idUsuario, PDO::PARAM_INT);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}elseif($fechaInicial == null)
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query;");
 			$stmt -> execute();
@@ -577,6 +613,8 @@ class ModeloRadicados
 		$stmt->close();
 		$stmt = null;
 	}
+
+
 
 	static public function mdlMostrarRadicadoRango($tabla, $fechaInicial, $fechaFinal, $anio, $id_area, $sw)
 	{

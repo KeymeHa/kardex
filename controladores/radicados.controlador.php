@@ -1179,7 +1179,7 @@ class ControladorRadicados
 		else{
 			$query.= " AND id_usuario = ".$id;
 		}
-		return ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal);
+		return ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal, null, null);
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 
 
@@ -1421,6 +1421,8 @@ class ControladorRadicados
 				$idAccion = $_POST["accionReg"];
 				$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]);
 				$urlSW = "";
+				date_default_timezone_set('America/Bogota');
+				$fechaActual2 = date("Y-m-d H:i:s");
 
 				if (is_null($registro)) 
 				{
@@ -1530,7 +1532,7 @@ class ControladorRadicados
 						if (count($encargados) > 0) 
 						{
 							$dJsonAccTemp = '"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"';
-							$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual." ".$horaActual );
+							$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
 						}//if (count($encargados) > 0) 
 						else
 						{
@@ -1678,6 +1680,26 @@ class ControladorRadicados
 					}
 						$dJsonAcc .= ',"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'","sw":"1"}]';
 
+					if ($idAccion == 1) 
+					{
+						$tabla2 = "registropqrencargado";
+               	 		$respuesta2 = ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla2, null, null, null, 8, $_SESSION["id"]);
+
+						if (!isset($respuesta2["id_usuario"]) ) 
+		                {
+		                  $datos2 = array( 
+		                  'id_registro' => $_POST["idRegistro"],
+		                  'id_usuario' => $id_Encargado,
+		                  'fecha' => $fechaActual2,
+		                  'sw' => 1,
+		                  'id_estado' => $estadoPQR);
+		                  var_dump($datos2);
+		                  $respuesta3 = ModeloRadicados::mdlInsertarRegistrosPQREncargado($tabla2, $datos2);
+		                  var_dump($respuesta3);
+		                }
+
+					}
+
 					$datos = array( 
 					'id_usuario' => $id_Encargado,
 					'id_area' => $id_Area_Encargado,
@@ -1687,6 +1709,7 @@ class ControladorRadicados
 
 					$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad($tabla, $datos);
 
+					
 					if($respuesta == "ok")
 					{
 
