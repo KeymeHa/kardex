@@ -211,7 +211,7 @@ class TablaRegistros
 				//espeficificar si alguien tiene permiso para ingresar a ese modulo
 
 		        $idmodulo = 7;
-		        $verModulo = ControladorAsignaciones::ctrVerAsignado($usuario["perfil"], $idmodulo);
+		        $verModulo = ControladorAsignaciones::ctrVerAsignado($usuario["id"], $idmodulo);
 
 		        if ( !isset($verModulo["modulo"]) ) 
 		        {
