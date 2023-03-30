@@ -112,6 +112,147 @@ class ControladorRadicados
 		return $respuesta;
 	}
 
+	static public function ctrIniciarTrazabilidad($codigo_radicado)
+	{
+		$countRad = new ControladorRadicados;
+		$radicados = $countRad->ctrMostrarRadicados("radicado", $codigo_radicado);
+		$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR(null, null);
+
+        $id_per = [];
+        $id_pqr  = [[]];
+        $id_estado = 5;
+
+        foreach ($traer_filtro as $key => $value) 
+        {
+
+          if(!is_null($value["id_pqr"]))
+          {
+             $id_per[$key] = $value["id_per"];
+             $id_pqr[$key]["id_pqr"] = json_decode($value["id_pqr"], true);
+          }
+
+        }
+        
+        //perfil para buscar una persona encargada de esa correspondencia
+        $per = 3;
+
+        //toma todos los radica
+        // al encenderse este sw enviara la información al regitrospqr
+        $registrar = 0;
+
+			$id_area = $radicados["id_area"];
+
+			for ($y=0; $y < count($id_per); $y++) 
+			{ 
+				$sw = 0; //dejar de buscar el id_pqr
+				$x = 0; // movimiento de elemento 
+
+				//genera un ciclo hasta encontrar a que juridiccion pertenece dependiendo si el id_pqr es igual al radicado
+				 while ( $x < count($id_pqr[$y]["id_pqr"]) && $sw == 0) 
+		          {
+		          	//si existe la llave valor x puede validar si el id_pqr es igual
+		            if (array_key_exists($x, $id_pqr[$y]["id_pqr"])) 
+		            {
+		              if ($id_pqr[$y]["id_pqr"][$x]["id"] == $radicados["id_pqr"] ) 
+		              {
+		                $per = $id_per[$y];
+		                $sw = 1;
+		              }
+		              else
+		              {
+		                $x++;
+		              }
+		            }else
+		            {
+		              $x++;
+		            }
+		          }//while
+
+			}//for
+
+			//buscar el id del usuario que peternecezca a un área y sea el encargado predeterminado de ella
+		    $id_usuario = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_area", $id_area, $per);       
+
+          if ($id_usuario != 0 )
+          {
+          $registrar = 1; 
+          }
+          else
+          {
+          //buscar todos los usuarios con perfil juridica,
+            $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+            $id_estado = 5;
+
+             if ($per == 7) 
+              {
+                if ($id_usuario != 0 )
+                {
+                  $registrar = 1; 
+                }
+                else
+                {
+                //buscar todos los usuarios con perfil juridica, tesoreria o correspondencia
+                  $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+                  //var_dump($usuarioContigente);
+
+
+                  if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+                  {
+                    //buscar a que área pertenecen
+                    foreach ($usuarioContigente as $k => $val) 
+                    {
+                      $id_area = ControladorPersonas::ctrMostrarIdPersonaPerfil("id_usuario", $val["id"], $per);
+
+                      if ($id_area != 0) 
+                      {
+                        $registrar = 1;
+                      }
+                    }
+                    //validar que sea el predeterminado
+                  }
+                }
+              }
+              else
+              {
+                 $usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+
+                 if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+                  {
+                      if (array_key_exists(0, $usuarioContigente)) 
+                      {
+                         $id_area_temp = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $usuarioContigente[0]["id"]);
+                         $id_area = $id_area_temp["id_area"];
+                         $id_usuario = $usuarioContigente[0]["id"];
+                         $registrar = 1;
+                         $id_estado = 2;
+                      }
+                  }
+              }
+
+            
+          }
+
+		    if ($registrar == 1) 
+		    {
+		    	$datos2 = array( 'id_radicado' => $radicados["id"],
+							'id_area' => $id_area,
+							'id_usuario' => $id_usuario,
+							'id_estado' => $id_estado,
+							'id_pqr' => $radicados["id_pqr"],
+							'fecha_vencimiento' => $radicados["fecha_vencimiento"],
+							'fecha_actualizacion' => $radicados["fecha"],
+							'fecha' => $radicados["fecha"],
+							'dias_habiles' => $radicados["dias"],
+							'dias_contados' => 0);
+		    	$registrar = ModeloRadicados::mdlNuevoRegistro("registropqr", $datos2);
+		    }
+
+
+		    return ;
+			
+		//}//foreach ($radicados as $key => $value)
+	}
+
 	static public function ctrRadicar()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
@@ -241,6 +382,10 @@ class ControladorRadicados
 
 				if ($respuesta == "ok") 
 				{
+
+					
+					$trazar = new ControladorRadicados;
+					$r = $trazar->ctrIniciarTrazabilidad($_POST["codigoInterno"]);
 
 					//----------------------------------INCREMENTAR CODIGO RAD-------------------------------------
 					try {
@@ -684,7 +829,7 @@ class ControladorRadicados
 
 			//llamar pqrfiltro
 
-
+			/*
 			$traer_filtro = ControladorParametros::ctrMostrarFiltroPQR(null, null);
 
             $id_per = [];
@@ -700,6 +845,7 @@ class ControladorRadicados
               }
 
             }
+
             //perfil para buscar una persona encargada de esa correspondencia
             $per = 3;
 
@@ -823,6 +969,8 @@ class ControladorRadicados
 			    }
 				
 			}//foreach ($radicados as $key => $value)
+
+			*/
 
 			$respuesta = ModeloRadicados::mdlGenerarCorte($tabla, $id_corte["id"]);
 			$indiceCodigo = "nameRad";
