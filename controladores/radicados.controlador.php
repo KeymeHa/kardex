@@ -1104,6 +1104,77 @@ class ControladorRadicados
 
 
 
+		//										   0,   0,        0,           null,      0,     0, "id",   $idRegistro
+	static public function ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, $es, $anio)
+	{
+		$query = "";
+		$tabla = "registropqrencargado";
+
+		if ($fechaInicial != null) 
+		{
+			$query.= ( !is_null($es) ) ? "AND " : "";
+
+			$validar = new ControladorRadicados;
+			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if ($anio != 0) 
+			{
+				$r = new ControladorRadicados;
+				$query = $r->anioActual($anio);
+				$query.= ( !is_null($es) ) ? " AND " : "";
+			}
+			else
+			{
+				if ( !is_null($es) ) 
+				{
+					$query .="WHERE ";
+				}
+				
+			}
+		}
+
+		if ( $es == "c1" ) 
+		{
+			$query.= "(id_estado = 1 or id_estado = 6)";
+
+		}elseif ( $es == "c2" ) {
+
+			$query.= "id_estado = 4";
+		}
+		elseif ( $es == "c3" ) {
+
+			$query.= "(id_estado = 2 or id_estado = 5)";
+		}
+		elseif ( $es == "c6" ) {//por asignar
+
+			$query.= "id_estado = 5";
+		}
+		elseif ( $es == "c4" ) 
+		{
+			$query.= "id_estado = 3";
+		}
+
+		if ($anio != 0) 
+		{
+			$query.= " AND id_usuario = ".$id;
+
+		}elseif ( $anio == 0 && is_null($es) ) {
+
+			$query.= "WHERE id_usuario = ".$id;
+		}
+		else{
+			$query.= " AND id_usuario = ".$id;
+		}
+		return ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal);
+	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
+
+
+
 	static public function ctrVerRegistroPQR($id)
 	{
 		$query = "WHERE id = ".$id;
