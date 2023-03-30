@@ -32,7 +32,7 @@ class ModeloRadicados
 				}
 				
 			}
-			elseif($item == "id") 
+			else
 			{
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
