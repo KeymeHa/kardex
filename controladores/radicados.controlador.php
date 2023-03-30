@@ -1045,7 +1045,7 @@ class ControladorRadicados
 
 		if ( $es == "c1" ) 
 		{
-			$query.= "id_estado = 1 or id_estado = 6";
+			$query.= "(id_estado = 1 or id_estado = 6)";
 
 		}elseif ( $es == "c2" ) {
 
@@ -1053,7 +1053,7 @@ class ControladorRadicados
 		}
 		elseif ( $es == "c3" ) {
 
-			$query.= "id_estado = 2 or id_estado = 5";
+			$query.= "(id_estado = 2 or id_estado = 5)";
 		}
 		elseif ( $es == "c6" ) {//por asignar
 
@@ -1883,9 +1883,35 @@ class ControladorRadicados
 			$tabla = "registropqr";
 			$count  = 0;
 			//el limite es 4, haciendo referencia de los 4 cuadrantes
+
+			$estados = array(1 => "(".$tabla.".id_estado = 1 or ".$tabla.".id_estado = 6)",
+						   2 => $tabla.".id_estado = 4",
+						   3 => $tabla.".id_estado = 2",
+						   4 => $tabla.".id_estado = 3" );
+			/*if ( $es == "c1" ) 
+		{
+			$query.= "(id_estado = 1 or id_estado = 6)";
+
+		}elseif ( $es == "c2" ) {
+
+			$query.= "id_estado = 4";
+		}
+		elseif ( $es == "c3" ) {
+
+			$query.= "(id_estado = 2 or id_estado = 5)";
+		}
+		elseif ( $es == "c6" ) {//por asignar
+
+			$query.= "id_estado = 5";
+		}
+		elseif ( $es == "c4" ) 
+		{
+			$query.= "id_estado = 3";
+		}*/
+
 			for ($i=1; $i <= 4; $i++) 
 			{ 
-				$consulta = ModeloRadicados::mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal);
+				$consulta = ModeloRadicados::mdlContarAreaRegistros($estados[$i], $tabla, $anio, $fechaInicial, $fechaFinal);
 
 				if (is_countable($consulta) && count($consulta) > 0 ) 
 				{

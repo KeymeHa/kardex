@@ -656,20 +656,20 @@ class ModeloRadicados
 	}//mdlContarRad
 
 
-	static public function mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal)
+	static public function mdlContarAreaRegistros($query, $tabla, $anio, $fechaInicial, $fechaFinal)
 	{
 
 		if($fechaInicial == null){
 
 			if ($anio != "") 
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area, areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area, areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $anio AND $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
 				$stmt -> execute();
 				//INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC
 			}
 			else
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
 				$stmt -> execute();
 			}
 
@@ -678,7 +678,7 @@ class ModeloRadicados
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND $tabla.id_estado = $i GROUP BY(areas.nombre) ");
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC ");
 
 			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
@@ -698,12 +698,12 @@ class ModeloRadicados
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND $tabla.id_estado = $i GROUP BY(areas.nombre)");
+				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
 
 			}
 		

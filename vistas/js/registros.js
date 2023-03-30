@@ -845,3 +845,42 @@ $("table.tabla").on('click', 'td.td_area', function()
   paginaCargada(39, idUser, per, anio, null, idA);
 
 })
+
+//cuando se da clic en una area
+$("table.tabla").on('click', 'td.td_area', function() 
+{
+  var idA = $(this).attr("idA");
+  mostrarSoloArea(idA);
+})
+
+//cuando se da clic en el total
+$("table.tabla").on('click', 'td.td_areaCuaTotal', function() 
+{
+  var idA = $(this).attr("idA");
+  mostrarSoloArea(idA);
+})
+
+$("table.tabla").on('click', 'td.td_areaCua', function() 
+{
+  var idA = $(this).attr("idA");
+  var es = $(this).attr("es");
+  var idUser = $("#inputVar").attr("idUser");
+  var per = $("#inputVar").attr("per");
+  var anio = $("#inputVar").attr("anio");
+
+  validarTablaRegistro();
+  aparecerTablaRegistros();
+  paginaCargada(39, idUser, per, anio, es, idA);
+
+})
+
+function mostrarSoloArea (idA)
+{
+  var idUser = $("#inputVar").attr("idUser");
+  var per = $("#inputVar").attr("per");
+  var anio = $("#inputVar").attr("anio");
+
+  validarTablaRegistro();
+  aparecerTablaRegistros();
+  paginaCargada(39, idUser, per, anio, null, idA);
+}

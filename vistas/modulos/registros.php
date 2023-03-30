@@ -193,7 +193,7 @@
 
               echo '<div class="box box-success">
       <div class="box-header">
-        <h3 class="box-title">Resumen Asignaciones</h3>
+        <h3 class="box-title">Resumen Asignaciones por áreas</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
@@ -233,11 +233,11 @@
 
                  echo '<tr>
                     <td class="td_area" idA="'.$value["id"].'"><a href="#">'.$value["nombre"].'</a></td>
-                    <td title="'.$value["3"].' Vencidas en '.$value["nombre"].'">'.$value["3"].'</td>
-                    <td title="'.$value["2"].' Pendientes en '.$value["nombre"].'">'.$value["2"].'</td>
-                    <td title="'.$value["4"].'  Extemporaneas en '.$value["nombre"].'">'.$value["4"].'</td>
-                    <td title="'.$value["1"].'  Resueltas en '.$value["nombre"].'">'.$value["1"].'</td>
-                    <td title="Total '.$total.' en '.$value["nombre"].'">'.$total.'</td>
+                    <td class="td_areaCua" idA="'.$value["id"].'" es="c4" title="'.$value["4"].' Vencidas en '.$value["nombre"].'"><a href="#">'.$value["4"].'</a></td>
+                    <td class="td_areaCua" idA="'.$value["id"].'" es="c3" title="'.$value["3"].' Pendientes en '.$value["nombre"].'"><a href="#">'.$value["3"].'</a></td>
+                    <td class="td_areaCua" idA="'.$value["id"].'" es="c2" title="'.$value["2"].'  Extemporaneas en '.$value["nombre"].'"><a href="#">'.$value["2"].'</a></td>
+                    <td class="td_areaCua" idA="'.$value["id"].'" es="c1" title="'.$value["1"].'  Resueltas en '.$value["nombre"].'"><a href="#">'.$value["1"].'</a></td>
+                    <td class="td_areaCuaTotal" idA="'.$value["id"].'" title="Total '.$total.' en '.$value["nombre"].'">'.$total.'</td>
                  </tr>';
                 }
 
