@@ -429,7 +429,7 @@ if (isset($_GET["idusr"]))
 }
 else
 {
-	echo'{"data": [nada]}';	return;
+	echo'{"data": []}';	return;
 }
 
 $mostrar -> mostrarTabla();
