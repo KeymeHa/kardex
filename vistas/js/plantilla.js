@@ -679,7 +679,10 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			var estado = urlParams.get('es');
 			var idA = urlParams.get('idA');
 
-			variable = "?idusr="+id+"&p="+per;
+			var idUser = $("#inputVar").attr("idUser");
+ 			var perfil = $("#inputVar").attr("per");
+
+			variable = "?idusr="+idUser+"&p="+perfil;
 
 
 			if( dato !== 0 )
