@@ -139,7 +139,7 @@
 				        $fechaFinal = $_GET["fechaFinal"];
 				      }
 
-				       $porcentaje = ControladorRadicados::ctrCuadrantesRegistros($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+				       $porcentaje = ControladorRadicados::ctrCuadrantesRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 
 				      if (isset($porcentaje)) 
 				         {

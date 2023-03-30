@@ -1480,7 +1480,7 @@ class ControladorParametros
 
 	}
 
-	static public function ctrContarEstados($id_perfil, $anio, $fechaInicial, $fechaFinal)
+	static public function ctrContarEstados($id, $id_perfil, $anio, $fechaInicial, $fechaFinal)
 	{
 		$query = "";
 		$validar = new ControladorParametros;
@@ -1503,18 +1503,26 @@ class ControladorParametros
 			$query .= ($anio == 0) ? 'WHERE' : "WHERE YEAR(registropqr.fecha) = '".$anio."' AND";
 		}
 
-		if ($traer_filtro["id_pqr"] != null) 
+		if (is_null($id)) 
 		{
-			$id_pqr = json_decode($traer_filtro["id_pqr"], true);
-			foreach ($id_pqr as $key => $value) 
+			if ($traer_filtro["id_pqr"] != null) 
 			{
-				$query .= " registropqr.id_pqr = ".$value["id"]." or";
+				$id_pqr = json_decode($traer_filtro["id_pqr"], true);
+				foreach ($id_pqr as $key => $value) 
+				{
+					$query .= " registropqr.id_pqr = ".$value["id"]." or";
+				}
+
+				$query = substr($query, 0 ,-2);
+
 			}
-
-			$query = substr($query, 0 ,-2);
-
-			$respuesta = ModeloParametros::mdlContarEstados($query, $fechaInicial, $fechaFinal);
+		}else
+		{
+			$query.= " id_usuario = ".$id;
 		}
+
+		$respuesta = ModeloParametros::mdlContarEstados($query, $fechaInicial, $fechaFinal);
+		
 
 		return $respuesta;
 
