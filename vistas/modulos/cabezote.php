@@ -22,7 +22,8 @@
 
 		              echo '<input type="hidden" readonly es="5" per="'.$_SESSION["perfil"].'" idUser="'.$_SESSION["id"].'" anio="'.$_SESSION["anioActual"].'" id="inputVar">';
 
-		              if ($_SESSION["perfil"] == 3) {
+		              if ($_SESSION["perfil"] == 3) 
+		              {
 		              	$agotado = ControladorInsumos::ctrVerificarInsAgotados(null, null);
 		              	$escasos = ControladorInsumos::ctrVerificarInsEscasos(null, null);
 		              	$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr($_SESSION["anioActual"]);
@@ -51,6 +52,17 @@
 		              		$noti+=1;
 		              	}
 		              	if ($notiAsignar != 0) 
+		              	{
+		              		$noti+=1;
+		              	}
+
+		              }
+		              else
+		              {
+		              	//contar cuantos sw son 1 y pertenecen al usuario
+		              	$asignados = ControladorRadicados::ctrNotificacionesEncargado($_SESSION["id"]);
+
+		              	if ($asignados != 0) 
 		              	{
 		              		$noti+=1;
 		              	}
@@ -109,6 +121,12 @@
 				                    		echo'<li><a href="index.php?ruta=registros&es=c3"><i class="glyphicon glyphicon-exclamation-sign text-blue"></i>Hay '.$notiAsignar.' Oficio(s) <strong>por asignar</strong></a></li>';
 				                    	}
 		                    		}
+		                    		else{
+		                    			if (isset($asignados) && $asignados != 0) 
+						              	{
+						              		echo'<li><a href="registros"><i class="glyphicon glyphicon-exclamation-sign text-blue"></i>Tienes <strong>'.$asignados.'</strong> Oficio(s) Por Revisar</a></li>';
+						              	}
+		                    		}
 
 		                    	?>
 		                    
@@ -118,7 +136,7 @@
 
 		              	if( $noti == 0)
 		              	{
-		              		echo'<li class="footer"><a href="#">¡Todo Bien!</a></li>';
+		              		echo'<li class="footer"><a href="#">¡No hay nuevas notificaciones!</a></li>';
 		              	}
 
 		              ?>

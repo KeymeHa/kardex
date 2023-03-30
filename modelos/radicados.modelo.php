@@ -741,6 +741,14 @@ class ModeloRadicados
 		}
 	}//mdlContarRad
 
+	static public function mdlNotificacionesEncargado($tabla, $idUsuario)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(id_usuario) FROM $tabla WHERE id_usuario = :id_usuario AND sw = 1");
+		$stmt->bindParam(":id_usuario", $idUsuario, PDO::PARAM_INT);
+		$stmt -> execute();
+		return $stmt -> fetch();
+	}
+
 
 	static public function mdlContarAreaRegistros($query, $tabla, $anio, $fechaInicial, $fechaFinal)
 	{

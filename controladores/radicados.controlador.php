@@ -2075,6 +2075,23 @@ class ControladorRadicados
 		}	
 
 	}//ctrContarAsignaciones
+
+	static public function ctrNotificacionesEncargado($idUsuario)
+	{
+
+		$tabla = "registropqrencargado";
+		$respuesta = ModeloRadicados::mdlNotificacionesEncargado($tabla, $idUsuario);
+
+		if (isset($respuesta["COUNT(id_usuario)"])) 
+		{
+			return $respuesta["COUNT(id_usuario)"];
+		}
+		else
+		{
+			return 0;
+		}
+
+	}
 	
 }
 
