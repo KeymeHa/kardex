@@ -1165,7 +1165,16 @@ class ControladorRadicados
 
 		}elseif ( $anio == 0 && is_null($es) ) {
 
-			$query.= "WHERE id_usuario = ".$id;
+			
+
+			if (!is_null($fechaInicial)) 
+			{
+				$query.= " AND id_usuario = ".$id;
+			}
+			else{
+				$query.= "WHERE id_usuario = ".$id;
+			}
+
 		}
 		else{
 			$query.= " AND id_usuario = ".$id;
@@ -1766,15 +1775,15 @@ class ControladorRadicados
 	}
 
 
-	static public function ctrCuadrantesRegistros($perfil, $anio, $fechaInicial, $fechaFinal)
+	static public function ctrCuadrantesRegistros($id, $perfil, $anio, $fechaInicial, $fechaFinal)
 	{
 		if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
 	    {
-	    	$estados_pqr = ControladorParametros::ctrContarEstados(7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	    	$estados_pqr = ControladorParametros::ctrContarEstados(null, 7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 	    }
 	    else
 	    {
-	      $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	      $estados_pqr = ControladorParametros::ctrContarEstados($id, $_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 	    }
 
 	    $porcentaje = [[]];
