@@ -219,8 +219,8 @@
             }
        
             
-
-         /*   <div class="row">
+          echo '
+           <div class="row">
               <br>
               <div class="col-md-6">
                 <p>Seleccione una acción rapida para este oficio.</p>
@@ -229,9 +229,9 @@
                     <input type="hidden" id="id_Registro_accion" name="idRegistro" value="'.$_GET['idRegistro'].'"> <select class="form-control" id="select_accion" required name="accionReg"></select>
                   </div>
               </div>
-            </div>*/
+            </div>
 
-             echo '
+             
 
              <div class="row">
                  <div id="contenido-modal-accion" class="col-md-8"></div>
