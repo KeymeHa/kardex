@@ -73,6 +73,8 @@
       Replicar
       </button>
     </a>
+
+    <button class="btn btn-info btnPrint" onclick="window.print()" ><i class="fa fa-print"></i> Imprimir</button>
     
     <br><br>
 
