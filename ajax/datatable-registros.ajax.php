@@ -293,7 +293,7 @@ class TablaRegistros
 								$acciones .= "<div class='col-md-4'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
 							}
 
-							if ($this->perfil == 7 && ($registrosPQR["id_estado"] == 2 || $registrosPQR["id_estado"] == 3 || $registrosPQR["id_estado"] == 5)) 
+							if ($registrosPQR["id_estado"] == 2 || $registrosPQR["id_estado"] == 3 || $registrosPQR["id_estado"] == 5) 
 							{
 								$acciones .= "<div class='col-lg-4 col-md-3'><button class='btn btn-info btnFastRegistro' idRegistro='".$registrosPQR["id"]."' title='Acceso Rapido' data-toggle='modal' data-target='#modalRegistroPQR'><i class='fa fa-bolt'></i></button></div>";
 							}
