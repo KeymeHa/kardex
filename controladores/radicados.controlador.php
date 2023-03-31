@@ -1991,29 +1991,27 @@ class ControladorRadicados
 						   2 => $tabla.".id_estado = 4",
 						   3 => $tabla.".id_estado = 2",
 						   4 => $tabla.".id_estado = 3" );
-			/*if ( $es == "c1" ) 
-		{
-			$query.= "(id_estado = 1 or id_estado = 6)";
-
-		}elseif ( $es == "c2" ) {
-
-			$query.= "id_estado = 4";
-		}
-		elseif ( $es == "c3" ) {
-
-			$query.= "(id_estado = 2 or id_estado = 5)";
-		}
-		elseif ( $es == "c6" ) {//por asignar
-
-			$query.= "id_estado = 5";
-		}
-		elseif ( $es == "c4" ) 
-		{
-			$query.= "id_estado = 3";
-		}*/
 
 			for ($i=1; $i <= 4; $i++) 
 			{ 
+
+				if (!is_null($fechaInicial)) 
+				{
+					$estados[$i] = "AND ".$estados[$i];
+				}
+				else
+				{
+					if ($anio != "") 
+					{
+						$estados[$i] = "AND ".$estados[$i]; 
+					}
+					else
+					{
+						$estados[$i] = "WHERE ".$estados[$i];
+					}
+				}
+
+
 				$consulta = ModeloRadicados::mdlContarAreaRegistros($estados[$i], $tabla, $anio, $fechaInicial, $fechaFinal);
 
 				if (is_countable($consulta) && count($consulta) > 0 ) 
@@ -2091,6 +2089,31 @@ class ControladorRadicados
 			return 0;
 		}
 
+	}
+
+	static public function ctrContarPorArea($id, $idPerfil, $anio, $fechaInicial, $fechaFinal)
+	{
+
+		$tabla = "registropqr";
+		$query = "";
+
+		if ($fechaInicial != null) 
+		{
+			$validar = new ControladorRadicados;
+			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			$r = new ControladorRadicados;
+			$query = $r->anioActual($anio);
+		}
+
+		$respuesta = ModeloRadicados::mdlContarAreaRegistros($query, $tabla, $anio, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
 	}
 	
 }

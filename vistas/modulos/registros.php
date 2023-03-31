@@ -156,8 +156,8 @@
 
     </div>
 
-     
 
+        
             <?php
 
             if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
@@ -189,9 +189,10 @@
                 }
 
                 
-            
+           
 
-              echo '<div class="box box-success">
+              echo '
+        <div class="box box-success">
       <div class="box-header">
         <h3 class="box-title">Resumen Asignaciones por áreas</h3>
         <div class="box-tools pull-right">
@@ -290,6 +291,12 @@
 
       </div>
     </div><!--box box-success-->
+
+    <?php
+
+     include("reportes/oficiosAreaspqr.php");
+
+    ?>
 
   </section>
 </div>
