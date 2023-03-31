@@ -202,14 +202,25 @@
 
        <form role="form" method="post" enctype="multipart/form-data" class="formularioModalRegistros">
 
-          <div class="box-body">
-       
-            <div class="row">
+          <div class="box-body">';
+
+            if ($_SESSION["perfil"] == 7) 
+            {
+              echo '<div class="row">
               <div class="col-md-6"><p>Fecha</p><input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" /></div>
               <div class="col-md-6"><p>Hora</p><input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/></div>
-            </div>
+            </div><div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                   <div class="panel">Detalles</div>
+                  </div>
+                </div>
+              </div>';
+            }
+       
+            
 
-            <div class="row">
+         /*   <div class="row">
               <br>
               <div class="col-md-6">
                 <p>Seleccione una acción rapida para este oficio.</p>
@@ -218,15 +229,9 @@
                     <input type="hidden" id="id_Registro_accion" name="idRegistro" value="'.$_GET['idRegistro'].'"> <select class="form-control" id="select_accion" required name="accionReg"></select>
                   </div>
               </div>
-            </div>
+            </div>*/
 
-             <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                   <div class="panel">Detalles</div>
-                  </div>
-                </div>
-              </div>
+             echo '
 
              <div class="row">
                  <div id="contenido-modal-accion" class="col-md-8"></div>
@@ -236,7 +241,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                   <div class="panel">Constancia</div>
+                   <div class="panel">Soporte o documento para adjuntar al avance del tramite.</div>
                       <input type="file" name="editarArchivo">
                   </div>
                 </div>
@@ -303,6 +308,8 @@
 
              }// foreach ($accionesPQR as $key => $value) 
 
+             //si marca 1 las asiones no serian asignado sino reasignado
+             $swAsignado = 0;
 
              for ($y=0; $y < count($grupoFechas) ; $y++) 
              { 
@@ -327,14 +334,24 @@
                     switch ($accionesPQR[$x]["acc"]) 
                     {
                       case 1:
-                        
+
                         $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
 
                         echo '<li>
                           <i class="fa fa-share bg-yellow"></i>
                           <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
-                          <h3 class="timeline-header">Asignado a <strong>'.$accionesPQR[$x]["da"]["nom"].'</strong>, perteneciente a <strong>'.$areaR.'</strong>.</h3>';
+                          <h3 class="timeline-header">';
+
+                          if($swAsignado == 0)
+                          {
+                            echo 'A';
+                          }
+                          else{
+                            echo 'Rea';
+                          }
+
+                        echo 'signado a <strong>'.$accionesPQR[$x]["da"]["nom"].'</strong>, perteneciente a <strong>'.$areaR.'</strong>.</h3>';
 
                           if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
                           {
@@ -351,6 +368,11 @@
                           echo '
                           </div>
                           </li>';
+
+                          if($swAsignado == 0)
+                          {
+                            $swAsignado = 1;
+                          }
 
                         break;
                       case 2:

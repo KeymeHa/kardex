@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	var elemento = $("#fechaReg");
     var elemento2 = $("#horaReg");
+    var per = $("#inputVar").attr("per");
 
 	 if ( $("#fechaReg") ) 
     {
@@ -15,6 +16,7 @@ $(document).ready(function() {
 
     var datosDos = new FormData();
         datosDos.append("verAcciones", 1);
+        datosDos.append("per", per);
         $.ajax({
             url:"ajax/parametros.ajax.php",
             method: "POST",
@@ -25,14 +27,10 @@ $(document).ready(function() {
             dataType: "json",
             success: function(resp)
             {   
-
                 $("#select_accion").append('<option value="">Seleccione una acción</option>');
-
-                
-
                 for (var i = 0; i < resp.length; i++) 
                 {
-                    $("#select_accion").append('<option value="'+resp[i]['id']+'">'+resp[i]['nombre']+'</option>');
+                    $("#select_accion").append('<option value="'+resp[i]['id']+'">'+(i+1)+'-'+resp[i]['nombre']+'</option>');
                 }
             }
         });

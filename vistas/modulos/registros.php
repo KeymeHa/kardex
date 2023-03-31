@@ -332,12 +332,22 @@
                       <select class="form-control" id="select_accion" required name="accionReg">
                         <?php
 
-                        $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
-                        echo '<option value="">Seleccione una Acción</option>';
-                        foreach ($accion_pqr as $key => $value) 
+                        $accion_pqr = ControladorParametros::ctrMostrarAccionesPQR("accion_pqr", $_SESSION["perfil"]);
+
+                        if (!is_countable($accion_pqr)) 
                         {
-                          echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
+                          echo '<option value="">No hay Acciones Disponibles</option>';
                         }
+                        else
+                        {
+                          echo '<option value="">Seleccione una Acción</option>';
+                          foreach ($accion_pqr as $key => $value) 
+                          {
+                            echo '<option value="'.$value["id"].'">'.($key+1).'-'.$value["nombre"].'</option>';
+                          }
+                        }
+
+                        
 
                         ?>
                       </select>
@@ -357,7 +367,10 @@
                     <div class="row div-progress-bar"></div>
                   </div>
             </div><!--row-->
-            <div class="row">
+
+            <?php if($_SESSION["perfil"] == 7)
+            {
+              echo ' <div class="row">
               <div class="col-md-6">
                   <p>Fecha</p>
                   <input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" />
@@ -366,15 +379,17 @@
                   <p>Hora</p>
                   <input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/>
               </div>
-            </div>
-
-            <div class="row">
+            </div><div class="row">
             <div class="col-md-12">
               <div class="form-group">
                <div class="panel">Detalles</div>
               </div>
             </div>
-          </div>
+          </div>';
+            }
+
+            ?>
+            
 
             <div class="row">
                <div id="contenido-modal-accion" class="col-md-8"></div>
@@ -386,7 +401,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-               <div class="panel">Constancia</div>
+               <div class="panel">Soporte o documento para adjuntar al avance del tramite.</div>
                   <input type="file" name="editarArchivo">
               </div>
             </div>
