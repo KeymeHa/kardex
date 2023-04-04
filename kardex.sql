@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.parametros: ~1 rows (aproximadamente)
-INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`, `modomanto`, `fechaRegistroPqr`, `rutaScan`) VALUES
+INSERT IGNORE INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`, `modomanto`, `fechaRegistroPqr`, `rutaScan`) VALUES
   (1, 10, 20, 30, 23, 1, 1, 1, 2023, 1, 'Empresa de Desarrollo Urbano de Barranquilla y la Región Caribe S.A - EDUBAR S.A', '800.091.140-4', 'Centro de Negocios Mix Via 40 # 73 Piso 9', '3605148 - 3602561', 'atencionalciudadano@edubar.com.co', 'Centro de Negocios Mix Via 40 # 73 Piso 9', 'Angelly Criales', 19, 1, 0, 1, NULL, NULL, NULL, 0, 0, 1, 5, 548, 66, '[{0:"1/enero/2022"},\r\n{1:"10/enero/2022"},\r\n{2:"21/marzo/2022"},\r\n{3:"10/abril/2022"},\r\n{4:"14/abril/2022"},\r\n{5:"15/abril/2022"},\r\n{6:"17/abril/2022"},\r\n{7:"1/mayo/2022"},\r\n{8:"30/mayo/2022"},\r\n{9:"20/junio/2022"},\r\n{10:"27/junio/2022"},\r\n{11:"4/julio/2022"},\r\n{12:"20/julio/2022"},\r\n{13:"7/agosto/2022"},\r\n{14:"15/agosto/2022"},\r\n{15:"17/octubre/2022"},\r\n{16:"7/noviembre/2022"},\r\n{17:"14/noviembre/2022"},\r\n{18:"8/diciembre/2022"},\r\n{19:"25/diciembre/2022"}]', 0, '2023-03-28 14:56:18', 'C:\\xampp\\xampp-control.exe');
 
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
 ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.js_data: ~67 rows (aproximadamente)
-INSERT INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `pOcho`, `pNueve`, `pDiez`, `pOnce`, `sw`, `ver`, `file`, `habilitado`, `descripcion`) VALUES
+INSERT IGNORE INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `pOcho`, `pNueve`, `pDiez`, `pOnce`, `sw`, `ver`, `file`, `habilitado`, `descripcion`) VALUES
   (1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Muestra las categorias de las que seran asociados '),
   (2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Permite Ver los insumos pertenecientes a una categ'),
   (3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Mustras todos los insumos ingresados en el sistema'),
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `insumosunidad` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.insumosunidad: ~11 rows (aproximadamente)
-INSERT INTO `insumosunidad` (`id`, `unidad`) VALUES
+INSERT IGNORE INTO `insumosunidad` (`id`, `unidad`) VALUES
   (1, 'Bolsa'),
   (2, 'Unidad'),
   (3, 'Resma'),
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `perfiles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `perfiles` (`id`, `perfil`) VALUES
+INSERT IGNORE INTO `perfiles` (`id`, `perfil`) VALUES
   (1, 'root'),
   (2, 'Administrador'),
   (3, 'Compras'),
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.areas: ~23 rows (aproximadamente)
-INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
+INSERT IGNORE INTO `areas` (`id`, `nombre`, `descripcion`, `elim`, `cat_asociadas`) VALUES
   (1, 'SISTEMAS', 'Encargados del área de Sistemas', 0, ''),
   (2, 'CONTRATACIÓN', 'Personal de Contratación', 0, ''),
   (3, 'REASENTAMIENTO', 'Abogados', 0, ''),
@@ -266,8 +266,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.usuarios: ~63 rows (aproximadamente)
-INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
+INSERT IGNORE INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
   (1, 'Kevin Bolaño Ariza', 'kb', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'kevinbolano@correo.com.co', 1, '2023-03-31 08:38:37', '2021-02-11 10:06:49', '644noteeoti4v3cogjqatqc8ao', '7c2553860cfb601c6b2242f1318537612b67d28b', 0, 0, 1);
+
 CREATE TABLE IF NOT EXISTS `personas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL DEFAULT '0',
@@ -284,8 +285,8 @@ CREATE TABLE IF NOT EXISTS `personas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.personas: ~63 rows (aproximadamente)
-INSERT INTO `personas` (`id`, `id_usuario`, `id_area`, `id_perfil`, `sw`) VALUES
-  (4, 11, 1, 7, 0);
+INSERT IGNORE INTO `personas` (`id`, `id_usuario`, `id_area`, `id_perfil`, `sw`) VALUES
+  (1, 1, 1, 7, 0);
 #PARAMETROS_CORRESPONDENCIA
 
 CREATE TABLE IF NOT EXISTS `estado_pqr` (
@@ -301,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `estado_pqr` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.estado_pqr: ~6 rows (aproximadamente)
-INSERT INTO `estado_pqr` (`id`, `nombre`, `elim`, `fecha_creacion`, `html`, `color`, `icono`, `descripcion`) VALUES
+INSERT IGNORE INTO `estado_pqr` (`id`, `nombre`, `elim`, `fecha_creacion`, `html`, `color`, `icono`, `descripcion`) VALUES
   (1, 'Resuelta', 0, '2023-01-27 01:52:45', 'success', 'green', 'ok-circle', NULL),
   (2, 'Pendiente', 0, '2023-01-27 01:52:57', 'warning', 'yellow', 'exclamation-sign', NULL),
   (3, 'Vencida', 0, '2023-01-27 01:53:15', 'danger', 'red', 'remove-circle', NULL),
@@ -316,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `accion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.accion: ~10 rows (aproximadamente)
-INSERT INTO `accion` (`id`, `nombre`) VALUES
+INSERT IGNORE INTO `accion` (`id`, `nombre`) VALUES
   (1, 'RADICADO'),
   (2, 'ASIGNADO'),
   (3, 'REASIGNADO'),
@@ -339,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `accion_pqr` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Acciones de pqr que ya estan en tramite por la entidad';
 
 -- Volcando datos para la tabla edubarco_kardex.accion_pqr: ~8 rows (aproximadamente)
-INSERT INTO `accion_pqr` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `nombre_accion`, `sw`) VALUES
+INSERT IGNORE INTO `accion_pqr` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `nombre_accion`, `sw`) VALUES
   (1, 'Traslado Interno o Reasginación', NULL, '2023-01-30 16:05:09', 'Asignado', '[{"id":"7"}]'),
   (2, 'Traslado Por Competencia', NULL, '2023-01-30 16:05:27', 'Trasladó', '[{"id":"7"}]'),
   (3, 'Devolver Oficio', NULL, '2023-01-30 16:05:43', 'Devuelto para Reasignación', '[{"id":"1"},{"id":"2"},{"id":"3"},{"id":"4"},{"id":"6"},{"id":"8"},{"id":"9"},{"id":"10"},{"id":"11"}]'),
@@ -356,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `articulo` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.articulo: ~9 rows (aproximadamente)
-INSERT INTO `articulo` (`id`, `nombre`) VALUES
+INSERT IGNORE INTO `articulo` (`id`, `nombre`) VALUES
   (1, 'Sobre'),
   (2, 'Documento'),
   (3, 'Caja'),
@@ -376,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.objeto: ~29 rows (aproximadamente)
-INSERT INTO `objeto` (`id`, `nombre`, `termino`) VALUES
+INSERT IGNORE INTO `objeto` (`id`, `nombre`, `termino`) VALUES
   (1, 'CITACIÓN JUDICIAL', 5),
   (2, 'DECRETO EJECUTIVO', 5),
   (3, 'DECRETO JUDICIAL', 5),
@@ -415,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `pqr` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.pqr: ~9 rows (aproximadamente)
-INSERT INTO `pqr` (`id`, `nombre`, `termino`) VALUES
+INSERT IGNORE INTO `pqr` (`id`, `nombre`, `termino`) VALUES
   (1, 'PETICIÓN', 12),
   (2, 'QUEJA', 12),
   (3, 'RECLAMO', 5),
@@ -445,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.proyectos: ~12 rows (aproximadamente)
-INSERT INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripcion`, `elim`) VALUES
+INSERT IGNORE INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripcion`, `elim`) VALUES
   (5, 'ADMINISTRATIVO', '2022-06-23', '2022-06-30', 'parte administrativa', 0),
   (6, 'HOSPITALES', '2022-06-24', '2022-12-31', 'LA EJECUCION DE LA INTERVENTORIA INTEGRAL (TECNICA, ADMINISTRATIVA, AMBIENTAL, FINANCIERA Y JURIDCA) DEL CONTRATO DE IBRA PARA EL DISEÑO, CONSTRUCCION, AMPLIACION, DOTACION PARA EL FUNCIONAMIENTO DE LAS INSTITUCIONES HOSPITALARIAS Y PUESTOS DE SALUD EN EL DEPARTAMENTO DEL ATLANTICO', 0),
   (7, 'ARROYO HOSPITAL', '2022-06-24', '2022-09-20', 'Canalización de arroyos en el hospital barranquilla', 0),
@@ -471,7 +472,7 @@ INSERT INTO `proyectos` (`id`, `nombre`, `fecha_inicio`, `fecha_fin`, `descripci
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.categorias: ~5 rows (aproximadamente)
-INSERT INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
+INSERT IGNORE INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
   (1, 'Papelería', 'Sin Informacion.', 0),
   (2, 'Sistemas', 'Sin Informacion.', 0),
   (3, 'Aseo', 'Sin Informacion.', 0),
@@ -509,7 +510,7 @@ INSERT INTO `categorias` (`id`, `categoria`, `descripcion`, `elim`) VALUES
 ) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.insumos: ~134 rows (aproximadamente)
-INSERT INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`, `imp`) VALUES
+INSERT IGNORE INTO `insumos` (`id`, `id_categoria`, `codigo`, `descripcion`, `observacion`, `imagen`, `stock`, `stockIn`, `precio_compra`, `precio_unidad`, `precio_por_mayor`, `fecha`, `elim`, `estante`, `nivel`, `seccion`, `prioridad`, `unidad`, `unidadSal`, `contenido`, `habilitado`, `imp`) VALUES
   (1, 3, '1', 'AMBIENTADOR DE BAÑO', '', NULL, 0, 0, 0, 0, 0, '2022-08-24 10:07:04', 0, '0', '0', '0', 2, 2, 2, 1, 1, 0),
   (2, 4, '2', 'AROMATICA SURTIDA EN BOLSA', '', NULL, 1, 0, 0, 0, 0, '2022-08-24 10:07:04', 0, '0', '0', '0', 2, 2, 2, 1, 1, 0),
   (3, 3, '3', 'ATOMIZADOR AMBIENTADOR', '', NULL, 0, 0, 0, 0, 0, '2022-08-24 10:07:04', 0, '0', '0', '0', 2, 2, 2, 1, 1, 0),
@@ -662,7 +663,7 @@ CREATE TABLE IF NOT EXISTS `proveedores` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.proveedores: ~3 rows (aproximadamente)
-INSERT INTO `proveedores` (`id`, `razonSocial`, `nombreComercial`, `nit`, `digitoNit`, `descripcion`, `direccion`, `telefono`, `contacto`, `fecha`, `correo`) VALUES
+INSERT IGNORE INTO `proveedores` (`id`, `razonSocial`, `nombreComercial`, `nit`, `digitoNit`, `descripcion`, `direccion`, `telefono`, `contacto`, `fecha`, `correo`) VALUES
   (2, 'SOLUCIONES MAF', 'TAURO', '8020028192', '1', '', '', '', '', '0000-00-00', ''),
   (3, 'Link marketing & servicios S.A.S.', 'Link marketing & servicios S.A.S.', '900420627', '4', '', 'Calle 80b # 42b - 96', '3004229391', 'Liliana Meza', '0000-00-00', 'lmeza@linkmys.com'),
   (4, 'ALMACÉN FULLER PEREIRA BOO S.A.S.', 'FULLER', '890111996', '6', '', 'CARRERA 46 # 68 51', '3588209', 'KELLY RUEDA', '0000-00-00', 'ventas@almacenfuller.com');
@@ -709,7 +710,7 @@ CREATE TABLE IF NOT EXISTS `exepcion_mensajes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.exepcion_mensajes: ~5 rows (aproximadamente)
-INSERT INTO `exepcion_mensajes` (`id`, `valor`) VALUES
+INSERT IGNORE INTO `exepcion_mensajes` (`id`, `valor`) VALUES
   (1, 'Contraseña Equivocada'),
   (2, 'Usuario Errado'),
   (3, 'Usuario Bloqueado por muchos intentos'),
@@ -744,7 +745,7 @@ CREATE TABLE IF NOT EXISTS `proyectoarea` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.proyectoarea: ~14 rows (aproximadamente)
-INSERT INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
+INSERT IGNORE INTO `proyectoarea` (`id`, `id_areas`, `id_proyecto`) VALUES
   (1, '[{"id":"5"},{"id":"1"},{"id":"8"},{"id":"10"},{"id":"11"},{"id":"12"},{"id":"9"},{"id":"7"},{"id":"4"},{"id":"6"},{"id":"2"},{"id":"13"},{"id":"14"},{"id":"15"},{"id":"16"},{"id":"18"},{"id":"17"},{"id":"3"},{"id":"19"},{"id":"20"},{"id":"21"}]', 5),
   (3, '[{"id":"5"},{"id":"2"},{"id":"3"}]', 6),
   (4, '[{"id":"6"},{"id":"3"}]', 7),
@@ -771,7 +772,7 @@ CREATE TABLE IF NOT EXISTS `asignaciones` (
 ) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.asignaciones: ~67 rows (aproximadamente)
-INSERT INTO `asignaciones` (`id`, `id_persona`, `modulo`) VALUES
+INSERT IGNORE INTO `asignaciones` (`id`, `id_persona`, `modulo`) VALUES
   (5, 1, 3),
   (12, 1, 3),
   (13, 18, 3),
@@ -854,7 +855,7 @@ CREATE TABLE IF NOT EXISTS `categoriaarea` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.categoriaarea: ~10 rows (aproximadamente)
-INSERT INTO `categoriaarea` (`id`, `id_areas`, `id_categorias`) VALUES
+INSERT IGNORE INTO `categoriaarea` (`id`, `id_areas`, `id_categorias`) VALUES
   (1, '[{"id":"10"},{"id":"9"},{"id":"8"},{"id":"7"},{"id":"6"},{"id":"5"},{"id":"4"},{"id":"3"},{"id":"2"},{"id":"1"},{"id":"18"},{"id":"17"},{"id":"16"},{"id":"14"},{"id":"13"},{"id":"12"},{"id":"11"},{"id":"19"},{"id":"20"},{"id":"21"},{"id":"23"}]', 1),
   (2, '[{"id":"10"},{"id":"9"},{"id":"8"},{"id":"7"},{"id":"6"},{"id":"5"},{"id":"4"},{"id":"3"},{"id":"2"},{"id":"1"},{"id":"18"},{"id":"17"},{"id":"16"},{"id":"14"},{"id":"13"},{"id":"12"},{"id":"11"},{"id":"19"},{"id":"20"},{"id":"21"},{"id":"23"}]', 1),
   (3, '[{"id":"1"},{"id":"5"}]', 2),
@@ -890,7 +891,7 @@ CREATE TABLE IF NOT EXISTS `pqr_filtro` (
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.pqr_filtro: ~9 rows (aproximadamente)
-INSERT INTO `pqr_filtro` (`id`, `id_pqr`, `id_per`) VALUES
+INSERT IGNORE INTO `pqr_filtro` (`id`, `id_pqr`, `id_per`) VALUES
   (1, '[{"id":"1"},{"id":"2"},{"id":"3"},{"id":"4"},{"id":"9"}]', 7),
   (2, '[{"id":"6"},{"id":"5"}]', 8),
   (3, '[{"id":"8"},{"id":"7"}]', 6),
@@ -912,7 +913,7 @@ CREATE TABLE IF NOT EXISTS `remitente` (
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.remitente: ~53 rows (aproximadamente)
-INSERT INTO `remitente` (`id`, `nombre`) VALUES
+INSERT IGNORE INTO `remitente` (`id`, `nombre`) VALUES
   (1, 'A CONSTRUIR'),
   (54, 'ALCALDÍA : B/QUILLA ROJA'),
   (3, 'ALCALDÍA : B/QUILLA VERDE'),
