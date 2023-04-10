@@ -113,10 +113,10 @@ class ModeloParametros
 		$stmt = null;
 	}
 
-	static public function mdlmostrarRegistrosEspecifico($tabla, $item, $valor)
+	static public function mdlmostrarRegistrosEspecifico($tabla, $item, $valor, $item2)
 	{
 	
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+		$stmt = Conexion::conectar()->prepare("SELECT $item2 FROM $tabla WHERE $item = :$item");
 		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt -> execute();
 		return $stmt -> fetch();
