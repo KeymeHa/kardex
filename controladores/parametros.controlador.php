@@ -1346,7 +1346,7 @@ class ControladorParametros
 
 	static public function ctrmostrarRegistroEspecifico($tabla, $item1, $valor, $item2)
 	{
-		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor);
+		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor, $item2);
 		return $respuesta[$item2];
 	}
 
