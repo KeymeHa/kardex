@@ -363,7 +363,12 @@
 
 				echo'><a href="registros">
 						<i class="fa fa-balance-scale"></i>
-						<span>Registros de PQR</span>
+						<span>Registros de PQR';
+						if($asignados != 0)
+                    	{
+                    		echo'<small class="label pull-right bg-yellow">'.$asignados.'</small>';
+                    	}
+						echo '</span>
 					</a>
 				</li>';
 
