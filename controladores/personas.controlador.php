@@ -168,6 +168,47 @@ class ControladorPersonas
 		return $respuesta;
 	}
 
+	static public function ctrVerEncargado($per)
+	{
+		$usuarioContigente = ControladorUsuarios::ctrMostrarUsuarios("perfil", $per);
+		//var_dump($usuarioContigente);
+		$respuesta = [];
+
+		if (is_countable($usuarioContigente) && count($usuarioContigente) != 0 && count($usuarioContigente[0]) != 0)
+		{
+		//buscar a que área pertenecen
+			foreach ($usuarioContigente as $k => $val) 
+			{
+				$item = "id_usuario";
+				$usuario = ControladorUsuarios::ctrValidarEncargado($item, $val["id"]);
+
+				if ($usuario != 0) 
+				{
+					$respuesta ["idArea"] = ControladorPersonas::ctrMostrarIdPersonaPerfil($item, $val["id"], $per);
+
+					if (!isset($respuesta ["idArea"]) || is_null($respuesta ["idArea"])) 
+					{
+						return 0;
+					}
+					else
+					{
+						$respuesta ["nombreArea"] = ControladorParametros::ctrmostrarRegistroEspecifico("areas", "id", $respuesta["idArea"], "nombre");
+						$respuesta ["id"] = $usuario["id"];
+						$respuesta ["nombre"] = $usuario["nombre"];
+						return $respuesta;
+					}
+
+				}	
+			}
+			return 0;
+		//validar que sea el predeterminado
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 
 	static public function ctrContarPersonasArea()
 	{
