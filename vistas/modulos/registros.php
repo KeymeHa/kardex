@@ -157,6 +157,7 @@
     </div>
 
 
+
         
             <?php
 
@@ -294,7 +295,12 @@
 
     <?php
 
+    if ($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11) 
+    {
      include("reportes/oficiosAreaspqr.php");
+     include("reportes/oficiospqr.php");
+    }
+
 
     ?>
 
