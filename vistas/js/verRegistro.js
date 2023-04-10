@@ -49,7 +49,7 @@ $('#select_accion').change(function() {
 
     //devuelto para reasignación (El encargado de recibir el oficio, menciono que no es de su competencia, 
     //El encargado de jurídica recibe el oficio y lo remite a la nueva área encargada de responderlo
-    if (valor == 1 || valor == 3) 
+    if (valor == 1) 
     {
         $("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEngargadoReg" value>'+
             '<div class="form-group nuevoencargadoAgregado"></div>');
@@ -77,7 +77,47 @@ $('#select_accion').change(function() {
         tablaRemitentesExternos();
         paginaCargada(37, 0, 0, 0, 1, 0 );
     }
-    
+    else if(valor == 3)
+    {
+        var datos = new FormData();
+        datos.append("devolucion", 7);
+
+          $.ajax({
+
+            url:"ajax/radicados.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(respuesta){
+
+              if (respuesta["nombreArea"] != null) 
+              {
+                $("#contenido-modal-accion").append('<blockquote>'+
+                  '<p>Realizar devolución</p>'+
+                  '<small>Se regresará el oficio a <cite title="Source Title">'+respuesta["nombre"]+'</cite> del área '+respuesta["nombreArea"]+', para su reasignación</small>'+
+                  '</blockquote><input type="hidden" name="devolId" value="'+respuesta["id"]+'">'+
+                  '<input type="hidden" name="devolIdArea" value="'+respuesta["idArea"]+'">'+
+                  '<input type="hidden" name="devolNomEnc" value="'+respuesta["nombre"]+'">');
+              }
+              else
+              {
+                $("#contenido-modal-accion").append('<div class="alert alert-danger alert-dismissible">'+
+                  '<h4><i class="icon fa fa-ban"></i> Alerta!</h4>'+
+                  'Ha Ocurrido un error al buscar un encargado para realizar la devolución, contacte al administrador.'+
+                  '</div>');
+                //devolId = devolución Id del encargado
+                //devolIdArea = devolución id del área a la que pertenece el encargado
+                //devolNomEnc = devolución nombre del encargado
+              }
+
+
+            }
+
+          });
+    }
     //Respondido por evaluar
     else if(valor == 4)
     {
@@ -99,15 +139,10 @@ $('#select_accion').change(function() {
       //traer objetos de pqr
       //nombre y termino
       //permita editar el termino   
-
        $("#contenido-modal-detalles").append('<input type="hidden" name="listadoPQR" id="listadoPQR" value>'+
             '<div class="form-group nuevopqrAgregado"></div>');
         tablaPQR();
         paginaCargada(42, 0, 0, 0, 0, 0);
-
-
-
-
     }
 
 

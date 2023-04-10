@@ -1436,7 +1436,7 @@ class ControladorRadicados
 					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
 					{	$fechaActual = $_POST["fechaReg"];	}
 					else
-					{	$fechaActual = date('d-m-Y');	}
+					{	$fechaActual = date('Y-m-d');	}
 
 					if( isset($_POST["horaReg"]) && (!is_null($_POST["horaReg"]) || !empty($_POST["horaReg"])) )
 					{	$horaActual = $_POST["horaReg"];     }
@@ -1572,6 +1572,45 @@ class ControladorRadicados
 
 					        break;
 					    case 3:
+
+					    	if (isset($_POST["devolId"]) && isset($_POST["devolNomEnc"]) && isset($_POST["devolIdArea"])) 
+					    	{
+					    		//id_Encargado para quien realiza la accion
+					    		//id_EncargadoD para quien se le devuelve el oficio
+
+					    		//buscar nombre
+					    		//buscar área
+
+					    		$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $idSESSION);
+
+					    		if (!isset($persona["id_usuario"])) 
+					    		{
+					    			$error = "No se encontro asociado a un área.";
+					    		}
+					    		else
+					    		{
+					    			$id_Area_EncargadoD = $persona["id_area"];
+									$nombre_EncargadoD = ControladorPersonas::ctrMostrarPersonas("id_usuario", $idSESSION);
+
+					    			$id_Encargado = $_POST["devolId"];
+									$nombre_Encargado = $_POST["devolNomEnc"];
+									$id_Area_Encargado = $_POST["devolIdArea"];
+
+							    	$dJsonAccTemp = '"id":"'.$idSESSION.'","nom":"'.$nombre_EncargadoD["nombre"].'","idA":"'.$id_Area_EncargadoD.'","idD":"'.$id_Encargado.'","nomD":"'.$nombre_Encargado.'","idAD":"'.$id_Area_Encargado.'"';
+									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
+					    		}
+					    	}
+					    	else
+					    	{
+					    		$error = 'se encontraron no se encontro al encargado para la devolución';
+					    	}
+
+						   
+						/*
+						devolId
+						devolIdArea
+						devolNomEnc
+						*/
 					    //Devuelto para Reasignación
 					        break;
 					    case 4:
@@ -1680,6 +1719,8 @@ class ControladorRadicados
 					}
 						$dJsonAcc .= ',"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'","sw":"1"}]';
 
+					//si es asignación o reasignación que es el mismo id 1, insertará un registro para que el
+					//encargado de esa área pueda llevar su gestión al oficio
 					if ($idAccion == 1) 
 					{
 						$tabla2 = "registropqrencargado";
@@ -1693,9 +1734,7 @@ class ControladorRadicados
 		                  'fecha' => $fechaActual2,
 		                  'sw' => 1,
 		                  'id_estado' => $estadoPQR);
-		                  var_dump($datos2);
 		                  $respuesta3 = ModeloRadicados::mdlInsertarRegistrosPQREncargado($tabla2, $datos2);
-		                  var_dump($respuesta3);
 		                }
 
 					}

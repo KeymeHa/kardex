@@ -49,6 +49,12 @@ class AjaxRadicados
 		$respuesta = ControladorParametros::ctrmostrarRegistros("remitente", "id", $valor);
 		echo json_encode($respuesta);
 	}
+
+	static public function verDevolucion($valor)
+	{
+		$respuesta = ControladorPersonas::ctrVerEncargado($valor);
+		echo json_encode($respuesta);
+	}
 }
 
 
@@ -79,3 +85,8 @@ if(isset($_POST["verRemitente"]))
 if(isset($_POST["verRemitente"]))
 {	$verR = new AjaxRadicados();
 	$verR -> verRemitente($_POST["id"]);}
+
+
+if(isset($_POST["devolucion"]))
+{	$devolver = new AjaxRadicados();
+	$devolver -> verDevolucion($_POST["devolucion"]);}
