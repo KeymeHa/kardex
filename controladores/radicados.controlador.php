@@ -253,6 +253,73 @@ class ControladorRadicados
 		//}//foreach ($radicados as $key => $value)
 	}
 
+
+	static public function ctrMostrarHistorialRegistros($id, $anioActual, $fechaInicial, $fechaFinal)
+	{
+		$mostrar = new ControladorRadicados;
+		$datos = $mostrar->ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, null, $anioActual, 0);
+
+         if (is_countable($datos) && count($datos) > 0 ) 
+         {
+         	$respuesta = [[]];
+
+         	foreach ($datos as $key => $value) 
+         	{
+         		$registrosPQR = ControladorRadicados::ctrAccesoRapidoRegistros($value["id_registro"], 0);
+				$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR["id_radicado"]);
+
+				if ($registrosPQR["dias_contados"] <= $registrosPQR["dias_habiles"]) 
+				{
+					$htmldias = $registrosPQR["dias_contados"]."/".$registrosPQR["dias_habiles"];
+				}
+				else
+				{
+					$htmldias = "<strong>".$registrosPQR["dias_contados"]."/".$registrosPQR["dias_habiles"]."</strong>";
+				}
+
+				$fecha_vencimiento  = ControladorParametros::ctrOrdenFecha($registrosPQR["fecha_vencimiento"], 0);
+
+				$estado = "";
+
+				$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $value["id_estado"]);
+
+				//si es por asignar
+				if ($value["id_estado"] == 5) 
+				{
+					$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$value["id"]."' nombre='".$usuarioNombre["nombre"]."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+				}
+				else
+				{
+					$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+				}
+
+				$acciones = "<div class='btn-group'><div class='col-lg-4 col-md-3'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
+
+				if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
+				{
+					$acciones .= "<div class='col-lg-3 col-md-4 col-xs-2'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
+				}
+
+				$acciones .= "</div>";
+
+				$respuesta[$key]["fecha"] = $radicado["fecha"];
+				$respuesta[$key]["radicado"] = $radicado["radicado"];
+				$respuesta[$key]["estado"] = $estado;
+				$respuesta[$key]["asunto"] = $radicado["asunto"];
+				$respuesta[$key]["id_remitente"] = $radicado["id_remitente"];
+				$respuesta[$key]["fecha_tramite"] = $value["fecha_tramite"];
+				$respuesta[$key]["fecha_vencimiento"] = $fecha_vencimiento;
+				$respuesta[$key]["htmldias"] = $htmldias;
+				$respuesta[$key]["acciones"] = $acciones;
+         	}
+         	return $respuesta;
+         }
+         else
+         {
+         	return null;
+         }
+	}//ctrMostrarHistorialRegistros($id, $anioActual, $fechaInicial, $fechaFinal)
+
 	static public function ctrRadicar()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
@@ -1105,7 +1172,7 @@ class ControladorRadicados
 
 
 		//										   0,   0,        0,           null,      0,     0, "id",   $idRegistro
-	static public function ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, $es, $anio)
+	static public function ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, $es, $anio, $sw)
 	{
 		$query = "";
 		$tabla = "registropqrencargado";
@@ -1166,7 +1233,6 @@ class ControladorRadicados
 		}elseif ( $anio == 0 && is_null($es) ) {
 
 			
-
 			if (!is_null($fechaInicial)) 
 			{
 				$query.= " AND id_usuario = ".$id;
@@ -1179,6 +1245,9 @@ class ControladorRadicados
 		else{
 			$query.= " AND id_usuario = ".$id;
 		}
+
+		$query.= " AND sw = ".$sw;
+
 		return ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal, null, null);
 	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
 

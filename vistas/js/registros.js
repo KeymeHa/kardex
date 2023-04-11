@@ -201,6 +201,11 @@ $("div.div-tablaRegistros").on('click', '.btnVerRegistro', function() {
 	window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
 });
 
+$("table.tablas").on('click', '.btnVerRegistro', function() {
+  var idRegistro = $(this).attr("idRegistro");
+  window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
+});
+
 $("div.div-tablaRegistros").on('click', '.btnFastRegistro', function() 
 {
 

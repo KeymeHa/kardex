@@ -221,7 +221,7 @@ class TablaRegistros
 				{
 					//traer todos los registros de la tabla registropqrencargado donde sea el usuario
 
-					$registros = ControladorRadicados::ctrVerRegistrosPQREncargado($this->idUsuario, $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual);
+					$registros = ControladorRadicados::ctrVerRegistrosPQREncargado($this->idUsuario, $this->fechaInicial, $this->fechaFinal, $this->estado, $this->anioActual, 1);
 
 					if (is_countable($registros) && count($registros) > 0 && isset($registros[0]["id_registro"]) ) 
 					{
@@ -321,14 +321,19 @@ class TablaRegistros
 									$htmldias = "<strong>".$registrosPQR["dias_contados"]."/".$registrosPQR["dias_habiles"]."</strong>";
 								}
 
+								/*
+
+								"'.$areaNombre["nombre"].'",
+					    		"'.$usuarioNombre["nombre"].'",
+
+								*/
+
 								$dJson .='[
 					    		"'.$radicado["fecha"].'",
 					    		"'.$radicado["radicado"].'",
 					    		"'.$estado.'",
 					    		"'.$radicado["asunto"].'",
 					    		"'.$radicado["id_remitente"].'",
-					    		"'.$areaNombre["nombre"].'",
-					    		"'.$usuarioNombre["nombre"].'",
 					    		"'.$fecha_respuesta.'",
 					    		"'.$fecha_vencimiento.'",
 					    		"'.$htmldias.'",

@@ -264,7 +264,7 @@
 
       <div class="box-header with-border">
         <h3 class="box-title">
-          Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';} ?>
+          Registros <?php if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';}else{ echo 'vigentes.';} ?>
         </h3>
       </div>
       <div class="box-body div-tablaRegistros">
@@ -277,8 +277,11 @@
            <th>Estado</th>
            <th>Asunto</th>
            <th>Remitente</th>
-           <th>Área</th>
-           <th>Encargado</th>
+           <?php if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 8) 
+           {
+            echo '<th>Área</th>
+                  <th>Encargado</th>';
+           } ?>
            <th>Fecha Respuesta</th>
            <th>Fecha Vencimiento</th>
            <th>días</th> 
@@ -297,9 +300,66 @@
      include("reportes/oficiosAreaspqr.php");
      include("reportes/oficiospqr.php");
     }
+    else
+    {
+
+
+      $hisRegistros = ControladorRadicados::ctrMostrarHistorialRegistros($_SESSION["id"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+
+      if (!is_null($hisRegistros)) 
+      {
+        echo '<div class="box box-success">
+                <div class="box-header">
+                  <h3 class="box-title">Historial</h3>
+                </div>
+                <div class="box-body">
+                  
+                <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+                <thead>
+                 <tr>
+                   <th>Fecha Radicado</th>
+                   <th># Radicado</th>
+                   <th>Estado</th>
+                   <th>Asunto</th>
+                   <th>Remitente</th>
+                   <th>Fecha Tramite</th>
+                   <th>Fecha Vencimiento</th>
+                   <th>días</th> 
+                   <th style="width: 120px">Acciones</th>
+                 </tr> 
+                </thead>
+                <tbody>';
+
+                foreach ($hisRegistros as $key => $value) 
+                {
+                  echo '<tr>
+                          <td>'.$value["fecha"].'</td>
+                          <td>'.$value["radicado"].'</td>
+                          <td>'.$value["estado"].'</td>
+                          <td>'.$value["asunto"].'</td>
+                          <td>'.$value["id_remitente"].'</td>
+                          <td>'.$value["fecha_tramite"].'</td>
+                          <td>'.$value["fecha_vencimiento"].'</td>
+                          <td>'.$value["htmldias"].'</td>
+                          <td>'.$value["acciones"].'</td>
+                        </tr>';
+                }//foreach
+
+                echo '
+                </tbody>
+                </table>
+
+                </div>
+              </div>';
+      }// if (!is_null($hisRegistros)) 
+
+    }//else ($_SESSION["perfil"] != 7 && $_SESSION["perfil"] != 11) 
 
 
     ?>
+
+
+
 
   </section>
 </div>

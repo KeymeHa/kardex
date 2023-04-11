@@ -16,3 +16,7 @@ ALTER TABLE `accion_pqr`
 ALTER TABLE `registropqr`
 	ADD COLUMN `id_accion` INT(10) NOT NULL DEFAULT '9' AFTER `id_pqr`,
 	ADD CONSTRAINT `FK_registropqr_accion_pqr` FOREIGN KEY (`id_accion`) REFERENCES `accion_pqr` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+ALTER TABLE `registropqrencargado`
+	ADD COLUMN `fecha_tramite` DATETIME NOT NULL AFTER `fecha`;
