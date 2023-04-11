@@ -286,6 +286,10 @@
         <div class="timeline-item">
           <span class="time"><i class="fa fa-clock-o"></i> <?php echo $registro["hora"];?></span>
             <h3 class="timeline-header">Radicación del documento.</h3>
+            <?php  if (!is_null($radicado["observaciones"]) && $radicado["observaciones"] != "" ) {
+                echo '<div class="timeline-body">Observaciones: '.$radicado["observaciones"].'</div>';
+              } ?>
+            
         </div>
       </li>
 
@@ -357,7 +361,7 @@
 
                           if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
                           {
-                             echo '<div class="timeline-body">'.$accionesPQR[$x]["obs"].'</div>';
+                             echo '<div class="timeline-body"><strong>'.$nombreObs.': </strong>'.$accionesPQR[$x]["obs"].'</div>';
                           }
 
                           if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
@@ -396,7 +400,7 @@
 
                           if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
                           {
-                             echo '<div class="timeline-body">'.$accionesPQR[$x]["obs"].'</div>';
+                             echo '<div class="timeline-body"><strong>'.$nombreObs.': </strong>'.$accionesPQR[$x]["obs"].'</div>';
                           }
 
                           if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
