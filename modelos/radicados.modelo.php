@@ -592,8 +592,9 @@ class ModeloRadicados
 
 	static public function mdlAcualizarTrazabilidad($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_area = :id_area, id_estado = :id_estado, acciones = :acciones WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_accion = :id_accion, id_usuario = :id_usuario, id_area = :id_area, id_estado = :id_estado, acciones = :acciones WHERE id = :id");
 
+		$stmt->bindParam(":id_accion", $datos["id_accion"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_area", $datos["id_area"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_STR);

@@ -1740,6 +1740,7 @@ class ControladorRadicados
 					}
 
 					$datos = array( 
+					'id_accion' => $idAccion,
 					'id_usuario' => $id_Encargado,
 					'id_area' => $id_Area_Encargado,
 					'id_estado' => $estadoPQR,
