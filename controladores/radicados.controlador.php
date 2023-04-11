@@ -1801,7 +1801,7 @@ class ControladorRadicados
 	static public function ctractualizarRegistros($idUsuario, $idPerfil, $anio)
 	{
 		$traer = new ControladorRadicados ;
-		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null);
+		$registrosPQR = $traer -> ctrVerRegistrosPQR($idUsuario, $idPerfil, null, null, null, $anio, null , null, null);
 
 		date_default_timezone_set('America/Bogota');
 		$fechaActual = date("Y-m-d");
