@@ -319,7 +319,7 @@ $('#select_accion').change(function() {
         tablaRemitentesExternos();
         paginaCargada(37, 0, 0, 0, 1, 0);
     }
-    else if(valor == 3)
+    else if(valor == 3 || valor == 4)
     {
         var datos = new FormData();
         datos.append("devolucion", 7);
@@ -335,11 +335,25 @@ $('#select_accion').change(function() {
             dataType: "json",
             success: function(respuesta){
 
+                var msnUno = "";
+                var msnDos = "";
+
+                if (valor == 3) 
+                {
+                    msnUno = "realizar la devolución";
+                    msnDos = "para su reasignación";
+                }
+                else
+                {
+                    msnUno = "enviar la posible respuesta";
+                    msnDos = "para la revisión de la posible respuesta";
+                }
+
               if (respuesta["nombreArea"] != null) 
               {
                 $("#contenido-modal-accion").append('<blockquote>'+
                   '<p>Realizar devolución</p>'+
-                  '<small>Se regresará el oficio a <cite title="Source Title">'+respuesta["nombre"]+'</cite> del área '+respuesta["nombreArea"]+', para su reasignación</small>'+
+                  '<small>Se regresará el oficio a <cite title="Source Title">'+respuesta["nombre"]+'</cite> del área '+respuesta["nombreArea"]+', '+msnDos+'.</small>'+
                   '</blockquote><input type="hidden" name="devolId" value="'+respuesta["id"]+'">'+
                   '<input type="hidden" name="devolIdArea" value="'+respuesta["idArea"]+'">'+
                   '<input type="hidden" name="devolNomEnc" value="'+respuesta["nombre"]+'">');
@@ -348,7 +362,7 @@ $('#select_accion').change(function() {
               {
                 $("#contenido-modal-accion").append('<div class="alert alert-danger alert-dismissible">'+
                   '<h4><i class="icon fa fa-ban"></i> Alerta!</h4>'+
-                  'Ha Ocurrido un error al buscar un encargado para realizar la devolución, contacte al administrador.'+
+                  'Ha Ocurrido un error al buscar un encargado para '+msnUno+', contacte al administrador.'+
                   '</div>');
                 //devolId = devolución Id del encargado
                 //devolIdArea = devolución id del área a la que pertenece el encargado
@@ -359,12 +373,7 @@ $('#select_accion').change(function() {
             }
 
           });
-    }
-    
-    //Respondido por evaluar
-    else if(valor == 4)
-    {
-        
+
     }
     //Respondido y Enviado (Se genero respuesta por el encargado de 
     //gestionar la respuesta y fue enviado al supervisor para su aprobación)

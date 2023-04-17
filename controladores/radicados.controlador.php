@@ -1667,11 +1667,17 @@ class ControladorRadicados
 
 							    	$dJsonAccTemp = '"id":"'.$idSESSION.'","nom":"'.$nombre_EncargadoD["nombre"].'","idA":"'.$id_Area_EncargadoD.'","idD":"'.$id_Encargado.'","nomD":"'.$nombre_Encargado.'","idAD":"'.$id_Area_Encargado.'"';
 									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
+
+									$dataRegE = array('sw' => 0, 
+													  'id_accion' => 3,
+													  'fecha_tramite' => date("Y-m-d H:i:s") );
+
+									$actualizarRegE = ModeloRadicados::mdlActualizarRegE("registropqrencargado", $_POST["idRegistro"] , $idSESSION, $dataRegE);
 					    		}
 					    	}
 					    	else
 					    	{
-					    		$error = 'se encontraron no se encontro al encargado para la devolución';
+					    		$error = 'se encontraron no se encontro al encargado para realizar esta acción.';
 					    	}
 
 						   
@@ -1684,6 +1690,42 @@ class ControladorRadicados
 					        break;
 					    case 4:
 					    //Respondido por Evaluar
+					    	if (isset($_POST["devolId"]) && isset($_POST["devolNomEnc"]) && isset($_POST["devolIdArea"])) 
+					    	{
+					    		//id_Encargado para quien realiza la accion
+					    		//id_EncargadoD para quien se le devuelve el oficio
+
+					    		//buscar nombre
+					    		//buscar área
+
+					    		$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $idSESSION);
+
+					    		if (!isset($persona["id_usuario"])) 
+					    		{
+					    			$error = "No se encontro asociado a un área.";
+					    		}
+					    		else
+					    		{
+					    			$id_Area_EncargadoD = $persona["id_area"];
+									$nombre_EncargadoD = ControladorPersonas::ctrMostrarPersonas("id_usuario", $idSESSION);
+
+					    			$id_Encargado = $_POST["devolId"];
+									$nombre_Encargado = $_POST["devolNomEnc"];
+									$id_Area_Encargado = $_POST["devolIdArea"];
+
+							    	$dJsonAccTemp = '"id":"'.$idSESSION.'","nom":"'.$nombre_EncargadoD["nombre"].'","idA":"'.$id_Area_EncargadoD.'","idD":"'.$id_Encargado.'","nomD":"'.$nombre_Encargado.'","idAD":"'.$id_Area_Encargado.'"';
+									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
+									$dataRegE = array('sw' => 0, 
+													  'id_accion' => 4,
+													  'fecha_tramite' => date("Y-m-d H:i:s") );
+
+									$actualizarRegE = ModeloRadicados::mdlActualizarRegE("registropqrencargado", $_POST["idRegistro"] , $idSESSION, $dataRegE);
+					    		}
+					    	}
+					    	else
+					    	{
+					    		$error = 'se encontraron no se encontro al encargado para realizar esta acción.';
+					    	}
 					        break;
 					    case 5:
 					    //Respondido y Enviado

@@ -447,7 +447,34 @@
                           </li>';
                         break;
                       case 4:
-                        # code...
+                        $areaR = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idA"], "nombre");
+                        $areaRD = ControladorParametros::ctrmostrarRegistroEspecifico('areas', "id", $accionesPQR[$x]["da"]["idAD"], "nombre");
+
+                        echo '<li>
+                          <i class="fa fa-sticky-note-o bg-blue"></i>
+                          <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i> '.$horaR.'</span>
+                          <h3 class="timeline-header">';
+
+                          
+
+                        echo '<strong>'.$accionesPQR[$x]["da"]["nom"].'</strong>, perteneciente a <strong>'.$areaR.'</strong>,<strong> Envió</strong> la posible respuesta a <strong>'.$accionesPQR[$x]["da"]["nomD"].'</strong> del área <strong>'.$areaRD.'</strong> para su revisión.</h3>';
+
+                          if (isset($accionesPQR[$x]["obs"]) && !empty($accionesPQR[$x]["obs"]) ) 
+                          {
+                             echo '<div class="timeline-body"><strong>'.$nombreObs.'</strong>: '.$accionesPQR[$x]["obs"].'</div>';
+                          }
+
+                          if (isset($accionesPQR[$x]["sop"]) && !empty($accionesPQR[$x]["sop"]) ) 
+                          {
+                             echo '<div class="timeline-footer">
+                              <a href="vistas/radicados/'.strval($anio->format("Y")).'/'.$radicado["radicado"].'/'.$accionesPQR[$x]["sop"].'.pdf" class="btn btn-primary btn-xs"><i class="fa fa-paperclip"></i> Anexo</a>
+                              </div>';
+                          }
+
+                          echo '
+                          </div>
+                          </li>';
                         break;
                       case 5:
                         # code...

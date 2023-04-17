@@ -20,3 +20,11 @@ ALTER TABLE `registropqr`
 
 ALTER TABLE `registropqrencargado`
 	ADD COLUMN `fecha_tramite` DATETIME NOT NULL AFTER `fecha`;
+
+ALTER TABLE `registropqrencargado`
+	ADD UNIQUE INDEX `id_registro` (`id_registro`);
+
+
+ALTER TABLE `registropqrencargado`
+	ADD COLUMN `id_accion` INT NOT NULL DEFAULT '1' AFTER `id_estado`,
+	ADD CONSTRAINT `FK_registropqrencargado_accion_pqr` FOREIGN KEY (`id_accion`) REFERENCES `accion_pqr` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;

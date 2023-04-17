@@ -811,4 +811,31 @@ class ModeloRadicados
 
 	}//mdlContarAreaRegistros
 
+
+	//										("registropqrencargado", $id_pqr , $idSESSION, "sw", 0)
+	static public function mdlActualizarRegE($tabla, $idReg, $idUsr, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET sw = :sw, id_accion = :id_accion, fecha_tramite = :fecha_tramite WHERE id_registro = :id_registro AND id_usuario = :id_usuario");
+
+		$stmt -> bindParam(":sw", $datos["sw"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_accion", $datos["id_accion"], PDO::PARAM_INT);
+		$stmt -> bindParam(":fecha_tramite", $datos["fecha_tramite"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_registro", $idReg, PDO::PARAM_INT);
+		$stmt -> bindParam(":id_usuario", $idUsr, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}//mdlActualizarRegE
+
 }
