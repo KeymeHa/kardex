@@ -163,6 +163,7 @@
 
               $contarPorArea = ControladorRadicados::ctrContarAsignaciones($_SESSION["anioActual"], $fechaInicial, $fechaFinal); 
               $tcuadrante = [];
+              $tcuadrante[0] = 0;
               $tt = 0;
               if (!is_null($contarPorArea) && is_countable($contarPorArea) && count($contarPorArea) > 0 ) 
               {
@@ -210,9 +211,9 @@
               <th class="bg-gray" style="text-align: center;" title="Total">Total</th>
             </tr>
             <tr>
-              <th id="th-r" style="text-align: center" title="Vencidas">'.$tcuadrante[3].'</th>
-              <th id="th-y" style="text-align: center" title="Pendientes">'.$tcuadrante[2].'</th>
-              <th id="th-rd" style="text-align: center" title="Extemporaneas">'.$tcuadrante[4].'</th>
+              <th id="th-r" style="text-align: center" title="Vencidas">'.$tcuadrante[4].'</th>
+              <th id="th-y" style="text-align: center" title="Pendientes">'.$tcuadrante[3].'</th>
+              <th id="th-rd" style="text-align: center" title="Extemporaneas">'.$tcuadrante[2].'</th>
               <th id="th-g" style="text-align: center" title="Resueltas">'.$tcuadrante[1].'</th>
               <th id="th-gr" style="text-align: center" title="Total">'.$tt.'</th>
             </tr>

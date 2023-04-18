@@ -2138,10 +2138,10 @@ class ControladorRadicados
 			$count  = 0;
 			//el limite es 4, haciendo referencia de los 4 cuadrantes
 
-			$estados = array(1 => "(".$tabla.".id_estado = 1 or ".$tabla.".id_estado = 6)",
-						   2 => $tabla.".id_estado = 4",
-						   3 => $tabla.".id_estado = 2",
-						   4 => $tabla.".id_estado = 3" );
+			$estados = array(  1 => "(".$tabla.".id_estado = 1 or ".$tabla.".id_estado = 6)",
+							   2 => $tabla.".id_estado = 4",
+							   3 => $tabla.".id_estado = 2",
+							   4 => $tabla.".id_estado = 3" );
 
 			for ($i=1; $i <= 4; $i++) 
 			{ 
@@ -2154,7 +2154,7 @@ class ControladorRadicados
 				{
 					if ($anio != "") 
 					{
-						$estados[$i] = "AND ".$estados[$i]; 
+						$estados[$i] = $anio." AND ".$estados[$i]; 
 					}
 					else
 					{
