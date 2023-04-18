@@ -754,19 +754,10 @@ class ModeloRadicados
 	static public function mdlContarAreaRegistros($query, $tabla, $anio, $fechaInicial, $fechaFinal)
 	{
 
-		if($fechaInicial == null){
-
-			if ($anio != "") 
-			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area, areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
-				$stmt -> execute();
-				//INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC
-			}
-			else
-			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area,  areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
-				$stmt -> execute();
-			}
+		if($fechaInicial == null)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla.id_area, areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id $query GROUP BY(areas.nombre) ORDER BY(areas.nombre) ASC");
+			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
 
