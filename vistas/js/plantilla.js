@@ -758,6 +758,17 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			tablaElegida =  $('.tablaPQR');
 			tablaAjax = 'pqr';
 		}
+		else if(pagina == 43)
+		{
+			tablaElegida =  $('.tablaLicencias');
+
+			if( dato !== 0 && dato2 !== 0 )
+			{
+				variable = "?item=" + dato + "&id=" + dato2;
+			}
+
+			tablaAjax = 'licencias';
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {

@@ -45,17 +45,32 @@
 					<span>Usuarios</span>
 				</a></li>';
 
+			
+
+		}
+
+
+		//SISTEMAS
+		if($_SESSION["perfil"] == 1 || $_SESSION["perfil"] == 10)
+		{
 			echo '<li class="header">Inventario Equipos de Computo</li>';
 
-			echo '<li ';
-			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'usuarios' ){ echo 'active';} }
+			echo '<li class="';
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'equipos' ){ echo 'active';} }
 
-			echo '><a href="equipos">
+			echo '"><a href="equipos">
 					<i class="fa fa-desktop"></i>
 					<span>Base de Datos PC</span>
 				</a></li>';
 
-		}
+			echo '<li class="';
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'equiposlicencias' ){ echo 'active';} }
+
+			echo '"><a href="equiposlicencias">
+					<i class="fa fa-windows"></i>
+					<span>Licencias</span>
+				</a></li>';
+		} 
 
 		//COMPRAS
 
