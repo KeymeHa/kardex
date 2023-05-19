@@ -126,6 +126,88 @@ class ModeloEquipos
 		$stmt -> close();
 		$stmt = null;
 
+	}//mdlDesvincularLicencia($tabla, $id)
+
+	//PARAMETROS	
+
+	public static function mdlMostrarParametros($tabla, $item, $valor)
+	{
+
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+			if ($stmt->execute()) 
+			{
+				return $stmt->fetch();
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+			if ($stmt->execute()) 
+			{
+				return $stmt->fetchAll();
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		
+		$stmt->close();
+		$stmt = null;
+	}//mdlMostrarParametros($tabla, $id)
+
+	public static function mdlNuevoParametro($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, tipo, fecha_creacion, id_usr) VALUES (:nombre, :tipo, :fecha_creacion, :id_usr)");
+
+		$stmt->bindParam(":nombre" , $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo" , $datos["tipo"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_creacion" , $datos["fecha_creacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usr" , $datos["id_usr"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}
+
+	public static function mdleditarParametro($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, fecha_actualizacion = :fecha_actualizacion, id_act = :id_act WHERE id = :id");
+
+		$stmt->bindParam(":nombre" , $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_actualizacion" , $datos["fecha_actualizacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_act" , $datos["id_act"], PDO::PARAM_INT);//id del usuario que actualizo el parametro
+		$stmt->bindParam(":id" , $datos["id"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt -> close();
+		$stmt = null;
 	}
 
 }

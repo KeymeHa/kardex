@@ -70,6 +70,14 @@
 					<i class="fa fa-windows"></i>
 					<span>Licencias</span>
 				</a></li>';
+
+			echo '<li class="';
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'equiposParametros' ){ echo 'active';} }
+
+			echo '"><a href="equiposParametros">
+					<i class="fa fa-cog"></i>
+					<span>Parametros</span>
+				</a></li>';
 		} 
 
 		//COMPRAS

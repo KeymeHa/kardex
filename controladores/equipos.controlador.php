@@ -157,9 +157,7 @@ class ControladorEquipos
 
 					});
 					</script>';
-					
 		}
-
 		return ;
 	}
 
@@ -221,6 +219,101 @@ class ControladorEquipos
 
 		return;
 
+	}
+
+	//PARAMETROS
+
+	public static function ctrMostrarParametros($item, $valor)
+	{
+		$tabla = "equiposparametros";
+		$respuesta = ModeloEquipos::mdlMostrarParametros($tabla, $item, $valor);
+		return $respuesta;
+	}
+
+	public static function ctrAccionParametro($idSession)
+	{
+		if (isset($_POST["inputParamAccion"]) )
+		{
+			$titulo = "";
+			$tipo="";
+
+			date_default_timezone_set('America/Bogota');
+			$fechaActual = date("Y-m-d");
+		
+			$accion = new ControladorEquipos();
+
+			if ($_POST["inputParamAccion"] == 1) 
+			{
+				$respuesta = $accion -> ctrEditarParametro($_POST, $idSession, $fechaActual);
+
+				if ($respuesta == "ok") 
+				{
+					$titulo = "Parametro Editado";
+					$tipo="success";
+				}
+				else
+				{
+					$titulo = "Ha ocurrido un error al editar el parametro";
+					$tipo="error";
+				}
+			}
+			elseif($_POST["inputParamAccion"] == 0) 
+			{
+				$respuesta = $accion -> ctrNuevoParametro($_POST, $idSession, $fechaActual);
+
+				if ($respuesta == "ok") 
+				{
+					$titulo = "Parametro Añadido";
+					$tipo="success";
+				}
+				else
+				{
+					$titulo = "Ha ocurrido un error al añadir el parametro.";
+					$tipo="error";
+				}
+			}
+
+
+			echo '<script>
+					swal({
+						type: "'.$tipo.'",
+						title: "'.$titulo.'",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+						if(result.value){
+						
+							window.location = "equiposParametros";
+						}
+					});
+					</script>';
+		}
+	}
+
+	static public function ctrNuevoParametro($post, $idSession, $fecha)
+	{
+		$tabla = "equiposparametros";
+		$datos = array( 'nombre' => $post["paramValue"],
+						'tipo' => $post["inputParamTipo"],
+						'fecha_creacion' => $fecha,
+						'id_usr' => $idSession);
+
+		$respuesta = ModeloEquipos::mdlNuevoParametro($tabla, $datos);
+		return $respuesta;
+	}
+
+	static public function ctrEditarParametro($post, $idSession, $fecha)
+	{
+		$tabla = "equiposparametros";
+		$datos = array( 'nombre' => $post["paramValue"],
+						'fecha_actualizacion' => $fecha,
+						'id_act' => $idSession,
+						'id' => $post["inputParamid"]);
+
+		$respuesta = ModeloEquipos::mdleditarParametro($tabla, $datos);
+		return $respuesta;	
 	}
 
 	//PROPIETARIOS

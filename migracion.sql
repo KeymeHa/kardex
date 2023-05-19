@@ -114,3 +114,28 @@ ALTER TABLE `equipos`
 
 
 INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pOnce`, `descripcion`) VALUES ('equiposlicencias', 'Licencias', '0', '0', '0', '10', '0', 'Pagina que lista las licencias adquiridas de los programas, como el paquete de ofimatica');
+INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pOnce`) VALUES ('equiposParametros', 'Parametros', '0', '0', '0', '10', '0');
+
+
+CREATE TABLE `equiposParametros` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(100) NOT NULL DEFAULT '0',
+	`tipo` SMALLINT(2) NOT NULL DEFAULT 0,
+	`fecha_creacion` DATE NOT NULL,
+	`elim` TINYINT(1) NOT NULL DEFAULT 0,
+	PRIMARY KEY (`id`)
+)
+COMMENT='Almacenara los paramtros de equipos, como propietarios, cpu'
+COLLATE='utf8mb4_unicode_ci'
+;
+
+
+ALTER TABLE `equiposparametros`
+	ADD COLUMN `id_usr` INT(11) NOT NULL AFTER `elim`,
+	ADD CONSTRAINT `FK_equiposparametros_usuarios` FOREIGN KEY (`id_usr`) REFERENCES `usuarios` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE `equiposparametros`
+	ADD COLUMN `fecha_actualizacion` DATE NOT NULL AFTER `id_usr`;
+
+ALTER TABLE `equiposparametros`
+	ADD COLUMN `id_act` INT(11) NULL AFTER `fecha_actualizacion`;
