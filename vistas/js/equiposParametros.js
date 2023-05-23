@@ -1,9 +1,9 @@
 $("button.btn-param").click(function() {
 	var opcion = $(this).attr("sw");
 	var titulo = "";
-	var datos = new FormData();
+	/*var datos = new FormData();
 	datos.append("idParam", opcion);
-	datos.append("item", "tipo");
+	datos.append("item", "tipo");*/
 
 	if (opcion == 1) 
 	{
@@ -39,12 +39,15 @@ $("button.btn-param").click(function() {
 	}
 
 	$("div.box-contenido").children().remove();
+
+	
+
 	$("div.box-contenido").append('<div class="box box-success">'+
           '<div class="box-header with-border">'+
             '<h3 class="box-title">'+titulo+'</h3>'+
           '</div>'+
           '<div class="box-body">'+
-            '<table class="table table-bordered table-striped dt-responsive tablas" width="100%" data-page-length="10">'+       
+            '<table class="table table-bordered table-striped dt-responsive tablaParamE" width="100%" data-page-length="10">'+       
               '<thead>'+      
                '<tr>'+           
                 '<th style="width:10px">#</th>'+
@@ -61,7 +64,9 @@ $("button.btn-param").click(function() {
           '</div>'+
         '</div><!-- box box-success -->');
 
+	paginaCargada(44, 0, 0, 0, "tipo", opcion);
 
+	/*
 	$.ajax({
 
 		url:"ajax/equipos.ajax.php",
@@ -90,6 +95,9 @@ $("button.btn-param").click(function() {
 
 		}//success: function(respuesta)
 	});//ajax
+	*/
+
+
 });
 
 $("div.box-contenido").on('click', '.btn-Parametro', function() {

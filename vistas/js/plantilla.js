@@ -769,6 +769,15 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 
 			tablaAjax = 'licencias';
 		}
+		else if(pagina == 44)
+		{
+			tablaElegida =  $('.tablaParamE');
+			if( dato !== 0 && dato2 !== 0 )
+			{
+				variable = "?item=" + dato + "&id=" + dato2;
+			}
+			tablaAjax = 'equiposparam';
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {
