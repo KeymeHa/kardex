@@ -73,29 +73,53 @@
               <div class="form-group">
                 <label>*Propietario</label>
                 <select class="form-control" required>
-                  <option>EDUBAR SA</option>
-                  <option>Accesar SAS</option>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
                 </select>
               </div>
 
               <div class="form-group">
                 <label>*Arquitectura</label>
                 <select class="form-control" required>
-                  <option>Portatil</option>
-                  <option>Escritorio</option>
-                  <option>MAC</option>
-                  <option>Todo en Uno</option>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="pc_marca">*Marca Equipo</label>
-                <input type="text" class="form-control" id="pc_marca" placeholder="HP" required>
+                <label>*Marca Equipo</label>
+                <select class="form-control" required>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
+                </select>
               </div>
 
               <div class="form-group">
-                <label for="pc_modelo">*Modelo</label>
-                <input type="text" class="form-control" id="pc_modelo" placeholder="Elitebook x360" required>
+                <label>*Modelo</label>
+                <select class="form-control" required>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
+                </select>
               </div>
 
             </div><!--col-md-6 col-lg-4 col-sm-12-->
@@ -103,13 +127,29 @@
             <div class="col-md-6 col-lg-4 col-sm-12">
 
               <div class="form-group">
-                <label for="pc_cpumarca">*CPU: Marca</label>
-                <input type="text" class="form-control" id="pc_cpumarca" placeholder="INTE, AMD" required>
+                <label>*CPU: Marca</label>
+                <select class="form-control" required>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
+                </select>
               </div>
 
               <div class="form-group">
-                <label for="pc_cpumodelo">*CPU: Modelo</label>
-                <input type="text" class="form-control" id="pc_cpumodelo" placeholder="i5, RYZEN 7" required>
+                <label>*CPU: Modelo</label>
+                <select class="form-control" required>
+                  <?php
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6);
+                    foreach ($paramE as $key => $value) {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                      # code...
+                    }
+                  ?>
+                </select>
               </div>
 
               <div class="form-group">
@@ -129,7 +169,7 @@
 
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
-                <input type="number" class="form-control" id="pc_hdd" min="120" value="1000" placeholder="1000">
+                <input type="number" class="form-control" id="pc_hdd" min="120" value="" placeholder="1000">
               </div>
 
             </div><!--col-md-6 col-lg-4 col-sm-12-->
@@ -171,16 +211,30 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="pc_so">*Sistema Operativo</label>
-                  <input type="text" class="form-control" id="pc_so" placeholder="IOS, Windows, Linux" required>
+                  <label>*Sistema Operativo</label>
+                  <select class="form-control" required>
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
                 </div>
 
-                <div class="form-group">
-                  <label for="pc_soVersion">*Versión SO</label>
-                  <input type="text" class="form-control" id="pc_soVersion" title="Versión Sistema Operativo" placeholder="Monterey, 11, Ubuntu 20.04" required>
-                </div>
-
-                
+                  <div class="form-group">
+                    <label>*Versión SO</label>
+                    <select class="form-control" required>
+                      <?php
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8);
+                        foreach ($paramE as $key => $value) {
+                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                          # code...
+                        }
+                      ?>
+                    </select>
+                  </div>
 
               </div>
 
