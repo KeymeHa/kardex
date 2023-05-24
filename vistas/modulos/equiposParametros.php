@@ -137,10 +137,18 @@
         </div>
         <?php
           $parametrosE = new ControladorEquipos();
-          $parametrosE -> ctrAccionParametro($_SESSION);
+          $parametrosE -> ctrAccionParametro($_SESSION["id"]);
         ?>
 
       </form>
     </div>
   </div>
 </div>
+
+
+<?php
+
+  $borrarParametro = new ControladorEquipos();
+  $borrarParametro -> ctrBorrarParametro($_SESSION["id"]);
+
+?>

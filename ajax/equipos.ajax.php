@@ -10,11 +10,11 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
-	/*public static function mostrarParametros($item, $valor)
+	public static function mostrarParametros($valor1, $valor2)
 	{
-		$respuesta = ControladorEquipos::ctrMostrarParametros($item, $valor);
+		$respuesta = ControladorEquipos::ctrExistenciaParametro("tipo", $valor1, "nombre" ,$valor2);
 		echo json_encode($respuesta);
-	}*/
+	}
 }
 
 
@@ -25,11 +25,11 @@ if (isset($_POST["idLicencia"]))
 }
 
 
-/*
-if (isset($_POST["idParam"])) 
+
+if (isset($_POST["valor"])) 
 {
 	$mostrar = new AjaxEquipos();
-	$mostrar -> mostrarParametros($_POST["item"], $_POST["idParam"]);
+	$mostrar -> mostrarParametros($_POST["tipo"], $_POST["valor"]);
 }
-*/
+
 

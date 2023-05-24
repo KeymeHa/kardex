@@ -124,3 +124,57 @@ $("div.box-contenido").on('click', '.btn-Parametro', function() {
 		$("h4.modal-title").html("Editar Parametro");
 	}
 });
+
+$("div.box-contenido").on('click', '.btn-ParametroElim', function() {
+
+	var tipoId = $(this).attr("tipoId");
+	var nombre = $(this).attr("nombreParam");
+	var tipo = $(this).attr("tipo");
+
+	swal({
+		type: "warning",
+		title: "¡Estas Seguro de Eliminar el parametro '"+nombre+"'!",
+		showCancelButton: true,
+		showConfirmButton: true,
+		confirmButtonText: "Eliminar",
+		cancelButtonText: "Cancelar",
+		confirmButtonColor: '#d33',
+		cancelButtonColor: '#149243',
+	}).then((result)=>{
+
+		if (result.value) 
+		{
+			window.location = "index.php?ruta=equiposParametros&idPe="+tipoId+"&tipo="+tipo;
+		}
+	})
+
+});
+
+$("#inputParam").change(function(){
+
+	var nombre = $(this).val();
+	var tipo = $("#inputParamTipo").val();
+	var datos = new FormData();
+	datos.append("valor", nombre);
+	datos.append("tipo", tipo);
+
+	$.ajax({
+
+		url:"ajax/equipos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{
+				if(respuesta)
+				{
+					$("#inputParam").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe este parametro.</div>');
+		    		$("#inputParam").val("");
+		    		ocultarAlert();
+	    		}	
+		}
+	});
+})

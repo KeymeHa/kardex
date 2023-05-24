@@ -139,3 +139,6 @@ ALTER TABLE `equiposparametros`
 
 ALTER TABLE `equiposparametros`
 	ADD COLUMN `id_act` INT(11) NULL AFTER `fecha_actualizacion`;
+
+ALTER TABLE `equipos`
+	ADD COLUMN `rol` INT(1) NOT NULL DEFAULT '0' AFTER `id_proyecto`;

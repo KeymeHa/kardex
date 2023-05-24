@@ -210,4 +210,90 @@ class ModeloEquipos
 		$stmt = null;
 	}
 
+
+	public static function mdlBorrarParametro($id)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE equiposparametros SET elim = 1 WHERE id = :id");
+		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			# code...
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt ->close();
+
+		$stmt = null;
+
+	}
+
+	public static function mdlDELETEParametro($id)
+	{
+		$stmt = Conexion::conectar()->prepare("DELETE FROM equiposparametros WHERE id = :id");
+		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			# code...
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt ->close();
+
+		$stmt = null;
+
+	}
+
+
+	public static function mdlValidarExistencia($tabla, $item1, $valor1, $item2, $valor2)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
+		$stmt->bindParam(":".$item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return $stmt->fetch();
+		}
+		else
+		{
+			return 0;
+		}
+
+		$stmt ->close();
+		$stmt = null;
+
+	}
+
+
+	//EQUIPOS
+
+	public static function mdlContarParametros($tabla, $item, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item ");
+
+		$stmt->bindParam(":".$item , $valor , PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return $stmt->fetch();
+		}
+		else
+		{
+			return 0;
+		}
+
+		$stmt -> close();
+		$stmt = null;
+	}
+
 }

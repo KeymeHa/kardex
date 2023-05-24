@@ -17,7 +17,7 @@ class TablaParametros
 		for( $i = 0; $i < count($parametro); $i++)
 		{	
 
-			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btn-Parametro' title='Editar Parametro' data-toggle='modal' data-target='#modalParametro' nombreParam='".$parametro[$i]["nombre"]."' tipoAcc='1' tipoId='".$parametro[$i]["id"]."' tipo='".$tipo."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-ParametroElim' title='Eliminar Parametro' tipoId='".$parametro[$i]["id"]."' nombreParam='".$parametro[$i]["nombre"]."'><i class='fa fa-close'></i></button></div></div>";			
+			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btn-Parametro' title='Editar Parametro' data-toggle='modal' data-target='#modalParametro' nombreParam='".$parametro[$i]["nombre"]."' tipoAcc='1' tipoId='".$parametro[$i]["id"]."' tipo='".$tipo."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-ParametroElim' title='Eliminar Parametro' tipoId='".$parametro[$i]["id"]."' nombreParam='".$parametro[$i]["nombre"]."' tipo='".$tipo."'><i class='fa fa-close'></i></button></div></div>";			
 
 		    $dJson .='[
 	    		"'.($i+1).'",

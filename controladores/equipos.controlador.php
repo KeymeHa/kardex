@@ -316,5 +316,142 @@ class ControladorEquipos
 		return $respuesta;	
 	}
 
+	static public function ctrBorrarParametro($idSession)
+	{
+
+		if (isset($_GET["idPe"]) && !is_null($_GET["idPe"]) && (isset($_GET["tipo"]) && !is_null($_GET["tipo"]) ) ) 
+		{
+			$mostrar = new ControladorEquipos();
+			$parametro = $mostrar -> ctrMostrarParametros("id", $_GET["idPe"]);
+
+			$titulo = "";
+			$tipo = "";
+
+			if (isset($parametro["id"]) && $parametro["id"] == $_GET["idPe"] ) 
+			{
+				//contar coincidencias en equipos
+				$contar = $mostrar ->ctrContarParametros($_GET["tipo"], $_GET["idPe"]);
+
+				$respuesta = "";
+
+				if ($contar == 0) 
+				{
+					$respuesta = ModeloEquipos::mdlDELETEParametro($parametro["id"]);
+				}
+				else
+				{
+					//actualizar parametro elim
+					$respuesta = ModeloEquipos::mdlBorrarParametro($parametro["id"]);
+					//eliminar parametro
+				}
+				
+
+				if ($respuesta == "ok") 
+				{
+					$titulo = "Parametro Eliminado";
+					$tipo="success";
+				}
+				else
+				{
+					$titulo = "Ha ocurrido un error al eliminar el parametro.";
+					$tipo="error";
+				}
+
+			}
+			else
+			{
+				$titulo = "Ha ocurrido un error al eliminar el parametro.";
+				$tipo="error";
+			}
+
+			echo '<script>
+					swal({
+						type: "'.$tipo.'",
+						title: "'.$titulo.'",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+						if(result.value){
+						
+							window.location = "equiposParametros";
+						}
+					});
+					</script>';
+
+		}//if (isset($_GET["idPe"]) && !is_null($_GET["idPe"]) ) 
+
+		
+	}//ctrBorrarParametro($idSession)
+
 	//PROPIETARIOS
+
+
+
+	//EQUIPOS
+
+	public static function ctrContarParametros($item, $valor)
+	{
+		switch ($item) {
+			case 1:
+				$item = "id_arquitectura";
+				break;
+			case 2:
+				$item = "id_propietario";
+				break;
+			case 3:
+				$item = "marca";
+				break;
+			case 4:
+				$item = "modelo";
+				break;
+			case 5:
+				$item = "cpu";
+				break;
+			case 6:
+				$item = "cpu_modelo";
+				break;
+			case 7:
+				$item = "so";
+				break;
+			case 8:
+				$item = "so_version";
+				break;
+			default:
+				 return 0;
+				break;
+		}
+
+		$tabla = "equipos";
+		$respuesta = ModeloEquipos::mdlContarParametros($tabla, $item, $valor);
+
+		if (isset($respuesta["COUNT(*)"])) 
+		{
+			return $respuesta["COUNT(*)"];
+		}
+		else
+		{
+			return 0;
+		}
+
+	}//ctrContarParametros($item, $valor)
+
+	public static function ctrExistenciaParametro($item1, $valor1, $item2, $valor2)
+	{
+
+		$tabla = "equiposparametros";
+
+		$respuesta = ModeloEquipos::mdlValidarExistencia($tabla, $item1, $valor1, $item2, $valor2);
+
+		if (isset($respuesta["id"]) && !is_null($respuesta["id"])) 
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+
+	}
 }
