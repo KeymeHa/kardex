@@ -78,6 +78,14 @@
 					<i class="fa fa-cog"></i>
 					<span>Parametros</span>
 				</a></li>';
+
+			echo '<li class="';
+			if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'actasIngreso' ){ echo 'active';} }
+
+			echo '"><a href="actasIngreso">
+					<i class="fa fa-file-pdf-o"></i>
+					<span>Actas</span>
+				</a></li>';
 		} 
 
 		//COMPRAS
