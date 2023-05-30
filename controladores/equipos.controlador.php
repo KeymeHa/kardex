@@ -533,7 +533,7 @@ class ControladorEquipos
 
 	public static function ctrEditarActa($post, $idSession, $files)
 	{
-				$titulo = "";
+		$titulo = "";
 		$tipo = "";
 		
 		$directorio = "";
@@ -573,33 +573,10 @@ class ControladorEquipos
 						if(!file_exists($directorio))
 						{
 							copy($tmp_name,$directorio);
-
-							$tabla = "equiposactas";
-							$datos = array('fecha' => $post["inputActaFecha"],
-											'tipo' => $post["radioActaTipo"],
-											'cantidad' => $post["inputActaCantidad"],
-											'observaciones' => $post["textObsActa"],
-											'file' => $directorio,
-											'id' => $post["inputActaId"] );
-
-
-							$respuesta = ModeloEquipos::mdlNuevaActaEquipo($tabla, $datos);
-
-							if ($respuesta == "ok") 
-							{
-								$titulo = "¡Acta ingresada al sistema!";
-								$tipo = "success";
-							}
-							else
-							{
-								$titulo = "¡Error al ingresar el acta en la base de datos!";
-								$tipo = "error";
-							}
-
 						}
 						else
 						{
-							$titulo = "¡Error al ingresar el acta!";
+							$titulo = "¡Error al editar acta!";
 							$tipo = "error";
 						}
 					}
@@ -607,6 +584,28 @@ class ControladorEquipos
 			}//si exite algo
 
 				
+		}
+
+		$tabla = "equiposactas";
+		$datos = array('fecha' => $post["inputActaFecha"],
+						'tipo' => $post["radioActaTipo"],
+						'cantidad' => $post["inputActaCantidad"],
+						'observaciones' => $post["textObsActa"],
+						'file' => $directorio,
+						'id' => $post["inputActaId"] );
+
+
+		$respuesta = ModeloEquipos::mdlEditarActaEquipo($tabla, $datos);
+
+		if ($respuesta == "ok") 
+		{
+			$titulo = "¡Acta editada!";
+			$tipo = "success";
+		}
+		else
+		{
+			$titulo = "¡Error al editar acta!";
+			$tipo = "error";
 		}
 
 		echo '<script>

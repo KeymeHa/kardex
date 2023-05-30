@@ -95,6 +95,11 @@
                 <p class="help-block">Formato Admitido PDF</p>
               </div>
 
+              <div class="form-group">
+              <label>Observaciones</label>
+              <textarea class="form-control" rows="3" name="textObsActa" placeholder="Enter ..."></textarea>
+              </div>
+
           </div><!--<div class="box-body">-->
         </div><!--<div class="modal-body">-->
 
