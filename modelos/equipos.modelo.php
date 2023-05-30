@@ -107,6 +107,88 @@ class ModeloEquipos
 		$stmt = null;		
 	}
 
+	//ACTAS
+
+	public static function mdlMostrarActas($tabla, $item, $valor)
+	{
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt->bindParam(":".$item , $valor , PDO::PARAM_INT);
+
+			if ($stmt->execute()) 
+			{
+				return $stmt->fetch();
+			}
+			else
+			{
+				return null;
+			}
+
+		}
+		else
+		{
+			if (!is_null($item) ) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+				$stmt->bindParam(":".$item , $valor , PDO::PARAM_STR);
+
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetchAll();
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetchAll();
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+
+	public static function mdlNuevaActaEquipo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha, tipo, cantidad, observaciones, file) VALUES (:fecha, :tipo, :cantidad, :observaciones, :file) ");
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_INT);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt->bindParam(":file", $datos["file"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
 
 	//EQUIPOS
 	public static function mdlDesvincularLicencia($tabla, $id)
@@ -130,20 +212,35 @@ class ModeloEquipos
 
 	//PARAMETROS	
 
-	public static function mdlMostrarParametros($tabla, $item, $valor)
+	public static function mdlMostrarParametros($tabla, $item, $valor, $item2)
 	{
-
 		if ($item == "id") 
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
-			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
-			if ($stmt->execute()) 
+			if (!is_null($item2)) 
 			{
-				return $stmt->fetch();
+				$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE $item = :$item");
+				$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetch();
+				}
+				else
+				{
+					return null;
+				}
 			}
 			else
 			{
-				return null;
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+				$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetch();
+				}
+				else
+				{
+					return null;
+				}
 			}
 		}
 		else
@@ -295,5 +392,57 @@ class ModeloEquipos
 		$stmt -> close();
 		$stmt = null;
 	}
+
+	public static function mdlMostrarEquipos($tabla, $item, $valor)
+	{
+		if ($item == "id") 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt ->bindParam(":".$item, $valor, PDO::PARAM_INT);
+			if ($stmt->execute()) 
+			{
+				return $stmt->fetch();
+			}
+			else
+			{
+				return null;
+			}
+		}//($item == "id") 
+		else
+		{
+			if (!is_null($item)) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetchAll();
+				}
+				else
+				{
+					return null;
+				}
+
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+				if ($stmt->execute()) 
+				{
+					return $stmt->fetchAll();
+				}
+				else
+				{
+					return null;
+				}
+			}//if (!is_null($item)) 
+		}//($item != "id") 
+
+		$stmt->close();
+		$stmt = null;
+
+	}//mdlMostrarEquipos($tabla, $item, $valor)
 
 }

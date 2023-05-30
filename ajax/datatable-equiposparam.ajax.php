@@ -7,7 +7,7 @@ class TablaParametros
 {
 	static public function mostrarTablaParametros($campo, $tipo)
 	{
-		 $parametro = ControladorEquipos::ctrMostrarParametros($campo, $tipo);
+		 $parametro = ControladorEquipos::ctrMostrarParametros($campo, $tipo, null);
 		 $dJson = '{"data": [';
 
 	    if ( count($parametro) == 0) 

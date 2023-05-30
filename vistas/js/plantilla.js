@@ -778,6 +778,28 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			}
 			tablaAjax = 'equiposparam';
 		}
+		else if(pagina == 45)
+		{
+			tablaElegida =  $('.tablaEquipos');
+			if( dato !== 0 && dato2 !== 0 )
+			{
+				variable = "?item=" + dato + "&valor=" + dato2;
+			}
+			else
+			{
+				variable = "?item=estado&valor=1";
+			}
+			tablaAjax = 'equipos';
+		}
+		else if(pagina == 46)
+		{
+			tablaElegida =  $('.tablaActasEntrega');
+			if( dato !== 0 && dato2 !== 0 )
+			{
+				variable = "?item=" + dato + "&valor=" + dato2;
+			}
+			tablaAjax = 'equiposactas';
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {

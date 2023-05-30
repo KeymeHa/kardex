@@ -29,9 +29,30 @@
         </button>
       </div>
       <div class="box-body">       
-      
+        <table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">
+          <thead>
+           <tr>
+             <th style="width:10px">#</th>
+             <th>PC</th>
+             <th>Serial</th>
+             <th>Arquitectura</th>
+             <th>Propiedad</th>
+             <th>Asignado a</th>
+             <th>Área</th>
+             <th>Acciones</th>
+           </tr> 
+          </thead>
+        </table> 
       </div>
     </div>
+
+    <?php
+
+    include("reportes/equiposArea.php");
+    include("reportes/equiposArquitectura.php");
+
+    ?>
+
   </section>
 </div>
 
@@ -74,7 +95,7 @@
                 <label>*Propietario</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -87,7 +108,7 @@
                 <label>*Arquitectura</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -100,7 +121,7 @@
                 <label>*Marca Equipo</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -113,7 +134,7 @@
                 <label>*Modelo</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -130,7 +151,7 @@
                 <label>*CPU: Marca</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -143,7 +164,7 @@
                 <label>*CPU: Modelo</label>
                 <select class="form-control" required>
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6);
+                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
                     foreach ($paramE as $key => $value) {
                       echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                       # code...
@@ -214,7 +235,7 @@
                   <label>*Sistema Operativo</label>
                   <select class="form-control" required>
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7);
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
                       foreach ($paramE as $key => $value) {
                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                         # code...
@@ -227,7 +248,7 @@
                     <label>*Versión SO</label>
                     <select class="form-control" required>
                       <?php
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8);
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
                         foreach ($paramE as $key => $value) {
                           echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
                           # code...

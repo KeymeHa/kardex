@@ -223,10 +223,32 @@ class ControladorEquipos
 
 	//PARAMETROS
 
-	public static function ctrMostrarParametros($item, $valor)
+	public static function ctrMostrarParametros($item, $valor, $item2)
 	{
 		$tabla = "equiposparametros";
-		$respuesta = ModeloEquipos::mdlMostrarParametros($tabla, $item, $valor);
+		$respuesta = ModeloEquipos::mdlMostrarParametros($tabla, $item, $valor, $item2);
+
+		if (!is_null($item2)) 
+		{
+			if (isset($respuesta["nombre"])) 
+			{
+				return $respuesta["nombre"];
+			}
+			else
+			{
+				return $respuesta;
+			}
+		}
+		else
+		{
+			return $respuesta;
+		}
+	}//ctrMostrarParametros($item, $valor, $item2)
+
+	public static function ctrMostrarParametrosNombre($item, $valor)
+	{
+		$tabla = "equiposparametros";
+		$respuesta = ModeloEquipos::ctrMostrarParametrosNombre($tabla, $item, $valor);
 		return $respuesta;
 	}
 
@@ -385,9 +407,224 @@ class ControladorEquipos
 		
 	}//ctrBorrarParametro($idSession)
 
-	//PROPIETARIOS
+	//ACTAS
+
+	public static function ctrMostrarActas($item, $valor)
+	{
+		$tabla = "equiposactas";
+		$respuesta = ModeloEquipos::mdlMostrarActas($tabla, $item, $valor);
+		return $respuesta;
+
+	}
+
+	public static function ctrAccionActas($idSession)
+	{
+		if (isset($_POST["inputActaFecha"]) )
+		{
+		
+			$accion = new ControladorEquipos();
+
+			if ($_POST["inputActaAccion"] == 1) 
+			{
+				$accion -> ctrEditarActa($_POST, $idSession, $_FILES);
+			}
+			elseif($_POST["inputActaAccion"] == 0) 
+			{
+				$accion -> ctrNuevaActa($_POST, $idSession, $_FILES);
+			}
+
+			return;
+		}
+	}
+
+	public static function ctrNuevaActa($post, $idSession, $files)
+	{
+		$titulo = "";
+		$tipo = "";
+		
+		$directorio = "";
+
+		date_default_timezone_set('America/Bogota');
+		$actualY = date("Y");
+				
+		if ( isset($files["actaPDF"]["tmp_name"]) ) 
+		{
+			if ( !$files["actaPDF"]["tmp_name"] == null )
+			{
+				$directorio = "vistas/actas/".strval($actualY);
+
+				if (!file_exists($directorio)) 
+				{
+				    mkdir($directorio, 0755, true);
+				}
+
+				if($files["actaPDF"]["type"] == "application/pdf")
+				{
+					$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+					$CONTADOR +=1;
+
+					$tmp_name = $files['actaPDF']['tmp_name'];
+					$directorio.='/'.strval($post["inputActaFecha"]).'-'.$CONTADOR.'.pdf';
+					$error = $files['actaPDF']['error'];
+
+					if($error)
+					{
+						echo '<script>
+						console.log("Error al copiar el archivo");
+						</script>';
+						return ;	
+					}
+					else
+					{
+						if(!file_exists($directorio))
+						{
+							copy($tmp_name,$directorio);
+
+							$tabla = "equiposactas";
+							$datos = array('fecha' => $post["inputActaFecha"],
+											'tipo' => $post["radioActaTipo"],
+											'cantidad' => $post["inputActaCantidad"],
+											'observaciones' => $post["textObsActa"],
+											'file' => $directorio );
 
 
+							$respuesta = ModeloEquipos::mdlNuevaActaEquipo($tabla, $datos);
+
+							if ($respuesta == "ok") 
+							{
+								$titulo = "¡Acta ingresada al sistema!";
+								$tipo = "success";
+							}
+							else
+							{
+								$titulo = "¡Error al ingresar el acta en la base de datos!";
+								$tipo = "error";
+							}
+
+						}
+						else
+						{
+							$titulo = "¡Error al ingresar el acta!";
+							$tipo = "error";
+						}
+					}
+				}
+			}//si exite algo
+
+				
+		}
+
+		echo '<script>
+			swal({
+				type: "'.$tipo.'",
+				title: "'.$titulo.'",
+				showConfirmButton: true,
+				confirmButtonText: "Cerrar"
+
+			}).then(function(result){
+
+				if(result.value){
+				
+					window.location = "actasIngreso";
+				}
+			});
+			</script>';
+	}
+
+	public static function ctrEditarActa($post, $idSession, $files)
+	{
+				$titulo = "";
+		$tipo = "";
+		
+		$directorio = "";
+
+		date_default_timezone_set('America/Bogota');
+		$actualY = date("Y");
+				
+		if ( isset($files["actaPDF"]["tmp_name"]) ) 
+		{
+			if ( !$files["actaPDF"]["tmp_name"] == null )
+			{
+				$directorio = "vistas/actas/".strval($actualY);
+
+				if (!file_exists($directorio)) 
+				{
+				    mkdir($directorio, 0755, true);
+				}
+
+				if($files["actaPDF"]["type"] == "application/pdf")
+				{
+					$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+					$CONTADOR +=1;
+
+					$tmp_name = $files['actaPDF']['tmp_name'];
+					$directorio.='/'.strval($post["inputActaFecha"]).'-'.$CONTADOR.'.pdf';
+					$error = $files['actaPDF']['error'];
+
+					if($error)
+					{
+						echo '<script>
+						console.log("Error al copiar el archivo");
+						</script>';
+						return ;	
+					}
+					else
+					{
+						if(!file_exists($directorio))
+						{
+							copy($tmp_name,$directorio);
+
+							$tabla = "equiposactas";
+							$datos = array('fecha' => $post["inputActaFecha"],
+											'tipo' => $post["radioActaTipo"],
+											'cantidad' => $post["inputActaCantidad"],
+											'observaciones' => $post["textObsActa"],
+											'file' => $directorio,
+											'id' => $post["inputActaId"] );
+
+
+							$respuesta = ModeloEquipos::mdlNuevaActaEquipo($tabla, $datos);
+
+							if ($respuesta == "ok") 
+							{
+								$titulo = "¡Acta ingresada al sistema!";
+								$tipo = "success";
+							}
+							else
+							{
+								$titulo = "¡Error al ingresar el acta en la base de datos!";
+								$tipo = "error";
+							}
+
+						}
+						else
+						{
+							$titulo = "¡Error al ingresar el acta!";
+							$tipo = "error";
+						}
+					}
+				}
+			}//si exite algo
+
+				
+		}
+
+		echo '<script>
+			swal({
+				type: "'.$tipo.'",
+				title: "'.$titulo.'",
+				showConfirmButton: true,
+				confirmButtonText: "Cerrar"
+
+			}).then(function(result){
+
+				if(result.value){
+				
+					window.location = "actasIngreso";
+				}
+			});
+			</script>';
+	}
 
 	//EQUIPOS
 
@@ -454,4 +691,15 @@ class ControladorEquipos
 		}
 
 	}
+
+
+	public static function ctrMostrarEquipos($item, $valor)
+	{
+		$tabla = "equipos";
+
+		$respuesta = ModeloEquipos::mdlMostrarEquipos($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
 }
