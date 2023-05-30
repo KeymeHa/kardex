@@ -270,7 +270,7 @@
 
                 
 
-                if ( $swmod == 0 ) 
+                if ( $swmod == 0 && $_SESSION["perfil"] != '11' && $_SESSION["perfil"] != '7' && $_SESSION["perfil"] != '3') 
                 {
                   echo '<br><div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="info-box">
