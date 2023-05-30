@@ -9,9 +9,6 @@
 
 
 <div class="content-wrapper">
-    <?php
-    include "bannerConstruccion.php";
-  ?>
   <section class="content-header">
     <h1>    
       Parametros Base de Datos Equipos  
