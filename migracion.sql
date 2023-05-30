@@ -142,3 +142,30 @@ ALTER TABLE `equiposparametros`
 
 ALTER TABLE `equipos`
 	ADD COLUMN `rol` INT(1) NOT NULL DEFAULT '0' AFTER `id_proyecto`;
+
+UPDATE `edubarco_kardex`.`js_data` SET `num`='45' WHERE  `id`=67;
+
+ALTER TABLE `equipos`
+	CHANGE COLUMN `estado` `estado` INT(1) NULL DEFAULT NULL AFTER `observaciones`,
+	CHANGE COLUMN `id_licencia` `id_licencia` INT(10) NOT NULL DEFAULT '1' AFTER `estado`;
+
+ALTER TABLE `equipos`
+	ADD COLUMN `nombre` CHAR(50) NULL DEFAULT NULL AFTER `serialD`;
+
+INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pDiez`) VALUES ('actasIngreso', 'Actas de Ingreso', '0', '0', '0', '0', '10');
+
+CREATE TABLE `equiposActas` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`fecha` DATE NULL,
+	`tipo` INT(1) NULL DEFAULT '1',
+	`cantidad` INT(2) NULL DEFAULT '1',
+	`Observaciones` VARCHAR(500) NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8mb4_unicode_ci'
+;
+
+UPDATE `edubarco_kardex`.`js_data` SET `num`='46' WHERE  `id`=73;
+
+ALTER TABLE `equiposactas`
+	ADD COLUMN `file` VARCHAR(100) NULL DEFAULT NULL AFTER `Observaciones`;
