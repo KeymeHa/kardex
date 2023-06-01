@@ -793,11 +793,25 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 		}
 		else if(pagina == 46)
 		{
-			tablaElegida =  $('.tablaActasEntrega');
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var fechaInicial = urlParams.get('fechaInicial');
+			var fechaFinal = urlParams.get('fechaFinal');
+
+			if(fechaInicial == null)
+			{
+			  variable = "?fechaInicial=null&actual="+anioActual;
+			} else 
+			{
+			  variable = "?fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal+"&actual="+anioActual;
+			}
+
 			if( dato !== 0 && dato2 !== 0 )
 			{
-				variable = "?item=" + dato + "&valor=" + dato2;
+				variable += "&item=" + dato + "&valor=" + dato2;
 			}
+
+			tablaElegida =  $('.tablaActasEntrega');
 			tablaAjax = 'equiposactas';
 		}
 		

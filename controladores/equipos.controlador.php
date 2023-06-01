@@ -2,6 +2,18 @@
 
 class ControladorEquipos
 {
+	public static function anioActual($anio)
+	{
+		$respuesta = ($anio == 0) ? '' : 'WHERE YEAR(fecha) = '.$anio;
+		return $respuesta;
+	}
+
+	function validateDate($date, $format = 'Y-m-d')
+	{
+	    $d = DateTime::createFromFormat($format, $date);
+	    return $d && $d->format($format) == $date;
+	}
+
 
 	//LICENCIAS
 
@@ -409,11 +421,33 @@ class ControladorEquipos
 
 	//ACTAS
 
-	public static function ctrMostrarActas($item, $valor)
+
+
+	//$this->item, $this->valor, $this->fechaInicial, $this->fechaFinal, $this->anioActual
+	public static function ctrMostrarActasFecha($item, $valor, $fechaInicial, $fechaFinal, $anio)
 	{
+		$query = "";
 		$tabla = "equiposactas";
-		$respuesta = ModeloEquipos::mdlMostrarActas($tabla, $item, $valor);
-		return $respuesta;
+
+		$validar = new ControladorEquipos;
+
+		if ($fechaInicial != null) 
+		{
+			
+			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if ($anio != 0) 
+			{
+				$query = $validar->anioActual($anio);
+			}
+		}
+
+		return ModeloEquipos::mdlMostrarActasFecha($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor);
 
 	}
 

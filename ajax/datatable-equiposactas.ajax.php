@@ -5,12 +5,17 @@ require_once "../modelos/equipos.modelo.php";
 
 class TablaActasEquipos
 {
-	static public function mostrarTablaActas($item, $valor)
+	public $item;
+	public $valor;
+	public $fechaInicial;
+	public $fechaFinal;
+	public $anioActual;
+	public function mostrarTablaActas()
 	{
-		 $actas = ControladorEquipos::ctrMostrarActas($item, $valor);
+		 $actas = ControladorEquipos::ctrMostrarActasFecha($this->item, $this->valor, $this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		 $dJson = '{"data": [';
 
-	    if ( count($actas) == 0) 
+	    if (is_countable($actas) && count($actas) == 0 || !isset($actas[0]) || is_null($actas) ) 
 	    {  	echo'{"data": []}';	return; }
 
 
@@ -21,7 +26,7 @@ class TablaActasEquipos
 
             $tipo = ($actas[$i]["tipo"] == 0) ? "Salida" : "Entrada" ;
 
-            $fecha = new Date_Time($actas[$i]["fecha"]);
+            $fecha = new DateTime($actas[$i]["fecha"]);
 
 		    $dJson .='[
 	    		"'.($i+1).'",
@@ -41,12 +46,36 @@ class TablaActasEquipos
 
 $actasE = new TablaActasEquipos();
 
-if ( isset($_GET["item"]) && isset($_GET["valor"])  ) 
+if (isset($_GET["fechaInicial"]) && $_GET["fechaInicial"] != "null") 
 {
-	$actasE -> mostrarTablaActas($_GET["item"] , $_GET["valor"]);
+	$actasE -> fechaInicial = $_GET["fechaInicial"];
+	$actasE -> fechaFinal = $_GET["fechaFinal"];
 }
 else
 {
-	$actasE -> mostrarTablaActas(null , null);
+	if ( isset($_GET["actual"]) ) 
+	{
+		$actasE -> anioActual = $_GET["actual"];
+	}
+	$actasE -> fechaInicial = null;
+	$actasE -> fechaFinal = null;
 }
 
+if (isset($_GET["item"]) && $_GET["item"] != "null") 
+{
+	$actasE -> item = $_GET["item"];
+	$actasE -> valor = $_GET["valor"];
+}
+else
+{
+	if ( isset($_GET["actual"]) ) 
+	{
+		$actasE -> anioActual = $_GET["actual"];
+	}
+
+	$actasE -> item = null;
+	$actasE -> valor = null;
+}
+
+
+$actasE -> mostrarTablaActas();

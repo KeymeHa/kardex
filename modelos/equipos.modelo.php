@@ -109,6 +109,64 @@ class ModeloEquipos
 
 	//ACTAS
 
+	public static function mdlMostrarActasFecha($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor)
+	{
+		if($fechaInicial == null)
+		{
+
+			if (is_null($item)) 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla $query;");
+				$stmt -> execute();
+				return $stmt -> fetchAll();	
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> execute();
+				return $stmt -> fetch();	
+			}
+
+		}elseif($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT('$fechaInicial', '%Y %m %d') $query");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' $query");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $query");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	public static function mdlMostrarActas($tabla, $item, $valor)
 	{
 		if ($item == "id") 
