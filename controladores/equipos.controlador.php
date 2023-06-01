@@ -621,14 +621,14 @@ class ControladorEquipos
 					}
 				}
 			}//si exite algo
+			else
+			{
+				$directorio = $post["inputActaDir"];
+			}
 
 				
 		}
-		else
-		{
-			$directorio = $post["inputActaDir"];
-		}
-
+		
 		$tabla = "equiposactas";
 		$datos = array('fecha' => $post["inputActaFecha"],
 						'tipo' => $post["radioActaTipo"],

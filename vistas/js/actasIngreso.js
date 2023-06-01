@@ -115,7 +115,7 @@ $(".btn-nuevaActa").click(function() {
 $(".tablaActasEntrega").on("click", "button.btn-actaE", function(){
 
 	$("h4.modal-title").html("Editar Acta");
-	$(".submitActasE").html("Editar");
+	$(".btn-submitActasE").html("Editar");
 	$("#inputActaAccion").val(1);
 
 	var idActa = $(this).attr("idActa");
@@ -138,7 +138,7 @@ $(".tablaActasEntrega").on("click", "button.btn-actaE", function(){
 			$("#inputActaFecha").val(respuesta["fecha"]);
 			$("#inputActaCantidad").val(respuesta["cantidad"]);
 			$("#textObsActa").html(respuesta["observaciones"]);
-			$("#inputActaDir").html(respuesta["file"]);
+			$("#inputActaDir").val(respuesta["file"]);
 
 			if (respuesta["tipo"] == 0) 
 			{
