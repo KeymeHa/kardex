@@ -111,3 +111,44 @@ $(".btn-nuevaActa").click(function() {
 	$("#inputActaAccion").val(0);
 	hoy(elemento)
 });
+
+$(".tablaActasEntrega").on("click", "button.btn-actaE", function(){
+
+	$("h4.modal-title").html("Editar Acta");
+	$(".submitActasE").html("Editar");
+	$("#inputActaAccion").val(1);
+
+	var idActa = $(this).attr("idActa");
+	var datos = new FormData();
+	datos.append("item", "id");
+	datos.append("idActa", idActa);
+
+	$.ajax({
+
+		url:"ajax/equipos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){	
+
+			$("#inputActaId").val(respuesta["id"]);
+			$("#inputActaFecha").val(respuesta["fecha"]);
+			$("#inputActaCantidad").val(respuesta["cantidad"]);
+			$("#textObsActa").html(respuesta["observaciones"]);
+			$("#inputActaDir").html(respuesta["file"]);
+
+			if (respuesta["tipo"] == 0) 
+			{
+				$("#tipoActa1").prop("checked", true);
+			}
+			else
+			{
+				$("#tipoActa2").prop("checked", true);
+			}
+
+		}
+	});
+});

@@ -75,6 +75,7 @@
               <div class="form-group">
                 <label for="inputFecha">*Fecha Ingreso/Devolución</label>
                 <input type="hidden" name="inputActaId" id="inputActaId" value="" readonly>
+                <input type="hidden" name="inputActaDir" id="inputActaDir" value="" readonly>
                 <input type="hidden" name="inputActaAccion" id="inputActaAccion" value="" readonly>
                 <input type="date" class="form-control" id="inputActaFecha" name="inputActaFecha" required="">
               </div>
@@ -107,7 +108,7 @@
 
               <div class="form-group">
               <label>Observaciones</label>
-              <textarea class="form-control" rows="3" name="textObsActa" placeholder="Enter ..."></textarea>
+              <textarea class="form-control" rows="3" name="textObsActa" id="textObsActa" placeholder="Enter ..."></textarea>
               </div>
 
           </div><!--<div class="box-body">-->

@@ -420,7 +420,12 @@ class ControladorEquipos
 	}//ctrBorrarParametro($idSession)
 
 	//ACTAS
+	public static function ctrMostrarActas($item, $valor)
+	{
+		$tabla = "equiposactas";
+		return ModeloEquipos::mdlMostrarActas($tabla, $item, $valor);
 
+	}
 
 
 	//$this->item, $this->valor, $this->fechaInicial, $this->fechaFinal, $this->anioActual
@@ -618,6 +623,10 @@ class ControladorEquipos
 			}//si exite algo
 
 				
+		}
+		else
+		{
+			$directorio = $post["inputActaDir"];
 		}
 
 		$tabla = "equiposactas";

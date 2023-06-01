@@ -248,6 +248,31 @@ class ModeloEquipos
 
 	}
 
+	public static function mdlEditarActaEquipo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET fecha = :fecha, tipo = :tipo, cantidad = :cantidad, observaciones = :observaciones, file = :file WHERE id = :id");
+
+		$stmt->bindParam(":fecha" , $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo" , $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad" , $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":observaciones" , $datos["observaciones"], PDO::PARAM_STR);
+		$stmt->bindParam(":file" , $datos["file"], PDO::PARAM_STR);
+		$stmt->bindParam(":id" , $datos["id"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}
+
 	//EQUIPOS
 	public static function mdlDesvincularLicencia($tabla, $id)
 	{
