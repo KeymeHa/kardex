@@ -10,7 +10,7 @@ class ModeloUsuarios
 		{
 			if ($item == "id_area" || $item == "perfil") 
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0");
+				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0 ORDER BY nombre ASC");
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 				$stmt -> execute();
 				return $stmt -> fetchAll();
@@ -25,7 +25,7 @@ class ModeloUsuarios
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 ORDER BY nombre ASC");
 
 			$stmt -> execute();
 
