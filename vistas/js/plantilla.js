@@ -814,6 +814,24 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			tablaElegida =  $('.tablaActasEntrega');
 			tablaAjax = 'equiposactas';
 		}
+		else if (pagina == 47)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idActa = urlParams.get('idActa');
+
+			if(idActa == null)
+			{
+			  variable = "?valor=null";
+			} else 
+			{
+			  variable = "?valor="+idActa+"&item=id_acta";
+			}
+
+			tablaElegida =  $('.tablaEquipos');
+			tablaAjax = 'equipos';
+
+		}
 		
 
 		//if (pagina != 26 && pagina != 8 && pagina != 39) {

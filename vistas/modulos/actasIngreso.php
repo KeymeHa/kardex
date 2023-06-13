@@ -19,8 +19,9 @@
     </ol>
   </section>
   <section class="content">
+
     <div class="box">
-      <div class="box-header with-border">
+      <div class="box-header">
         <button class="btn btn-success btn-nuevaActa" data-toggle="modal" data-target="#modalActaIngreso"><i class="fa fa-plus"></i>
           Nueva Acta
         </button>
@@ -35,11 +36,15 @@
             <i class="fa fa-caret-down"></i>
         </button>
       </div>
+    </div>
+
+    <div class="box">
       <div class="box-body">
         <table class="table table-bordered table-striped dt-responsive tablaActasEntrega" width="100%">
           <thead>
            <tr>
              <th style="width:10px">#</th>
+             <th>Código</th>
              <th>Fecha</th>
              <th>Equipos</th>
              <th>Tipo</th>
@@ -71,6 +76,14 @@
 
         <div class="modal-body">
           <div class="box-body">
+
+            <?php
+               $val = 20;
+               $parametro = ControladorParametros::ctrMostrarParametros($val);
+                echo '<div class="form-group">
+                <label for="inputCantidad">* Código</label>
+                <input type="text" class="form-control" id="inputActaCodigo" name="inputActaCodigo" placeholder="Número de Acta" title="Código de Acta" required value="'.$parametro["codigo"].'" readonly></div>';
+              ?>
 
               <div class="form-group">
                 <label for="inputFecha">*Fecha Ingreso/Devolución</label>

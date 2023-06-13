@@ -22,7 +22,7 @@ class TablaActasEquipos
 		for( $i = 0; $i < count($actas); $i++)
 		{	
 
-			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btn-actaE' title='Editar Acta' data-toggle='modal' data-target='#modalActaIngreso' idActa='".$actas[$i]["id"]."' ><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-actaElimE' title='Eliminar Acta' idActa='".$actas[$i]["id"]."'><i class='fa fa-close'></i></button></div></div>";	
+			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerActa' title='Ver Acta' idActa='".$actas[$i]["id"]."' ><i class='fa fa-newspaper-o'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-actaE' title='Editar Acta' data-toggle='modal' data-target='#modalActaIngreso' idActa='".$actas[$i]["id"]."' ><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-actaElimE' title='Eliminar Acta' idActa='".$actas[$i]["id"]."'><i class='fa fa-close'></i></button></div></div>";	
 
             $tipo = ($actas[$i]["tipo"] == 1) ? "Salida" : "Entrada" ;
 
@@ -30,6 +30,7 @@ class TablaActasEquipos
 
 		    $dJson .='[
 	    		"'.($i+1).'",
+	    		"'.$actas[$i]["codigo"].'",
 	    		"'.$fecha->format('m-d-Y').'",
 	    		"'.$actas[$i]["cantidad"].'",
 	    		"'.$tipo.'",

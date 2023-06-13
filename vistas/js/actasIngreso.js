@@ -152,3 +152,8 @@ $(".tablaActasEntrega").on("click", "button.btn-actaE", function(){
 		}
 	});
 });
+
+$(".tablaActasEntrega").on("click", "button.btnVerActa", function(){
+	var idActa = $(this).attr("idActa");
+	window.location = "index.php?ruta=verActaEquipos&idActa="+idActa;
+})
