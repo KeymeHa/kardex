@@ -524,13 +524,15 @@ class ControladorEquipos
 											'tipo' => $post["radioActaTipo"],
 											'cantidad' => $post["inputActaCantidad"],
 											'observaciones' => $post["textObsActa"],
+											'codigo' => $post["inputActaCodigo"],
 											'file' => $directorio );
-
 
 							$respuesta = ModeloEquipos::mdlNuevaActaEquipo($tabla, $datos);
 
 							if ($respuesta == "ok") 
 							{
+								$indiceCodigo = "codActa";
+								$indice = ControladorParametros::ctrIncrementarCodigo($indiceCodigo);
 								$titulo = "¡Acta ingresada al sistema!";
 								$tipo = "success";
 							}
