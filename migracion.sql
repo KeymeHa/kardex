@@ -169,3 +169,16 @@ UPDATE `edubarco_kardex`.`js_data` SET `num`='46' WHERE  `id`=73;
 
 ALTER TABLE `equiposactas`
 	ADD COLUMN `file` VARCHAR(100) NULL DEFAULT NULL AFTER `Observaciones`;
+
+
+INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pDiez`, `file`) VALUES ('verActaEquipos', 'Ver Acta', '0', '0', '0', '0', '10', '0');
+
+
+UPDATE `edubarco_kardex`.`js_data` SET `num`='47' WHERE  `id`=74;
+
+
+ALTER TABLE `equipos`
+	ADD COLUMN `id_acta` INT NULL AFTER `rol`;
+
+ALTER TABLE `equiposactas`
+	ADD COLUMN `codigo` CHAR(7) NOT NULL DEFAULT '0' AFTER `id`;
