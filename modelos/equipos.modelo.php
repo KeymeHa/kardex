@@ -226,11 +226,12 @@ class ModeloEquipos
 
 	public static function mdlNuevaActaEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha, tipo, cantidad, observaciones, file) VALUES (:fecha, :tipo, :cantidad, :observaciones, :file) ");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha, tipo, cantidad, observaciones, codigo, file) VALUES (:fecha, :tipo, :cantidad, :observaciones, :codigo, :file) ");
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_INT);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":file", $datos["file"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
