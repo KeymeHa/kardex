@@ -296,8 +296,14 @@
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Responsable</label>
-                  <select class="form-control">
-                    <option>Perensejo Perez</option>
+                  <select class="form-control" name="select">
+                    <?php
+                    $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
+                    foreach ($responsable as $key => $value) :
+                      $areaR = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].' - '.$areaR["nombre"].'</option>';
+                    endforeach;
+                    ?>
                   </select>
                 </div>
               </div>
@@ -307,7 +313,16 @@
                 <div class="form-group">
                   <label>Asignado a:</label>
                   <select class="form-control">
-                    <option>Juancho Rodriguez</option>
+                    <?php
+
+                    $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
+
+                    foreach ($usuarios as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                    }
+
+                    ?>
                   </select>
                 </div>
               </div>
