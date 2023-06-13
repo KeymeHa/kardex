@@ -11,13 +11,26 @@ class ModeloPersonas
 	{
 		if($item != null)
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			if ($item == "sw") 
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+				$stmt -> execute();
 
-			return $stmt -> fetch();
+				return $stmt -> fetchAll();
+			}
+			else
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+				$stmt -> execute();
+
+				return $stmt -> fetch();
+			}
 
 		}
 		else
