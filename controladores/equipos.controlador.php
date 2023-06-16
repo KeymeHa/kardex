@@ -44,12 +44,29 @@ class ControladorEquipos
 		return $respuesta;
 	}//ctrMostrarLicencias($item, $valor)
 
-	static public function ctrContarUsoLicencias($id)
+
+
+	static public function ctrMostrarLicenciaDis()
 	{
-		$tabla = "equipos";
-		$respuesta = ModeloEquipos::mdlContarUsoLicencias($tabla, $id);
-		return $respuesta;
-	}//ctrContarUsoLicencias($id)
+		#llamar ctrMostrarLicencias
+		$llamar = new ControladorEquipos();
+		$licenciasAll = $llamar->ctrMostrarLicencias(null, null);
+		$licenciasOk = [[]];
+		#comparar con ctrContarUsoLicencias
+		$count = 0;
+		for ($i=0; $i < count($licenciasAll); $i++) 
+		{ 
+			$contar = $llamar->ctrContarEnEquipos("id_licencia", $licenciasAll[$i]["id"]);
+			if ($contar < $licenciasAll[$i]["instalaciones"] ) 
+			{
+				$licenciasOk[$count]["id"] = $licenciasAll[$i]["id"];
+				$licenciasOk[$count]["usuario"] = $licenciasAll[$i]["usuario"];
+				$count ++;
+				#añadir quienes son menores que 
+			}
+		}//for ($i=0; $i < count($contar); $i++) 
+		return $licenciasOk;
+	}
 
 	static public function ctrNuevaLicencia($post)
 	{
@@ -424,7 +441,32 @@ class ControladorEquipos
 	{
 		$tabla = "equiposactas";
 		return ModeloEquipos::mdlMostrarActas($tabla, $item, $valor);
+	}
 
+	static public function ctrMostrarActasDis()
+	{
+		#llamar ctrMostrarLicencias
+		$llamar = new ControladorEquipos();
+		$actasAll = $llamar->ctrMostrarActas(null, null);
+		$actasOk = [[]];
+		#comparar con ctrContarUsoLicencias
+		$count = 0;
+		for ($i=0; $i < count($actasAll); $i++) 
+		{ 
+			$contar = $llamar->ctrContarEnEquipos("id_acta", $actasAll[$i]["id"]);
+
+			if ($contar < $actasAll[$i]["cantidad"] ) 
+			{
+				$actasOk[$count]["id"] = $actasAll[$i]["id"];
+				$actasOk[$count]["codigo"] = $actasAll[$i]["codigo"];
+				$actasOk[$count]["fecha"] = $actasAll[$i]["fecha"];
+				$actasOk[$count]["cantidad"] = $actasAll[$i]["cantidad"];
+				$actasOk[$count]["cantidadUso"] = $contar;
+				$count ++;
+				#añadir quienes son menores que 
+			}
+		}//for ($i=0; $i < count($contar); $i++) 
+		return $actasOk;
 	}
 
 
@@ -433,12 +475,9 @@ class ControladorEquipos
 	{
 		$query = "";
 		$tabla = "equiposactas";
-
 		$validar = new ControladorEquipos;
-
 		if ($fechaInicial != null) 
 		{
-			
 			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
 			{
 				return 0;
@@ -451,9 +490,7 @@ class ControladorEquipos
 				$query = $validar->anioActual($anio);
 			}
 		}
-
 		return ModeloEquipos::mdlMostrarActasFecha($tabla, $query, $fechaInicial, $fechaFinal, $item, $valor);
-
 	}
 
 	public static function ctrAccionActas($idSession)
@@ -745,5 +782,149 @@ class ControladorEquipos
 
 		return $respuesta;
 	}
+
+	public static function ctrAccionEquipo($idSesion)
+	{
+		if (isset($_POST["inputEquipoAccion"]) )
+		{
+			$accion = new ControladorEquipos();
+			if ($_POST["inputEquipoAccion"] == 1) 
+			{
+				//$accion -> ctrEditarLicencia($_POST);
+			}
+			elseif($_POST["inputEquipoAccion"] == 0) 
+			{
+				$accion -> ctrNuevoEquipo($_POST, $idSesion);
+			}
+			return;
+		}
+	}
+
+	public static function ctrNuevoEquipo($post, $idSesion)
+	{
+		if (isset($post["inputSerialE"]))
+		{
+			$titulo = "";
+			$tipo = "";
+
+
+
+
+			/*
+		
+			inputSerialE
+			inputSerialDE
+			selectIdProE
+			selectIdArqE
+			selectIdMarcaE
+			selectIdModeloE
+			selectIdCPUE
+			selectIdCPUModE
+			inputCPUFreE
+			inputRamE
+			inputSSDE
+			inputHDDE
+			inputGPUE
+			inputGPUModE
+			inputGPUCapE
+			checkTecladoE
+			checkMouseE
+			selectSOE
+			selectSOVerE
+			dateIngresoE
+			selectIdActaE
+			selectResponsableE
+			selectAsignadoE
+			textObservacionesE
+
+			selectRolE
+			selectProyectoE
+
+			selectLicenciaE
+
+			*/
+
+			$teclado = (isset($post["checkTecladoE"]))?1:0;
+			$mouse = (isset($post["checkMouseE"]))?1:0;
+			/*
+
+			ID_LICENCIA
+
+			*/
+
+			$id_area = ControladorPersonasctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
+
+			$tabla = "equipos";
+			$datos = array('serial' => $post["inputSerialE"],
+						   'serialD' => $post["inputSerialDE"],
+						   'id_propietario' => $post["selectIdProE"],
+						   'id_arquitectura' => $post["selectIdArqE"],
+						   'marca' => $post["selectIdMarcaE"],
+						   'modelo' => $post["selectIdModeloE"],
+						   'cpu' => $post["selectIdCPUE"],
+						   'cpu_modelo' => $post["selectIdCPUModE"],
+						   'cpu_frecuencia' => $post["inputCPUFreE"],
+						   'ram' => $post["inputRamE"],
+						   'ssd' => $post["inputSSDE"],
+						   'hdd' => $post["inputHDDE"],
+						   'gpu' => $post["inputGPUE"],
+						   'gpu_modelo' => $post["inputGPUModE"],
+						   'gpu_capacidad' => $post["inputGPUCapE"],
+						   'teclado' => $teclado,
+						   'mouse' => $mouse, 
+						   'so' => $post["selectSOE"],
+						   'so_version' => $post["selectSOVerE"],
+						   'fecha_ingreso' => $post["dateIngresoE"],
+						   'id_acta' => $post["selectIdActaE"],
+						   'id_responsable' => $post["selectResponsableE"],
+						   'id_usuario' => $post["selectAsignadoE"],
+						   'observaciones' => $post["textObservacionesE"],
+						   'id_area' => $id_area["id_area"],
+						   'id_proyecto' => $post["selectProyectoE"],
+						   'rol' => $post["selectRolE"],
+						   'id_usr_generado' => $idSesion,
+						   'id_licencia' => $post["selectLicenciaE"] );
+
+			$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+
+			if ($respuesta == "ok") 
+			{
+				$titulo = "¡Equipo ingresado!";
+				$tipo = "success";
+			}
+			else
+			{
+				$titulo = "¡Error al añadir equipo!";
+				$tipo = "error";
+			}
+
+			echo '<script>
+				swal({
+					type: "'.$tipo.'",
+					title: "'.$titulo.'",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+
+				}).then(function(result){
+
+					if(result.value){
+					
+						window.location = "equipos";
+					}
+				});
+				</script>';
+
+
+			}
+
+	}//ctrNuevoEquipo()
+
+
+	static public function ctrContarEnEquipos($item, $valor)
+	{
+		$tabla = "equipos";
+		$respuesta = ModeloEquipos::mdlContarEnEquipos($tabla, $item, $valor);
+		return $respuesta[0];
+	}//ctrContarUsoLicencias($id)
 
 }
