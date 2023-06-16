@@ -24,8 +24,11 @@
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPC"><i class="fa fa-desktop"></i>
+        <button class="btn btn-success btn-newEquipo" data-toggle="modal" data-target="#modalAgregarPC"><i class="fa fa-desktop"></i>
           Ingresar Equipo
+        </button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPCS"><i class="fa fa-desktop"></i>
+          Ingreso Masivo
         </button>
       </div>
       <div class="box-body">       
@@ -83,17 +86,18 @@
 
               <div class="form-group">
                 <label for="pc_serial">*Serial</label>
-                <input type="text" class="form-control" id="pc_serial" placeholder="Ingrese número serie " required autocomplete="off" >
+                <input type="text" class="form-control" id="pc_serial" placeholder="Ingrese número serie " required autocomplete="off" name="inputSerialE">
+                 <input type="hidden" required readonly name="inputEquipoAccion" id="inputEquipoAccion" value="0">
               </div>
 
               <div class="form-group">
                 <label for="pc_serialD">Segundo Serial</label>
-                <input type="text" class="form-control" id="pc_serialD" placeholder="número de serio opcional" autocomplete="off">
+                <input type="text" class="form-control" id="pc_serialD" placeholder="número de serio opcional" autocomplete="off" name="inputSerialDE">
               </div>
 
               <div class="form-group">
                 <label>*Propietario</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdProE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
                     foreach ($paramE as $key => $value) {
@@ -106,7 +110,7 @@
 
               <div class="form-group">
                 <label>*Arquitectura</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdArqE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
                     foreach ($paramE as $key => $value) {
@@ -119,7 +123,7 @@
 
               <div class="form-group">
                 <label>*Marca Equipo</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdMarcaE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
                     foreach ($paramE as $key => $value) {
@@ -132,7 +136,7 @@
 
               <div class="form-group">
                 <label>*Modelo</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdModeloE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
                     foreach ($paramE as $key => $value) {
@@ -149,7 +153,7 @@
 
               <div class="form-group">
                 <label>*CPU: Marca</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdCPUE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
                     foreach ($paramE as $key => $value) {
@@ -162,7 +166,7 @@
 
               <div class="form-group">
                 <label>*CPU: Modelo</label>
-                <select class="form-control" required>
+                <select class="form-control" required name="selectIdCPUModE">
                   <?php
                     $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
                     foreach ($paramE as $key => $value) {
@@ -175,22 +179,22 @@
 
               <div class="form-group">
                 <label for="pc_cpufre">*CPU: Frecuencia (Ghz)</label>
-                <input type="text" class="form-control" id="pc_cpufre" placeholder="2.5" required>
+                <input type="text" class="form-control" id="pc_cpufre" placeholder="2.5" required name="inputCPUFreE">
               </div>
 
               <div class="form-group">
                 <label for="pc_ram">*Capacidad RAM (Gb)</label>
-                <input type="number" class="form-control" id="pc_ram" min="4" value="8" placeholder="8" required>
+                <input type="number" class="form-control" id="pc_ram" min="4" value="8" placeholder="8" required name="inputRamE">
               </div>
 
               <div class="form-group">
                 <label for="pc_ssd">*SSD (Gb)</label>
-                <input type="number" class="form-control" id="pc_ssd" min="120" value="250" placeholder="250" required>
+                <input type="number" class="form-control" id="pc_ssd" min="120" value="250" placeholder="250" required name="inputSSDE">
               </div>
 
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
-                <input type="number" class="form-control" id="pc_hdd" min="120" value="" placeholder="1000">
+                <input type="number" class="form-control" id="pc_hdd" min="120" value="" placeholder="1000" name="inputHDDE">
               </div>
 
             </div><!--col-md-6 col-lg-4 col-sm-12-->
@@ -198,17 +202,17 @@
             <div class="col-md-6 col-lg-4 col-sm-12">
               <div class="form-group">
                 <label for="pc_gpumarca">GPU: Marca</label>
-                <input type="text" class="form-control" id="pc_gpumarca" placeholder="NVIDIA, AMD">
+                <input type="text" class="form-control" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">
               </div>
 
               <div class="form-group">
                 <label for="pc_gpumodelo">GPU: Modelo</label>
-                <input type="text" class="form-control" id="pc_gpumodelo" placeholder="Gforce, Radeon">
+                <input type="text" class="form-control" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE">
               </div>
 
               <div class="form-group">
                 <label for="pc_gpucap">GPU: Capacidad (Gb)</label>
-                <input type="number" class="form-control" id="pc_gpucap" placeholder="2">
+                <input type="number" class="form-control" id="pc_gpucap" placeholder="2" name="inputGPUCapE">
               </div>
 
               <div class="form-group">
@@ -216,7 +220,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-12">
                   <div class="checkbox">
                     <label>
-                    <input type="checkbox">
+                    <input type="checkbox" name="checkTecladoE">
                     Teclado
                     </label>
                   </div>
@@ -225,7 +229,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-12">
                   <div class="checkbox">
                     <label>
-                    <input type="checkbox">
+                    <input type="checkbox" name="checkMouseE">
                     Mouse
                     </label>
                   </div>
@@ -233,7 +237,7 @@
 
                 <div class="form-group">
                   <label>*Sistema Operativo</label>
-                  <select class="form-control" required>
+                  <select class="form-control" required name="selectSOE">
                     <?php
                       $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
                       foreach ($paramE as $key => $value) {
@@ -246,7 +250,7 @@
 
                   <div class="form-group">
                     <label>*Versión SO</label>
-                    <select class="form-control" required>
+                    <select class="form-control" required name="selectSOVerE">
                       <?php
                         $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
                         foreach ($paramE as $key => $value) {
@@ -262,8 +266,10 @@
 
             </div><!--col-md-6 col-lg-4 col-sm-12-->
 
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <h4>Ingreso</h4>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-12">
+                <h4>Ingreso</h4>
+              </div>
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
@@ -272,7 +278,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="date" class="form-control pull-right" required>
+                    <input type="date" class="form-control pull-right" required id="dateIngresoE" value="" name="dateIngresoE">
                   </div>
                 </div>
               </div><!--col-md-6 col-lg-6 col-sm-12-->
@@ -280,23 +286,30 @@
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>*Acta de Ingreso</label>
-                  <select class="form-control" required>
-                    <option>18/05/2023</option>
-                    <option>20/05/2023</option>
+                  <select class="form-control" required name="selectIdActaE">
+                    <?php
+
+                    $actasIngreso = ControladorEquipos::ctrMostrarActasDis();
+                    foreach ($actasIngreso as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["codigo"].' / '.$value["fecha"].' PC '.$value["cantidadUso"].'/'.$value["cantidad"].' </option>';
+                    }
+                    ?>
                   </select>
                 </div>
               </div><!--col-md-6 col-lg-6 col-sm-12-->
 
             </div><!--col-lg-12 col-md-12 col-sm-12-->
 
-            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row">
 
               <h4>Responsabilidad</h4>
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Responsable</label>
-                  <select class="form-control" name="select">
+                  <select class="form-control" name="selectResponsableE">
+                    <option value="0">Seleccione Responsable</option>
                     <?php
                     $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
                     foreach ($responsable as $key => $value) :
@@ -312,7 +325,8 @@
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Asignado a:</label>
-                  <select class="form-control">
+                  <select class="form-control" name="selectAsignadoE">
+                    <option value="0">Seleccione Asignado</option>
                     <?php
 
                     $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
@@ -327,12 +341,59 @@
                 </div>
               </div>
 
-            </div>
+              <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="form-group">
+                  <label>Rol</label>
+                  <select class="form-control" name="selectRolE">
+                    <option value="0">Contratista</option>
+                    <option value="1">Empleado</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="form-group">
+                  <label>Proyecto:</label>
+                  <select class="form-control" name="selectProyectoE">
+                    <?php
+
+                    $proyectos = ControladorProyectos::ctrMostrarProyectos(null, null);
+
+                    foreach ($proyectos as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                    }
+
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="form-group">
+                  <label>Licencia</label>
+                  <select class="form-control" name="selectLicenciaE">
+                    <option value="">Sin Asignar</option>
+                    <?php
+
+                    $licencias = ControladorEquipos::ctrMostrarLicenciaDis();
+                    foreach ($licencias as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["usuario"].'</option>';
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+            </div><!--row-->
+
+
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
                 <label>Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObservacionesE"></textarea>
               </div>
             </div>
 
@@ -354,6 +415,13 @@
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
           <button type="submit" class="btn btn-success">Ingresar</button>
         </div>
+
+        <?php
+
+        $accionEquipo = new ControladorEquipos();
+        $accionEquipo -> ctrAccionEquipo($_SESSION["id"]);
+
+        ?>
 
       </form>
     </div>

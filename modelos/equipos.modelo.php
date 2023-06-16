@@ -97,10 +97,10 @@ class ModeloEquipos
 
 	}
 
-	public static function mdlContarUsoLicencias($tabla, $valor)
+	public static function mdlContarEnEquipos($tabla, $item, $valor)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE id_licencia = :id_licencia ");
-		$stmt ->bindParam( ":id_licencia" , $valor , PDO::PARAM_INT );
+		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item ");
+		$stmt ->bindParam( ":".$item , $valor , PDO::PARAM_INT );
 		$stmt -> execute();
 		return $stmt->fetch();
 		$stmt->close();
@@ -458,6 +458,52 @@ class ModeloEquipos
 
 	//EQUIPOS
 
+	public static function mdlNuevoEquipo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla('serial', id_propietario, id_arquitectura, marca, modelo, cpu, cpu_modelo, cpu_frecuencia, ram, ssd, hdd, gpu, gpu_modelo, gpu_capacidad, teclado, mouse, so, so_version, fecha_ingreso, id_acta, id_responsable, id_usuario, observaciones, id_area, id_proyecto, rol, id_usr_generado, id_licencia) VALUES(':serial' , :id_propietario, :id_arquitectura, :marca, :modelo, :cpu, :cpu_modelo, :cpu_frecuencia, :ram, :ssd, :hdd, :gpu, :gpu_modelo, :gpu_capacidad, :teclado, :mouse, :so, :so_version, :fecha_ingreso, :id_acta, :id_responsable, :id_usuario, :observaciones, :id_area, :id_proyecto, :rol, :id_usr_generado, :id_licencia)");
+
+		$stmt->bindParam(":serial", $datos["serial"] , PDO::PARAM_STR);
+		$stmt->bindParam(":id_propietario", $datos["id_propietario"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_arquitectura", $datos["id_arquitectura"] , PDO::PARAM_INT);
+		$stmt->bindParam(":marca", $datos["marca"] , PDO::PARAM_INT);
+		$stmt->bindParam(":modelo", $datos["modelo"] , PDO::PARAM_INT);
+		$stmt->bindParam(":cpu", $datos["cpu"] , PDO::PARAM_STR);
+		$stmt->bindParam(":cpu_modelo", $datos["cpu_modelo"] , PDO::PARAM_STR);
+		$stmt->bindParam(":cpu_frecuencia", $datos["cpu_frecuencia"] , PDO::PARAM_STR);
+		$stmt->bindParam(":ram", $datos["ram"] , PDO::PARAM_STR);
+		$stmt->bindParam(":ssd", $datos["ssd"] , PDO::PARAM_STR);
+		$stmt->bindParam(":hdd", $datos["hdd"] , PDO::PARAM_STR);
+		$stmt->bindParam(":gpu", $datos["gpu"] , PDO::PARAM_STR);
+		$stmt->bindParam(":gpu_modelo", $datos["gpu_modelo"] , PDO::PARAM_STR);
+		$stmt->bindParam(":gpu_capacidad", $datos["gpu_capacidad"] , PDO::PARAM_STR);
+		$stmt->bindParam(":teclado", $datos["teclado"] , PDO::PARAM_INT);
+		$stmt->bindParam(":mouse", $datos["mouse"] , PDO::PARAM_INT);
+		$stmt->bindParam(":so", $datos["so"] , PDO::PARAM_STR);
+		$stmt->bindParam(":so_version", $datos["so_version"] , PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_ingreso", $datos["fecha_ingreso"] , PDO::PARAM_STR);
+		$stmt->bindParam(":id_acta", $datos["id_acta"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_responsable", $datos["id_responsable"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"] , PDO::PARAM_INT);
+		$stmt->bindParam(":observaciones", $datos["observaciones"] , PDO::PARAM_STR);
+		$stmt->bindParam(":id_area", $datos["id_area"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_proyecto", $datos["id_proyecto"] , PDO::PARAM_INT);
+		$stmt->bindParam(":rol", $datos["rol"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_usr_generado", $datos["id_usr_generado"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_licencia", $datos["id_licencia"] , PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	public static function mdlContarParametros($tabla, $item, $valor)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item ");
@@ -483,6 +529,7 @@ class ModeloEquipos
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 			$stmt ->bindParam(":".$item, $valor, PDO::PARAM_INT);
+
 			if ($stmt->execute()) 
 			{
 				return $stmt->fetch();
@@ -491,23 +538,38 @@ class ModeloEquipos
 			{
 				return null;
 			}
+
 		}//($item == "id") 
 		else
 		{
 			if (!is_null($item)) 
 			{
+
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
-				if ($stmt->execute()) 
+				if($item == "serial")
 				{
-					return $stmt->fetchAll();
+					if ($stmt->execute()) 
+					{
+						return $stmt->fetch();
+					}
+					else
+					{
+						return null;
+					}
 				}
 				else
 				{
-					return null;
+					if ($stmt->execute()) 
+					{
+						return $stmt->fetchAll();
+					}
+					else
+					{
+						return null;
+					}
 				}
-
 			}
 			else
 			{
