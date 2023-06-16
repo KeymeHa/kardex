@@ -182,3 +182,8 @@ ALTER TABLE `equipos`
 
 ALTER TABLE `equiposactas`
 	ADD COLUMN `codigo` CHAR(7) NOT NULL DEFAULT '0' AFTER `id`;
+
+UPDATE `edubarco_kardex`.`js_data` SET `file`='1' WHERE  `id`=67;
+
+ALTER TABLE `equipos_licencias`
+	ADD COLUMN `instalaciones` TINYINT(2) NOT NULL DEFAULT '1' AFTER `fecha_creacion`;
