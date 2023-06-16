@@ -22,6 +22,12 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
+	public static function validarSerial($item, $valor)
+	{
+		$respuesta = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+		echo json_encode($respuesta);
+	}
+
 }//AjaxEquipos
 
 if (isset($_POST["idLicencia"])) 
@@ -42,3 +48,8 @@ if (isset($_POST["idActa"]))
 	$mostrar -> mostarActas($_POST["item"], $_POST["idActa"]);
 }
 
+if (isset($_POST["serial"])) 
+{
+	$mostrar = new AjaxEquipos();
+	$mostrar -> validarSerial("serial", $_POST["serial"]);
+}
