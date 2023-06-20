@@ -56,7 +56,7 @@ class ControladorEquipos
 		$count = 0;
 		for ($i=0; $i < count($licenciasAll); $i++) 
 		{ 
-			$contar = $llamar->ctrContarEnEquipos("id_licencia", $licenciasAll[$i]["id"]);
+			$contar = $llamar->ctrContarEnEquipos("id_licencia", $licenciasAll[$i]["id"], 0);
 			if ($contar < $licenciasAll[$i]["instalaciones"] ) 
 			{
 				$licenciasOk[$count]["id"] = $licenciasAll[$i]["id"];
@@ -453,7 +453,7 @@ class ControladorEquipos
 		$count = 0;
 		for ($i=0; $i < count($actasAll); $i++) 
 		{ 
-			$contar = $llamar->ctrContarEnEquipos("id_acta", $actasAll[$i]["id"]);
+			$contar = $llamar->ctrContarEnEquipos("id_acta", $actasAll[$i]["id"], 0);
 
 			if ($contar < $actasAll[$i]["cantidad"] ) 
 			{
@@ -807,52 +807,49 @@ class ControladorEquipos
 			$titulo = "";
 			$tipo = "";
 
-
-
-
-			/*
-		
-			inputSerialE
-			inputSerialDE
-			selectIdProE
-			selectIdArqE
-			selectIdMarcaE
-			selectIdModeloE
-			selectIdCPUE
-			selectIdCPUModE
-			inputCPUFreE
-			inputRamE
-			inputSSDE
-			inputHDDE
-			inputGPUE
-			inputGPUModE
-			inputGPUCapE
-			checkTecladoE
-			checkMouseE
-			selectSOE
-			selectSOVerE
-			dateIngresoE
-			selectIdActaE
-			selectResponsableE
-			selectAsignadoE
-			textObservacionesE
-
-			selectRolE
-			selectProyectoE
-
-			selectLicenciaE
-
-			*/
-
 			$teclado = (isset($post["checkTecladoE"]))?1:0;
 			$mouse = (isset($post["checkMouseE"]))?1:0;
-			/*
 
-			ID_LICENCIA
+			//$id_area = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
 
-			*/
 
-			$id_area = ControladorPersonasctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
+			//en caso de haber responsable pero no asignado, toma el valor del responsable y lo pasa al asignado
+
+			if($post["selectResponsableE"] == 0 && $post["selectAsignadoE"] == 0)
+			{
+				$responsable = $idSesion;
+				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+				$asignado =  $responsable;
+				//ver area al que pertecene
+			}
+			else
+			{
+				if ($post["selectAsignadoE"] == 0) 
+				{
+					$responsable = $post["selectResponsableE"];
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+					$asignado =  $responsable;
+					//el responsable es el asignado
+					//buscar a que area pertenece
+				}
+				elseif($post["selectResponsableE"] == 0)
+				{
+					$asignado =  $post["selectAsignadoE"];
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
+					//buscar a que area pertenece y quien es el responsable
+					$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
+				}
+				else
+				{
+					$responsable = $post["selectResponsableE"];
+					$asignado =  $post["selectAsignadoE"];
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+				}
+			}
+
+			//en caso de no haber ni responsable ni asignado, pasa al responsable de sistemas
+			//en caso de no haber responsable pero si asignado, busca a que area pertenece el asignado y busca el predeterminado, este sera el responsable
+
 
 			$tabla = "equipos";
 			$datos = array('serial' => $post["inputSerialE"],
@@ -876,16 +873,20 @@ class ControladorEquipos
 						   'so_version' => $post["selectSOVerE"],
 						   'fecha_ingreso' => $post["dateIngresoE"],
 						   'id_acta' => $post["selectIdActaE"],
-						   'id_responsable' => $post["selectResponsableE"],
-						   'id_usuario' => $post["selectAsignadoE"],
+						   'id_responsable' => $responsable, #ojo
+						   'id_usuario' => $asignado,
 						   'observaciones' => $post["textObservacionesE"],
-						   'id_area' => $id_area["id_area"],
+						   'id_area' => $id_area,
 						   'id_proyecto' => $post["selectProyectoE"],
 						   'rol' => $post["selectRolE"],
 						   'id_usr_generado' => $idSesion,
 						   'id_licencia' => $post["selectLicenciaE"] );
 
-			$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+			var_dump($datos);
+
+			$respuesta = "ok";
+
+			//$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
 
 			if ($respuesta == "ok") 
 			{
@@ -920,10 +921,10 @@ class ControladorEquipos
 	}//ctrNuevoEquipo()
 
 
-	static public function ctrContarEnEquipos($item, $valor)
+	static public function ctrContarEnEquipos($item, $valor, $param)
 	{
 		$tabla = "equipos";
-		$respuesta = ModeloEquipos::mdlContarEnEquipos($tabla, $item, $valor);
+		$respuesta = ModeloEquipos::mdlContarEnEquipos($tabla, $item, $valor, $param);
 		return $respuesta[0];
 	}//ctrContarUsoLicencias($id)
 
