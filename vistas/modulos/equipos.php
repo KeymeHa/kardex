@@ -267,7 +267,7 @@
             </div><!--col-md-6 col-lg-4 col-sm-12-->
 
             <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-12">
+              <div class="col-md-12 col-lg-12 col-sm-12">
                 <h4>Ingreso</h4>
               </div>
 
