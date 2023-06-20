@@ -97,12 +97,21 @@ class ModeloEquipos
 
 	}
 
-	public static function mdlContarEnEquipos($tabla, $item, $valor)
+	public static function mdlContarEnEquipos($tabla, $item, $valor, $param)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item ");
-		$stmt ->bindParam( ":".$item , $valor , PDO::PARAM_INT );
-		$stmt -> execute();
-		return $stmt->fetch();
+		if ($param == 0) 
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item ");
+			$stmt ->bindParam( ":".$item , $valor , PDO::PARAM_INT );
+			$stmt -> execute();
+			return $stmt->fetch();
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT areas.nombre, COUNT(areas.nombre) FROM $tabla INNER JOIN areas ON $tabla.id_area = areas.id GROUP BY(areas.nombre) ORDER BY COUNT(areas.nombre) DESC");
+			$stmt -> execute();
+			return $stmt->fetchAll();
+		}
 		$stmt->close();
 		$stmt = null;		
 	}
