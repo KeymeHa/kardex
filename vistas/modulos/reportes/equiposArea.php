@@ -17,7 +17,7 @@
 
       <div class="row">
         <div class="col-lg-12">
-          <div class="chart" id="bar-chart-rqCanMesAnio" style="height: 250px;"></div>
+          <div class="chart" id="bar-chart-EArea" style="height: 250px;"></div>
         </div>
       </div>
 
@@ -32,7 +32,7 @@
  var data = [
      <?php
 
-     $insumosCountCat = ControladorInsumos::ctrContarInsumosCat();
+     $insumosCountCat = ControladorEquipos::ctrContarEnEquipos(null, null, 1);
 
    if($insumosCountCat != null)
     {
@@ -40,7 +40,7 @@
 
         foreach ($insumosCountCat as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."', Insumos: ".$value[1]." },";
+         $ykeys.= "{ y: '".$value["usuarios.nombre"]."', Equipos: ".$value["COUNT(usuarios.nombre)"]." },";
 
         }
 
@@ -49,7 +49,7 @@
 
     }else{
 
-       echo "{ y: '0', Insumos: '0' }";
+       echo "{ y: '0', Equipos: '0' }";
 
     }
 
@@ -58,8 +58,8 @@
     config = {
       data: data,
       xkey: 'y',
-      ykeys: ['Insumos'],
-      labels: ['Insumos'],
+      ykeys: ['Equipos'],
+      labels: ['Equipos'],
       barColors: ['#00a65a'],
       fillOpacity: 0.6,
       hideHover: 'auto',
@@ -67,7 +67,7 @@
       resize: true
   };
 
-  config.element = 'bar-chart-rqCanMesAnio';
+  config.element = 'bar-chart-EArea';
   Morris.Bar(config);
 
 
