@@ -82,6 +82,27 @@ class ModeloPersonas
 		$stmt = null;
 	}
 
+	static public function mdlMostrarPersonaArea($tabla, $item, $valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT id_area FROM $tabla WHERE $item = :$item");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlPersonaPredeterminada($tabla, $id_area)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT id_usuario FROM $tabla WHERE id_area = :id_area AND sw = 1");
+		$stmt -> bindParam(":id_area", $id_area, PDO::PARAM_INT);
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 	/*=============================================
 	REGISTRO DE PRODUCTO
 	=============================================*/
