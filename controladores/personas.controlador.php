@@ -29,6 +29,19 @@ class ControladorPersonas
 		}
 	}
 
+	static public function ctrMostrarPersonaArea($item, $valor)
+	{
+		$tabla = "personas";
+		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
+		return $res["id_area"];
+	}
+
+	static public function ctrPersonaPredeterminada($id_area)
+	{
+		$tabla = "personas";
+		$res = ModeloPersonas::mdlPersonaPredeterminada($tabla, $id_area);
+		return $res["id_usuario"];
+	}
 
 	static public function ctrMostrarPersonas($item, $valor)
 	{
