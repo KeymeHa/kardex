@@ -187,3 +187,33 @@ UPDATE `edubarco_kardex`.`js_data` SET `file`='1' WHERE  `id`=67;
 
 ALTER TABLE `equipos_licencias`
 	ADD COLUMN `instalaciones` TINYINT(2) NOT NULL DEFAULT '1' AFTER `fecha_creacion`;
+
+
+ALTER TABLE `equipos`
+	CHANGE COLUMN `serial` `n_serie` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `id`;
+
+	ALTER TABLE `equipos`
+	CHANGE COLUMN `hdd` `hdd` INT(10) NOT NULL DEFAULT '0' AFTER `ssd`;
+
+ALTER TABLE `equipos`
+	CHANGE COLUMN `serialD` `serialD` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `n_serie`,
+	CHANGE COLUMN `nombre` `nombre` CHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `serialD`,
+	CHANGE COLUMN `id_propietario` `id_propietario` INT(10) NULL DEFAULT NULL AFTER `nombre`,
+	CHANGE COLUMN `marca` `marca` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `id_arquitectura`,
+	CHANGE COLUMN `modelo` `modelo` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `marca`,
+	CHANGE COLUMN `cpu` `cpu` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `modelo`,
+	CHANGE COLUMN `cpu_modelo` `cpu_modelo` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `cpu`,
+	CHANGE COLUMN `cpu_generacion` `cpu_generacion` INT(10) NULL DEFAULT '0' AFTER `cpu_modelo`,
+	CHANGE COLUMN `cpu_frecuencia` `cpu_frecuencia` FLOAT NULL DEFAULT '0' AFTER `cpu_generacion`,
+	CHANGE COLUMN `ram` `ram` INT(10) NULL DEFAULT '0' AFTER `cpu_frecuencia`,
+	CHANGE COLUMN `ssd` `ssd` INT(10) NULL DEFAULT '0' AFTER `ram`,
+	CHANGE COLUMN `gpu` `gpu` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `hdd`,
+	CHANGE COLUMN `gpu_modelo` `gpu_modelo` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `gpu`,
+	CHANGE COLUMN `gpu_capacidad` `gpu_capacidad` INT(10) NULL DEFAULT '0' AFTER `gpu_modelo`,
+	CHANGE COLUMN `so` `so` VARCHAR(50) NULL DEFAULT '0' COMMENT 'sistema operativo' COLLATE 'utf8mb4_unicode_ci' AFTER `mouse`,
+	CHANGE COLUMN `so_version` `so_version` VARCHAR(50) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `so`,
+	CHANGE COLUMN `observaciones` `observaciones` VARCHAR(500) NULL DEFAULT '0' COLLATE 'utf8mb4_unicode_ci' AFTER `so_version`,
+	CHANGE COLUMN `estado` `estado` INT(10) NULL DEFAULT '0' AFTER `observaciones`,
+	CHANGE COLUMN `id_licencia` `id_licencia` INT(10) NOT NULL DEFAULT '0' AFTER `estado`,
+	CHANGE COLUMN `id_usuario` `id_usuario` INT(10) NOT N/* gran consulta SQL (2,1 KiB), recortada a los 2.000 caracteres */
+
