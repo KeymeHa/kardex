@@ -48,8 +48,8 @@ if (isset($_POST["idActa"]))
 	$mostrar -> mostarActas($_POST["item"], $_POST["idActa"]);
 }
 
-if (isset($_POST["serial"])) 
+if (isset($_POST["n_serie"])) 
 {
 	$mostrar = new AjaxEquipos();
-	$mostrar -> validarSerial("serial", $_POST["serial"]);
+	$mostrar -> validarSerial("n_serie", $_POST["n_serie"]);
 }
