@@ -469,9 +469,10 @@ class ModeloEquipos
 
 	public static function mdlNuevoEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla('serial', id_propietario, id_arquitectura, marca, modelo, cpu, cpu_modelo, cpu_frecuencia, ram, ssd, hdd, gpu, gpu_modelo, gpu_capacidad, teclado, mouse, so, so_version, fecha_ingreso, id_acta, id_responsable, id_usuario, observaciones, id_area, id_proyecto, rol, id_usr_generado, id_licencia) VALUES(':serial' , :id_propietario, :id_arquitectura, :marca, :modelo, :cpu, :cpu_modelo, :cpu_frecuencia, :ram, :ssd, :hdd, :gpu, :gpu_modelo, :gpu_capacidad, :teclado, :mouse, :so, :so_version, :fecha_ingreso, :id_acta, :id_responsable, :id_usuario, :observaciones, :id_area, :id_proyecto, :rol, :id_usr_generado, :id_licencia)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(n_serie, serialD, id_propietario, id_arquitectura, marca, modelo, cpu, cpu_modelo, cpu_frecuencia, ram, ssd, hdd, gpu, gpu_modelo, gpu_capacidad, teclado, mouse, so, so_version, fecha_ingreso, id_acta, id_responsable, id_usuario, observaciones, id_area, id_proyecto, rol, id_usr_generado, id_licencia) VALUES(:n_serie , :serialD, :id_propietario, :id_arquitectura, :marca, :modelo, :cpu, :cpu_modelo, :cpu_frecuencia, :ram, :ssd, :hdd, :gpu, :gpu_modelo, :gpu_capacidad, :teclado, :mouse, :so, :so_version, :fecha_ingreso, :id_acta, :id_responsable, :id_usuario, :observaciones, :id_area, :id_proyecto, :rol, :id_usr_generado, :id_licencia)");
 
-		$stmt->bindParam(":serial", $datos["serial"] , PDO::PARAM_STR);
+		$stmt->bindParam(":n_serie", $datos["n_serie"] , PDO::PARAM_STR);
+		$stmt->bindParam(":serialD", $datos["serialD"] , PDO::PARAM_STR);
 		$stmt->bindParam(":id_propietario", $datos["id_propietario"] , PDO::PARAM_INT);
 		$stmt->bindParam(":id_arquitectura", $datos["id_arquitectura"] , PDO::PARAM_INT);
 		$stmt->bindParam(":marca", $datos["marca"] , PDO::PARAM_INT);
