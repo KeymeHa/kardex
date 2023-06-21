@@ -9,9 +9,6 @@
 
 
 <div class="content-wrapper">
-    <?php
-    include "bannerConstruccion.php";
-  ?>
   <section class="content-header">
     <h1>    
       Base Datos PC  
@@ -179,7 +176,7 @@
 
               <div class="form-group">
                 <label for="pc_cpufre">*CPU: Frecuencia (Ghz)</label>
-                <input type="text" class="form-control" id="pc_cpufre" placeholder="2.5" required name="inputCPUFreE">
+                <input type="text" class="form-control" id="pc_cpufre" placeholder="2.5" value="0" name="inputCPUFreE">
               </div>
 
               <div class="form-group">
@@ -278,7 +275,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="date" class="form-control pull-right" required id="dateIngresoE" value="" name="dateIngresoE">
+                    <input type="date" class="form-control" name="dateIngresoE" id="dateIngresoE" value="" />
                   </div>
                 </div>
               </div><!--col-md-6 col-lg-6 col-sm-12-->
