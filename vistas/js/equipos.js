@@ -1,4 +1,4 @@
-$("#btn-newEquipo").click(function(){
+$("button.btn-newEquipo").click(function(){
 	$("#inputEquipoAccion").val(0);
 	var elemento = $("#dateIngresoE");
 	hoy(elemento);
@@ -7,10 +7,12 @@ $("#btn-newEquipo").click(function(){
 
 $("#pc_serial").change(function() {
 
-	var serial = $(this).val();
+	var n_serie = $(this).val();
 
 	var datos = new FormData();
-	datos.append("serial", serial);
+	datos.append("n_serie", n_serie);
+
+	$(".alert").remove();
 
 	$.ajax({
 
@@ -24,8 +26,8 @@ $("#pc_serial").change(function() {
 		success: function(respuesta){	
 			if(respuesta)
 			{
-				$(this).parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i>¡ '+serial+' ya existe! .</div>');
-	    		$(this).val("");
+				$("#pc_serial").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> '+n_serie+' ya existe ! .</div>');
+	    		$("#pc_serial").val("");
 	    		ocultarAlert();
     		}	
 		}
