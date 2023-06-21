@@ -28,11 +28,13 @@ class TablaActasEquipos
 
             $fecha = new DateTime($actas[$i]["fecha"]);
 
+            $contar = ControladorEquipos::ctrContarEnEquipos("id_acta", $actas[$i]["id"], 0);
+
 		    $dJson .='[
 	    		"'.($i+1).'",
 	    		"'.$actas[$i]["codigo"].'",
 	    		"'.$fecha->format('m-d-Y').'",
-	    		"'.$actas[$i]["cantidad"].'",
+	    		"'.$contar."/".$actas[$i]["cantidad"].'",
 	    		"'.$tipo.'",
 	    		"'.$acciones.'"
 	    		],';
