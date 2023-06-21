@@ -32,15 +32,15 @@
  var data = [
      <?php
 
-     $insumosCountCat = ControladorEquipos::ctrContarEnEquipos(null, null, 1);
+     $countAreasEquipo = ControladorEquipos::ctrContarEnEquipos(null, null, 1);
 
-   if($insumosCountCat != null)
+   if($countAreasEquipo != null)
     {
         $ykeys = "";
 
-        foreach ($insumosCountCat as $key => $value) {
+        foreach ($countAreasEquipo as $key => $value) {
 
-         $ykeys.= "{ y: '".$value["usuarios.nombre"]."', Equipos: ".$value["COUNT(usuarios.nombre)"]." },";
+         $ykeys.= "{ y: '".$value["nombre"]."', Equipos: ".$value["COUNT(areas.nombre)"]." },";
 
         }
 
