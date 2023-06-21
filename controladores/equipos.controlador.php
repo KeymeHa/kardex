@@ -274,10 +274,10 @@ class ControladorEquipos
 		}
 	}//ctrMostrarParametros($item, $valor, $item2)
 
-	public static function ctrMostrarParametrosNombre($item, $valor)
+	public static function ctrMostrarParametrosNombre($item, $valor, $item2)
 	{
 		$tabla = "equiposparametros";
-		$respuesta = ModeloEquipos::ctrMostrarParametrosNombre($tabla, $item, $valor);
+		$respuesta = ModeloEquipos::mdlMostrarParametros($tabla, $item, $valor, $item2);
 		return $respuesta;
 	}
 
@@ -373,7 +373,7 @@ class ControladorEquipos
 		if (isset($_GET["idPe"]) && !is_null($_GET["idPe"]) && (isset($_GET["tipo"]) && !is_null($_GET["tipo"]) ) ) 
 		{
 			$mostrar = new ControladorEquipos();
-			$parametro = $mostrar -> ctrMostrarParametros("id", $_GET["idPe"]);
+			$parametro = $mostrar -> ctrMostrarParametros("id", $_GET["idPe"], null);
 
 			$titulo = "";
 			$tipo = "";
@@ -711,35 +711,17 @@ class ControladorEquipos
 
 	public static function ctrContarParametros($item, $valor)
 	{
-		switch ($item) {
-			case 1:
-				$item = "id_arquitectura";
-				break;
-			case 2:
-				$item = "id_propietario";
-				break;
-			case 3:
-				$item = "marca";
-				break;
-			case 4:
-				$item = "modelo";
-				break;
-			case 5:
-				$item = "cpu";
-				break;
-			case 6:
-				$item = "cpu_modelo";
-				break;
-			case 7:
-				$item = "so";
-				break;
-			case 8:
-				$item = "so_version";
-				break;
-			default:
-				 return 0;
-				break;
-		}
+
+		$parametros = array(1 => "id_arquitectura",
+						   2 => "id_propietario",
+						   3 => "marca",
+						   4 => "modelo",
+						   5 => "cpu",
+						   6 => "cpu_modelo",
+						   7 => "so",
+						   8 => "so_version");
+
+		$item = (array_key_exists($item, $parametros))? $parametros[$item] : 0 ;
 
 		$tabla = "equipos";
 		$respuesta = ModeloEquipos::mdlContarParametros($tabla, $item, $valor);
@@ -852,8 +834,8 @@ class ControladorEquipos
 
 
 			$tabla = "equipos";
-			$datos = array('serial' => $post["inputSerialE"],
-						   'serialD' => $post["inputSerialDE"],
+			$datos = array('n_serie' => $post["inputSerialE"],
+						   'serialD' => ( empty($post["inputSerialDE"]) )? 0 : $post["inputSerialDE"] ,
 						   'id_propietario' => $post["selectIdProE"],
 						   'id_arquitectura' => $post["selectIdArqE"],
 						   'marca' => $post["selectIdMarcaE"],
@@ -863,10 +845,10 @@ class ControladorEquipos
 						   'cpu_frecuencia' => $post["inputCPUFreE"],
 						   'ram' => $post["inputRamE"],
 						   'ssd' => $post["inputSSDE"],
-						   'hdd' => $post["inputHDDE"],
-						   'gpu' => $post["inputGPUE"],
-						   'gpu_modelo' => $post["inputGPUModE"],
-						   'gpu_capacidad' => $post["inputGPUCapE"],
+						   'hdd' => ( empty($post["inputHDDE"]) )? 0 : $post["inputHDDE"] ,
+						   'gpu' => ( empty($post["inputGPUE"]) )? 0 : $post["inputGPUE"] ,
+						   'gpu_modelo' => ( empty($post["inputGPUModE"]) )? 0 : $post["inputGPUModE"] ,
+						   'gpu_capacidad' => ( empty($post["inputGPUCapE"]) )? 0 : $post["inputGPUCapE"],
 						   'teclado' => $teclado,
 						   'mouse' => $mouse, 
 						   'so' => $post["selectSOE"],
@@ -882,11 +864,11 @@ class ControladorEquipos
 						   'id_usr_generado' => $idSesion,
 						   'id_licencia' => $post["selectLicenciaE"] );
 
-			var_dump($datos);
-
 			$respuesta = "ok";
 
-			//$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+			//var_dump($datos);
+
+			$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
 
 			if ($respuesta == "ok") 
 			{
@@ -925,7 +907,17 @@ class ControladorEquipos
 	{
 		$tabla = "equipos";
 		$respuesta = ModeloEquipos::mdlContarEnEquipos($tabla, $item, $valor, $param);
-		return $respuesta[0];
+
+		if ($param != 0) 
+		{
+			return $respuesta;
+		}
+		else
+		{
+			return $respuesta[0];
+		}
+
+		
 	}//ctrContarUsoLicencias($id)
 
 }
