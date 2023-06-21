@@ -30,11 +30,18 @@ class TablaEquipos
 	    		"'.ControladorEquipos::ctrMostrarParametros("id", $equipos[$i]["id_propietario"], 1).'",
 	    		"'.ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]).'",
 */
+	    	$usuario = ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]);
+
+	    	$arq = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_arquitectura"], 1);
+	    	$prop = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_propietario"], 1);
+
 		    $dJson .='[
 	    		"'.($i+1).'",
 	    		"'.$equipos[$i]["nombre"].'",
-	    		"'.$equipos[$i]["serial"].'",
-	    		"'.$equipos[$i]["nombre"].'",	
+	    		"'.$equipos[$i]["n_serie"].'",
+	    		"'.$arq["nombre"].'",	
+	    		"'.$prop["nombre"].'",	
+	    		"'.$usuario["nombre"].'",	
 	    		"'.$area["nombre"].'",
 	    		"'.$acciones.'"
 	    		],';
