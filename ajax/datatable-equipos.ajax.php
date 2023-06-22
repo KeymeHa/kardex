@@ -22,16 +22,10 @@ class TablaEquipos
 
 		for( $i = 0; $i < count($equipos); $i++)
 		{	
-			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-bajaPC' title='Devolver o marcar de baja' idPC='".$equipos[$i]["id"]."'><i class='fa fa-arrow-down'></i></button></div></div>";
+			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-bajaPC' title='Devolver o marcar de baja' idPC='".$equipos[$i]["id"]."'><i class='fa fa-arrow-down'></i></button></div></div>";
 
 			$area = ControladorAreas::ctrMostrarAreas("id", $equipos[$i]["id_area"]);
-/*
-			"'.ControladorEquipos::ctrMostrarParametros("id", $equipos[$i]["id_arquitectura"], 1).'",
-	    		"'.ControladorEquipos::ctrMostrarParametros("id", $equipos[$i]["id_propietario"], 1).'",
-	    		"'.ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]).'",
-*/
 	    	$usuario = ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]);
-
 	    	$arq = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_arquitectura"], 1);
 	    	$prop = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_propietario"], 1);
 
@@ -39,8 +33,8 @@ class TablaEquipos
 	    		"'.($i+1).'",
 	    		"'.$equipos[$i]["nombre"].'",
 	    		"'.$equipos[$i]["n_serie"].'",
-	    		"'.$arq["nombre"].'",	
-	    		"'.$prop["nombre"].'",	
+	    		"'.$arq.'",	
+	    		"'.$prop.'",	
 	    		"'.$usuario["nombre"].'",	
 	    		"'.$area["nombre"].'",
 	    		"'.$acciones.'"
