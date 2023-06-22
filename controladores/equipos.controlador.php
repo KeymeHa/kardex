@@ -278,7 +278,7 @@ class ControladorEquipos
 	{
 		$tabla = "equiposparametros";
 		$respuesta = ModeloEquipos::mdlMostrarParametros($tabla, $item, $valor, $item2);
-		return $respuesta;
+		return !is_null($item2)? $respuesta["nombre"]:$respuesta;
 	}
 
 	public static function ctrAccionParametro($idSession)
@@ -919,5 +919,19 @@ class ControladorEquipos
 
 		
 	}//ctrContarUsoLicencias($id)
+
+	static public function ctrMostrarItem($dato, $sw, $titulo)
+	{
+		if ($dato != 0 && !empty($dato)) 
+		{
+			$dato = ($sw == 1) ? '<dt>'.$titulo.'</dt><dd>'.ControladorEquipos::ctrMostrarParametrosNombre("id", $dato, 1).'</dd>' : '<dt>'.$titulo.'</dt><dd>'.$dato.'</dd>' ;
+		}//
+		else
+		{
+			$dato = "";
+		}
+
+		return $dato;
+	}
 
 }
