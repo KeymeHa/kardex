@@ -39,6 +39,17 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 INSERT INTO `parametros` (`id`, `stMinimo`, `stModerado`, `stAlto`, `codRq`, `codFac`, `codPed`, `codOrdC`, `anioActual`, `nameFac`, `razonSocial`, `nit`, `direccion`, `tel`, `correo`, `direccionEnt`, `repLegal`, `valorIVA`, `validarIns`, `validarCat`, `codActa`, `li`, `prueba`, `extencion`, `dia`, `count`, `codVen`, `codCorte`, `codRad`, `nameRad`, `festivos`, `modomanto`, `fechaRegistroPqr`, `rutaScan`) VALUES
   (1, 10, 20, 30, 1, 1, 1, 1, 2023, 1, 'NOMBRE DE LA EMPRESA', 'id de la empresa', 'Dirección fisica de la empresa', 'telefono', 'correo', 'Direccion fisica', 'gerente', 1, 1, 0, 1, NULL, NULL, NULL, 0, 0, 1, 1, 1, 1, '', 0, '2023-04-18 08:53:17', '');
 
+CREATE TABLE IF NOT EXISTS `anios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `anio` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla edubarco_kardex.anios: ~3 rows (aproximadamente)
+INSERT INTO `anios` (`id`, `anio`) VALUES
+  (1, 2021),
+  (2, 2022),
+  (3, 2023);
 
 CREATE TABLE IF NOT EXISTS `js_data` (
   `id` int NOT NULL AUTO_INCREMENT,
