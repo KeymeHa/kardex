@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `correo`, `estado`, `ultimo_login`, `fecha`, `sid`, `sid_ext`, `elim`, `try`, `id_area`) VALUES
-  (1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5autHv3Ukefrj18Q.sA446i51Rv.qpK78q', 1, NULL, 'mail@mail.com', 1, '2023-06-21 17:08:57', '2021-02-11 10:06:49', 'ih6rajrn088vcanmkvehc1ko8o', '2f256b90494106c57e3ac14f7e8cacf6260fa219', 0, 0, 1);
+  (1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5aub7LdtrTXnn.ZQdALsthndsluPeTbv.a', 1, NULL, 'mail@mail.com', 1, '2023-06-21 17:08:57', '2021-02-11 10:06:49', 'ih6rajrn088vcanmkvehc1ko8o', '2f256b90494106c57e3ac14f7e8cacf6260fa219', 0, 0, 1);
 
   CREATE TABLE IF NOT EXISTS `personas` (
   `id` int NOT NULL AUTO_INCREMENT,
