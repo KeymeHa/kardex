@@ -217,3 +217,6 @@ ALTER TABLE `equipos`
 	CHANGE COLUMN `id_licencia` `id_licencia` INT(10) NOT NULL DEFAULT '0' AFTER `estado`,
 	CHANGE COLUMN `id_usuario` `id_usuario` INT(10) NOT N/* gran consulta SQL (2,1 KiB), recortada a los 2.000 caracteres */
 
+INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pTres`, `pCuatro`, `pCinco`, `pDiez`, `file`) VALUES ('verpc', 'Caracteristicas PC', '0', '0', '0', '10', '0');
+
+INSERT INTO `edubarco_kardex`.`js_data` (`page`, `title`, `pSeis`, `pSiete`, `pOcho`, `pNueve`, `pDiez`, `pOnce`) VALUES ('404', 'Página no Encontrada', '6', '7', '8', '9', '10', '11');
