@@ -35,3 +35,10 @@ $("#pc_serial").change(function() {
 
 
 });
+
+
+$("table.tablaEquipos").on('click', 'button.btn-verPC', function() 
+{
+	var idPC = $(this).attr("idPC");
+	window.location = "index.php?ruta=verpc&idpc="+idPC;
+});
