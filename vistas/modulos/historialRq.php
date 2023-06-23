@@ -50,7 +50,7 @@
                       {
                          echo '
                         <div class="timeline-body">
-                                 <strong>'.$nombre[0].'</strong> Genero la orden de<strong>'.$value2["valorAnt"].'</strong>. 
+                                 <strong>'.$nombre.'</strong> Genero la orden de<strong>'.$value2["valorAnt"].'</strong>. 
                               </div>';
                       }elseif ($value2["accion"] == 2) {
                         echo '
@@ -70,7 +70,7 @@
 
                         echo '
                         <div class="timeline-body">
-                           <strong>'.$nombre[0].' <span style="color: red;">eliminó<span></strong> la requisición <strong>'.$strAnt[0].'</strong> para el área: <strong>'.$strAnt[1].'</strong>. 
+                           <strong>'.$nombre.' <span style="color: red;">eliminó<span></strong> la requisición <strong>'.$strAnt[0].'</strong> para el área: <strong>'.$strAnt[1].'</strong>. 
                         </div>';
                       }
                     }

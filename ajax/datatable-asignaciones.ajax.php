@@ -53,7 +53,7 @@ class Tablapersonas
 	           $usuario = ControladorUsuarios::ctrMostrarNombre("id", $personas[$i]["id"]);
 
 				 $usrDefinido = ControladorUsuarios::ctrValidarEncargado("id_usuario", $personas[$i]["id"] );
-		    	 $usr_predeterminado = ( $usrDefinido == 0 ) ? $usuario["nombre"] : "<strong>".$usuario["nombre"]."</strong>(Encargado predeterminado)" ;
+		    	 $usr_predeterminado = ( $usrDefinido == 0 ) ? $usuario : "<strong>".$usuario."</strong>(Encargado predeterminado)" ;
 
 				if (isset($permiso["modulo"])) 
 				{

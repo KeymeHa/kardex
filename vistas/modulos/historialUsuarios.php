@@ -50,7 +50,7 @@
                       {
                          echo '
                         <div class="timeline-body">
-                                 <strong>'.$nombre[0].'</strong> creo el usuario de<strong>'.$value2["valorAnt"].'</strong>. 
+                                 <strong>'.$nombre.'</strong> creo el usuario de<strong>'.$value2["valorAnt"].'</strong>. 
                               </div>';
                       }elseif ($value2["accion"] == 2) {
                         echo '
@@ -67,7 +67,7 @@
                       elseif ($value2["accion"] == 4) {
                         echo '
                         <div class="timeline-body">
-                                 <strong>'.$nombre[0].'</strong> elimino el usuario de <strong>'.$value2["valorAnt"].'</strong>. 
+                                 <strong>'.$nombre.'</strong> elimino el usuario de <strong>'.$value2["valorAnt"].'</strong>. 
                               </div>';
                       }
                     }

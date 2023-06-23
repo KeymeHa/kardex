@@ -17,7 +17,7 @@ class AjaxPersonas
 		$respuesta["id_area"] =  $persona["id_area"];
 		$respuesta["id"] =  $valor;
 		$respuesta["area"] =  $area["nombre"];
-		$respuesta["nombre"] =  $usuario["nombre"];
+		$respuesta["nombre"] =  $usuario;
 		echo json_encode($respuesta);
 	}#ajaxEditarPersona
 

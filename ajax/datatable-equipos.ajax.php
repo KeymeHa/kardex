@@ -35,7 +35,7 @@ class TablaEquipos
 	    		"'.$equipos[$i]["n_serie"].'",
 	    		"'.$arq.'",	
 	    		"'.$prop.'",	
-	    		"'.$usuario["nombre"].'",	
+	    		"'.$usuario.'",	
 	    		"'.$area["nombre"].'",
 	    		"'.$acciones.'"
 	    		],';

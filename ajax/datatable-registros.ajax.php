@@ -106,7 +106,7 @@ class TablaRegistros
 							//si es por asignar
 							if ($registrosPQR[$i]["id_estado"] == 5) 
 							{
-								$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$registrosPQR[$i]["id"]."' nombre='".$usuarioNombre["nombre"]."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+								$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$registrosPQR[$i]["id"]."' nombre='".$usuarioNombre."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
 							}
 							else
 							{
@@ -193,7 +193,7 @@ class TablaRegistros
 					    		"'.$radicado["asunto"].'",
 					    		"'.$radicado["id_remitente"].'",
 					    		"'.$areaNombre["nombre"].'",
-					    		"'.$usuarioNombre["nombre"].'",
+					    		"'.$usuarioNombre.'",
 					    		"'.$fecha_respuesta.'",
 					    		"'.$fecha_vencimiento.'",
 					    		"'.$htmldias.'",
@@ -241,7 +241,7 @@ class TablaRegistros
 							//si es por asignar
 							if ($registrosPQR["id_estado"] == 5) 
 							{
-								$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$registrosPQR["id"]."' nombre='".$usuarioNombre["nombre"]."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+								$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$registrosPQR["id"]."' nombre='".$usuarioNombre."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
 							}
 							else
 							{
@@ -324,7 +324,7 @@ class TablaRegistros
 								/*
 
 								"'.$areaNombre["nombre"].'",
-					    		"'.$usuarioNombre["nombre"].'",
+					    		"'.$usuarioNombre.'",
 
 								*/
 

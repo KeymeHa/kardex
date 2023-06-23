@@ -199,7 +199,7 @@ class ControladorUsuarios
 	static public function ctrMostrarNombre($item, $valor)
 	{
 		$respuesta = ModeloUsuarios::MdlMostrarNombre($item, $valor);
-		return $respuesta;
+		return $respuesta["nombre"];
 	}
 
 	static public function ctrCrearUsuario()

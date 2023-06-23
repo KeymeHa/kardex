@@ -286,7 +286,7 @@ class ControladorRadicados
 				//si es por asignar
 				if ($value["id_estado"] == 5) 
 				{
-					$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$value["id"]."' nombre='".$usuarioNombre["nombre"]."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
+					$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$value["id"]."' nombre='".$usuarioNombre."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
 				}
 				else
 				{
@@ -2084,7 +2084,7 @@ class ControladorRadicados
 
 					$resultado["estado"] = $estadoPQR;
 
-					$dJsonAccTemp = '"id":"'.$registro["id_usuario"].'","nom":"'.$usuarioNombre["nombre"].'","idA":"'.$registro["id_area"].'"';
+					$dJsonAccTemp = '"id":"'.$registro["id_usuario"].'","nom":"'.$usuarioNombre.'","idA":"'.$registro["id_area"].'"';
 
 					$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $idRegistro, "fecha_asignacion", $fechacompleta );
 

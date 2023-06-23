@@ -85,7 +85,7 @@ class TablaRequisiciones
 	    	$dJson .='[
 	    		"'.($i + 1).'",
 	    		"'.$codigoInt.'",
-	    		"'.$usuario['nombre'].'",
+	    		"'.$usuario.'",
 	    		"'.$area['nombre'].'",
 	    		"'.$cantidadInsumos.'",
 	    		"'.$fecha.'",
