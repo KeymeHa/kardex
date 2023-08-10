@@ -192,7 +192,7 @@ class TablaRegistros
 					    		"'.$estado.'",
 					    		"'.$radicado["asunto"].'",
 					    		"'.$radicado["id_remitente"].'",
-					    		"'.$areaNombre["nombre"].'",
+					    		"'.$areaNombre.'",
 					    		"'.$usuarioNombre.'",
 					    		"'.$fecha_respuesta.'",
 					    		"'.$fecha_vencimiento.'",

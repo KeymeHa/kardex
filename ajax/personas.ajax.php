@@ -16,7 +16,7 @@ class AjaxPersonas
 		$usuario = ControladorUsuarios::ctrMostrarNombre($item, $persona["id_usuario"]);
 		$respuesta["id_area"] =  $persona["id_area"];
 		$respuesta["id"] =  $valor;
-		$respuesta["area"] =  $area["nombre"];
+		$respuesta["area"] =  $area;
 		$respuesta["nombre"] =  $usuario;
 		echo json_encode($respuesta);
 	}#ajaxEditarPersona
