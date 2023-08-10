@@ -305,6 +305,39 @@ class ModeloEquipos
 
 	//PARAMETROS	
 
+	public static function mdlValidarParametro($tabla, $item1, $valo1, $item2, $valor2)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
+		$stmt->bindParam(":".$item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		if ($stmt->execute()) 
+		{
+			return $stmt->fetch();
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public static function mdlShowParameters($tabla, $valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo = :tipo");
+		$stmt->bindParam(":tipo", $valor, PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return $stmt->fetchAll();
+		}
+		else
+		{
+			return null;
+		}
+		
+		$stmt->close();
+		$stmt = null;
+	}
+
 	public static function mdlMostrarParametros($tabla, $item, $valor, $item2)
 	{
 		if ($item == "id") 
@@ -340,6 +373,7 @@ class ModeloEquipos
 		{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY nombre ASC");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+
 			if ($stmt->execute()) 
 			{
 				return $stmt->fetchAll();
@@ -558,7 +592,7 @@ class ModeloEquipos
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
-				if($item == "serial")
+				if($item == "n_serie")
 				{
 					if ($stmt->execute()) 
 					{

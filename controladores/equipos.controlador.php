@@ -274,6 +274,13 @@ class ControladorEquipos
 		}
 	}//ctrMostrarParametros($item, $valor, $item2)
 
+	public static function ctrShowParameters($valor)
+	{
+		$tabla = "equiposparametros";
+		$respuesta = ModeloEquipos::mdlShowParameters($tabla, $valor);
+		return $respuesta;
+	}
+
 	public static function ctrMostrarParametrosNombre($item, $valor, $item2)
 	{
 		$tabla = "equiposparametros";
@@ -343,16 +350,33 @@ class ControladorEquipos
 		}
 	}
 
+	static public function ctrValidarParametro($item1, $valo1, $item2, $valor2 )
+	{
+		$tabla = "equiposparametros";
+		$respuesta = ModeloEquipos::mdlValidarParametro($tabla, $item1, $valo1, $item2, $valor2);
+		return ( isset($respuesta["nombre"]) && !is_null($respuesta["nombre"]) )? 1 : 0 ;
+	}
+
 	static public function ctrNuevoParametro($post, $idSession, $fecha)
 	{
 		$tabla = "equiposparametros";
-		$datos = array( 'nombre' => $post["paramValue"],
+		$accion = new ControladorEquipos();
+		$validar = $accion -> ctrValidarParametro("tipo", $post["inputParamTipo"], "nombre", $post["paramValue"] );
+
+		if( $validar == 1 )
+		{
+			return "error";
+		}
+		else
+		{
+			$datos = array( 'nombre' => $post["paramValue"],
 						'tipo' => $post["inputParamTipo"],
 						'fecha_creacion' => $fecha,
 						'id_usr' => $idSession);
 
-		$respuesta = ModeloEquipos::mdlNuevoParametro($tabla, $datos);
-		return $respuesta;
+			$respuesta = ModeloEquipos::mdlNuevoParametro($tabla, $datos);
+			return $respuesta;
+		}
 	}
 
 	static public function ctrEditarParametro($post, $idSession, $fecha)
@@ -770,6 +794,7 @@ class ControladorEquipos
 		if (isset($_POST["inputEquipoAccion"]) )
 		{
 			$accion = new ControladorEquipos();
+
 			if ($_POST["inputEquipoAccion"] == 1) 
 			{
 				//$accion -> ctrEditarLicencia($_POST);
@@ -789,60 +814,33 @@ class ControladorEquipos
 			$titulo = "";
 			$tipo = "";
 
+			$respuesta = "";
+
+			date_default_timezone_set('America/Bogota');
+
 			$teclado = (isset($post["checkTecladoE"]))?1:0;
 			$mouse = (isset($post["checkMouseE"]))?1:0;
 
-			//$id_area = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
+			$accion = new ControladorEquipos();
+			$equipo = $accion->ctrMostrarEquipos($item, $valor);
 
-
-			//en caso de haber responsable pero no asignado, toma el valor del responsable y lo pasa al asignado
-
-			if($post["selectResponsableE"] == 0 && $post["selectAsignadoE"] == 0)
-			{
-				$responsable = $idSesion;
-				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-				$asignado =  $responsable;
-				//ver area al que pertecene
-			}
-			else
-			{
-				if ($post["selectAsignadoE"] == 0) 
-				{
-					$responsable = $post["selectResponsableE"];
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-					$asignado =  $responsable;
-					//el responsable es el asignado
-					//buscar a que area pertenece
-				}
-				elseif($post["selectResponsableE"] == 0)
-				{
-					$asignado =  $post["selectAsignadoE"];
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
-					//buscar a que area pertenece y quien es el responsable
-					$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
-				}
-				else
-				{
-					$responsable = $post["selectResponsableE"];
-					$asignado =  $post["selectAsignadoE"];
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-				}
-			}
-
-			//en caso de no haber ni responsable ni asignado, pasa al responsable de sistemas
-			//en caso de no haber responsable pero si asignado, busca a que area pertenece el asignado y busca el predeterminado, este sera el responsable
-
+			$obs = ControladorParametros::ctrValidarCaracteres($post["textObservacionesE"]);
 
 			$tabla = "equipos";
+
+			$dJsonAcc .= '{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"1","da":{"file":"'.$post["selectIdActaE"].'","obs":"'.$obs.'",}}]';
+
 			$datos = array('n_serie' => $post["inputSerialE"],
 						   'serialD' => ( empty($post["inputSerialDE"]) )? 0 : $post["inputSerialDE"] ,
 						   'id_propietario' => $post["selectIdProE"],
 						   'id_arquitectura' => $post["selectIdArqE"],
+						   'nombre' => $post["nombrePc"],
 						   'marca' => $post["selectIdMarcaE"],
 						   'modelo' => $post["selectIdModeloE"],
 						   'cpu' => $post["selectIdCPUE"],
 						   'cpu_modelo' => $post["selectIdCPUModE"],
 						   'cpu_frecuencia' => $post["inputCPUFreE"],
+						   'cpu_generacion' => $post["selectIdCPUGenE"],
 						   'ram' => $post["inputRamE"],
 						   'ssd' => $post["inputSSDE"],
 						   'hdd' => ( empty($post["inputHDDE"]) )? 0 : $post["inputHDDE"] ,
@@ -857,18 +855,66 @@ class ControladorEquipos
 						   'id_acta' => $post["selectIdActaE"],
 						   'id_responsable' => $responsable, #ojo
 						   'id_usuario' => $asignado,
-						   'observaciones' => $post["textObservacionesE"],
+						   'observaciones' => $obs,
 						   'id_area' => $id_area,
 						   'id_proyecto' => $post["selectProyectoE"],
 						   'rol' => $post["selectRolE"],
 						   'id_usr_generado' => $idSesion,
+						   'estado' => 1,
 						   'id_licencia' => $post["selectLicenciaE"] );
 
-			$respuesta = "ok";
 
-			//var_dump($datos);
+			if( isset($equipo["n_serie"]) && !is_null($equipo["n_serie"]) )
+			{
+				//$id_area = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
 
-			$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+
+				//en caso de haber responsable pero no asignado, toma el valor del responsable y lo pasa al asignado
+
+				if($post["selectResponsableE"] == 0 && $post["selectAsignadoE"] == 0)
+				{
+					$responsable = $idSesion;
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+					$asignado =  $responsable;
+					//ver area al que pertecene
+					}
+					else
+					{
+						if ($post["selectAsignadoE"] == 0) 
+						{
+							$responsable = $post["selectResponsableE"];
+							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+							$asignado =  $responsable;
+							//el responsable es el asignado
+							//buscar a que area pertenece
+						}
+						elseif($post["selectResponsableE"] == 0)
+						{
+							$asignado =  $post["selectAsignadoE"];
+							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
+							//buscar a que area pertenece y quien es el responsable
+							$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
+						}
+						else
+						{
+							$responsable = $post["selectResponsableE"];
+							$asignado =  $post["selectAsignadoE"];
+							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+						}
+					}
+
+					//en caso de no haber ni responsable ni asignado, pasa al responsable de sistemas
+					//en caso de no haber responsable pero si asignado, busca a que area pertenece el asignado y busca el predeterminado, este sera el responsable
+
+				$dJsonAcc = substr($equipo["historial"], 0 ,-1);
+				$datos["historial"] = ','.$dJsonAcc;
+	            $respuesta = ModeloEquipos::mdlEditarEquipo($tabla, $datos);
+			}
+			else
+			{
+				$datos["historial"] = '['.$dJsonAcc;
+				$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+			}
 
 			if ($respuesta == "ok") 
 			{

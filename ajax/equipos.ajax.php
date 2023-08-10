@@ -28,6 +28,19 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
+	public static function addParametroFast($tipo, $valor, $idSession)
+	{
+		//agregar nuevo parametro
+		$post = array('paramValue' => $valor,
+					'inputParamTipo' => $tipo );
+		date_default_timezone_set('America/Bogota');
+		$fechaActual = date("Y-m-d");
+		$agregar = ControladorEquipos::ctrNuevoParametro($post, $idSession, $fechaActual);
+		//traer todos los parametros de ese tipo
+		$traer = ControladorEquipos::ctrShowParameters($tipo);
+		echo json_encode($traer);
+	}
+
 }//AjaxEquipos
 
 if (isset($_POST["idLicencia"])) 
@@ -36,7 +49,7 @@ if (isset($_POST["idLicencia"]))
 	$mostrar -> mostrarLicencia($_POST["item"], $_POST["idLicencia"]);
 }
 
-if (isset($_POST["valor"])) 
+if (isset($_POST["valor"]) && !isset($_POST["addParam"]) ) 
 {
 	$mostrar = new AjaxEquipos();
 	$mostrar -> mostrarParametros($_POST["tipo"], $_POST["valor"]);
@@ -52,4 +65,10 @@ if (isset($_POST["n_serie"]))
 {
 	$mostrar = new AjaxEquipos();
 	$mostrar -> validarSerial("n_serie", $_POST["n_serie"]);
+}
+
+if(isset($_POST["addParam"]))
+{
+	$addParam = new AjaxEquipos();
+	$addParam -> addParametroFast($_POST["tipo"], $_POST["valor"], $_POST["idSession"]);
 }
