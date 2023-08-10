@@ -12,6 +12,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>SICOR | <?php if(isset($js_data["title"])){echo $js_data["title"];}else{echo 'Dashboard';}?></title>
@@ -88,7 +94,7 @@
                 if ($js_data["sw"] == 1) 
                 {
                   include "modulos/".$_GET["ruta"].".php";
-                  echo '<input type="hidden" id="inputPagCarAnioActual" value="'.$_SESSION["anioActual"].'" readonly>';
+                  echo '<input type="hidden" id="inputPagCarAnioActual" value="'.$_SESSION["anioActual"].'" idSession="'.$_SESSION["id"].'" readonly>';
 
                   #var_dump($js_data);
                 }
