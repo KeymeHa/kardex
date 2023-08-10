@@ -79,11 +79,15 @@
         <div class="modal-body">
           <div class="box-body">
 
+            <div class="divAlertError">
+              
+            </div>
+
             <div class="col-md-6 col-lg-4 col-sm-12">
 
               <div class="form-group">
                 <label for="pc_serial">*Serial</label>
-                <input type="text" class="form-control" id="pc_serial" placeholder="Ingrese número serie " required autocomplete="off" name="inputSerialE">
+                <input type="text" class="form-control" id="pc_serial" placeholder="Ingrese número serie" required autocomplete="off" name="inputSerialE">
                  <input type="hidden" required readonly name="inputEquipoAccion" id="inputEquipoAccion" value="0">
               </div>
 
@@ -92,83 +96,179 @@
                 <input type="text" class="form-control" id="pc_serialD" placeholder="número de serio opcional" autocomplete="off" name="inputSerialDE">
               </div>
 
-              <div class="form-group">
-                <label>*Propietario</label>
-                <select class="form-control" required name="selectIdProE">
-                  <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
-                    }
-                  ?>
-                </select>
-              </div>
+<!------------------------------------------------------------------------------------------------->
 
-              <div class="form-group">
-                <label>*Arquitectura</label>
-                <select class="form-control" required name="selectIdArqE">
-                  <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
-                    }
-                  ?>
-                </select>
-              </div>
+              <div class="form-group"><!--btn-addParam-->
 
-              <div class="form-group">
-                <label>*Marca Equipo</label>
-                <select class="form-control" required name="selectIdMarcaE">
-                  <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
-                    }
-                  ?>
-                </select>
-              </div>
+                  <label for="exampleInputEmail1">*Propietario</label>
 
-              <div class="form-group">
-                <label>*Modelo</label>
-                <select class="form-control" required name="selectIdModeloE">
-                  <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
-                    }
-                  ?>
-                </select>
-              </div>
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-success btn-addParam" param="2">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+
+                    <select class="form-control" required name="selectIdProE">
+                      <?php
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
+                        foreach ($paramE as $key => $value) {
+                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                          # code...
+                        }
+                      ?>
+                    </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+
+<!------------------------------------------------------------------------------------------------->
+
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*Arquitectura</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="1"><i class="fa fa-plus"></i></button>
+                  </div>
+
+                  <select class="form-control" required name="selectIdArqE">
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+
+<!------------------------------------------------------------------------------------------------->
+
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*Marca Equipo</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="3"><i class="fa fa-plus"></i></button>
+                  </div>
+
+                  <select class="form-control" required name="selectIdMarcaE">
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+
+<!------------------------------------------------------------------------------------------------->
+
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*Modelo</label>
+
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-success btn-addParam" param="4"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                    <select class="form-control" required name="selectIdModeloE">
+                      <?php
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
+                        foreach ($paramE as $key => $value) {
+                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                          # code...
+                        }
+                      ?>
+                    </select>
+                  </div>
+
+
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+
 
             </div><!--col-md-6 col-lg-4 col-sm-12-->
 
             <div class="col-md-6 col-lg-4 col-sm-12">
 
-              <div class="form-group">
-                <label>*CPU: Marca</label>
-                <select class="form-control" required name="selectIdCPUE">
-                  <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
-                    }
-                  ?>
-                </select>
-              </div>
+
+<!------------------------------------------------------------------------------------------------->
+
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*CPU: Marca</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="5"><i class="fa fa-plus"></i></button>
+                  </div>
+
+                  <select class="form-control" required name="selectIdCPUE">
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+
+<!------------------------------------------------------------------------------------------------->
+
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*CPU: Modelo</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="6"><i class="fa fa-plus"></i></button>
+                  </div>
+
+                  <select class="form-control" required name="selectIdCPUModE">
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
 
               <div class="form-group">
-                <label>*CPU: Modelo</label>
-                <select class="form-control" required name="selectIdCPUModE">
+                <label>*CPU: Generación</label>
+                <select class="form-control" required name="selectIdCPUGenE">
                   <?php
-                    $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
-                    foreach ($paramE as $key => $value) {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                      # code...
+                    for($i = 14 ; $i >= 4 ; $i--)
+                    {
+                      echo '<option value="'.$i.'">'.$i.'</option>';
                     }
                   ?>
                 </select>
@@ -189,14 +289,18 @@
                 <input type="number" class="form-control" id="pc_ssd" min="120" value="250" placeholder="250" required name="inputSSDE">
               </div>
 
+
+            </div><!--col-md-6 col-lg-4 col-sm-12-->
+
+<!------------------------------------------------------------------------------------------------->
+
+            <div class="col-md-6 col-lg-4 col-sm-12">
+              
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
                 <input type="number" class="form-control" id="pc_hdd" min="120" value="" placeholder="1000" name="inputHDDE">
               </div>
 
-            </div><!--col-md-6 col-lg-4 col-sm-12-->
-
-            <div class="col-md-6 col-lg-4 col-sm-12">
               <div class="form-group">
                 <label for="pc_gpumarca">GPU: Marca</label>
                 <input type="text" class="form-control" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">
@@ -212,28 +316,17 @@
                 <input type="number" class="form-control" id="pc_gpucap" placeholder="2" name="inputGPUCapE">
               </div>
 
-              <div class="form-group">
+<!------------------------------------------------------------------------------------------------->
 
-                <div class="col-md-6 col-lg-6 col-sm-12">
-                  <div class="checkbox">
-                    <label>
-                    <input type="checkbox" name="checkTecladoE">
-                    Teclado
-                    </label>
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*Sistema Operativo</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="7"><i class="fa fa-plus"></i></button>
                   </div>
-                </div>
 
-                <div class="col-md-6 col-lg-6 col-sm-12">
-                  <div class="checkbox">
-                    <label>
-                    <input type="checkbox" name="checkMouseE">
-                    Mouse
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label>*Sistema Operativo</label>
                   <select class="form-control" required name="selectSOE">
                     <?php
                       $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
@@ -243,25 +336,59 @@
                       }
                     ?>
                   </select>
-                </div>
-
-                  <div class="form-group">
-                    <label>*Versión SO</label>
-                    <select class="form-control" required name="selectSOVerE">
-                      <?php
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
-                        foreach ($paramE as $key => $value) {
-                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                          # code...
-                        }
-                      ?>
-                    </select>
                   </div>
 
-              </div>
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
 
 
+              <div class="form-group"><!--btn-addParam-->
+
+                  <label for="exampleInputEmail1">*Versión SO</label>
+
+                  <div class="input-group">
+                  <div class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-addParam" param="8"><i class="fa fa-plus"></i></button>
+                  </div>
+
+                  <select class="form-control" required name="selectSOVerE">
+                    <?php
+                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
+                      foreach ($paramE as $key => $value) {
+                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                        # code...
+                      }
+                    ?>
+                  </select>
+                  </div>
+
+               <div class="div-add"></div>
+
+              </div><!--form-group--><!--btn-addParam-->
+            
             </div><!--col-md-6 col-lg-4 col-sm-12-->
+
+            <div class="form-group">
+
+                <div class="col-md-3 col-lg-2 col-sm-6">
+                  <div class="checkbox">
+                    <label>
+                    <input type="checkbox" name="checkTecladoE">
+                    Teclado
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-sm-6">
+                  <div class="checkbox">
+                    <label>
+                    <input type="checkbox" name="checkMouseE">
+                    Mouse
+                    </label>
+                  </div>
+                </div>
+              </div>
 
             <div class="row">
               <div class="col-md-12 col-lg-12 col-sm-12">
@@ -300,9 +427,14 @@
 
             <div class="row">
 
-              <h4>Responsabilidad</h4>
+
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <h4>Responsabilidad</h4>
+              </div>
 
               <div class="col-md-6 col-lg-6 col-sm-12">
+             
+             
                 <div class="form-group">
                   <label>Responsable</label>
                   <select class="form-control" name="selectResponsableE">
@@ -396,7 +528,7 @@
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Nota: los campos con el simbolo * , son campos requeridos</label>
+                <label>Nota: los campos con el simbolo * son campos requeridos</label>
               </div>
             </div>            
 
