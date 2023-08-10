@@ -72,7 +72,7 @@ class ControladorAreas
 
 		$respuesta = ModeloAreas::mdlMostrarNombreAreas($tabla, $item, $valor);
 
-		return $respuesta;
+		return $respuesta["nombre"];
 	}
 
 	static public function ctrMostrarAreas($item, $valor)
