@@ -64,105 +64,156 @@
 
   <section class="content">
 
-    <div class="box box-success">
-      <div class="box-header">
-        <div class="box-title">
-          Caracteristicas
+
+      <div class="col-lg-8 col-md-8 col-sm-12">
+         <div class="box box-success">
+            <div class="box-header">
+              <div class="box-title">
+                Caracteristicas
+              </div>
+            </div>
+            <div class="box-body">
+              
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <dl class="dl-horizontal">
+                  <?php 
+                    #asignado a
+                    #rol
+                    #Responsable
+                    #area
+                    #generado por
+                    #propietario
+                    #nombrepc
+                    echo ControladorEquipos::ctrMostrarItem($equipo["n_serie"], 0, "Serial");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["nombre"], 0, "Nombre PC");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["serialD"], 0, "2do Serial");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["id_propietario"], 1, "Propietario");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["id_arquitectura"], 1, "Arquitectura");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["marca"], 1, "Marca");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["modelo"], 1, "Modelo");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu"], 1, "CPU");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu_modelo"], 1, "Modelo CPU");
+                  ?>
+                </dl>
+              </div><!--col-lg-6 col-md-6 col-sm-12-->
+
+               <div class="col-lg-6 col-md-6 col-sm-12">
+                <dl class="dl-horizontal">
+                  <?php 
+                    echo ControladorEquipos::ctrMostrarItem($equipo["ram"], 0, "Memoria RAM");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["ssd"], 0, "Disco SSD");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["hdd"], 1, "HDD");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu"], 1, "GPU");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu_modelo"], 1, "Modelo GPU");
+                    echo ($equipo["teclado"] == 1)? '<dt>Teclado</dt><dd>Incluido</dd>' : '' ;
+                    echo ($equipo["mouse"] == 1)? '<dt>Mouse</dt><dd>Incluido</dd>' : '' ;
+                    echo ControladorEquipos::ctrMostrarItem($equipo["so"], 1, "Sistema Operativo");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["so_version"], 1, "Versión SO");
+
+                  ?>
+                </dl>
+              </div><!--col-lg-6 col-md-6 col-sm-12-->
+              
+              <?php
+              echo ( !empty($equipo["observaciones"]) )? '<div class="col-lg-12 col-md-12 col-sm-12"><dt>Observaciones</dt><dd>'.$equipo["observaciones"].'</dd></div>' : "" ;
+              ?>
+
+            </div><!--box-body-->
+            <div class="box-footer">
+             
+              <button class="btn btn-success"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button>
+              <button class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button>
+            </div>
+          </div>
+
+
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">
+                  Información de Usuario
+                </h3>
+              </div>
+              <div class="box-body">
+
+                <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
+                  <div class="description-block border-right">
+                    <span class="description-text">Asignado</span>
+                    <h5 class="description-header"><?php echo $usuario; ?></h5>
+                    <h5 class="description-header"><?php echo ( $equipo["rol"] == 0 ) ? "(Contratista)" : "(Empleado)" ; ?></h5>
+                  </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
+                  <div class="description-block border-right">
+                    <span class="description-text">Supervisor</span>
+                    <h5 class="description-header"><?php echo $supervisor; ?></h5>
+                  </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
+                  <div class="description-block border-right">
+                    <span class="description-text">Área</span>
+                    <h5 class="description-header"><?php echo $area;?></h5>
+                  </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
+                  <div class="description-block border-right">
+                    <span class="description-text">Proyecto</span>
+                    <h5 class="description-header">Administrativo</h5>
+                  </div>
+                </div>
+
+              </div><!--box-body-->
+              <div class="box-footer">
+                 <button class="btn btn-success"><i class="fa fa-user-plus"></i> Reasignar</button>
+              </div>
+            </div>
+
+      </div>
+
+
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+         <div class="box">
+          <div class="box-body">
+
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
+              </ol>
+              <div class="carousel-inner">
+              <div class="item">
+              <img src="vistas/img/equipos/edu-083/foto_1.jpg" alt="First slide" width="500">
+              <div class="carousel-caption">
+              Foto 1
+              </div>
+              </div>
+              <div class="item">
+              <img src="vistas/img/equipos/edu-083/foto_2.jpg" alt="Second slide" width="500">
+              <div class="carousel-caption">
+              Foto 2
+              </div>
+              </div>
+              <div class="item active">
+              <img src="vistas/img/equipos/edu-083/foto_3.jpg" alt="Third slide" width="500">
+              <div class="carousel-caption">
+              Foto 3
+              </div>
+              </div>
+              </div>
+              <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <span class="fa fa-angle-left"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <span class="fa fa-angle-right"></span>
+              </a>
+            </div>
+          </div><!--box-body-->
         </div>
       </div>
-      <div class="box-body">
-        
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <dl class="dl-horizontal">
-            <?php 
-              #asignado a
-              #rol
-              #Responsable
-              #area
-              #generado por
-              #propietario
-              #nombrepc
-              echo ControladorEquipos::ctrMostrarItem($equipo["n_serie"], 0, "Serial");
-              echo ControladorEquipos::ctrMostrarItem($equipo["nombre"], 0, "Nombre PC");
-              echo ControladorEquipos::ctrMostrarItem($equipo["serialD"], 0, "2do Serial");
-              echo ControladorEquipos::ctrMostrarItem($equipo["id_propietario"], 1, "Propietario");
-              echo ControladorEquipos::ctrMostrarItem($equipo["id_arquitectura"], 1, "Arquitectura");
-              echo ControladorEquipos::ctrMostrarItem($equipo["marca"], 1, "Marca");
-              echo ControladorEquipos::ctrMostrarItem($equipo["modelo"], 1, "Modelo");
-              echo ControladorEquipos::ctrMostrarItem($equipo["cpu"], 1, "CPU");
-              echo ControladorEquipos::ctrMostrarItem($equipo["cpu_modelo"], 1, "Modelo CPU");
-            ?>
-          </dl>
-        </div><!--col-lg-6 col-md-6 col-sm-12-->
-
-         <div class="col-lg-6 col-md-6 col-sm-12">
-          <dl class="dl-horizontal">
-            <?php 
-              echo ControladorEquipos::ctrMostrarItem($equipo["ram"], 0, "Memoria RAM");
-              echo ControladorEquipos::ctrMostrarItem($equipo["ssd"], 0, "Disco SSD");
-              echo ControladorEquipos::ctrMostrarItem($equipo["hdd"], 1, "HDD");
-              echo ControladorEquipos::ctrMostrarItem($equipo["gpu"], 1, "GPU");
-              echo ControladorEquipos::ctrMostrarItem($equipo["gpu_modelo"], 1, "Modelo GPU");
-              echo ($equipo["teclado"] == 1)? '<dt>Teclado</dt><dd>Incluido</dd>' : '' ;
-              echo ($equipo["mouse"] == 1)? '<dt>Mouse</dt><dd>Incluido</dd>' : '' ;
-              echo ControladorEquipos::ctrMostrarItem($equipo["so"], 1, "Sistema Operativo");
-              echo ControladorEquipos::ctrMostrarItem($equipo["so_version"], 1, "Versión SO");
-
-            ?>
-          </dl>
-        </div><!--col-lg-6 col-md-6 col-sm-12-->
-        
-        <?php
-        echo ( !empty($equipo["observaciones"]) )? '<div class="col-lg-12 col-md-12 col-sm-12"><dt>Observaciones</dt><dd>'.$equipo["observaciones"].'</dd></div>' : "" ;
-        ?>
-
-      </div><!--box-body-->
-      <div class="box-footer">
-        <button class="btn btn-success"><i class="fa fa-user-plus"></i> Reasignar</button>
-        <button class="btn btn-success"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button>
-        <button class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button>
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">
-          Información de Usuario
-        </h3>
-      </div>
-      <div class="box-body">
-
-        <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
-          <div class="description-block border-right">
-            <span class="description-text">Asignado</span>
-            <h5 class="description-header"><?php echo $usuario; ?></h5>
-            <h5 class="description-header"><?php echo ( $equipo["rol"] == 0 ) ? "(Contratista)" : "(Empleado)" ; ?></h5>
-          </div>
-        </div>
-
-        <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
-          <div class="description-block border-right">
-            <span class="description-text">Supervisor</span>
-            <h5 class="description-header"><?php echo $supervisor; ?></h5>
-          </div>
-        </div>
-
-        <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
-          <div class="description-block border-right">
-            <span class="description-text">Área</span>
-            <h5 class="description-header"><?php echo $area;?></h5>
-          </div>
-        </div>
-
-        <div class="col-sm-3 col-xs-3 col-lg-3 col-md-3">
-          <div class="description-block border-right">
-            <span class="description-text">Proyecto</span>
-            <h5 class="description-header">Administrativo</h5>
-          </div>
-        </div>
-
-      </div><!--box-body-->
-    </div>
 
     <div class="col-md-12">
       <h3>Trazabilidad</h3>
