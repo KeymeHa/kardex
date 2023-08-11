@@ -93,7 +93,13 @@
 
               <div class="form-group">
                 <label for="pc_serialD">Segundo Serial</label>
-                <input type="text" class="form-control" id="pc_serialD" placeholder="número de serio opcional" autocomplete="off" name="inputSerialDE">
+                <input type="text" class="form-control" id="pc_serialD" placeholder="número de serie opcional" autocomplete="off" name="inputSerialDE">
+              </div>
+
+
+              <div class="form-group">
+                <label for="pc_nombreE">*Nombre PC</label>
+                <input type="text" class="form-control" id="pc_nombreE" placeholder="EDU-000" autocomplete="off" name="inputNombreE">
               </div>
 
 <!------------------------------------------------------------------------------------------------->
