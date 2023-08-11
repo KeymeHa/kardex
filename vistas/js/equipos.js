@@ -4,6 +4,38 @@ $("button.btn-newEquipo").click(function(){
 	hoy(elemento);
 });
 
+$("#pc_nombreE").change(function() {
+
+
+	var pc_nombre = $(this).val();
+
+	var datos = new FormData();
+	datos.append("nombre", pc_nombre);
+
+	$(".alert").remove();
+
+	$.ajax({
+
+		url:"ajax/equipos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){	
+
+			if(respuesta)
+			{
+				$("#pc_nombreE").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> '+pc_nombre+' ya existe ! .</div>');
+	    		$("#pc_nombreE").val("");
+	    		ocultarAlert();
+    		}	
+		}
+	});
+
+
+});
 
 $("#pc_serial").change(function() {
 
@@ -191,3 +223,30 @@ $("form").on('change', 'input.inputParam', function(){
 
 	//mostrar mensaje de error
 });
+
+
+
+
+/*
+
+rellamar datos del formulario recien ingresado
+
+selectIdProE
+selectIdArqE
+selectIdMarcaE
+selectIdModeloE
+selectIdCPUE
+selectIdCPUModE
+selectIdCPUGenE
+inputCPUFreE
+inputRamE
+inputSSDE
+inputHDDE
+inputGPUE
+inputGPUModE
+inputGPUCapE
+selectSOE
+selectSOVerE
+textObservacionesE
+
+*/
