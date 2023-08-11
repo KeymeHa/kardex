@@ -826,6 +826,9 @@ class ControladorEquipos
 
 			$obs = ControladorParametros::ctrValidarCaracteres($post["textObservacionesE"]);
 
+
+			$nombrePc = ControladorParametros::ctrValidarCaracteres($post["inputNombreE"]);
+
 			$tabla = "equipos";
 
 			$dJsonAcc .= '{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"1","da":{"file":"'.$post["selectIdActaE"].'","obs":"'.$obs.'",}}]';
@@ -834,7 +837,7 @@ class ControladorEquipos
 						   'serialD' => ( empty($post["inputSerialDE"]) )? 0 : $post["inputSerialDE"] ,
 						   'id_propietario' => $post["selectIdProE"],
 						   'id_arquitectura' => $post["selectIdArqE"],
-						   'nombre' => $post["nombrePc"],
+						   'nombre' => $nombrePc,
 						   'marca' => $post["selectIdMarcaE"],
 						   'modelo' => $post["selectIdModeloE"],
 						   'cpu' => $post["selectIdCPUE"],
@@ -908,12 +911,35 @@ class ControladorEquipos
 
 				$dJsonAcc = substr($equipo["historial"], 0 ,-1);
 				$datos["historial"] = ','.$dJsonAcc;
+				$datos["id"] = $equipo["id"];
 	            $respuesta = ModeloEquipos::mdlEditarEquipo($tabla, $datos);
 			}
 			else
 			{
 				$datos["historial"] = '['.$dJsonAcc;
 				$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+			}
+
+			$dir_temporal = "vistas/doc/temporal.txt";
+
+			if( file_exists($dir_temporal) )
+			{
+				//agregar
+			}
+			else
+			{
+				//crear y agregar
+				$file_temporal = fopen($dir_temporal,"w+"); 
+				if($file_temporal == false) { 
+				   die('<script> console.log("No se ha podido crear el archivo.");</script>'); 
+				}
+				else
+				{
+					fwrite($file_temporal, '[{"selectIdProE":"'.$post["selectIdProE"].'"},{"selectIdArqE":"'.$post["selectIdArqE"].'"},{"selectIdMarcaE":"'.$post["selectIdMarcaE"].'"},{"selectIdModeloE":"'.$post["selectIdModeloE"].'"},{"selectIdCPUE":"'.$post["selectIdCPUE"].'"},{"selectIdCPUModE":"'.$post["selectIdCPUModE"].'"},{"selectIdCPUGenE":"'.$post["selectIdCPUGenE"].'"},{"inputCPUFreE":"'.$post["inputCPUFreE"].'"},{"inputRamE":"'.$post["inputRamE"].'"},{"inputSSDE":"'.$post["inputSSDE"].'"},{"inputHDDE":"'.$post["inputHDDE"].'"},{"inputGPUE":"'.$post["inputGPUE"].'"},{"inputGPUModE":"'.$post["inputGPUModE"].'"},{"inputGPUCapE":"'.$post["inputGPUCapE"].'"},{"selectSOE":"'.$post["selectSOE"].'"},{"selectSOVerE":"'.$post["selectSOVerE"].'"},{"textObservacionesE":"'.$post["textObservacionesE"].'"}]');
+
+					fclose($file_temporal);
+				}
+
 			}
 
 			if ($respuesta == "ok") 
