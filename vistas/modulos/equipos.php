@@ -24,9 +24,9 @@
         <button class="btn btn-success btn-newEquipo" data-toggle="modal" data-target="#modalAgregarPC"><i class="fa fa-desktop"></i>
           Ingresar Equipo
         </button>
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPCS"><i class="fa fa-desktop"></i>
+        <!--<button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPCS"><i class="fa fa-desktop"></i>
           Ingreso Masivo
-        </button>
+        </button>-->
       </div>
       <div class="box-body">       
         <table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">
