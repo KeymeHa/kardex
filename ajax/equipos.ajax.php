@@ -25,7 +25,10 @@ class AjaxEquipos
 	public static function validarSerial($item, $valor)
 	{
 		$respuesta = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+
 		echo json_encode($respuesta);
+
+		
 	}
 
 	public static function addParametroFast($tipo, $valor, $idSession)
@@ -72,3 +75,11 @@ if(isset($_POST["addParam"]))
 	$addParam = new AjaxEquipos();
 	$addParam -> addParametroFast($_POST["tipo"], $_POST["valor"], $_POST["idSession"]);
 }
+
+
+if (isset($_POST["nombre"])) 
+{
+	$mostrar = new AjaxEquipos();
+	$mostrar -> validarSerial("nombre", $_POST["nombre"]);
+}
+
