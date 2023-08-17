@@ -779,6 +779,79 @@ class ControladorEquipos
 
 	}
 
+	static public function ctrReasignacion($idSesion)
+	{
+		if (isset($_POST["idEReasignar"])) 
+		{
+			$titulo = "";
+			$tipo = "";
+
+
+			//llamar equipo
+			$accion = new ControladorEquipos();
+			$equipo = $accion->ctrMostrarEquipos("id", $_POST["idEReasignar"]);
+
+			if ( ($_POST["selectAsignadoE"] != $equipo["id_usuario"]) || ($_POST["selectResponsableE"] != $equipo["id_responsable"]) && isset($equipo["historial"])  ) 
+			{
+				$obs = ControladorParametros::ctrValidarCaracteres($_POST["textObservacionesE"]);
+
+				$idArea = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $_POST["selectResponsableE"]);
+
+
+
+
+				$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"2","gen":"'.$idSesion.'","da":{"idRes":"'.$_POST["selectResponsableE"].'","idArea":"'.$idArea.'","idAsg":"'.$_POST["selectAsignadoE"].'","obs":"'.$obs.'"}}]';
+
+				$datos = array( 'id_usuario' => $_POST["selectAsignadoE"],
+								'id_responsable' => $_POST["selectResponsableE"] ,
+								'id_usr_generado' => $idSesion ,
+								'id_area' =>  $idArea,
+								'id_proyecto' => $_POST["selectProyectoE"] ,
+								'historial' => substr($equipo["historial"], 0 ,-1).$dJsonAcc ,
+								'observaciones' => $obs ,
+								'id' => $_POST["idEReasignar"]);
+				$tabla = "equipos";
+
+				//actualizar
+				$respuesta = ModeloEquipos::mdlReasignarEquipo($tabla, $datos);
+
+				//mensaje de error o satifacción
+				if ($respuesta == "ok") 
+				{
+					$titulo = "¡Equipo reasignado!";
+					$tipo = "success";
+				}
+				else
+				{
+					$titulo = "¡No se logro reasignar el equipo!";
+					$tipo = "error";
+				}
+			}
+			else
+			{
+				$titulo = "No se encontraron cambios en los responsables o usuario asignado";
+				$tipo = "warning";
+			}
+
+
+			echo '<script>
+				swal({
+					type: "'.$tipo.'",
+					title: "'.$titulo.'",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+
+				}).then(function(result){
+
+					if(result.value){
+					
+						window.location = "index.php?ruta=verpc&idpc='.$equipo["id"].'";
+					}
+				});
+				</script>';
+		}
+	}
+
 
 	public static function ctrMostrarEquipos($item, $valor)
 	{
@@ -789,163 +862,337 @@ class ControladorEquipos
 		return $respuesta;
 	}
 
-	public static function ctrAccionEquipo($idSesion)
+	public static function ctrValidarAsignaciones($responsable, $asignado, $idSession, $obs)
 	{
-		if (isset($_POST["inputEquipoAccion"]) )
-		{
-			$accion = new ControladorEquipos();
 
-			if ($_POST["inputEquipoAccion"] == 1) 
+		$usuarios = [];
+
+		if($responsable == 0 && $asignado == 0)
 			{
-				//$accion -> ctrEditarLicencia($_POST);
+				$responsable = $idSession;
+				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+				$asignado =  $responsable;
+
+				$dJsonAcc .= ']';//si no se definio responsable al ingresar el equipo simplemente se registra el ingreso mas no la asignación del equipo
 			}
-			elseif($_POST["inputEquipoAccion"] == 0) 
+			else
 			{
-				$accion -> ctrNuevoEquipo($_POST, $idSesion);
+				if ($asignado == 0) 
+				{
+					$responsable = $responsable;
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+					$asignado =  $responsable;
+					//el responsable es el asignado
+					//buscar a que area pertenece
+				}
+				elseif($responsable == 0)
+				{
+					$asignado =  $asignado;
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
+					//buscar a que area pertenece y quien es el responsable
+					$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
+				}
+				else
+				{
+					$responsable = $responsable;
+					$asignado =  $asignado;
+					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+				}
+
+				$usuarios["res"] = $responsable;
+				$usuarios["asi"] = $asignado;
+				$usuarios["gen"] = $idSession;
+				$usuarios["are"] = $id_area;
+				$usuarios["json"] = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"2","gen":"'.$idSession.'","da":{"idRes":"'.$responsable.'","idArea":"'.$usuarios["are"].'","idAsg":"'.$asignado.'","obs":"'.$obs.'"}}';
+
+				return $usuarios;
+
+				//En caso que se haya definido a quien será asignado el equipo si registrará en el historial esta información
 			}
-			return;
-		}
 	}
 
-	public static function ctrNuevoEquipo($post, $idSesion)
+	public static function ctrAccionEquipo($idSesion)
 	{
-		if (isset($post["inputSerialE"]))
+		if (isset($_POST["inputSerialE"]))
 		{
 			$titulo = "";
 			$tipo = "";
 
 			$respuesta = "";
 
+			$responsable = 0;
+			$id_area = 0;
+			$asignado =  0;
+
 			date_default_timezone_set('America/Bogota');
 
-			$teclado = (isset($post["checkTecladoE"]))?1:0;
-			$mouse = (isset($post["checkMouseE"]))?1:0;
+			$teclado = (isset($_POST["checkTecladoE"]))?1:0;
+			$mouse = (isset($_POST["checkMouseE"]))?1:0;
 
 			$accion = new ControladorEquipos();
-			$equipo = $accion->ctrMostrarEquipos($item, $valor);
+			$equipo = $accion->ctrMostrarEquipos("n_serie", $_POST["inputSerialE"]);
 
-			$obs = ControladorParametros::ctrValidarCaracteres($post["textObservacionesE"]);
+			$obs = ControladorParametros::ctrValidarCaracteres($_POST["textObservacionesE"]);
 
+			$nombrePc = ControladorParametros::ctrValidarCaracteres($_POST["inputNombreE"]);
 
-			$nombrePc = ControladorParametros::ctrValidarCaracteres($post["inputNombreE"]);
+			if ($_POST["inputEquipoAccion"] == 0 ) 
+			{
+				$dJsonAcc = '{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"1","gen":"'.$idSesion.'","da":{"file":"'.$_POST["selectIdActaE"].'","obs":"'.$obs.'"}}';
+			}
+
+			//if input 0 && no existe
+			if( $_POST["inputEquipoAccion"] == 0 && !isset($equipo["n_serie"]) )
+			{
+				//if responsable y asignado
+				//agregar
+				$usuarios = $accion -> ctrValidarAsignaciones($_POST["selectResponsableE"], $_POST["selectAsignadoE"], $idSesion, $obs);
+
+				if ($usuarios["res"] != $usuarios["gen"] &&  $usuarios["gen"] != $usuarios["asi"])
+				{
+					$dJsonAcc .= $usuarios["json"].']';
+				}
+				else
+				{
+					$dJsonAcc .= ']';
+				}
+			}
+			//else
+			else
+			{
+				if ($equipo["estado"] == 0) 
+				{
+				//if estado es 0
+					//responsable y asignado
+					//agregar
+					$usuarios = $accion -> ctrValidarAsignaciones($_POST["selectResponsableE"], $_POST["selectAsignadoE"], $idSesion, $obs);
+
+					$dJsonAcc .= $usuarios["json"];
+				}
+				else
+				{
+				//else
+					if( ( $equipo["id_responsable"] != $_POST["selectResponsableE"]) || ($equipo["id_usuario"] != $_POST["selectAsignadoE"]) )
+					{
+					//if responsable y asignado es distinto
+						//agregar
+						$usuarios = $accion -> ctrValidarAsignaciones($_POST["selectResponsableE"], $_POST["selectAsignadoE"], $idSesion, $obs);
+						$dJsonAcc .= $usuarios["json"];
+					}
+					
+				}
+			}
+	
+			//crear carpeta
+
+			$ruta="";
+			$tmp_name = "";
+			$nombreArchivo = "";
+
+			$jsonFoto = "";
+
+			if(count($_FILES) > 0)
+			{
+				$contador = 0;
+
+				foreach ($_FILES['fotosE']['tmp_name'] as $key => $value) 
+				{
+					if ($_FILES['fotosE']['name'][$key]) 
+					{
+						$directorio = "vistas/img/equipos/".$nombrePc;
+				
+						if (!file_exists($directorio)) 
+						{
+						    mkdir($directorio, 0755, true);
+						}
+
+						$tmp_name = $_FILES['fotosE']['tmp_name'][$key];
+						$ruta = $directorio.'/';
+
+						$ext = array("jpeg", "jpg", "JPG", "png");
+
+						if (($_FILES["fotosE"]["type"][$key] == "image/jpeg") || ($_FILES["fotosE"]["type"][$key] == "image/jpg") || ($_FILES["fotosE"]["type"][$key] == "image/JPG") || ($_FILES["fotosE"]["type"][$key] == "image/png"))
+						{
+							$temp = explode(".", $_FILES['fotosE']['tmp_name'][$key]);
+
+							if (count($temp) > 0 && in_array( $temp[count($temp)-1] , $ext) ) 
+							{
+								$nombreArchivo.=strval($contador+1).'.'.strval($temp[count($temp)-1]);
+							}
+							
+						}
+				
+						$ruta .= $nombreArchivo;
+
+						if(file_exists($ruta))
+						{
+							unlink($ruta);
+						}
+
+						if (copy($tmp_name, $ruta)) 
+						{
+							$contador ++;
+
+							if ( empty($jsonFoto) ) 
+							{
+								$jsonFoto = '[{ "'.$contador.'":"'.$nombreArchivo.'",';
+							}
+							else
+							{
+								$jsonFoto .= '"'.$contador.'":"'.$nombreArchivo.'",';
+							}
+						}
+					}//if $_files
+				}//foreach
+
+				if($contador > 0)
+				{
+					$jsonFoto = substr($jsonFoto, 0 ,-1).'}]';
+				}
+	
+			}
+
+			//subir fotos
+
+			if ( isset($equipo["n_serie"]) && !is_null($equipo["n_serie"]) ) 
+			{
+				if (!empty($equipo["fotos"]) && count($_FILES) == 0 ) 
+				{
+					$jsonFoto = $equipo["fotos"];
+				}
+			}
+
+			//agregar a un Json
+
+			$datos = array('n_serie' => $_POST["inputSerialE"],
+						   'serialD' => ( empty($_POST["inputSerialDE"]) )? 0 : $_POST["inputSerialDE"] ,
+						   'id_propietario' => $_POST["selectIdProE"],
+						   'id_arquitectura' => $_POST["selectIdArqE"],
+						   'nombre' => $nombrePc,
+						   'marca' => $_POST["selectIdMarcaE"],
+						   'modelo' => $_POST["selectIdModeloE"],
+						   'cpu' => $_POST["selectIdCPUE"],
+						   'cpu_modelo' => $_POST["selectIdCPUModE"],
+						   'cpu_frecuencia' => $_POST["inputCPUFreE"],
+						   'cpu_generacion' => $_POST["selectIdCPUGenE"],
+						   'ram' => $_POST["inputRamE"],
+						   'ssd' => $_POST["inputSSDE"],
+						   'hdd' => ( empty($_POST["inputHDDE"]) )? 0 : $_POST["inputHDDE"] ,
+						   'gpu' => ( empty($_POST["inputGPUE"]) )? 0 : $_POST["inputGPUE"] ,
+						   'gpu_modelo' => ( empty($_POST["inputGPUModE"]) )? 0 : $_POST["inputGPUModE"] ,
+						   'gpu_capacidad' => ( empty($_POST["inputGPUCapE"]) )? 0 : $_POST["inputGPUCapE"],
+						   'teclado' => $teclado,
+						   'mouse' => $mouse, 
+						   'so' => $_POST["selectSOE"],
+						   'so_version' => $_POST["selectSOVerE"],
+						   'fecha_ingreso' => $_POST["dateIngresoE"],
+						   'id_acta' => $_POST["selectIdActaE"],
+						   'id_responsable' => $usuarios["gen"], #ojo
+						   'id_usuario' => $usuarios["asi"],
+						   'observaciones' => $obs,
+						   'id_area' => $usuarios["are"],
+						   'id_proyecto' => $_POST["selectProyectoE"],
+						   'rol' => $_POST["selectRolE"],
+						   'id_usr_generado' => $usuarios["gen"],
+						   'estado' => 1,
+						   'fotos' => $jsonFoto,
+						   'id_licencia' => $_POST["selectLicenciaE"] );
 
 			$tabla = "equipos";
 
-			$dJsonAcc .= '{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"1","da":{"file":"'.$post["selectIdActaE"].'","obs":"'.$obs.'",}}]';
-
-			$datos = array('n_serie' => $post["inputSerialE"],
-						   'serialD' => ( empty($post["inputSerialDE"]) )? 0 : $post["inputSerialDE"] ,
-						   'id_propietario' => $post["selectIdProE"],
-						   'id_arquitectura' => $post["selectIdArqE"],
-						   'nombre' => $nombrePc,
-						   'marca' => $post["selectIdMarcaE"],
-						   'modelo' => $post["selectIdModeloE"],
-						   'cpu' => $post["selectIdCPUE"],
-						   'cpu_modelo' => $post["selectIdCPUModE"],
-						   'cpu_frecuencia' => $post["inputCPUFreE"],
-						   'cpu_generacion' => $post["selectIdCPUGenE"],
-						   'ram' => $post["inputRamE"],
-						   'ssd' => $post["inputSSDE"],
-						   'hdd' => ( empty($post["inputHDDE"]) )? 0 : $post["inputHDDE"] ,
-						   'gpu' => ( empty($post["inputGPUE"]) )? 0 : $post["inputGPUE"] ,
-						   'gpu_modelo' => ( empty($post["inputGPUModE"]) )? 0 : $post["inputGPUModE"] ,
-						   'gpu_capacidad' => ( empty($post["inputGPUCapE"]) )? 0 : $post["inputGPUCapE"],
-						   'teclado' => $teclado,
-						   'mouse' => $mouse, 
-						   'so' => $post["selectSOE"],
-						   'so_version' => $post["selectSOVerE"],
-						   'fecha_ingreso' => $post["dateIngresoE"],
-						   'id_acta' => $post["selectIdActaE"],
-						   'id_responsable' => $responsable, #ojo
-						   'id_usuario' => $asignado,
-						   'observaciones' => $obs,
-						   'id_area' => $id_area,
-						   'id_proyecto' => $post["selectProyectoE"],
-						   'rol' => $post["selectRolE"],
-						   'id_usr_generado' => $idSesion,
-						   'estado' => 1,
-						   'id_licencia' => $post["selectLicenciaE"] );
-
-
 			if( isset($equipo["n_serie"]) && !is_null($equipo["n_serie"]) )
 			{
-				//$id_area = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $post["selectAsignadoE"]);
+				/*if ($_POST["inputEquipoAccion"] != 0 && $equipo["estado"] == 1 ) 
+				{*/
+					//validar cambios
+					$llaves = array( 'n_serie', 'serialD', 'id_propietario', 'id_arquitectura', 'nombre', 'marca', 'modelo', 'cpu', 'cpu_modelo', 'cpu_frecuencia', 'cpu_generacion', 'ram', 'ssd', 'hdd', 'gpu', 'gpu_modelo', 'gpu_capacidad', 'teclado', 'mouse', 'so', 'so_version', 'fecha_ingreso', 'id_acta', 'id_responsable', 'id_usuario', 'id_proyecto', 'rol', 'id_licencia' );
 
+					$llaves_post = array( "inputSerialE", "inputSerialDE", "selectIdProE", "selectIdArqE", "inputNombreE", "selectIdMarcaE", "selectIdModeloE", "selectIdCPUE", "selectIdCPUModE", "inputCPUFreE", "selectIdCPUGenE", "inputRamE", "inputSSDE", "inputHDDE", "inputGPUE", "inputGPUModE", "inputGPUCapE", "checkTecladoE", "checkMouseE", "selectSOE", "selectSOVerE", "dateIngresoE", "selectIdActaE", "selectResponsableE", "selectAsignadoE", "selectProyectoE", "selectRolE", "selectLicenciaE" );
 
-				//en caso de haber responsable pero no asignado, toma el valor del responsable y lo pasa al asignado
+					$llaves_ver = array( 'serial', '2do serial', 'propietario', 'arquitectura', 'nombre', 'marca', 'modelo', 'CPU', 'modelo CPU', 'CPU frecuencia', 'CPU generación', 'RAM', 'SSD', 'HDD', 'GPU', 'modelo GPU', 'capacidad GPU', 'teclado', 'mouse', 'Sistema operativo', 'version SO', 'fecha ingreso', 'acta', 'responsable', 'usuario', 'proyecto', 'rol', 'licencia' );
 
-				if($post["selectResponsableE"] == 0 && $post["selectAsignadoE"] == 0)
-				{
-					$responsable = $idSesion;
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-					$asignado =  $responsable;
-					//ver area al que pertecene
+					$data = "";
+
+					for ( $i=0 ; $i < count($llaves); $i++ ) 
+					{ 
+						if( $equipo[ $llaves[$i] ] != $_POST[ $llaves_post[$i] ] )
+						{
+							$new = ""; 
+
+							if ( intval($_POST[ $llaves_post[$i]]) ) 
+							{
+								$new = $_POST[ $llaves_post[$i]]; 
+							}
+							else
+							{
+								$new = ControladorParametros::ctrValidarCaracteres($_POST[ $llaves_post[$i]]); 
+							}
+
+							$data .= '"'.$i.'":{"nom":"'.$llaves_ver[$i].'","ant":"'.$equipo[ $llaves[$i] ].'","new":"'.$new.'"},';
+							//$edit .= $llaves_ver[$i]." de ".$equipo[ $llaves[$i] ]." a ".$_POST[ $llaves_post[$i] ].",";
+						}//if
+
+					}//for
+
+					if( !empty($dJsonAcc) )
+					{
+						if (!empty($data) ) 
+						{
+							$data = substr($data, 0 ,-1);
+							$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"3","gen":"'.$idSesion.'","obs":"'.$obs.'","da":{'.$data.'}}]';
+						}
+
+						$datos["historial"] = substr($equipo["historial"], 0 ,-1).",".$dJsonAcc;
+						$datos["id"] = $equipo["id"];
+			            $respuesta = ModeloEquipos::mdlEditarEquipo($tabla, $datos);
 					}
 					else
 					{
-						if ($post["selectAsignadoE"] == 0) 
-						{
-							$responsable = $post["selectResponsableE"];
-							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-							$asignado =  $responsable;
-							//el responsable es el asignado
-							//buscar a que area pertenece
-						}
-						elseif($post["selectResponsableE"] == 0)
-						{
-							$asignado =  $post["selectAsignadoE"];
-							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
-							//buscar a que area pertenece y quien es el responsable
-							$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
-						}
-						else
-						{
-							$responsable = $post["selectResponsableE"];
-							$asignado =  $post["selectAsignadoE"];
-							$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-						}
+						$titulo = "No se encontraron datos para actualizar.";
+						$tipo = "warning";
 					}
 
-					//en caso de no haber ni responsable ni asignado, pasa al responsable de sistemas
-					//en caso de no haber responsable pero si asignado, busca a que area pertenece el asignado y busca el predeterminado, este sera el responsable
+					
 
-				$dJsonAcc = substr($equipo["historial"], 0 ,-1);
-				$datos["historial"] = ','.$dJsonAcc;
-				$datos["id"] = $equipo["id"];
-	            $respuesta = ModeloEquipos::mdlEditarEquipo($tabla, $datos);
+				//}//if ($_POST["inputEquipoAccion"] != 0 && $equipo["estado"] == 1 ) 
+				
 			}
 			else
 			{
 				$datos["historial"] = '['.$dJsonAcc;
 				$respuesta = ModeloEquipos::mdlNuevoEquipo($tabla, $datos);
+				//var_dump($datos);
 			}
 
 			$dir_temporal = "vistas/doc/temporal.txt";
 
-			if( file_exists($dir_temporal) )
-			{
-				//agregar
+				//crear y agregar
+			$file_temporal = fopen($dir_temporal,"w+"); 
+			if($file_temporal == false) { 
+			   die('<script> console.log("No se ha podido crear el archivo.");</script>'); 
 			}
 			else
 			{
-				//crear y agregar
-				$file_temporal = fopen($dir_temporal,"w+"); 
-				if($file_temporal == false) { 
-				   die('<script> console.log("No se ha podido crear el archivo.");</script>'); 
-				}
-				else
-				{
-					fwrite($file_temporal, '[{"selectIdProE":"'.$post["selectIdProE"].'"},{"selectIdArqE":"'.$post["selectIdArqE"].'"},{"selectIdMarcaE":"'.$post["selectIdMarcaE"].'"},{"selectIdModeloE":"'.$post["selectIdModeloE"].'"},{"selectIdCPUE":"'.$post["selectIdCPUE"].'"},{"selectIdCPUModE":"'.$post["selectIdCPUModE"].'"},{"selectIdCPUGenE":"'.$post["selectIdCPUGenE"].'"},{"inputCPUFreE":"'.$post["inputCPUFreE"].'"},{"inputRamE":"'.$post["inputRamE"].'"},{"inputSSDE":"'.$post["inputSSDE"].'"},{"inputHDDE":"'.$post["inputHDDE"].'"},{"inputGPUE":"'.$post["inputGPUE"].'"},{"inputGPUModE":"'.$post["inputGPUModE"].'"},{"inputGPUCapE":"'.$post["inputGPUCapE"].'"},{"selectSOE":"'.$post["selectSOE"].'"},{"selectSOVerE":"'.$post["selectSOVerE"].'"},{"textObservacionesE":"'.$post["textObservacionesE"].'"}]');
+				fwrite($file_temporal, '[{"selectIdProE":"'.$_POST["selectIdProE"].'","selectIdArqE":"'.$_POST["selectIdArqE"].'","selectIdMarcaE":"'.$_POST["selectIdMarcaE"].'","selectIdModeloE":"'.$_POST["selectIdModeloE"].'","selectIdCPUE":"'.$_POST["selectIdCPUE"].'","selectIdCPUModE":"'.$_POST["selectIdCPUModE"].'","selectIdCPUGenE":"'.$_POST["selectIdCPUGenE"].'","inputCPUFreE":"'.$_POST["inputCPUFreE"].'","inputRamE":"'.$_POST["inputRamE"].'","inputSSDE":"'.$_POST["inputSSDE"].'","inputHDDE":"'.$_POST["inputHDDE"].'","inputGPUE":"'.$_POST["inputGPUE"].'","inputGPUModE":"'.$_POST["inputGPUModE"].'","inputGPUCapE":"'.$_POST["inputGPUCapE"].'","selectSOE":"'.$_POST["selectSOE"].'","selectSOVerE":"'.$_POST["selectSOVerE"].'","textObservacionesE":"'.$_POST["textObservacionesE"].'"}]');
 
-					fclose($file_temporal);
-				}
-
+				fclose($file_temporal);
 			}
 
 			if ($respuesta == "ok") 
 			{
-				$titulo = "¡Equipo ingresado!";
+				$titulo = "¡Equipo ";
 				$tipo = "success";
+
+				if ($_POST["inputEquipoAccion"] == 0 ) 
+				{
+					$titulo .= "ingresado!";
+					
+				}
+				else
+				{
+					$titulo .= "actualizado!";
+				}
+				
 			}
 			else
 			{
@@ -973,7 +1220,6 @@ class ControladorEquipos
 			}
 
 	}//ctrNuevoEquipo()
-
 
 	static public function ctrContarEnEquipos($item, $valor, $param)
 	{
