@@ -232,7 +232,6 @@ class ModeloEquipos
 
 	}
 
-
 	public static function mdlNuevaActaEquipo($tabla, $datos)
 	{
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha, tipo, cantidad, observaciones, codigo, file) VALUES (:fecha, :tipo, :cantidad, :observaciones, :codigo, :file) ");
@@ -284,6 +283,33 @@ class ModeloEquipos
 	}
 
 	//EQUIPOS
+
+	public static function mdlReasignarEquipo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_responsable = :id_responsable, id_usr_generado = :id_usr_generado, id_area = :id_area, id_proyecto = :id_proyecto, historial = :historial, observaciones = :observaciones WHERE id = :id");
+
+		$stmt -> bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_responsable", $datos["id_responsable"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_usr_generado", $datos["id_usr_generado"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_proyecto", $datos["id_proyecto"], PDO::PARAM_INT);
+		$stmt -> bindParam(":historial", $datos["historial"], PDO::PARAM_STR);
+		$stmt -> bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		if($stmt->execute())
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt -> close();
+		$stmt = null;
+	}//mdlReasignarEquipo
+
 	public static function mdlDesvincularLicencia($tabla, $id)
 	{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_licencia = 0 WHERE id_licencia = :id_licencia");
@@ -503,7 +529,7 @@ class ModeloEquipos
 
 	public static function mdlNuevoEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(historial, n_serie, serialD, id_propietario, id_arquitectura, marca, nombre,  modelo, cpu, cpu_modelo, cpu_frecuencia, ram, ssd, hdd, gpu, gpu_modelo, gpu_capacidad, teclado, mouse, so, so_version, fecha_ingreso, id_acta, id_responsable, id_usuario, observaciones, id_area, id_proyecto, rol, id_usr_generado, id_licencia) VALUES(:historial, :n_serie , :serialD, :id_propietario, :id_arquitectura, :marca, :nombre, :modelo, :cpu, :cpu_modelo, :cpu_frecuencia, :ram, :ssd, :hdd, :gpu, :gpu_modelo, :gpu_capacidad, :teclado, :mouse, :so, :so_version, :fecha_ingreso, :id_acta, :id_responsable, :id_usuario, :observaciones, :id_area, :id_proyecto, :rol, :id_usr_generado, :id_licencia)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(historial, n_serie, serialD, id_propietario, id_arquitectura, marca, nombre,  modelo, cpu, cpu_modelo, cpu_frecuencia, ram, ssd, hdd, gpu, gpu_modelo, gpu_capacidad, teclado, mouse, so, so_version, fecha_ingreso, id_acta, id_responsable, id_usuario, observaciones, id_area, id_proyecto, rol, id_usr_generado, fotos, id_licencia) VALUES(:historial, :n_serie , :serialD, :id_propietario, :id_arquitectura, :marca, :nombre, :modelo, :cpu, :cpu_modelo, :cpu_frecuencia, :ram, :ssd, :hdd, :gpu, :gpu_modelo, :gpu_capacidad, :teclado, :mouse, :so, :so_version, :fecha_ingreso, :id_acta, :id_responsable, :id_usuario, :observaciones, :id_area, :id_proyecto, :rol, :id_usr_generado, :fotos, :id_licencia)");
 
 		$stmt->bindParam(":historial", $datos["historial"] , PDO::PARAM_STR);
 		$stmt->bindParam(":n_serie", $datos["n_serie"] , PDO::PARAM_STR);
@@ -535,6 +561,7 @@ class ModeloEquipos
 		$stmt->bindParam(":id_proyecto", $datos["id_proyecto"] , PDO::PARAM_INT);
 		$stmt->bindParam(":rol", $datos["rol"] , PDO::PARAM_INT);
 		$stmt->bindParam(":id_usr_generado", $datos["id_usr_generado"] , PDO::PARAM_INT);
+		$stmt->bindParam(":fotos", $datos["fotos"] , PDO::PARAM_STR);
 		$stmt->bindParam(":id_licencia", $datos["id_licencia"] , PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
@@ -553,7 +580,7 @@ class ModeloEquipos
 
 		public static function mdlEditarEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historial = :historial,  = :n_serie, serialD = :serialD, id_propietario = :id_propietario, id_arquitectura = :id_arquitectura, marca = :marca, nombre = :nombre,  modelo = :modelo, cpu = :cpu, cpu_modelo = :cpu_modelo, cpu_frecuencia = :cpu_frecuencia, ram = :ram, ssd = :ssd, hdd = :hdd, gpu = :gpu, gpu_modelo = :gpu_modelo, gpu_capacidad = :gpu_capacidad, teclado = :teclado, mouse = :mouse, so = :so, so_version = :so_version, fecha_ingreso = :fecha_ingreso, id_acta = :id_acta, id_responsable = :id_responsable, id_usuario = :id_usuario, observaciones = :observaciones, id_area = :id_area, id_proyecto = :id_proyecto, rol = :rol, id_usr_generado = :id_usr_generado, id_licencia = :id_licencia  WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historial = :historial,  = :n_serie, serialD = :serialD, id_propietario = :id_propietario, id_arquitectura = :id_arquitectura, marca = :marca, nombre = :nombre,  modelo = :modelo, cpu = :cpu, cpu_modelo = :cpu_modelo, cpu_frecuencia = :cpu_frecuencia, ram = :ram, ssd = :ssd, hdd = :hdd, gpu = :gpu, gpu_modelo = :gpu_modelo, gpu_capacidad = :gpu_capacidad, teclado = :teclado, mouse = :mouse, so = :so, so_version = :so_version, fecha_ingreso = :fecha_ingreso, id_acta = :id_acta, id_responsable = :id_responsable, id_usuario = :id_usuario, observaciones = :observaciones, id_area = :id_area, id_proyecto = :id_proyecto, rol = :rol, id_usr_generado = :id_usr_generado, id_licencia = :id_licencia, fotos = :fotos  WHERE id = :id");
 
 		$stmt->bindParam(":historial", $datos["historial"] , PDO::PARAM_STR);
 		$stmt->bindParam(":n_serie", $datos["n_serie"] , PDO::PARAM_STR);
@@ -586,6 +613,7 @@ class ModeloEquipos
 		$stmt->bindParam(":rol", $datos["rol"] , PDO::PARAM_INT);
 		$stmt->bindParam(":id_usr_generado", $datos["id_usr_generado"] , PDO::PARAM_INT);
 		$stmt->bindParam(":id_licencia", $datos["id_licencia"] , PDO::PARAM_INT);
+		$stmt->bindParam(":fotos", $datos["fotos"] , PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"] , PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
