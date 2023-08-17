@@ -5,6 +5,18 @@
      echo'<script> window.location="noAutorizado";</script>';
   }
 
+  $linea = "";
+
+  if (file_exists("vistas/doc/temporal.txt")) 
+  {
+    $fshow = fopen("vistas/doc/temporal.txt", "r");
+    while (!feof($fshow)){
+      $linea = fgets($fshow);
+      $temporalData = json_decode($linea, true);
+    }
+    fclose($fshow);
+  }
+
 ?>
 
 
@@ -28,7 +40,8 @@
           Ingreso Masivo
         </button>-->
       </div>
-      <div class="box-body">       
+      <div class="box-body">  
+
         <table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">
           <thead>
            <tr>
@@ -62,7 +75,7 @@
 <div id="modalAgregarPC" class="modal fade" role="dialog">
    <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form role="form" method="post">
+      <form role="form" method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -117,9 +130,29 @@
 
                     <select class="form-control" required name="selectIdProE">
                       <?php
+
+                        if (isset($temporalData[0]["selectIdProE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdProE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdProE"].'">'.$nomParam.'</option>';
+                        }
+
                         $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
                         foreach ($paramE as $key => $value) {
-                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+
+                           if (isset($temporalData[0]["selectIdProE"])) 
+                            {
+                              if ($temporalData[0]["selectIdProE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
                           # code...
                         }
                       ?>
@@ -143,11 +176,31 @@
 
                   <select class="form-control" required name="selectIdArqE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+                      if (isset($temporalData[0]["selectIdArqE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdArqE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdArqE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectIdArqE"])) 
+                            {
+                              if ($temporalData[0]["selectIdArqE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
+
                     ?>
                   </select>
                   </div>
@@ -169,11 +222,30 @@
 
                   <select class="form-control" required name="selectIdMarcaE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+                      if (isset($temporalData[0]["selectIdMarcaE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdMarcaE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdMarcaE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectIdMarcaE"])) 
+                            {
+                              if ($temporalData[0]["selectIdMarcaE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
                     ?>
                   </select>
                   </div>
@@ -195,11 +267,31 @@
 
                     <select class="form-control" required name="selectIdModeloE">
                       <?php
+                        if (isset($temporalData[0]["selectIdModeloE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdModeloE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdModeloE"].'">'.$nomParam.'</option>';
+                        }
+
                         $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
                         foreach ($paramE as $key => $value) {
-                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+
+                           if (isset($temporalData[0]["selectIdModeloE"])) 
+                            {
+                              if ($temporalData[0]["selectIdModeloE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
                           # code...
                         }
+
                       ?>
                     </select>
                   </div>
@@ -229,11 +321,30 @@
 
                   <select class="form-control" required name="selectIdCPUE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+                      if (isset($temporalData[0]["selectIdCPUE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdCPUE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdCPUE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectIdCPUE"])) 
+                            {
+                              if ($temporalData[0]["selectIdCPUE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
                     ?>
                   </select>
                   </div>
@@ -255,11 +366,31 @@
 
                   <select class="form-control" required name="selectIdCPUModE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+                      if (isset($temporalData[0]["selectIdCPUModE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdCPUModE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectIdCPUModE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectIdCPUModE"])) 
+                            {
+                              if ($temporalData[0]["selectIdCPUModE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
+
                     ?>
                   </select>
                   </div>
@@ -272,7 +403,7 @@
                 <label>*CPU: Generación</label>
                 <select class="form-control" required name="selectIdCPUGenE">
                   <?php
-                    for($i = 14 ; $i >= 4 ; $i--)
+                    for($i = 11 ; $i >= 4 ; $i--)
                     {
                       echo '<option value="'.$i.'">'.$i.'</option>';
                     }
@@ -335,11 +466,31 @@
 
                   <select class="form-control" required name="selectSOE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+
+                      if (isset($temporalData[0]["selectSOE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectSOE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectSOE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectSOE"])) 
+                            {
+                              if ($temporalData[0]["selectSOE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
                     ?>
                   </select>
                   </div>
@@ -360,11 +511,30 @@
 
                   <select class="form-control" required name="selectSOVerE">
                     <?php
-                      $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
-                      foreach ($paramE as $key => $value) {
-                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                        # code...
-                      }
+                      if (isset($temporalData[0]["selectSOVerE"])) 
+                        {
+                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectSOVerE"], 1);
+                         echo '<option value="'.$temporalData[0]["selectSOVerE"].'">'.$nomParam.'</option>';
+                        }
+
+                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
+                        foreach ($paramE as $key => $value) {
+
+                           if (isset($temporalData[0]["selectSOVerE"])) 
+                            {
+                              if ($temporalData[0]["selectSOVerE"] != $value["id"]) 
+                              {
+                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                              }
+                            }
+                            else
+                            {
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          
+                          # code...
+                        }
                     ?>
                   </select>
                   </div>
@@ -521,9 +691,17 @@
                 </div>
               </div>
 
+
+              <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="form-group">
+                  <label>Fotos equipo:</label>
+                  <div class="input-group date">
+                    <input type="file" name="fotosE[]" id="fotosE" multiple>
+                  </div>
+                </div>
+              </div>
+
             </div><!--row-->
-
-
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
