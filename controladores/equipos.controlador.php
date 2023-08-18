@@ -391,6 +391,37 @@ class ControladorEquipos
 		return $respuesta;	
 	}
 
+	public static function ctrTraerParametros($item, $valor)
+	{
+		$datos = [[]];
+
+		//buscar en parametros que tipo es el $valor
+		$accion = new ControladorEquipos;
+		$parametro = $accion -> ctrMostrarParametros("id", $valor, null);
+
+		//llamar a todos los parametros con el mismo tipo
+		$parametros = $accion -> ctrShowParameters($parametro["tipo"]);
+
+
+		//en un arreglo agregar primero $datos[id] $valor y $datos[nombre] 
+		$datos[0]["id"] = $parametro["id"];
+		$datos[0]["nombre"] = $parametro["nombre"];
+
+		$count = 0;
+
+		for ($i=0; $i < count($parametros); $i++) 
+		{ 
+			//agregar el resto de parametros si son distintos a $valor
+			if ($valor != $parametros[$i]["id"]) 
+			{
+				$count++;
+				$datos[$count]["id"] = $parametros[$i]["id"];
+				$datos[$count]["nombre"] = $parametros[$i]["nombre"];
+			}
+		}
+		return $datos;
+	}
+
 	static public function ctrBorrarParametro($idSession)
 	{
 
