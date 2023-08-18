@@ -73,7 +73,7 @@
               <h3 class="box-title">
               Caracteristicas
               </h3>
-              <button class="btn btn-warning pull-right"><i class="fa fa-pencil"></i> Editar</button>
+              <button class="btn btn-warning pull-right btn-editarPC" data-toggle='modal' data-target='#modalEditarPc' idPC="<?php echo $equipo['id']; ?>" ><i class="fa fa-pencil"></i> Editar</button>
             </div>
             <div class="box-body">
               
@@ -556,7 +556,7 @@ No se encontraron datos.
 </div>
 
 
-<div id="modalAgregarPC" class="modal fade" role="dialog">
+<div id="modalEditarPc" class="modal fade" role="dialog">
    <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form role="form" method="post" enctype="multipart/form-data">
@@ -584,19 +584,19 @@ No se encontraron datos.
 
               <div class="form-group">
                 <label for="pc_serial">*Serial</label>
-                <input type="text" class="form-control" id="pc_serial" placeholder="Ingrese número serie" required autocomplete="off" name="inputSerialE">
-                 <input type="hidden" required readonly name="inputEquipoAccion" id="inputEquipoAccion" value="<?php echo $equipo['id'];?>">
+                <input type="text" class="form-control pc_serial" id="pc_serial" placeholder="Ingrese número serie" required autocomplete="off" name="inputSerialE">
+                 <input type="hidden" class="inputEquipoAccion" required readonly name="inputEquipoAccion" id="inputEquipoAccion" value="<?php echo $equipo['id'];?>">
               </div>
 
               <div class="form-group">
                 <label for="pc_serialD">Segundo Serial</label>
-                <input type="text" class="form-control" id="pc_serialD" placeholder="número de serie opcional" autocomplete="off" name="inputSerialDE">
+                <input type="text" class="form-control inputSerialDE" id="pc_serialD" placeholder="número de serie opcional" autocomplete="off" name="inputSerialDE">
               </div>
 
 
               <div class="form-group">
                 <label for="pc_nombreE">*Nombre PC</label>
-                <input type="text" class="form-control" id="pc_nombreE" placeholder="EDU-000" autocomplete="off" name="inputNombreE">
+                <input type="text" class="form-control inputNombreE" id="pc_nombreE" placeholder="EDU-000" autocomplete="off" name="inputNombreE">
               </div>
 
 <!------------------------------------------------------------------------------------------------->
@@ -612,34 +612,7 @@ No se encontraron datos.
                       </button>
                     </div>
 
-                    <select class="form-control" required name="selectIdProE">
-                      <?php
-
-                        if (isset($temporalData[0]["selectIdProE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdProE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdProE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 2, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdProE"])) 
-                            {
-                              if ($temporalData[0]["selectIdProE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-                      ?>
+                    <select class="form-control selectIdProE" required name="selectIdProE">
                     </select>
                   </div>
 
@@ -658,34 +631,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="1"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectIdArqE">
-                    <?php
-                      if (isset($temporalData[0]["selectIdArqE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdArqE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdArqE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 1, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdArqE"])) 
-                            {
-                              if ($temporalData[0]["selectIdArqE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-
-                    ?>
+                  <select class="form-control selectIdArqE" required name="selectIdArqE">
                   </select>
                   </div>
 
@@ -704,33 +650,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="3"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectIdMarcaE">
-                    <?php
-                      if (isset($temporalData[0]["selectIdMarcaE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdMarcaE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdMarcaE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 3, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdMarcaE"])) 
-                            {
-                              if ($temporalData[0]["selectIdMarcaE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-                    ?>
+                  <select class="form-control selectIdMarcaE" required name="selectIdMarcaE">
                   </select>
                   </div>
 
@@ -749,34 +669,7 @@ No se encontraron datos.
                       <button type="button" class="btn btn-success btn-addParam" param="4"><i class="fa fa-plus"></i></button>
                     </div>
 
-                    <select class="form-control" required name="selectIdModeloE">
-                      <?php
-                        if (isset($temporalData[0]["selectIdModeloE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdModeloE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdModeloE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 4, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdModeloE"])) 
-                            {
-                              if ($temporalData[0]["selectIdModeloE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-
-                      ?>
+                    <select class="form-control selectIdModeloE" required name="selectIdModeloE">
                     </select>
                   </div>
 
@@ -803,33 +696,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="5"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectIdCPUE">
-                    <?php
-                      if (isset($temporalData[0]["selectIdCPUE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdCPUE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdCPUE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 5, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdCPUE"])) 
-                            {
-                              if ($temporalData[0]["selectIdCPUE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-                    ?>
+                  <select class="form-control selectIdCPUE" required name="selectIdCPUE">
                   </select>
                   </div>
 
@@ -848,34 +715,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="6"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectIdCPUModE">
-                    <?php
-                      if (isset($temporalData[0]["selectIdCPUModE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectIdCPUModE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectIdCPUModE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 6, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectIdCPUModE"])) 
-                            {
-                              if ($temporalData[0]["selectIdCPUModE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-
-                    ?>
+                  <select class="form-control selectIdCPUModE" required name="selectIdCPUModE">
                   </select>
                   </div>
 
@@ -885,29 +725,23 @@ No se encontraron datos.
 
               <div class="form-group">
                 <label>*CPU: Generación</label>
-                <select class="form-control" required name="selectIdCPUGenE">
-                  <?php
-                    for($i = 11 ; $i >= 4 ; $i--)
-                    {
-                      echo '<option value="'.$i.'">'.$i.'</option>';
-                    }
-                  ?>
+                <select class="form-control selectIdCPUGenE" required name="selectIdCPUGenE">
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="pc_cpufre">*CPU: Frecuencia (Ghz)</label>
-                <input type="text" class="form-control" id="pc_cpufre" placeholder="2.5" value="0" name="inputCPUFreE">
+                <input type="text" class="form-control inputCPUFreE" id="pc_cpufre" placeholder="2.5" value="0" name="inputCPUFreE">
               </div>
 
               <div class="form-group">
                 <label for="pc_ram">*Capacidad RAM (Gb)</label>
-                <input type="number" class="form-control" id="pc_ram" min="4" value="8" placeholder="8" required name="inputRamE">
+                <input type="number" class="form-control inputRamE" id="pc_ram" min="4" value="8" placeholder="8" required name="inputRamE">
               </div>
 
               <div class="form-group">
                 <label for="pc_ssd">*SSD (Gb)</label>
-                <input type="number" class="form-control" id="pc_ssd" min="120" value="250" placeholder="250" required name="inputSSDE">
+                <input type="number" class="form-control inputSSDE" id="pc_ssd" min="120" value="250" placeholder="250" required name="inputSSDE">
               </div>
 
 
@@ -919,22 +753,22 @@ No se encontraron datos.
               
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
-                <input type="number" class="form-control" id="pc_hdd" min="120" value="" placeholder="1000" name="inputHDDE">
+                <input type="number" class="form-control inputHDDE" id="pc_hdd" min="120" value="" placeholder="1000" name="inputHDDE">
               </div>
 
               <div class="form-group">
                 <label for="pc_gpumarca">GPU: Marca</label>
-                <input type="text" class="form-control" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">
+                <input type="text" class="form-control inputGPUE" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">
               </div>
 
               <div class="form-group">
                 <label for="pc_gpumodelo">GPU: Modelo</label>
-                <input type="text" class="form-control" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE">
+                <input type="text" class="form-control inputGPUModE" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE">
               </div>
 
               <div class="form-group">
                 <label for="pc_gpucap">GPU: Capacidad (Gb)</label>
-                <input type="number" class="form-control" id="pc_gpucap" placeholder="2" name="inputGPUCapE">
+                <input type="number" class="form-control inputGPUCapE" id="pc_gpucap" placeholder="2" name="inputGPUCapE">
               </div>
 
 <!------------------------------------------------------------------------------------------------->
@@ -948,34 +782,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="7"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectSOE">
-                    <?php
-
-                      if (isset($temporalData[0]["selectSOE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectSOE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectSOE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 7, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectSOE"])) 
-                            {
-                              if ($temporalData[0]["selectSOE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-                    ?>
+                  <select class="form-control selectSOE" required name="selectSOE">
                   </select>
                   </div>
 
@@ -993,33 +800,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="8"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control" required name="selectSOVerE">
-                    <?php
-                      if (isset($temporalData[0]["selectSOVerE"])) 
-                        {
-                          $nomParam = ControladorEquipos::ctrMostrarParametrosNombre("id", $temporalData[0]["selectSOVerE"], 1);
-                         echo '<option value="'.$temporalData[0]["selectSOVerE"].'">'.$nomParam.'</option>';
-                        }
-
-                        $paramE = ControladorEquipos::ctrMostrarParametros("tipo", 8, null);
-                        foreach ($paramE as $key => $value) {
-
-                           if (isset($temporalData[0]["selectSOVerE"])) 
-                            {
-                              if ($temporalData[0]["selectSOVerE"] != $value["id"]) 
-                              {
-                                echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                              }
-                            }
-                            else
-                            {
-                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                            }
-
-                          
-                          # code...
-                        }
-                    ?>
+                  <select class="form-control selectSOVerE" required name="selectSOVerE">
                   </select>
                   </div>
 
@@ -1034,7 +815,7 @@ No se encontraron datos.
                 <div class="col-md-3 col-lg-2 col-sm-6">
                   <div class="checkbox">
                     <label>
-                    <input type="checkbox" name="checkTecladoE">
+                    <input type="checkbox" class="checkTecladoE" name="checkTecladoE">
                     Teclado
                     </label>
                   </div>
@@ -1043,7 +824,7 @@ No se encontraron datos.
                 <div class="col-md-3 col-lg-2 col-sm-6">
                   <div class="checkbox">
                     <label>
-                    <input type="checkbox" name="checkMouseE">
+                    <input type="checkbox" class="checkMouseE" name="checkMouseE">
                     Mouse
                     </label>
                   </div>
@@ -1070,15 +851,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>*Acta de Ingreso</label>
-                  <select class="form-control" required name="selectIdActaE">
-                    <?php
-
-                    $actasIngreso = ControladorEquipos::ctrMostrarActasDis();
-                    foreach ($actasIngreso as $key => $value) 
-                    {
-                      echo '<option value="'.$value["id"].'">'.$value["codigo"].' / '.$value["fecha"].' PC '.$value["cantidadUso"].'/'.$value["cantidad"].' </option>';
-                    }
-                    ?>
+                  <select class="form-control selectIdActaE" required name="selectIdActaE">
                   </select>
                 </div>
               </div><!--col-md-6 col-lg-6 col-sm-12-->
@@ -1097,15 +870,7 @@ No se encontraron datos.
              
                 <div class="form-group">
                   <label>Responsable</label>
-                  <select class="form-control" name="selectResponsableE">
-                    <option value="0">Seleccione Responsable</option>
-                    <?php
-                    $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
-                    foreach ($responsable as $key => $value) :
-                      $areaR = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].' - '.$areaR["nombre"].'</option>';
-                    endforeach;
-                    ?>
+                  <select class="form-control selectResponsableE" name="selectResponsableE">
                   </select>
                 </div>
               </div>
@@ -1114,18 +879,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Asignado a:</label>
-                  <select class="form-control" name="selectAsignadoE">
-                    <option value="0">Seleccione Asignado</option>
-                    <?php
-
-                    $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
-
-                    foreach ($usuarios as $key => $value) 
-                    {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                    }
-
-                    ?>
+                  <select class="form-control selectAsignadoE" name="selectAsignadoE">
                   </select>
                 </div>
               </div>
@@ -1133,9 +887,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Rol</label>
-                  <select class="form-control" name="selectRolE">
-                    <option value="0">Contratista</option>
-                    <option value="1">Empleado</option>
+                  <select class="form-control selectRolE" name="selectRolE">
                   </select>
                 </div>
               </div>
@@ -1143,17 +895,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Proyecto:</label>
-                  <select class="form-control" name="selectProyectoE">
-                    <?php
-
-                    $proyectos = ControladorProyectos::ctrMostrarProyectos(null, null);
-
-                    foreach ($proyectos as $key => $value) 
-                    {
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                    }
-
-                    ?>
+                  <select class="form-control selectProyectoE" name="selectProyectoE">
                   </select>
                 </div>
               </div>
@@ -1161,16 +903,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Licencia</label>
-                  <select class="form-control" name="selectLicenciaE">
-                    <option value="">Sin Asignar</option>
-                    <?php
-
-                    $licencias = ControladorEquipos::ctrMostrarLicenciaDis();
-                    foreach ($licencias as $key => $value) 
-                    {
-                      echo '<option value="'.$value["id"].'">'.$value["usuario"].'</option>';
-                    }
-                    ?>
+                  <select class="form-control selectLicenciaE" name="selectLicenciaE">
                   </select>
                 </div>
               </div>
@@ -1209,8 +942,8 @@ No se encontraron datos.
         ======================================-->
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-          <button type="submit" class="btn btn-success">Ingresar</button>
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Editar</button>
         </div>
 
         <?php
