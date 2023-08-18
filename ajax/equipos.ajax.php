@@ -25,10 +25,7 @@ class AjaxEquipos
 	public static function validarSerial($item, $valor)
 	{
 		$respuesta = ControladorEquipos::ctrMostrarEquipos($item, $valor);
-
 		echo json_encode($respuesta);
-
-		
 	}
 
 	public static function addParametroFast($tipo, $valor, $idSession)
@@ -44,6 +41,18 @@ class AjaxEquipos
 		echo json_encode($traer);
 	}
 
+	public static function verEquipo($item, $valor)
+	{
+		$respuesta = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+		echo json_encode($respuesta);
+	}
+
+	public static function traerParametros($item, $valor)
+	{
+		$respuesta = ControladorEquipos::ctrTraerParametros($item, $valor);
+		echo json_encode($respuesta);
+	}
+
 }//AjaxEquipos
 
 if (isset($_POST["idLicencia"])) 
@@ -52,7 +61,7 @@ if (isset($_POST["idLicencia"]))
 	$mostrar -> mostrarLicencia($_POST["item"], $_POST["idLicencia"]);
 }
 
-if (isset($_POST["valor"]) && !isset($_POST["addParam"]) ) 
+if (isset($_POST["valor"]) && !isset($_POST["addParam"]) && !isset($_POST["datosSelect"])) 
 {
 	$mostrar = new AjaxEquipos();
 	$mostrar -> mostrarParametros($_POST["tipo"], $_POST["valor"]);
@@ -83,3 +92,14 @@ if (isset($_POST["nombre"]))
 	$mostrar -> validarSerial("nombre", $_POST["nombre"]);
 }
 
+if(isset($_POST["idPC"]))
+{
+	$buscar = new AjaxEquipos();
+	$buscar -> verEquipo("id", $_POST["idPC"]);
+}
+
+if (isset($_POST["datosSelect"])) 
+{
+	$llamar = new AjaxEquipos();
+	$llamar -> traerParametros($_POST["item"], $_POST["valor"]);
+}
