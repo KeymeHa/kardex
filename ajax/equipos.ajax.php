@@ -1,6 +1,14 @@
 <?php
 require_once "../controladores/equipos.controlador.php";
 require_once "../modelos/equipos.modelo.php";
+require_once "../controladores/proyectos.controlador.php";
+require_once "../modelos/proyectos.modelo.php";
+require_once "../controladores/usuarios.controlador.php";
+require_once "../modelos/usuarios.modelo.php";
+require_once "../controladores/personas.controlador.php";
+require_once "../modelos/personas.modelo.php";
+require_once "../controladores/areas.controlador.php";
+require_once "../modelos/areas.modelo.php";
 
 class AjaxEquipos
 {
@@ -47,9 +55,9 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
-	public static function traerParametros($item, $valor)
+	public static function traerParametros($item, $valor, $elemento)
 	{
-		$respuesta = ControladorEquipos::ctrTraerParametros($item, $valor);
+		$respuesta = ControladorEquipos::ctrTraerParametros($item, $valor, $elemento);
 		echo json_encode($respuesta);
 	}
 
@@ -101,5 +109,5 @@ if(isset($_POST["idPC"]))
 if (isset($_POST["datosSelect"])) 
 {
 	$llamar = new AjaxEquipos();
-	$llamar -> traerParametros($_POST["item"], $_POST["valor"]);
+	$llamar -> traerParametros($_POST["item"], $_POST["valor"], $_POST["elemento"]);
 }
