@@ -132,8 +132,9 @@ $("button.btn-editarPC").click(function() {
 					dataType: "json",
 					success: function(response2)
 					{
-							console.log(" en #"+response2.length);
+						console.log(" en #"+response2.length);
 						
+						$("#"+response2[response2.length-1]).children().remove();
 
 						for (var j = 0; j < response2.length-1; j++) 
 						{
