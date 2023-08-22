@@ -391,21 +391,66 @@ class ControladorEquipos
 		return $respuesta;	
 	}
 
-	public static function ctrTraerParametros($item, $valor)
+	public static function ctrTraerParametros($item, $valor, $elemento)
 	{
 		$datos = [[]];
 
 		//buscar en parametros que tipo es el $valor
 		$accion = new ControladorEquipos;
-		$parametro = $accion -> ctrMostrarParametros("id", $valor, null);
 
-		//llamar a todos los parametros con el mismo tipo
-		$parametros = $accion -> ctrShowParameters($parametro["tipo"]);
+		$item2 = "id";
 
+		if ($item == "id_proyecto") 
+		{
+			$parametro = ControladorProyectos::ctrMostrarProyectos($item2, $valor);
+			$parametros = ControladorProyectos::ctrMostrarProyectos(null, null);
+		}
+		elseif($item == "id_acta")
+		{
+			$parametro = $accion -> ctrMostrarActas($item2, $valor);
+			$parametros = $accion -> ctrMostrarActas(null, null);
+		}
+		elseif($item == "id_licencia")
+		{
+			$parametro = $accion -> ctrMostrarLicencias($item2, $valor);
+			$parametros = $accion ->ctrMostrarLicenciaDis();
+		}
+		elseif($item == "id_responsable" || $item == "id_usuario")
+		{
+			if ($item == "id_responsable") 
+			{
+				$parametro = ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
+				$parametros = ControladorPersonas::ctrMostrarPersonas("sw", 1);
+			}
+			else
+			{
+				$parametro = ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
+				$parametros = ControladorUsuarios::ctrMostrarUsuarios(null, null);
+			}
+		}
+		else
+		{
+			$parametro = $accion -> ctrMostrarParametros($item2, $valor, null);
+			//llamar a todos los parametros con el mismo tipo
+			$parametros = $accion -> ctrShowParameters($parametro["tipo"]);
+		}
 
 		//en un arreglo agregar primero $datos[id] $valor y $datos[nombre] 
 		$datos[0]["id"] = $parametro["id"];
-		$datos[0]["nombre"] = $parametro["nombre"];
+
+
+		if ( isset($parametro["usuario"]) && isset($parametro["productos"]) ) 
+		{
+			$datos[0]["nombre"] = $parametro["usuario"];
+		}
+		elseif( isset($parametro["codigo"]) )
+		{
+			$datos[0]["nombre"] = $parametro["codigo"];
+		}
+		else
+		{
+			$datos[0]["nombre"] = $parametro["nombre"];
+		}
 
 		$count = 0;
 
@@ -416,9 +461,36 @@ class ControladorEquipos
 			{
 				$count++;
 				$datos[$count]["id"] = $parametros[$i]["id"];
-				$datos[$count]["nombre"] = $parametros[$i]["nombre"];
+
+				if ( $item == "id_licencia" ) 
+				{
+					$datos[$count]["nombre"] = $parametros[$i]["usuario"];
+				}
+				elseif( isset($parametros[$i]["codigo"]) )
+				{
+					$datos[$count]["nombre"] = $parametros[$i]["codigo"].' / '.$parametros[$i]["fecha"].' PC '.$parametros[$i]["cantidadUso"].'/'.$parametros[$i]["cantidad"];
+				}
+				elseif($item == "id_responsable" || $item == "id_usuario")
+				{
+					if ( $item == "id_responsable" ) 
+					{
+						$areaR = ControladorAreas::ctrMostrarAreas("id", $parametros[$i]["id_area"]);
+                     	$datos[$count]["nombre"] = $parametros[$i]["nombre"].' - '.$areaR["nombre"];
+					}
+					else
+					{
+						$datos[$count]["nombre"] = $parametros[$i]["nombre"];
+					}
+				}
+				else
+				{
+					$datos[$count]["nombre"] = $parametros[$i]["nombre"];
+				}
 			}
 		}
+
+		array_push($datos, $elemento);
+
 		return $datos;
 	}
 
