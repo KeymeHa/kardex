@@ -566,7 +566,7 @@ No se encontraron datos.
         ======================================-->
         <div class="modal-header" style="background:#00A65A; color:white">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Nuevo Equipo</h4>
+          <h4 class="modal-title">Editar Equipo</h4>
         </div>
 
         <!--=====================================
@@ -612,13 +612,13 @@ No se encontraron datos.
                       </button>
                     </div>
 
-                    <select class="form-control selectIdProE" required name="selectIdProE">
+                    <select class="form-control selectIdProE" id="selectIdProE" required name="selectIdProE">
                     </select>
                   </div>
 
                <div class="div-add"></div>
 
-              </div><!--form-group--><!--btn-addParam-->
+              </div><!--form-group--><!--btn-addParam-->  
 
 <!------------------------------------------------------------------------------------------------->
 
@@ -631,7 +631,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="1"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectIdArqE" required name="selectIdArqE">
+                  <select class="form-control selectIdArqE" id="selectIdArqE" required name="selectIdArqE">
                   </select>
                   </div>
 
@@ -650,7 +650,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="3"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectIdMarcaE" required name="selectIdMarcaE">
+                  <select class="form-control selectIdMarcaE" id="selectIdMarcaE" required name="selectIdMarcaE">
                   </select>
                   </div>
 
@@ -669,7 +669,7 @@ No se encontraron datos.
                       <button type="button" class="btn btn-success btn-addParam" param="4"><i class="fa fa-plus"></i></button>
                     </div>
 
-                    <select class="form-control selectIdModeloE" required name="selectIdModeloE">
+                    <select class="form-control selectIdModeloE" id="selectIdModeloE" required name="selectIdModeloE">
                     </select>
                   </div>
 
@@ -696,7 +696,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="5"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectIdCPUE" required name="selectIdCPUE">
+                  <select class="form-control selectIdCPUE" id="selectIdCPUE" required name="selectIdCPUE">
                   </select>
                   </div>
 
@@ -715,7 +715,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="6"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectIdCPUModE" required name="selectIdCPUModE">
+                  <select class="form-control selectIdCPUModE" id="selectIdCPUModE" required name="selectIdCPUModE">
                   </select>
                   </div>
 
@@ -782,7 +782,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="7"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectSOE" required name="selectSOE">
+                  <select class="form-control selectSOE" id="selectSOE" required name="selectSOE">
                   </select>
                   </div>
 
@@ -800,7 +800,7 @@ No se encontraron datos.
                   <button type="button" class="btn btn-success btn-addParam" param="8"><i class="fa fa-plus"></i></button>
                   </div>
 
-                  <select class="form-control selectSOVerE" required name="selectSOVerE">
+                  <select class="form-control selectSOVerE" id="selectSOVerE" required name="selectSOVerE">
                   </select>
                   </div>
 
@@ -851,7 +851,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>*Acta de Ingreso</label>
-                  <select class="form-control selectIdActaE" required name="selectIdActaE">
+                  <select class="form-control selectIdActaE" id="selectIdActaE" required name="selectIdActaE">
                   </select>
                 </div>
               </div><!--col-md-6 col-lg-6 col-sm-12-->
@@ -870,7 +870,7 @@ No se encontraron datos.
              
                 <div class="form-group">
                   <label>Responsable</label>
-                  <select class="form-control selectResponsableE" name="selectResponsableE">
+                  <select class="form-control selectResponsableE" id="selectResponsableE" name="selectResponsableE">
                   </select>
                 </div>
               </div>
@@ -879,7 +879,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Asignado a:</label>
-                  <select class="form-control selectAsignadoE" name="selectAsignadoE">
+                  <select class="form-control selectAsignadoE" id="selectAsignadoE" name="selectAsignadoE">
                   </select>
                 </div>
               </div>
@@ -887,7 +887,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Rol</label>
-                  <select class="form-control selectRolE" name="selectRolE">
+                  <select class="form-control selectRolE" id="selectRolE" name="selectRolE">
                   </select>
                 </div>
               </div>
@@ -895,7 +895,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Proyecto:</label>
-                  <select class="form-control selectProyectoE" name="selectProyectoE">
+                  <select class="form-control selectProyectoE" id="selectProyectoE" name="selectProyectoE">
                   </select>
                 </div>
               </div>
@@ -903,7 +903,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Licencia</label>
-                  <select class="form-control selectLicenciaE" name="selectLicenciaE">
+                  <select class="form-control selectLicenciaE" id="selectLicenciaE" name="selectLicenciaE">
                   </select>
                 </div>
               </div>
