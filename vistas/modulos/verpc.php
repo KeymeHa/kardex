@@ -80,15 +80,15 @@
               <div class="col-lg-6 col-md-6 col-sm-12">
                 <dl class="dl-horizontal">
                   <?php 
-                    echo ControladorEquipos::ctrMostrarItem($equipo["n_serie"], 0, "Serial");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["nombre"], 0, "Nombre PC");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["serialD"], 0, "2do Serial");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["id_propietario"], 1, "Propietario");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["id_arquitectura"], 1, "Arquitectura");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["marca"], 1, "Marca");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["modelo"], 1, "Modelo");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu"], 1, "CPU");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu_modelo"], 1, "Modelo CPU");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["n_serie"], 0, "Serial", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["nombre"], 0, "Nombre PC", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["serialD"], 0, "2do Serial", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["id_propietario"], 1, "Propietario", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["id_arquitectura"], 1, "Arquitectura", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["marca"], 1, "Marca", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["modelo"], 1, "Modelo", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu"], 1, "CPU", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["cpu_modelo"], 1, "Modelo CPU", "");
                   ?>
                 </dl>
               </div><!--col-lg-6 col-md-6 col-sm-12-->
@@ -96,15 +96,15 @@
                <div class="col-lg-6 col-md-6 col-sm-12">
                 <dl class="dl-horizontal">
                   <?php 
-                    echo ControladorEquipos::ctrMostrarItem($equipo["ram"], 0, "Memoria RAM");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["ssd"], 0, "Disco SSD");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["hdd"], 1, "HDD");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu"], 1, "GPU");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu_modelo"], 1, "Modelo GPU");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["ram"], 0, "Memoria RAM", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["ssd"], 0, "Disco SSD", "GB");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["hdd"], 0, "HDD", "GB");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu"], 0, "GPU", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["gpu_modelo"], 1, "Modelo GPU", "");
                     echo ($equipo["teclado"] == 1)? '<dt>Teclado</dt><dd>Incluido</dd>' : '' ;
                     echo ($equipo["mouse"] == 1)? '<dt>Mouse</dt><dd>Incluido</dd>' : '' ;
-                    echo ControladorEquipos::ctrMostrarItem($equipo["so"], 1, "Sistema Operativo");
-                    echo ControladorEquipos::ctrMostrarItem($equipo["so_version"], 1, "Versión SO");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["so"], 1, "Sistema Operativo", "");
+                    echo ControladorEquipos::ctrMostrarItem($equipo["so_version"], 1, "Versión SO", "");
 
                   ?>
                 </dl>
@@ -119,6 +119,7 @@
              
               <button class="btn btn-success"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button>
               <button class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button>
+              <button class="btn btn-success"><i class="fa fa-file"></i> Añadir Soporte</button>
             </div>
           </div>
 
@@ -297,7 +298,7 @@
               <strong>'.$usr_gen.'</strong>: Se dio de baja el equipo.
             </div>
             '; 
-            echo ( !empty($trazabilidad[$x]["acc"]["obs"]) )? '<div class="timeline-footer">'.$trazabilidad[$x]["acc"]["obs"].'
+            echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">'.$trazabilidad[$x]["da"]["obs"].'
             </div>' : '' ;
             echo '</div>
         </li>';
@@ -324,11 +325,14 @@
           <i class="fa fa-share-square bg-blue"></i>
           <div class="timeline-item">
             <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
-            <h3 class="timeline-header"><a href="#"><i class="fa fa-paperclip"></i> Anexo</a></h3>
+            <h3 class="timeline-header '; echo ( $trazabilidad[$x]["da"]["idAsg"] == $equipo["id_usuario"])?"docResposability": "" ;  echo '" idPC="'.$_GET["idpc"].'" ><a href=""><i class="fa fa-paperclip"></i> Documento de Responsabilidad</a></h3>
             <div class="timeline-body">
-              '.$usr_gen.': Se asigno el equipo a '.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["acc"]["idAsg"]).' quien actua como responsable '.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["acc"]["idRes"]).' del área '.ControladorAreas::ctrMostrarNombreAreas($item, $trazabilidad[$x]["acc"]["idArea"]).' .
+              '.$usr_gen.': Se asigno el equipo a <strong>'.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idAsg"]).'</strong> y quien actua como responsable <strong>'.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idRes"]).'</strong> del área <strong>'.ControladorAreas::ctrMostrarNombreAreas($item, $trazabilidad[$x]["da"]["idArea"]).'</strong> .
             </div>
-          </div>
+         '; 
+            echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">'.$trazabilidad[$x]["da"]["obs"].'
+            </div>' : '' ;
+            echo '</div>
         </li>';
                       
                       break;
@@ -566,7 +570,7 @@ No se encontraron datos.
         ======================================-->
         <div class="modal-header" style="background:#00A65A; color:white">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Editar Equipo</h4>
+          <h4 class="modal-title">Editar Equipo: <?php echo $equipo["nombre"];?></h4>
         </div>
 
         <!--=====================================
