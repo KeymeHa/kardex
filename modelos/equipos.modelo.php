@@ -286,13 +286,14 @@ class ModeloEquipos
 
 	public static function mdlReasignarEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_responsable = :id_responsable, id_usr_generado = :id_usr_generado, id_area = :id_area, id_proyecto = :id_proyecto, historial = :historial, observaciones = :observaciones WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_usuario = :id_usuario, id_responsable = :id_responsable, id_usr_generado = :id_usr_generado, id_area = :id_area, id_proyecto = :id_proyecto, rol = :rol, historial = :historial, observaciones = :observaciones WHERE id = :id");
 
 		$stmt -> bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id_responsable", $datos["id_responsable"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id_usr_generado", $datos["id_usr_generado"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id_area", $datos["id_area"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id_proyecto", $datos["id_proyecto"], PDO::PARAM_INT);
+		$stmt -> bindParam(":rol", $datos["rol"], PDO::PARAM_INT);
 		$stmt -> bindParam(":historial", $datos["historial"], PDO::PARAM_STR);
 		$stmt -> bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
