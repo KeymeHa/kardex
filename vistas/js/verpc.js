@@ -35,6 +35,12 @@ $("#pc_serial").change(function() {
 
 });
 
+$("h3.docResposability").click(function() 
+{
+	var idPC = $(this).attr("idPC");
+	window.open("extensiones/TCPDF-main/examples/docResposability.php?idPC="+idPC, "_blank");
+});
+
 
 $("button.btn-editarPC").click(function() {
 
