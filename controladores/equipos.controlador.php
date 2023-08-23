@@ -900,8 +900,7 @@ class ControladorEquipos
 
 				$idArea = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $_POST["selectResponsableE"]);
 
-
-
+				date_default_timezone_set('America/Bogota');
 
 				$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"2","gen":"'.$idSesion.'","da":{"idRes":"'.$_POST["selectResponsableE"].'","idArea":"'.$idArea.'","idAsg":"'.$_POST["selectAsignadoE"].'","obs":"'.$obs.'"}}]';
 
@@ -909,7 +908,8 @@ class ControladorEquipos
 								'id_responsable' => $_POST["selectResponsableE"] ,
 								'id_usr_generado' => $idSesion ,
 								'id_area' =>  $idArea,
-								'id_proyecto' => $_POST["selectProyectoE"] ,
+								'id_proyecto' => $_POST["selectProyectoE"],
+								'rol' => $_POST["selectRolE"],
 								'historial' => substr($equipo["historial"], 0 ,-1).$dJsonAcc ,
 								'observaciones' => $obs ,
 								'id' => $_POST["idEReasignar"]);
@@ -968,50 +968,52 @@ class ControladorEquipos
 	public static function ctrValidarAsignaciones($responsable, $asignado, $idSession, $obs)
 	{
 
+		$dJsonAcc = "";
+
 		$usuarios = [];
 
 		if($responsable == 0 && $asignado == 0)
+		{
+			$responsable = $idSession;
+			$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
+			$asignado =  $responsable;
+
+			$dJsonAcc .= ']';//si no se definio responsable al ingresar el equipo simplemente se registra el ingreso mas no la asignación del equipo
+		}
+		else
+		{
+			if ($asignado == 0) 
 			{
-				$responsable = $idSession;
+				$responsable = $responsable;
 				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
 				$asignado =  $responsable;
-
-				$dJsonAcc .= ']';//si no se definio responsable al ingresar el equipo simplemente se registra el ingreso mas no la asignación del equipo
+				//el responsable es el asignado
+				//buscar a que area pertenece
+			}
+			elseif($responsable == 0)
+			{
+				$asignado =  $asignado;
+				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
+				//buscar a que area pertenece y quien es el responsable
+				$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
 			}
 			else
 			{
-				if ($asignado == 0) 
-				{
-					$responsable = $responsable;
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-					$asignado =  $responsable;
-					//el responsable es el asignado
-					//buscar a que area pertenece
-				}
-				elseif($responsable == 0)
-				{
-					$asignado =  $asignado;
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $asignado);
-					//buscar a que area pertenece y quien es el responsable
-					$responsable = ControladorPersonas::ctrPersonaPredeterminada($id_area);
-				}
-				else
-				{
-					$responsable = $responsable;
-					$asignado =  $asignado;
-					$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
-				}
-
-				$usuarios["res"] = $responsable;
-				$usuarios["asi"] = $asignado;
-				$usuarios["gen"] = $idSession;
-				$usuarios["are"] = $id_area;
-				$usuarios["json"] = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"2","gen":"'.$idSession.'","da":{"idRes":"'.$responsable.'","idArea":"'.$usuarios["are"].'","idAsg":"'.$asignado.'","obs":"'.$obs.'"}}';
-
-				return $usuarios;
-
-				//En caso que se haya definido a quien será asignado el equipo si registrará en el historial esta información
+				$responsable = $responsable;
+				$asignado =  $asignado;
+				$id_area = ControladorPersonas::ctrMostrarPersonaArea("id_usuario", $responsable);
 			}
+
+			$usuarios["json"] = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"2","gen":"'.$idSession.'","da":{"idRes":"'.$responsable.'","idArea":"'.$usuarios["are"].'","idAsg":"'.$asignado.'","obs":"'.$obs.'"}}';
+			//En caso que se haya definido a quien será asignado el equipo si registrará en el historial esta información
+		}
+
+		$usuarios["res"] = $responsable;
+		$usuarios["asi"] = $asignado;
+		$usuarios["gen"] = $idSession;
+		$usuarios["are"] = $id_area;
+
+		return $usuarios;
 	}
 
 	public static function ctrAccionEquipo($idSesion)
@@ -1036,7 +1038,6 @@ class ControladorEquipos
 			$equipo = $accion->ctrMostrarEquipos("n_serie", $_POST["inputSerialE"]);
 
 			$obs = ControladorParametros::ctrValidarCaracteres($_POST["textObservacionesE"]);
-
 			$nombrePc = ControladorParametros::ctrValidarCaracteres($_POST["inputNombreE"]);
 
 			if ($_POST["inputEquipoAccion"] == 0 ) 
@@ -1085,7 +1086,6 @@ class ControladorEquipos
 					
 				}
 			}
-	
 			//crear carpeta
 
 			$ruta="";
@@ -1320,7 +1320,7 @@ class ControladorEquipos
 				</script>';
 
 
-			}
+		}
 
 	}//ctrNuevoEquipo()
 
@@ -1341,11 +1341,11 @@ class ControladorEquipos
 		
 	}//ctrContarUsoLicencias($id)
 
-	static public function ctrMostrarItem($dato, $sw, $titulo)
+	static public function ctrMostrarItem($dato, $sw, $titulo, $tam)
 	{
 		if ($dato != 0 && !empty($dato)) 
 		{
-			$dato = ($sw == 1) ? '<dt>'.$titulo.'</dt><dd>'.ControladorEquipos::ctrMostrarParametrosNombre("id", $dato, 1).'</dd>' : '<dt>'.$titulo.'</dt><dd>'.$dato.'</dd>' ;
+			$dato = ($sw == 1) ? '<dt>'.$titulo.'</dt><dd>'.ControladorEquipos::ctrMostrarParametrosNombre("id", $dato, 1).'</dd>' : '<dt>'.$titulo.'</dt><dd>'.$dato.' '.$tam.'</dd>' ;
 		}//
 		else
 		{
