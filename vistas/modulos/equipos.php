@@ -23,7 +23,7 @@
 <div class="content-wrapper">
   <section class="content-header">
     <h1>    
-      Base Datos PC  
+      Base Datos PC <span class="tipoEquipo">(Activos)</span>
     </h1>
     <ol class="breadcrumb">    
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -36,13 +36,25 @@
         <button class="btn btn-success btn-newEquipo" data-toggle="modal" data-target="#modalEquipo"><i class="fa fa-desktop"></i>
           Ingresar Equipo
         </button>
+
+        <a href="equiposDevolucion">
+          <button class="btn btn-success"><i class="fa fa-chevron-down"></i>
+            Devolución masiva
+          </button>
+        </a>
+
+        <button class="btn btn-success btn-tipoPC" tipoPC="1"><i class="fa fa-desktop"></i>
+            No Activos
+        </button>
+
         <!--<button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPCS"><i class="fa fa-desktop"></i>
           Ingreso Masivo
         </button>-->
       </div>
       <div class="box-body">  
 
-        <table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">
+        <div id="div-tablePC">
+          <table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">
           <thead>
            <tr>
              <th style="width:10px">#</th>
@@ -56,6 +68,9 @@
            </tr> 
           </thead>
         </table> 
+        </div>
+
+        
       </div>
     </div>
 
@@ -757,3 +772,9 @@
     </div>
   </div>
 </div>
+<?php
+/*
+$devPC = new ControladorEquipos();
+$devPC -> ctrEstadoEquipo($_SESSION["id"]);
+*/
+?>
