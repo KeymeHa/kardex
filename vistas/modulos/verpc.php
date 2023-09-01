@@ -10,11 +10,9 @@
     {
       $item = "id";
       $equipo = ControladorEquipos::ctrMostrarEquipos($item,$_GET["idpc"]);
-      $usuario = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_usuario"]);
-      $supervisor = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_responsable"]);
+      
       $usr_gen = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_usr_generado"]);
-      $area = ControladorAreas::ctrMostrarNombreAreas($item, $equipo["id_area"]);
-      $proyecto = ControladorProyectos::ctrMostrarProyectos($item, $equipo["id_proyecto"]);
+
 
       if (is_null($equipo)) 
       {
@@ -68,12 +66,13 @@
 
 
       <div class="col-lg-8 col-md-8 col-sm-12">
-         <div class="box <?php echo ( $estado['estado'] == 1 )? 'box-success' : 'box-default' ; ?>">
+         <div class="box <?php echo ( $equipo['estado'] == 1 )? 'box-success' : 'box-danger' ; ?>">
             <div class="box-header">
               <h3 class="box-title">
               Caracteristicas
               </h3>
-              <button class="btn btn-warning pull-right btn-editarPC" data-toggle='modal' data-target='#modalEditarPc' idPC="<?php echo $equipo['id']; ?>" ><i class="fa fa-pencil"></i> Editar</button>
+              <?php echo ($equipo["estado"] != 0)?'<button class="btn btn-warning pull-right btn-editarPC" data-toggle="modal" data-target="#modalEditarPc" idPC="'.$equipo["id"].'" ><i class="fa fa-pencil"></i> Editar</button>': '';?>
+              
             </div>
             <div class="box-body">
               
@@ -117,9 +116,11 @@
             </div><!--box-body-->
             <div class="box-footer">
              
-              <button class="btn btn-success"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button>
-              <button class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button>
-              <button class="btn btn-success"><i class="fa fa-file"></i> Añadir Soporte</button>
+              <?php 
+
+              echo ($equipo["estado"] ==  1)? '<button type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button><button type="button" class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button> <button type="button" class="btn btn-success btn-AddSoporte"  data-toggle="modal" data-target="#modalSoportePC" ><i class="fa fa-file"></i> Añadir Soporte</button>' :'<button  type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-in"></i> Ingresar Equipo</button>';
+
+              ?>
             </div>
           </div>
 
@@ -129,7 +130,15 @@
                 if ( $equipo['estado'] == 1 )
                 {
 
-                  echo '<div class="box box-success">
+                  if($equipo["id_usuario"] != 0 && $equipo["id_responsable"] != 0)
+                  {
+
+                    $usuario = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_usuario"]);
+                    $supervisor = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_responsable"]);
+                    $area = ControladorAreas::ctrMostrarNombreAreas($item, $equipo["id_area"]);
+                    $proyecto = ControladorProyectos::ctrMostrarProyectos($item, $equipo["id_proyecto"]);
+
+                      echo '<div class="box box-success">
               <div class="box-header">
                 <h3 class="box-title">
                   Información de Usuario
@@ -192,6 +201,16 @@
               </div>
             </div>';
 
+
+                  }else
+                  {
+                    echo '<div class="box box-default"><div class="box-footer">
+                 <button class="btn btn-success btn-reasignar" id="btn-reasignar" data-toggle="modal" data-target="#modalReasignarPC"><i class="fa fa-user-plus"></i> Asignar</button>
+              </div></div>';
+                  }
+
+                
+
                 }//if ( $estado['estado'] == 1 )
                 else
                 {
@@ -208,8 +227,8 @@
 
 
       <div class="col-lg-4 col-md-4 col-sm-12">
-         <div class="box <?php echo ( $estado['estado'] == 1 )? 'box-success' : 'box-default' ; ?>">
-          <div class="box-body">
+         <div class="box <?php echo ( $equipo['estado'] == 1 )? 'box-success' : 'box-danger' ; ?>">
+          <div class="box-body  box-<?php echo ($equipo['estado'] == 1 )? 'success' : 'danger' ; ?> ">
 
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
@@ -253,104 +272,224 @@
 
       if ($equipo["historial"] != null) 
       {
-        echo ' <div class="col-md-12">
-      <h3>Trazabilidad</h3>
-    </div>
-
-    <div class="col-md-12">
-      <ul class="timeline">';
+ 
+        echo '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12"><h3>Historial</h3></div></div><div class="row"><div class="col-lg-12 col-md-12 col-sm-12"><ul class="timeline">';
 
         $grupoFechas = [];
         $trazabilidad = json_decode($equipo["historial"], true);
 
-      foreach ($trazabilidad as $key => $value) 
-      {
-        if (!in_array($value["fe"], $grupoFechas)) 
+        foreach ($trazabilidad as $key => $value) 
         {
-          $grupoFechas[] = $value["fe"];
-        }
-      }// foreach ($accionesPQR as $key => $value) 
+          if (!in_array($value["fe"], $grupoFechas)) 
+          {
+            $grupoFechas[] = $value["fe"];
+          }
+        }// foreach ($accionesPQR as $key => $value) 
 
 
-      for ($y=0; $y < count($grupoFechas) ; $y++) 
-      {
-        $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$y], 0);
-
-         echo '<li class="time-label">
-          <span class="bg-red">
-            '.$fechaTemp.'
-          </span>
-        </li>';
-
-        for ($x=0; $x < count($trazabilidad); $x++) 
+        for ($y=0; $y < count($grupoFechas) ; $y++) 
         {
-            if ($grupoFechas[$y] == $trazabilidad[$x]["fe"]) 
+          $fechaTemp = ControladorParametros::ctrOrdenFecha($grupoFechas[$y], 0);
+          echo ' <li class="time-label">
+              <span class="bg-red">
+                  '.$fechaTemp.'
+              </span>
+          </li>';
+
+           for ($x=0; $x < count($trazabilidad); $x++) 
             {
-              switch ($trazabilidad[$x]["acc"]) 
-                    {
-                    case 0:
-                      echo '<li>
-          <i class="fa fa-arrow-circle-down bg-red"></i>
-          <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
-            <h3 class="timeline-header"><a href="#"><i class="fa fa-paperclip"></i> Anexo</a></h3>
-            <div class="timeline-body">
-              <strong>'.$usr_gen.'</strong>: Se dio de baja el equipo.
-            </div>
-            '; 
-            echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">'.$trazabilidad[$x]["da"]["obs"].'
-            </div>' : '' ;
-            echo '</div>
-        </li>';
-                      break;
+                if ($grupoFechas[$y] == $trazabilidad[$x]["fe"]) 
+                {
+                   switch ($trazabilidad[$x]["acc"]) 
+                   {
+                      case 0:
+                         echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-arrow-circle-down bg-red"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
 
-                    case 1:
+                            <h3 class="timeline-header"><a href="#">Salida</a></h3>
 
-                      $actaPDF = ControladorEquipos::ctrMostrarActas($item, $equipo["id_acta"]);
+                            <div class="timeline-body">
+                               <strong>'.$usr_gen.'</strong>: Se dio de baja o se devolvio el equipo.
+                            </div>';
 
-                      echo '<li>
-          <i class="fa fa-arrow-circle-up bg-green"></i>
-          <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
-            <h3 class="timeline-header"><a href="vistas/actas'.$actaPDF["file"].'"><i class="fa fa-paperclip"></i> '.$actaPDF["codigo"].'</a></h3>
-            <div class="timeline-body">
-              '.$usr_gen.': Ingreso de equipo.
-            </div>
-          </div>
-        </li>';
-                      break;
+                            if (isset($trazabilidad[$x]["obs"])) 
+                            {
+                               echo ( !empty($trazabilidad[$x]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["obs"].'
+                            </div>' : '' ;
+                            }
+                            else
+                            {
+                               echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["da"]["obs"].'
+                            </div>' : '' ;
+                            }
 
-                    case 2:
-          echo '<li>
-          <i class="fa fa-share-square bg-blue"></i>
-          <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
-            <h3 class="timeline-header '; echo ( $trazabilidad[$x]["da"]["idAsg"] == $equipo["id_usuario"])?"docResposability": "" ;  echo '" idPC="'.$_GET["idpc"].'" ><a href=""><i class="fa fa-paperclip"></i> Documento de Responsabilidad</a></h3>
-            <div class="timeline-body">
-              '.$usr_gen.': Se asigno el equipo a <strong>'.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idAsg"]).'</strong> y quien actua como responsable <strong>'.ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idRes"]).'</strong> del área <strong>'.ControladorAreas::ctrMostrarNombreAreas($item, $trazabilidad[$x]["da"]["idArea"]).'</strong> .
-            </div>
-         '; 
-            echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">'.$trazabilidad[$x]["da"]["obs"].'
-            </div>' : '' ;
-            echo '</div>
-        </li>';
+                    echo '
+                        </div>
+                    </li>';
+                        break;
+                      case 1:
+
+                         $actaPDF = ControladorEquipos::ctrMostrarActas($item, $equipo["id_acta"]);
+
+                         echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-arrow-circle-up bg-green"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                            <h3 class="timeline-header"><a href="vistas/actas'.$actaPDF["file"].'"><i class="fa fa-paperclip"></i> Ingreso '.$actaPDF["codigo"].'</a></h3>
+
+                            <div class="timeline-body">
+                                <strong>'.$usr_gen.'</strong>: Ingreso el equipo.
+                            </div>';
+
+                            if (isset($trazabilidad[$x]["obs"])) 
+                            {
+                               echo ( !empty($trazabilidad[$x]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["obs"].'
+                            </div>' : '' ;
+                            }
+                            else
+                            {
+                               echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["da"]["obs"].'
+                            </div>' : '' ;
+                            }
+
+                    echo '
+                        </div>
+                    </li>';
+                        break;
+                      case 2:
+                         echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-share-square bg-blue"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                            <h3 class="timeline-header"><a href="#">Asignación</a></h3>
+
+                            <div class="timeline-body">
+                                <strong>'.$usr_gen.'</strong>: Se asigno el equipo a ';
+
+
+                                $usuario_tr = ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idAsg"]);
+                                $supervisor_tr = ControladorUsuarios::ctrMostrarNombre($item, $trazabilidad[$x]["da"]["idRes"]);
+                                $area_tr = ControladorAreas::ctrMostrarNombreAreas($item, $trazabilidad[$x]["da"]["idArea"]);
+
+                                echo($trazabilidad[$x]["da"]["idAsg"] == $trazabilidad[$x]["da"]["idRes"])? $usuario_tr.' del área '.$area_tr : $usuario_tr.' y quien supervisa su uso '.$supervisor_tr.' del área '.$area_tr ;
+
+                                echo'
+                            </div>';
+
+                            if (isset($trazabilidad[$x]["obs"])) 
+                            {
+                               echo ( !empty($trazabilidad[$x]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["obs"].'
+                            </div>' : '' ;
+                            }
+                            else
+                            {
+                               echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["da"]["obs"].'
+                            </div>' : '' ;
+                            }
+
+                    echo '
+                        </div>
+                    </li>';
+                        break;
+                      case 3:
+
+
+                        if (!file_exists("vistas/doc/equipos/".$equipo["nombre"]."/".$trazabilidad[$x]["da"]["file"].".pdf")) {
+                           echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-close bg-red"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                            <h3 class="timeline-header"><a href="#">Soporte</a></h3>
+
+                            <div class="timeline-body">
+                                No se encontro el archivo
+                            </div>
+
+                            <div class="timeline-footer">
+                                <a class="btn btn-primary btn-xs">...</a>
+                            </div>
+                        </div>
+                    </li>';
+                        }
+                        else
+                        {
+                                                     echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-book bg-blue"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                            <h3 class="timeline-header"><a href="vistas/doc/equipos/'.$equipo["nombre"].'/'.$trazabilidad[$x]["da"]["file"].'.pdf"><i class="fa fa-book"></i> Soporte</a></h3>
+
+                            <div class="timeline-body">
+                                <strong>'.$usr_gen.'</strong>: Adjunto un soporte.
+                            </div>';
+
+                            if (isset($trazabilidad[$x]["obs"])) 
+                            {
+                               echo ( !empty($trazabilidad[$x]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["obs"].'
+                            </div>' : '' ;
+                            }
+                            else
+                            {
+                               echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["da"]["obs"].'
+                            </div>' : '' ;
+                            }
+
+                    echo '
+                        </div>
+                    </li>';
+                        }
+
+
+                        break;
                       
-                      break;
+                      default:
+                         echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-envelope bg-blue"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
 
-                    default:
+                            <h3 class="timeline-header"><a href="#">Support Team</a> ...</h3>
 
-                      break;
-                    }  
+                            <div class="timeline-body">
+                                ...
+                                Content goes here
+                            </div>
+
+                            <div class="timeline-footer">
+                                <a class="btn btn-primary btn-xs">...</a>
+                            </div>
+                        </div>
+                    </li>';
+                        break;
+                    }
+                }
             }
-        }//trazabilidad
 
-      }//grupoFechas
+        }
 
-
-
-        echo '
-      </ul>
-    </div>';
+echo '
+</ul></div></div>
+          ';
 
       }
       else
@@ -416,7 +555,7 @@ No se encontraron datos.
                 <div class="form-group">
                   <label>Responsable</label>
                   <input type="hidden" name="idEReasignar" value="<?php echo $_GET['idpc']?>" required readonly>
-                  <select class="form-control" name="selectResponsableE">
+                  <select class="form-control" name="selectResponsableE" required>
                     <?php
                       $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
 
@@ -451,7 +590,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Asignado a:</label>
-                  <select class="form-control" name="selectAsignadoE">
+                  <select class="form-control" name="selectAsignadoE" required>
                     <?php
 
                     $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
@@ -485,7 +624,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Rol</label>
-                  <select class="form-control" name="selectRolE">
+                  <select class="form-control" name="selectRolE" required>
 
                     <?php echo ( $equipo["rol"] == 0 ) ? '<option value="0">Contratista</option><option value="1">Empleado</option>' : '<option value="1">Empleado</option><option value="0">Contratista</option>' ; ?>
 
@@ -497,7 +636,7 @@ No se encontraron datos.
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
                   <label>Proyecto:</label>
-                  <select class="form-control" name="selectProyectoE">
+                  <select class="form-control" name="selectProyectoE" required>
                     <?php
 
                     $proyectos = ControladorProyectos::ctrMostrarProyectos(null, null);
@@ -954,6 +1093,158 @@ No se encontraron datos.
 
         $accionEquipo = new ControladorEquipos();
         $accionEquipo -> ctrAccionEquipo($_SESSION["id"]);
+
+        ?>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modalSoportePC" class="modal fade" role="dialog">
+   <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+        <div class="modal-header" style="background:#00A65A; color:white">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Agregar Soporte: <strong><?php echo $equipo["nombre"]."</strong>, Serial: <strong>".$equipo["n_serie"];?></strong> </h4>
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+          <div class="box-body">
+
+            <div class="divAlertError">
+            </div>
+
+            <div class="form-group">
+              <label for="soportePC">Soporte</label>
+              <input type="file" id="soportePC" name="soportePC">
+              <p class="help-block">Acepta solo Archivo PDF.</p>
+            </div>
+
+                        <div class="form-group">
+              <div class="radio">
+              <label>
+              <input type="radio" name="optionsRadios" id="optionTipoEstado1" value="1" checked="">
+              Doc. de Responsabilidad Firmado
+              </label>
+              </div>
+
+              <div class="radio">
+              <label>
+              <input type="radio" name="optionsRadios" id="optionTipoEstado2" value="2">
+              Doc. Devolución Firmado
+              </label>
+              </div>
+
+              <div class="radio">
+              <label>
+              <input type="radio" name="optionsRadios" id="optionTipoEstado3" value="3">
+              Solicitud de Soporte
+              </label>
+              </div>
+
+              <div class="radio">
+              <label>
+              <input type="radio" name="optionsRadios" id="optionTipoEstado4" value="3">
+              Otro
+              </label>
+              </div>
+            </div>
+
+            <input type="hidden" class="inputSoporteID" required readonly name="inputSoporteID" id="inputSoporteID" value="<?php echo $equipo['id'];?>">
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObsSE"></textarea>
+              </div>
+            </div>
+
+          </div><!--box-body-->
+        </div><!--modal-body-->
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Añadir</button>
+        </div>
+
+        <?php
+
+        $addSoporte = new ControladorEquipos();
+        $addSoporte -> ctrSoporte($_SESSION["id"]);
+
+        ?>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modalEstadoPC" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+    <div class="modal-content">
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+        <div class="modal-header" style="background:#00A65A; color:white">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><span class="title-estado"></span> <strong><?php echo $equipo["nombre"]."</strong>, Serial: <strong>".$equipo["n_serie"];?></strong></h4>
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+          <div class="box-body">
+
+            <div class="divAlertError">
+            </div>
+
+            <input type="hidden" class="inputEstadoPC" required readonly name="inputEstadoPC" id="inputEstadoPC" value="<?php echo $equipo['id'];?>">
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObsEE"></textarea>
+              </div>
+            </div>
+
+            <div class="divAsignacionEstado">
+            </div>
+
+
+          </div><!--box-body-->
+        </div><!--modal-body-->
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Aceptar</button>
+        </div>
+
+        <?php
+
+        $estadoPC = new ControladorEquipos();
+        $estadoPC -> ctrEstadoEquipo($_SESSION["id"]);
 
         ?>
 

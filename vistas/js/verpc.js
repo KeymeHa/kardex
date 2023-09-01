@@ -3,6 +3,8 @@ $("button.btn-reasignar").click(function(){
 	hoy(elemento);
 });
 
+
+
 $("#pc_serial").change(function() {
 
 	var n_serie = $(this).val();
@@ -39,6 +41,118 @@ $("h3.docResposability").click(function()
 {
 	var idPC = $(this).attr("idPC");
 	window.open("extensiones/TCPDF-main/examples/docResposability.php?idPC="+idPC, "_blank");
+});
+
+
+$("button.btn-devolverPC").click(function() {
+	
+	var est = $(this).attr("est");
+	var opciones = "";
+
+
+	$("div.divAsignacionEstado").children().remove();
+
+	if (est == 1) 
+	{
+		$("span.title-estado").html("Devolver Equipo");
+	}
+	else
+	{
+		$("span.title-estado").html("Ingresar Equipo");
+
+			var titulos = [ "Responsable", "Asignado a:", "Rol", "Proyecto:",
+			 "Licencia"];
+
+			var names = [ "selectResponsableEE", "selectAsignadoEE", "selectRolEE", "selectProyectoEE",
+			 "selectLicenciaEE"];
+
+			 var llaves = [ 'id_responsable', 'id_usuario', 'rol', 'id_proyecto', 'id_licencia'];
+
+			 $("div.divAsignacionEstado").append('<div class="row"><div class="col-md-12 col-lg-12 col-sm-12">'+
+                '<h4>Responsabilidad</h4>'+
+              '</div></div>');
+
+			 for (var i = 0; i < titulos.length; i++) 
+			 {
+			 	if (llaves[i] == "rol") 
+			 	{
+					 $("div.divAsignacionEstado > div.row").append('<div class="col-md-6 col-lg-6 col-sm-12">'+
+	                '<div class="form-group">'+
+	                  '<label>'+titulos[i]+'</label>'+
+	                  '<select class="form-control '+names[i]+'" id="'+names[i]+'" name="'+names[i]+'">'+
+	                  '<option value="">Seleccione una opción</option><option value="0">Contratista</option><option value="1">Empleado</option></select>'+
+	                '</div>'+
+	              '</div>');
+			 	}//llaves rol
+			 	else
+			 	{
+
+			 		 $("div.divAsignacionEstado > div.row").append('<div class="col-md-6 col-lg-6 col-sm-12">'+
+	                '<div class="form-group">'+
+	                  '<label>'+titulos[i]+'</label>'+
+	                  '<select class="form-control '+names[i]+'" id="'+names[i]+'" name="'+names[i]+'">'+
+	                  '</select>'+
+	                '</div>'+
+	              '</div>');
+
+			 		var datas = new FormData();
+					datas.append("item" , llaves[i]);
+					datas.append("valor" , 0);
+					datas.append("tipeSelect" , 1);
+					datas.append("elemento" , names[i]);
+					datas.append("datosSelect", 1);
+
+					$.ajax({
+
+						url:"ajax/equipos.ajax.php",
+						method: "POST",
+						data: datas,
+						cache: false,
+						contentType: false,
+						processData: false,
+						dataType: "json",
+						success: function(response2)
+						{
+
+							$("#"+response2[response2.length-1]).children().remove();
+
+							$("#"+response2[response2.length-1]).append('<option value="0">Seleccionar</option>');
+
+
+							for (var j = 0; j < response2.length-1; j++) 
+							{
+								$("#"+response2[response2.length-1]).append('<option value="'+response2[j]["id"]+'">'+response2[j]["nombre"]+'</option>');
+
+							}//for (var j = 0; j < arrI.length; j++)
+
+						}
+					});
+
+				
+			 	}
+
+			 }
+	}
+
+	
+
+	/*swal({
+		type: "warning",
+		title: "¿Estas Seguro de Marcar como devulto y/o dar de baja este equipo?",
+		showCancelButton: true,
+		showConfirmButton: true,
+		confirmButtonText: "Si",
+		cancelButtonText: "No",
+		confirmButtonColor: '#149243',
+		cancelButtonColor: '#d33',
+	}).then((result)=>{
+
+		if (result.value) 
+		{
+			window.location = "index.php?ruta=verpc&idpc="+idPC+"&acc=e";
+		}
+	})*/
+
 });
 
 
