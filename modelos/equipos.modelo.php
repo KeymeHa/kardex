@@ -717,4 +717,54 @@ class ModeloEquipos
 
 	}//mdlMostrarEquipos($tabla, $item, $valor)
 
+	static public function mdlCambiarEstadoEquipo($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historial = :historial, id_licencia = :id_licencia, rol = :rol, id_usuario = :id_usuario, id_responsable = :id_responsable, id_area = :id_area, estado = :estado WHERE id = :id");
+		$stmt->bindParam(":historial",$datos["historial"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_licencia",$datos["id_licencia"], PDO::PARAM_INT);
+		$stmt->bindParam(":rol",$datos["rol"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_usuario",$datos["id_usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_responsable",$datos["id_responsable"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_area",$datos["id_area"], PDO::PARAM_INT);
+		$stmt->bindParam(":estado",$datos["estado"], PDO::PARAM_INT);
+		$stmt->bindParam(":id",$datos["id"], PDO::PARAM_INT);
+
+		
+
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlAddSoporte($tabla, $datos)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historial = :historial WHERE id = :id");
+
+		$stmt->bindParam(":historial",$datos["historial"], PDO::PARAM_STR);
+		$stmt->bindParam(":id",$datos["id"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) 
+		{
+			return "ok";
+		}
+		else
+		{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 }
