@@ -4,7 +4,166 @@ $("button.btn-newEquipo").click(function(){
 	hoy(elemento);
 	$(".btn-modal").html("Agregar");
 	$(".titulo-modal").html("Nuevo Equipo");
+
+	//limpiar formulario
+
+	$("#pc_serial").val("");
+	$("input.inputEquipoAccion").val("");
+	$("input.inputSerialDE").val("");
+	$("#pc_nombreE").val("");
+	$("input.inputCPUFreE").val(0);
+	$("input.inputRamE").val(8);
+	$("input.inputSSDE").val(250);
+	$("input.inputHDDE").val(0);
+	$("input.inputGPUE").val(0);
+	$("input.inputGPUModE").val(0);
+	$("input.inputGPUCapE").val(0);
+	$('.checkMouseE').prop('checked', false);
+	$('.checkTecladoE').prop('checked', false);
+	$(".textObservacionesE").html("");
+/*
+	//traer información
+
+	var elementos = [ "selectIdProE", "selectIdArqE", "selectIdMarcaE", "selectIdModeloE",
+			 "selectIdCPUE", "selectIdCPUModE", "selectSOE", "selectSOVerE", "selectIdActaE", "selectResponsableE", "selectAsignadoE",
+			 "selectProyectoE", "selectLicenciaE"];
+
+	var llaves = [ 'id_propietario', 'id_arquitectura', 'marca', 'modelo',
+	 'cpu', 'cpu_modelo', 'so', 'so_version', 'id_acta', 'id_responsable',
+	  'id_usuario', 'id_proyecto', 'id_licencia' ];
+
+	var valores = [ response1['id_propietario'], response1['id_arquitectura'], response1['marca'], 
+	response1['modelo'], response1['cpu'], response1['cpu_modelo'], 
+	response1['so'], response1['so_version'], response1['id_acta'], 
+	response1['id_responsable'], response1['id_usuario'], response1['id_proyecto'], response1['id_licencia'] ];
+
+	for (var i = 0; i < elementos.length; i++) 
+	{
+		var datas = new FormData();
+		datas.append("item" , llaves[i]);
+		datas.append("valor" , valores[i]);
+		datas.append("elemento" , elementos[i]);
+		datas.append("datosSelect", 1);
+		datas.append("tipeSelect", 0);
+
+		$.ajax({
+
+			url:"ajax/equipos.ajax.php",
+			method: "POST",
+			data: datas,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success: function(response2)
+			{
+				console.log(" en #"+response2.length);
+				
+				$("#"+response2[response2.length-1]).children().remove();
+
+				for (var j = 0; j < response2.length-1; j++) 
+				{
+					$("#"+response2[response2.length-1]).append('<option value="'+response2[j]["id"]+'">'+response2[j]["nombre"]+'</option>');
+
+				}//for (var j = 0; j < arrI.length; j++)
+			}
+		});
+
+	}
+
+	//select
+
+*/
+
 });
+
+
+$("#div-tablePC").on('click', 'button.btn-devolverPC', function(){
+	
+	var idPC = $(this).attr("idPC");
+	var est = $(this).attr("est");
+
+	var titulo = "";
+
+	if (est == 0) 
+	{
+		titulo = "¿Estas Seguro de volver a ingresar este equipo?";
+	}
+	else
+	{
+		titulo = "¿Estas Seguro de Marcar como devulto y/o dar de baja este equipo?";
+	}
+
+	swal({
+		type: "warning",
+		title: titulo,
+		showCancelButton: true,
+		showConfirmButton: true,
+		confirmButtonText: "Si",
+		cancelButtonText: "No",
+		confirmButtonColor: '#149243',
+		cancelButtonColor: '#d33',
+	}).then((result)=>{
+
+		if (result.value) 
+		{
+			window.location = "index.php?ruta=verpc&idpc="+idPC+"&acc=e";
+		}
+	})
+
+});
+
+$("button.btn-tipoPC").click(function() {
+
+	//traer equipos segun estado
+
+	var estado = $(this).attr("tipoPC");
+
+	if (estado == 1) 
+	{
+		$("span.tipoEquipo").html("(No activos)");
+
+		estado = 0;
+		$(this).html("Activos");
+		$(this).attr({tipoPC: estado});
+		$(this).removeClass('btn-success');
+		$(this).addClass('btn-default');
+	}
+	else
+	{
+		$("span.tipoEquipo").html("(Activos)");
+		estado = 1;
+		$(this).html("<i class='fa fa-desktop'></i> No Activos");
+		$(this).attr({tipoPC: estado});
+		$(this).removeClass('btn-default');
+		$(this).addClass('btn-success');
+	}
+	
+	aparecerTabla();
+	paginaCargada(45, 0, 0, 0, "estado", estado);
+
+});
+
+
+
+function aparecerTabla()
+{
+	$("#div-tablePC").children().remove();
+	$("#div-tablePC").append('<table class="table table-bordered table-striped dt-responsive tablaEquipos" width="100%">'+
+          '<thead>'+
+           '<tr>'+
+             '<th style="width:10px">#</th>'+
+             '<th>PC</th>'+
+             '<th>Serial</th>'+
+             '<th>Arquitectura</th>'+
+             '<th>Propiedad</th>'+
+             '<th>Asignado a</th>'+
+             '<th>Área</th>'+
+             '<th>Acciones</th>'+
+           '</tr>'+ 
+          '</thead>'+
+        '</table>')
+}
 
 $("#pc_nombreE").change(function() {
 
@@ -77,7 +236,7 @@ $("#pc_serial").change(function() {
 });
 
 
-$("table.tablaEquipos").on('click', 'button.btn-verPC', function() 
+$("#div-tablePC").on('click', 'button.btn-verPC', function() 
 {
 	var idPC = $(this).attr("idPC");
 	window.location = "index.php?ruta=verpc&idpc="+idPC;
@@ -232,7 +391,7 @@ $("form").on('change', 'input.inputParam', function(){
 });
 
 
-$("table.tablaEquipos").on('click', 'button.btn-editarPC', function() 
+$("#div-tablePC").on('click', 'button.btn-editarPC', function() 
 {
 
 	$(".alert").remove();
@@ -324,6 +483,7 @@ $("table.tablaEquipos").on('click', 'button.btn-editarPC', function()
 				datas.append("valor" , valores[i]);
 				datas.append("elemento" , elementos[i]);
 				datas.append("datosSelect", 1);
+				datas.append("tipeSelect", 1);
 
 				$.ajax({
 
