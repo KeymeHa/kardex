@@ -391,66 +391,86 @@ class ControladorEquipos
 		return $respuesta;	
 	}
 
-	public static function ctrTraerParametros($item, $valor, $elemento)
+	public static function ctrTraerParametros($item, $valor, $elemento, $tipo)
 	{
 		$datos = [[]];
-
 		//buscar en parametros que tipo es el $valor
 		$accion = new ControladorEquipos;
-
 		$item2 = "id";
-
-		if ($item == "id_proyecto") 
+		//if tipo es 1 es edit
+		//sino es new
+		if ($tipo == 1) 
 		{
-			$parametro = ControladorProyectos::ctrMostrarProyectos($item2, $valor);
-			$parametros = ControladorProyectos::ctrMostrarProyectos(null, null);
-		}
-		elseif($item == "id_acta")
-		{
-			$parametro = $accion -> ctrMostrarActas($item2, $valor);
-			$parametros = $accion -> ctrMostrarActas(null, null);
-		}
-		elseif($item == "id_licencia")
-		{
-			$parametro = $accion -> ctrMostrarLicencias($item2, $valor);
-			$parametros = $accion ->ctrMostrarLicenciaDis();
-		}
-		elseif($item == "id_responsable" || $item == "id_usuario")
-		{
-			if ($item == "id_responsable") 
+			if ($item == "id_proyecto") 
 			{
-				$parametro = ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
-				$parametros = ControladorPersonas::ctrMostrarPersonas("sw", 1);
+				$parametro = ($valor == 0)? null :ControladorProyectos::ctrMostrarProyectos($item2, $valor);
+				$parametros = ControladorProyectos::ctrMostrarProyectos(null, null);
+			}
+			elseif($item == "id_acta")
+			{
+				$parametro = ($valor == 0)? null : $accion -> ctrMostrarActas($item2, $valor);
+				$parametros = $accion -> ctrMostrarActas(null, null);
+			}
+			elseif($item == "id_licencia")
+			{
+				$parametro = ($valor == 0)? null : $accion -> ctrMostrarLicencias($item2, $valor);
+				$parametros = $accion ->ctrMostrarLicenciaDis();
+			}
+			elseif($item == "id_responsable" || $item == "id_usuario")
+			{
+				if ($item == "id_responsable") 
+				{
+					$parametro = ($valor == 0)? null : ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
+					$parametros = ControladorPersonas::ctrMostrarPersonas("sw", 1);
+				}
+				else
+				{
+					$parametro = ($valor == 0)? null : ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
+					$parametros = ControladorUsuarios::ctrMostrarUsuarios(null, null);
+				}
 			}
 			else
 			{
-				$parametro = ControladorUsuarios::ctrMostrarUsuarios($item2, $valor);
-				$parametros = ControladorUsuarios::ctrMostrarUsuarios(null, null);
+				$parametro = ($valor == 0)? null : $accion -> ctrMostrarParametros($item2, $valor, null);
+				//llamar a todos los parametros con el mismo tipo
+				$parametros = $accion -> ctrShowParameters($parametro["tipo"]);
 			}
+
+			//en un arreglo agregar primero $datos[id] $valor y $datos[nombre] 
+			$inicio = 0;			
+
+			if ( isset($parametro["id"]) && !is_null($parametro["id"]) ) 
+			{
+				$datos[$inicio]["id"] = $parametro["id"];
+				if ( isset($parametro["usuario"]) && isset($parametro["productos"]) ) 
+				{
+					$datos[$inicio]["nombre"] = $parametro["usuario"];
+				}
+				elseif( isset($parametro["codigo"]) )
+				{
+					$datos[$inicio]["nombre"] = $parametro["codigo"];
+				}
+				else
+				{
+					$datos[$inicio]["nombre"] = $parametro["nombre"];
+				}
+				$inicio = 1;
+			}
+			
 		}
 		else
 		{
-			$parametro = $accion -> ctrMostrarParametros($item2, $valor, null);
-			//llamar a todos los parametros con el mismo tipo
-			$parametros = $accion -> ctrShowParameters($parametro["tipo"]);
+			if (file_exists("vistas/doc/temporal.txt")) 
+			  {
+			    $fshow = fopen("vistas/doc/temporal.txt", "r");
+			    while (!feof($fshow)){
+			      $linea = fgets($fshow);
+			      $temporalData = json_decode($linea, true);
+			    }
+			    fclose($fshow);
+			  }
 		}
 
-		//en un arreglo agregar primero $datos[id] $valor y $datos[nombre] 
-		$datos[0]["id"] = $parametro["id"];
-
-
-		if ( isset($parametro["usuario"]) && isset($parametro["productos"]) ) 
-		{
-			$datos[0]["nombre"] = $parametro["usuario"];
-		}
-		elseif( isset($parametro["codigo"]) )
-		{
-			$datos[0]["nombre"] = $parametro["codigo"];
-		}
-		else
-		{
-			$datos[0]["nombre"] = $parametro["nombre"];
-		}
 
 		$count = 0;
 
@@ -459,8 +479,16 @@ class ControladorEquipos
 			//agregar el resto de parametros si son distintos a $valor
 			if ($valor != $parametros[$i]["id"]) 
 			{
-				$count++;
-				$datos[$count]["id"] = $parametros[$i]["id"];
+				if ($inicio == 1) 
+				{
+					$count++;
+					$datos[$count]["id"] = $parametros[$i]["id"];
+				}
+				else
+				{
+					$datos[$count]["id"] = $parametros[$i]["id"];
+					$inicio = 1;
+				}
 
 				if ( $item == "id_licencia" ) 
 				{
@@ -489,7 +517,10 @@ class ControladorEquipos
 			}
 		}
 
-		array_push($datos, $elemento);
+		if ($elemento != 0) 
+		{
+			array_push($datos, $elemento);
+		}
 
 		return $datos;
 	}
@@ -1355,4 +1386,220 @@ class ControladorEquipos
 		return $dato;
 	}
 
+	static public function ctrEstadoEquipo($idSesion)
+	{
+		if ( isset($_POST["inputEstadoPC"]) ) 
+		{
+			$id_equipo = $_POST["inputEstadoPC"];
+			$accion = new ControladorEquipos();
+			$equipo = $accion->ctrMostrarEquipos("id", $id_equipo);
+			$titulo = "Sin información";
+			$tipo = "warning";
+			$id_licencia = 0;
+			$id_area = 0;
+			$rol = 0;
+			$usuarios = [];
+			$id_usuario = 0;
+			$id_responsable = 0;
+
+			if (isset($equipo["id"]))
+			{
+				date_default_timezone_set('America/Bogota');
+				$dJsonAcc = "";
+				$estado = 0;
+
+				$obs = "";
+
+				if (isset($_POST["textObsEE"])) 
+				{
+					$obs = (!empty($_POST["textObsEE"]))? ControladorParametros::ctrValidarCaracteres($_POST["textObsEE"]) : "" ;
+				}
+				else
+				{
+					$obs = "";
+				}
+
+				if ($equipo["estado"] == 1) 
+				{
+					$dJsonAcc = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"'.$estado.'","gen":"'.$idSesion.'","obs":"'.$obs.'"}';
+				}
+				else
+				{
+					$estado = 1;
+					$dJsonAcc = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"'.$estado.'","gen":"'.$idSesion.'","obs":"'.$obs.'"}';
+
+					if (isset($_POST["selectResponsableEE"]) && isset($_POST["selectAsignadoEE"]) && isset($_POST["selectRolEE"]) && isset($_POST["selectProyectoEE"]) && isset($_POST["selectLicenciaEE"]) ) 
+					{
+						$usuarios = $accion -> ctrValidarAsignaciones($_POST["selectResponsableEE"], $_POST["selectAsignadoEE"], $idSesion, "");
+
+						if ($usuarios["res"] != $usuarios["gen"] &&  $usuarios["gen"] != $usuarios["asi"])
+						{
+							$id_usuario = $usuarios["gen"];
+							$id_responsable = $usuarios["res"];
+							$dJsonAcc .= $usuarios["json"];
+							$id_area = $usuarios["are"];
+						}
+
+						$id_licencia = $_POST["selectLicenciaEE"];
+						$rol = $_POST["selectRolEE"];
+					}
+				}		
+
+				$dJsonAcc .= ']';
+
+				$tabla = "equipos";
+				$datos = array( 'historial' => substr($equipo["historial"], 0 ,-1).$dJsonAcc,
+								'id_licencia' => $id_licencia,
+								'rol' => $rol,
+								'id_usuario' => $id_usuario,
+								'id_responsable' => $id_responsable,
+								'id_area' => $id_area,
+								'estado' => $estado,
+								'id' => $id_equipo );
+	            $respuesta = ModeloEquipos::mdlCambiarEstadoEquipo($tabla, $datos);
+
+            	if ($respuesta == "ok") 
+				{
+					$titulo = ($estado == 1)?"Equipo Ingresado":"¡Equipo marcado como devuelto ";
+					$tipo = "success";						
+				}
+				else
+				{
+					$titulo = "¡ha ocurrido un error!";
+					$tipo = "error";
+				}
+			}
+
+				echo '<script>
+				swal({
+					type: "'.$tipo.'",
+					title: "'.$titulo.'",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+
+				}).then(function(result){
+
+					if(result.value){
+					
+						window.location = "equipos";
+					}
+				});
+				</script>';
+
+
+
+		}
+	}//ctrDevolverEquipo
+
+
+	static public function ctrSoporte($idSesion)
+	{
+		if (isset($_POST["inputSoporteID"])) 
+		{
+			if ( isset($_FILES["soportePC"]["tmp_name"]) ) 
+			{
+
+				$titulo = "No se ha realizado alguna acción.";
+				$tipo = "warning";
+
+				$directorio = "";
+
+				date_default_timezone_set('America/Bogota');
+
+				$accion = new ControladorEquipos();
+				$equipo = $accion->ctrMostrarEquipos("id", $_POST["inputSoporteID"]);
+
+				if (isset($equipo["id"])) 
+				{
+					# code...
+					if ( !$_FILES["soportePC"]["tmp_name"] == null )
+					{
+
+						$directorio = "vistas/doc/equipos/".strval($equipo["nombre"]);
+
+						if (!file_exists($directorio)) 
+						{
+						    mkdir($directorio, 0755, true);
+						}
+
+						if (isset($_POST["textObsSE"])) 
+						{
+							$obs = (!empty($_POST["textObsSE"]))? ControladorParametros::ctrValidarCaracteres($_POST["textObsSE"]) : "" ;
+						}
+						else
+						{
+							$obs = "";
+						}
+
+						if($_FILES["soportePC"]["type"] == "application/pdf")
+						{
+							$CONTADOR = ControladorParametros::ctrcontarArchivosEn( $directorio, 'pdf' );
+							$CONTADOR +=1;
+
+							$tmp_name = $_FILES['soportePC']['tmp_name'];
+							$directorio.='/'.$CONTADOR.'.pdf';
+							$error = $_FILES['soportePC']['error'];
+
+							if($error)
+							{
+								echo '<script>
+								console.log("Error al copiar el archivo");
+								</script>';
+								return ;	
+							}
+							else
+							{
+								if(!file_exists($directorio))
+								{
+									copy($tmp_name,$directorio);
+
+									$dJsonAcc = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"3","gen":"'.$idSesion.'","da":{"file":"'.$CONTADOR.'","obs":"'.$obs.'"}}]';
+
+									$tabla = "equipos";
+									$datos = array( 'historial' => substr($equipo["historial"], 0 ,-1).$dJsonAcc,
+													'id' => $_GET["idpc"] );
+
+									$respuesta = ModeloEquipos::mdlAddSoporte($tabla, $datos);
+
+									if ($respuesta == "ok") 
+									{
+										$titulo = "¡Soporte Anexado!";
+										$tipo = "success";
+									}
+									else
+									{
+										$titulo = "¡Error al ingresar Soporte!";
+										$tipo = "error";
+									}
+
+								}
+								else
+								{
+									$titulo = "¡Error al ingresar Soporte!";
+									$tipo = "error";
+								}
+							}
+						}
+					}//si exite algo
+				}//equipo existe
+
+				echo '<script>
+				swal({
+					type: "'.$tipo.'",
+					title: "'.$titulo.'",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+
+				}).then(function(result){
+
+					if(result.value){
+					
+						window.location = "index.php?ruta=verpc&idpc='.$equipo["id"].'";
+					}
+				});
+				</script>';
+			}
+		}
+
+	}//ctrSoporte
 }
