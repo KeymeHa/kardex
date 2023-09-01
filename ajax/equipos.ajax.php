@@ -55,9 +55,9 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
-	public static function traerParametros($item, $valor, $elemento)
+	public static function traerParametros($item, $valor, $elemento, $tipo)
 	{
-		$respuesta = ControladorEquipos::ctrTraerParametros($item, $valor, $elemento);
+		$respuesta = ControladorEquipos::ctrTraerParametros($item, $valor, $elemento, $tipo);
 		echo json_encode($respuesta);
 	}
 
@@ -109,5 +109,7 @@ if(isset($_POST["idPC"]))
 if (isset($_POST["datosSelect"])) 
 {
 	$llamar = new AjaxEquipos();
-	$llamar -> traerParametros($_POST["item"], $_POST["valor"], $_POST["elemento"]);
+
+	$tipo =( isset($_POST["tipeSelect"]) )? $_POST["tipeSelect"] : null ;
+	$llamar -> traerParametros($_POST["item"], $_POST["valor"], $_POST["elemento"], $tipo );
 }
