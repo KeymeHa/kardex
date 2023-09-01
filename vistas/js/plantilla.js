@@ -781,7 +781,7 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 		else if(pagina == 45)
 		{
 			tablaElegida =  $('.tablaEquipos');
-			if( dato !== 0 && dato2 !== 0 )
+			if( dato != 0 )
 			{
 				variable = "?item=" + dato + "&valor=" + dato2;
 			}
@@ -831,6 +831,12 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			tablaElegida =  $('.tablaEquipos');
 			tablaAjax = 'equipos';
 
+		}
+		else if(pagina == 48)
+		{
+			tablaElegida =  $('.tablaEquipos');
+			variable = "?item=estado&valor=1&acc=1";
+			tablaAjax = 'equipos';
 		}
 		
 
