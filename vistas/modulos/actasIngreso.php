@@ -89,7 +89,7 @@
                 <label for="inputFecha">*Fecha Ingreso/Devolución</label>
                 <input type="hidden" name="inputActaId" id="inputActaId" value="" readonly>
                 <input type="hidden" name="inputActaDir" id="inputActaDir" value="" readonly>
-                <input type="hidden" name="inputActaAccion" id="inputActaAccion" value="" readonly>
+                <input type="hidden" name="inputActaAccion" id="inputActaAccion" value="0" readonly>
                 <input type="date" class="form-control" id="inputActaFecha" name="inputActaFecha" required="">
               </div>
 
