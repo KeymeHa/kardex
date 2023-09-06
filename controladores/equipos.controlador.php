@@ -89,6 +89,7 @@ class ControladorEquipos
 
 				$tabla = "equipos_licencias";
 				$datos = array( 'usuario' => $post["licencia_user"],
+								'instalaciones' => ($post["licencia_can"] > 0)? $post["licencia_can"]: 1,
 								'password' => $post["licencia_pass"], 
 								'productos' => $post["licencia_pro"],
 								'fecha_creacion' => $fechaActual);
@@ -677,6 +678,19 @@ class ControladorEquipos
 		$tipo = "";
 		
 		$directorio = "";
+		$directorio2 = "";
+
+		/*
+
+			inputActaCodigo
+			inputActaFecha
+			inputActaCantidad
+			radioActaTipo
+
+			actaPDF
+			
+	
+		*/
 
 		date_default_timezone_set('America/Bogota');
 		$actualY = date("Y");
@@ -699,6 +713,7 @@ class ControladorEquipos
 
 					$tmp_name = $files['actaPDF']['tmp_name'];
 					$directorio.='/'.strval($post["inputActaFecha"]).'-'.$CONTADOR.'.pdf';
+					//$directorio2 = strval($actualY).'/'.strval($post["inputActaFecha"]).'-'.$CONTADOR;
 					$error = $files['actaPDF']['error'];
 
 					if($error)
@@ -714,11 +729,13 @@ class ControladorEquipos
 						{
 							copy($tmp_name,$directorio);
 
+							$obs = (!empty($_POST["textObsActa"]))? ControladorParametros::ctrValidarCaracteres($_POST["textObsActa"]): "";
+
 							$tabla = "equiposactas";
 							$datos = array('fecha' => $post["inputActaFecha"],
 											'tipo' => $post["radioActaTipo"],
 											'cantidad' => $post["inputActaCantidad"],
-											'observaciones' => $post["textObsActa"],
+											'observaciones' => $obs,
 											'codigo' => $post["inputActaCodigo"],
 											'file' => $directorio );
 
@@ -1060,6 +1077,10 @@ class ControladorEquipos
 			$id_area = 0;
 			$asignado =  0;
 
+			$dJsonAcc = "";
+
+			$usuarios = [];
+
 			date_default_timezone_set('America/Bogota');
 
 			$teclado = (isset($_POST["checkTecladoE"]))?1:0;
@@ -1113,6 +1134,13 @@ class ControladorEquipos
 						//agregar
 						$usuarios = $accion -> ctrValidarAsignaciones($_POST["selectResponsableE"], $_POST["selectAsignadoE"], $idSesion, $obs);
 						$dJsonAcc .= $usuarios["json"];
+					}
+					else
+					{
+						$usuarios["res"] = $equipo["id_responsable"];
+						$usuarios["asi"] = $equipo["id_usuario"];
+						$usuarios["gen"] = $equipo["id_usr_generado"];
+						$usuarios["are"] = $equipo["id_area"];
 					}
 					
 				}
@@ -1221,7 +1249,7 @@ class ControladorEquipos
 						   'so_version' => $_POST["selectSOVerE"],
 						   'fecha_ingreso' => $_POST["dateIngresoE"],
 						   'id_acta' => $_POST["selectIdActaE"],
-						   'id_responsable' => $usuarios["gen"], #ojo
+						   'id_responsable' => $usuarios["res"],
 						   'id_usuario' => $usuarios["asi"],
 						   'observaciones' => $obs,
 						   'id_area' => $usuarios["are"],
@@ -1233,9 +1261,12 @@ class ControladorEquipos
 						   'id_licencia' => $_POST["selectLicenciaE"] );
 
 			$tabla = "equipos";
+			$data = "";
 
-			if( isset($equipo["n_serie"]) && !is_null($equipo["n_serie"]) )
+			if( isset($equipo["n_serie"]) )
 			{
+
+				echo "existe equipo";
 				/*if ($_POST["inputEquipoAccion"] != 0 && $equipo["estado"] == 1 ) 
 				{*/
 					//validar cambios
@@ -1245,40 +1276,47 @@ class ControladorEquipos
 
 					$llaves_ver = array( 'serial', '2do serial', 'propietario', 'arquitectura', 'nombre', 'marca', 'modelo', 'CPU', 'modelo CPU', 'CPU frecuencia', 'CPU generación', 'RAM', 'SSD', 'HDD', 'GPU', 'modelo GPU', 'capacidad GPU', 'teclado', 'mouse', 'Sistema operativo', 'version SO', 'fecha ingreso', 'acta', 'responsable', 'usuario', 'proyecto', 'rol', 'licencia' );
 
-					$data = "";
+					$contarArray = 0;
 
 					for ( $i=0 ; $i < count($llaves); $i++ ) 
 					{ 
-						if( $equipo[ $llaves[$i] ] != $_POST[ $llaves_post[$i] ] )
+						if (isset($_POST[ $llaves_post[$i] ])) 
 						{
-							$new = ""; 
-
-							if ( intval($_POST[ $llaves_post[$i]]) ) 
+							if( $equipo[ $llaves[$i] ] != $_POST[ $llaves_post[$i] ] )
 							{
-								$new = $_POST[ $llaves_post[$i]]; 
-							}
-							else
-							{
-								$new = ControladorParametros::ctrValidarCaracteres($_POST[ $llaves_post[$i]]); 
-							}
+								$new = ""; 
 
-							$data .= '"'.$i.'":{"nom":"'.$llaves_ver[$i].'","ant":"'.$equipo[ $llaves[$i] ].'","new":"'.$new.'"},';
-							//$edit .= $llaves_ver[$i]." de ".$equipo[ $llaves[$i] ]." a ".$_POST[ $llaves_post[$i] ].",";
-						}//if
+								if ( intval($_POST[ $llaves_post[$i]]) ) 
+								{
+									$new = ControladorEquipos::ctrMostrarParametrosNombre("id", $_POST[ $llaves_post[$i]], 1); 
+								}
+								else
+								{
+									$new = ControladorParametros::ctrValidarCaracteres($_POST[ $llaves_post[$i]]); 
+								}
+
+
+
+								$data .= '"'.$contarArray.'":{"nom":"'.$llaves_ver[$i].'","ant":"'.ControladorEquipos::ctrMostrarParametrosNombre("id", $equipo[$llaves[$i]], 1).'","new":"'.$new.'"},';
+
+								$contarArray++;
+								//$edit .= $llaves_ver[$i]." de ".$equipo[ $llaves[$i] ]." a ".$_POST[ $llaves_post[$i] ].",";
+							}//if
+						}
 
 					}//for
 
-					if( !empty($dJsonAcc) )
+					if( !empty($data) )
 					{
-						if (!empty($data) ) 
-						{
-							$data = substr($data, 0 ,-1);
-							$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"3","gen":"'.$idSesion.'","obs":"'.$obs.'","da":{'.$data.'}}]';
-						}
+						$data = substr($data, 0 ,-1);
+
+						$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"4","gen":"'.$idSesion.'","obs":"'.$obs.'","da":{'.$data.'}}]';
+
 
 						$datos["historial"] = substr($equipo["historial"], 0 ,-1).",".$dJsonAcc;
 						$datos["id"] = $equipo["id"];
 			            $respuesta = ModeloEquipos::mdlEditarEquipo($tabla, $datos);
+
 					}
 					else
 					{
@@ -1330,9 +1368,25 @@ class ControladorEquipos
 			}
 			else
 			{
-				$titulo = "¡Error al añadir equipo!";
+				$titulo = "¡Error al ";
+
+				if ($_POST["inputEquipoAccion"] == 0 ) 
+				{
+					$titulo .= "añadir";
+					
+				}
+				else
+				{
+					$titulo .= "actualizar";
+				}
+
+
+				$titulo .= " equipo!";
 				$tipo = "error";
+
 			}
+
+			$url = (isset($_GET["ruta"]) && isset($_GET["idpc"]))? "index.php?ruta=verpc&idpc=".$_GET["idpc"] : "equipos";
 
 			echo '<script>
 				swal({
@@ -1345,7 +1399,7 @@ class ControladorEquipos
 
 					if(result.value){
 					
-						window.location = "equipos";
+						window.location = "'.$url .'";
 					}
 				});
 				</script>';
