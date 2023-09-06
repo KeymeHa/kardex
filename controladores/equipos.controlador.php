@@ -1295,9 +1295,9 @@ class ControladorEquipos
 									$new = ControladorParametros::ctrValidarCaracteres($_POST[ $llaves_post[$i]]); 
 								}
 
+								$data .= $llaves_ver[$i]." de ".ControladorEquipos::ctrMostrarParametrosNombre("id", $equipo[$llaves[$i]], 1)." a ".$new.",";
 
-
-								$data .= '"'.$contarArray.'":{"nom":"'.$llaves_ver[$i].'","ant":"'.ControladorEquipos::ctrMostrarParametrosNombre("id", $equipo[$llaves[$i]], 1).'","new":"'.$new.'"},';
+								//$data .= '"'.$contarArray.'":{"nom":"'.$llaves_ver[$i].'","ant":"'.ControladorEquipos::ctrMostrarParametrosNombre("id", $equipo[$llaves[$i]], 1).'","new":"'.$new.'"},';
 
 								$contarArray++;
 								//$edit .= $llaves_ver[$i]." de ".$equipo[ $llaves[$i] ]." a ".$_POST[ $llaves_post[$i] ].",";
@@ -1310,7 +1310,7 @@ class ControladorEquipos
 					{
 						$data = substr($data, 0 ,-1);
 
-						$dJsonAcc .= ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"4","gen":"'.$idSesion.'","obs":"'.$obs.'","da":{'.$data.'}}]';
+						$dJsonAcc .= '{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"4","gen":"'.$idSesion.'","obs":"'.$obs.'","da":"'.$data.'"}]';
 
 
 						$datos["historial"] = substr($equipo["historial"], 0 ,-1).",".$dJsonAcc;
@@ -1603,11 +1603,9 @@ class ControladorEquipos
 							}
 							else
 							{
-								if(!file_exists($directorio))
-								{
-									copy($tmp_name,$directorio);
+								copy($tmp_name,$directorio);
 
-									$dJsonAcc = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"3","gen":"'.$idSesion.'","da":{"file":"'.$CONTADOR.'","obs":"'.$obs.'"}}]';
+									$dJsonAcc = ',{"fe":"'.date('Y-m-d').'","hr":"'.date('h:i a').'","acc":"3","gen":"'.$idSesion.'","da":{"file":"'.$CONTADOR.'","obs":"'.$obs.'","type":"'.$_POST["optionTipoSp"].'"}}]';
 
 									$tabla = "equipos";
 									$datos = array( 'historial' => substr($equipo["historial"], 0 ,-1).$dJsonAcc,
@@ -1625,13 +1623,6 @@ class ControladorEquipos
 										$titulo = "¡Error al ingresar Soporte!";
 										$tipo = "error";
 									}
-
-								}
-								else
-								{
-									$titulo = "¡Error al ingresar Soporte!";
-									$tipo = "error";
-								}
 							}
 						}
 					}//si exite algo
