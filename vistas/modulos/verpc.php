@@ -118,7 +118,11 @@
              
               <?php 
 
-              echo ($equipo["estado"] ==  1)? '<button type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button><button type="button" class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button> <button type="button" class="btn btn-success btn-AddSoporte"  data-toggle="modal" data-target="#modalSoportePC" ><i class="fa fa-file"></i> Añadir Soporte</button>' :'<button  type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-in"></i> Ingresar Equipo</button>';
+              echo ($equipo["estado"] ==  1)? '<button type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-out"></i> Marcar como Devuelto</button> <button type="button" class="btn btn-success btn-AddSoporte" data-toggle="modal" data-target="#modalSoportePC" ><i class="fa fa-file"></i> Añadir Soporte</button>' :'<button  type="button" class="btn btn-success btn-devolverPC" idPC="'.$equipo['id'].'" est="'.$equipo['estado'].'" data-toggle="modal" data-target="#modalEstadoPC"><i class="fa fa-sign-in"></i> Ingresar Equipo</button>';
+
+              /*
+            <button type="button" class="btn btn-success"><i class="fa fa-bullhorn"></i> Reportar</button>
+              */
 
               ?>
             </div>
@@ -202,7 +206,8 @@
             </div>';
 
 
-                  }else
+                  }
+                  else
                   {
                     echo '<div class="box box-default"><div class="box-footer">
                  <button class="btn btn-success btn-reasignar" id="btn-reasignar" data-toggle="modal" data-target="#modalReasignarPC"><i class="fa fa-user-plus"></i> Asignar</button>
@@ -230,40 +235,71 @@
          <div class="box <?php echo ( $equipo['estado'] == 1 )? 'box-success' : 'box-danger' ; ?>">
           <div class="box-body  box-<?php echo ($equipo['estado'] == 1 )? 'success' : 'danger' ; ?> ">
 
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-              <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
-              <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-              <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
-              </ol>
-              <div class="carousel-inner">
-              <div class="item">
-              <img src="vistas/img/equipos/edu-083/foto_1.jpg" alt="First slide" width="500">
-              <div class="carousel-caption">
-              Foto 1
-              </div>
-              </div>
-              <div class="item">
-              <img src="vistas/img/equipos/edu-083/foto_2.jpg" alt="Second slide" width="500">
-              <div class="carousel-caption">
-              Foto 2
-              </div>
-              </div>
-              <div class="item active">
-              <img src="vistas/img/equipos/edu-083/foto_3.jpg" alt="Third slide" width="500">
-              <div class="carousel-caption">
-              Foto 3
-              </div>
-              </div>
-              </div>
-              <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <?php
+
+            if (!empty($equipo["fotos"])) 
+            {
+              $fotosEquipo = json_decode($equipo["fotos"], true);
+
+              if (is_countable($fotosEquipo) && count($fotosEquipo) > 0) 
+              {
+
+                echo '<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">';
+
+                for ($i = 0; $i < count($fotosEquipo); $i++) 
+                { 
+                  echo '<li data-target="#carousel-example-generic" data-slide-to="'.$i.'" class="active"></li>';
+                }//for
+                
+              echo '</ol><div class="carousel-inner">';
+
+               for ($i = 0; $i < count($fotosEquipo); $i++) 
+                { 
+                  echo '<div class="item active">
+                  <img src="vistas/img/equipos/edu-083/foto_1.jpg" alt="'.$i.' slide" width="400">
+                    <div class="carousel-caption">
+                      Foto '.($i+1).'
+                    </div>
+                </div>';
+                }//for
+              
+               echo '
+              </div><!--carousel-inner--><a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
               <span class="fa fa-angle-left"></span>
               </a>
               <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
               <span class="fa fa-angle-right"></span>
               </a>
-            </div>
+            </div><!--carousel-example-generic-->';
+
+              
+
+               
+              }
+
+            }
+            else
+            {
+              echo '<img class="img-responsive" src="vistas/img/equipos/default/MAC.png" alt="Photo">';
+            }
+
+            ?>
+
           </div><!--box-body-->
+          <div class="box-footer">
+
+            <?php
+
+            if ($equipo["estado"] != 0) 
+            {
+              echo '<button class="btn btn-warning pull-right btn-editarFoto" data-toggle="modal" data-target="#modalImagenesPC" idPC="'.$equipo["id"].'" ><i class="fa fa-pencil"></i> ';
+              echo (!empty($equipo["fotos"]) )?'Editar': 'Agregar';
+              echo ' Imagen</button>';
+            }
+
+            ?>
+          </div>
         </div>
       </div>
 
@@ -437,7 +473,32 @@
                             <h3 class="timeline-header"><a href="vistas/doc/equipos/'.$equipo["nombre"].'/'.$trazabilidad[$x]["da"]["file"].'.pdf"><i class="fa fa-book"></i> Soporte</a></h3>
 
                             <div class="timeline-body">
-                                <strong>'.$usr_gen.'</strong>: Adjunto un soporte.
+                                <strong>'.$usr_gen.'</strong>: Adjunto un ';
+
+                                switch ($trazabilidad[$x]["da"]["type"]) {
+                                  case 1:
+                                    echo 'Doc. de Responsabilidad Firmado';
+                                    break;
+
+                                  case 2:
+                                    echo 'Doc. Devolución Firmado';
+                                    break;
+
+                                  case 3:
+                                    echo 'Solicitud de Soporte';
+                                    break;
+
+                                  case 4:
+                                    echo 'Otro';
+                                    break;
+                                  
+                                  default:
+                                    echo 'soporte';
+                                    break;
+                                }
+
+
+                                echo '
                             </div>';
 
                             if (isset($trazabilidad[$x]["obs"])) 
@@ -460,6 +521,40 @@
 
 
                         break;
+
+
+                      case 4:
+
+
+                         echo'<li>
+                        <!-- timeline icon -->
+                        <i class="fa fa-pencil bg-yellow"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                            <h3 class="timeline-header"><a href="#">Edición</a></h3>
+
+                            <div class="timeline-body">
+                                <strong>'.$usr_gen.'</strong>: se Modificaron los siguientes valores: '.$trazabilidad[$x]["da"].' No se encontraron datos.'.'.
+                            </div>';
+
+                           if (isset($trazabilidad[$x]["obs"])) 
+                            {
+                               echo ( !empty($trazabilidad[$x]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["obs"].'
+                            </div>' : '' ;
+                            }
+                            else
+                            {
+                               echo ( !empty($trazabilidad[$x]["da"]["obs"]) )? '<div class="timeline-footer">
+                                '.$trazabilidad[$x]["da"]["obs"].'
+                            </div>' : '' ;
+                            }
+
+                            echo '
+                        </div>
+                    </li>';
+                      break;
                       
                       default:
                          echo'<li>
@@ -896,7 +991,7 @@ No se encontraron datos.
               
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
-                <input type="number" class="form-control inputHDDE" id="pc_hdd" min="120" value="" placeholder="1000" name="inputHDDE">
+                <input type="number" class="form-control inputHDDE" id="pc_hdd" min="0" value="" placeholder="1000" name="inputHDDE">
               </div>
 
               <div class="form-group">
@@ -1133,28 +1228,28 @@ No se encontraron datos.
                         <div class="form-group">
               <div class="radio">
               <label>
-              <input type="radio" name="optionsRadios" id="optionTipoEstado1" value="1" checked="">
+              <input type="radio" name="optionTipoSp" id="opTipoS1" value="1" checked="">
               Doc. de Responsabilidad Firmado
               </label>
               </div>
 
               <div class="radio">
               <label>
-              <input type="radio" name="optionsRadios" id="optionTipoEstado2" value="2">
+              <input type="radio" name="optionTipoSp" id="opTipoS2" value="2">
               Doc. Devolución Firmado
               </label>
               </div>
 
               <div class="radio">
               <label>
-              <input type="radio" name="optionsRadios" id="optionTipoEstado3" value="3">
+              <input type="radio" name="optionTipoSp" id="opTipoS3" value="3">
               Solicitud de Soporte
               </label>
               </div>
 
               <div class="radio">
               <label>
-              <input type="radio" name="optionsRadios" id="optionTipoEstado4" value="3">
+              <input type="radio" name="optionTipoSp" id="opTipoS4" value="4">
               Otro
               </label>
               </div>
@@ -1247,6 +1342,76 @@ No se encontraron datos.
         $estadoPC -> ctrEstadoEquipo($_SESSION["id"]);
 
         ?>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalImagenesPC" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+    <div class="modal-content">
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+        <div class="modal-header" style="background:#00A65A; color:white">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><span class="title-estado"></span> <strong><?php echo $equipo["nombre"]."</strong>, Serial: <strong>".$equipo["n_serie"];?></strong></h4>
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+          <div class="box-body">
+
+            <div class="divAlertError">
+            </div>
+
+            <input type="hidden" class="inputIdImagenesPC" required readonly name="inputIdImagenesPC" id="inputIdImagenesPC" value="<?php echo $equipo['id'];?>">
+
+              <div class="form-group">
+
+                <div class="col-sm-6">
+                  <img class="img-responsive" src="vistas/img/equipos/default/MAC.png" alt="Photo">
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label>Foto 1</label>
+                  </div>
+                  <div class="row">
+                    <a class="btn btn-app">
+                      <i class="fa fa-edit"></i> Edit
+                    </a>
+                  </div>
+                  
+                  
+                </div>
+              </div><!--form-group-->
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObsIE"></textarea>
+              </div>
+            </div>
+
+          </div><!--box-body-->
+        </div><!--modal-body-->
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Editar</button>
+        </div>
 
       </form>
     </div>
