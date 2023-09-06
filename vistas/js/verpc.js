@@ -239,7 +239,8 @@ $("button.btn-editarPC").click(function() {
 				datas.append("item" , llaves[i]);
 				datas.append("valor" , valores[i]);
 				datas.append("elemento" , elementos[i]);
-				datas.append("datosSelect", 1);
+				datas.append("datosSelect", 1); 
+				datas.append("tipeSelect", 1);
 
 				$.ajax({
 
