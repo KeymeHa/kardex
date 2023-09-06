@@ -11,7 +11,7 @@ require_once "../modelos/usuarios.modelo.php";
 
 class TablaEquipos
 {
-	public static function mostrarEquipos($item, $valor)
+	public static function mostrarEquipos($item, $valor, $acc)
 	{
 		 $equipos = ControladorEquipos::ctrMostrarEquipos($item, $valor);
 		 $dJson = '{"data": [';
@@ -22,10 +22,37 @@ class TablaEquipos
 
 		for( $i = 0; $i < count($equipos); $i++)
 		{	
-			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' nombre='".$equipos[$i]["nombre"]."' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btn-bajaPC' title='Devolver o marcar de baja' idPC='".$equipos[$i]["id"]."'><i class='fa fa-arrow-down'></i></button></div></div>";
 
-			$area = ControladorAreas::ctrMostrarAreas("id", $equipos[$i]["id_area"]);
-	    	$usuario = ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]);
+			$clase = "";
+			$icono = "";
+			$titulo = "";
+
+
+			if ($equipos[$i]["estado"] == 0) 
+			{
+				$clase = "btn-info";
+				$icono = "fa-arrow-up";
+				$titulo = "Volver a ingresar";
+			}
+			else
+			{
+				$clase = "btn-danger";
+				$icono = "fa-arrow-down";
+				$titulo = "Devolver o marcar de baja";
+			}
+
+			$acciones = ($acc == null)? "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' nombre='".$equipos[$i]["nombre"]."' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn ".$clase." btn-bajaPC' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>": "<div class='btn-group'><div class='col-md-4'><button class='btn ".$clase." agregarPC RegresarBoton' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>" ;
+
+			$usuario = "No asignado";
+			$areaN = "No asignado";		
+
+			if ($equipos[$i]["id_responsable"] !=  0)
+			{
+				$usuario = ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]);
+				$area = ControladorAreas::ctrMostrarAreas("id", $equipos[$i]["id_area"]);
+				$areaN = $area["nombre"];
+			}
+	    	
 	    	$arq = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_arquitectura"], 1);
 	    	$prop = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_propietario"], 1);
 
@@ -36,7 +63,7 @@ class TablaEquipos
 	    		"'.$arq.'",	
 	    		"'.$prop.'",	
 	    		"'.$usuario.'",	
-	    		"'.$area["nombre"].'",
+	    		"'.$areaN.'",
 	    		"'.$acciones.'"
 	    		],';
 		}//For
@@ -50,13 +77,13 @@ class TablaEquipos
 
 $equiposMostrar = new TablaEquipos();
 
-if (isset($_GET["item"]) && isset($_GET["valor"]) ) 
+if (!isset($_GET["item"]) && !isset($_GET["valor"]) ) 
 {
-	$equiposMostrar -> mostrarEquipos(null, null);
+	$equiposMostrar -> mostrarEquipos(null, null, null);
 }
 else
 {
-	$equiposMostrar -> mostrarEquipos($_GET["item"], $_GET["valor"]);
+	$equiposMostrar -> mostrarEquipos($_GET["item"], $_GET["valor"], (isset($_GET["acc"]))? 1 : null);
 }
 
 
