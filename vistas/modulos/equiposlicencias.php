@@ -84,6 +84,11 @@
                 <input type="text" class="form-control" id="inputlicenciaPro" name="licencia_pro" placeholder="Aplicaciones">
               </div>
 
+              <div class="form-group">
+                <label for="inputlicenciaPro">Instalaciones</label>
+                <input type="number" class="form-control" min="1" id="inputCantidad" name="licencia_can" placeholder="Aplicaciones">
+              </div>
+
           </div><!--<div class="box-body">-->
         </div><!--<div class="modal-body">-->
 

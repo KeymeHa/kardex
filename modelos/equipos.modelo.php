@@ -8,8 +8,9 @@ class ModeloEquipos
 
 	public static function mdlNuevaLicencia($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(usuario, password, productos, fecha_creacion) VALUES (:usuario, :password, :productos, :fecha_creacion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(usuario, instalaciones, password, productos, fecha_creacion) VALUES (:usuario, :instalaciones, :password, :productos, :fecha_creacion)");
 		$stmt ->bindParam( ":usuario", $datos["usuario"] , PDO::PARAM_STR );
+		$stmt ->bindParam( ":instalaciones", $datos["instalaciones"] , PDO::PARAM_INT );
 		$stmt ->bindParam( ":password", $datos["password"] , PDO::PARAM_STR );
 		$stmt ->bindParam( ":productos", $datos["productos"] , PDO::PARAM_STR );
 		$stmt ->bindParam( ":fecha_creacion", $datos["fecha_creacion"] , PDO::PARAM_STR );
@@ -235,12 +236,14 @@ class ModeloEquipos
 	public static function mdlNuevaActaEquipo($tabla, $datos)
 	{
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha, tipo, cantidad, observaciones, codigo, file) VALUES (:fecha, :tipo, :cantidad, :observaciones, :codigo, :file) ");
+		
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_INT);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":file", $datos["file"], PDO::PARAM_STR);
+
 
 		if ($stmt->execute()) 
 		{
@@ -581,19 +584,19 @@ class ModeloEquipos
 
 		public static function mdlEditarEquipo($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historial = :historial,  = :n_serie, serialD = :serialD, id_propietario = :id_propietario, id_arquitectura = :id_arquitectura, marca = :marca, nombre = :nombre,  modelo = :modelo, cpu = :cpu, cpu_modelo = :cpu_modelo, cpu_frecuencia = :cpu_frecuencia, ram = :ram, ssd = :ssd, hdd = :hdd, gpu = :gpu, gpu_modelo = :gpu_modelo, gpu_capacidad = :gpu_capacidad, teclado = :teclado, mouse = :mouse, so = :so, so_version = :so_version, fecha_ingreso = :fecha_ingreso, id_acta = :id_acta, id_responsable = :id_responsable, id_usuario = :id_usuario, observaciones = :observaciones, id_area = :id_area, id_proyecto = :id_proyecto, rol = :rol, id_usr_generado = :id_usr_generado, id_licencia = :id_licencia, fotos = :fotos  WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET n_serie = :n_serie, serialD = :serialD, id_propietario = :id_propietario, id_arquitectura = :id_arquitectura, nombre = :nombre, marca = :marca, modelo = :modelo, cpu = :cpu, cpu_modelo = :cpu_modelo, cpu_frecuencia = :cpu_frecuencia, cpu_generacion = :cpu_generacion, ram = :ram, ssd = :ssd, hdd = :hdd, gpu = :gpu, gpu_modelo = :gpu_modelo, gpu_capacidad = :gpu_capacidad, teclado = :teclado, mouse = :mouse, so = :so, so_version = :so_version, fecha_ingreso = :fecha_ingreso, id_acta = :id_acta, id_responsable = :id_responsable, id_usuario = :id_usuario, observaciones = :observaciones, id_area = :id_area, id_proyecto = :id_proyecto, rol = :rol, id_usr_generado = :id_usr_generado, estado = :estado, fotos = :fotos, id_licencia = :id_licencia, historial = :historial  WHERE id = :id");
 
-		$stmt->bindParam(":historial", $datos["historial"] , PDO::PARAM_STR);
 		$stmt->bindParam(":n_serie", $datos["n_serie"] , PDO::PARAM_STR);
 		$stmt->bindParam(":serialD", $datos["serialD"] , PDO::PARAM_STR);
-		$stmt->bindParam(":id_propietario", $datos["id_propietario"] , PDO::PARAM_INT);
-		$stmt->bindParam(":id_arquitectura", $datos["id_arquitectura"] , PDO::PARAM_INT);
-		$stmt->bindParam(":marca", $datos["marca"] , PDO::PARAM_INT);
-		$stmt->bindParam(":nombre", $datos["nombre"] , PDO::PARAM_STR);		
-		$stmt->bindParam(":modelo", $datos["modelo"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_propietario", $datos["id_propietario"] , PDO::PARAM_STR);
+		$stmt->bindParam(":id_arquitectura", $datos["id_arquitectura"] , PDO::PARAM_STR);
+		$stmt->bindParam(":nombre", $datos["nombre"] , PDO::PARAM_STR);
+		$stmt->bindParam(":marca", $datos["marca"] , PDO::PARAM_STR);
+		$stmt->bindParam(":modelo", $datos["modelo"] , PDO::PARAM_STR);
 		$stmt->bindParam(":cpu", $datos["cpu"] , PDO::PARAM_STR);
 		$stmt->bindParam(":cpu_modelo", $datos["cpu_modelo"] , PDO::PARAM_STR);
 		$stmt->bindParam(":cpu_frecuencia", $datos["cpu_frecuencia"] , PDO::PARAM_STR);
+		$stmt->bindParam(":cpu_generacion", $datos["cpu_generacion"] , PDO::PARAM_STR);
 		$stmt->bindParam(":ram", $datos["ram"] , PDO::PARAM_STR);
 		$stmt->bindParam(":ssd", $datos["ssd"] , PDO::PARAM_STR);
 		$stmt->bindParam(":hdd", $datos["hdd"] , PDO::PARAM_STR);
@@ -612,9 +615,11 @@ class ModeloEquipos
 		$stmt->bindParam(":id_area", $datos["id_area"] , PDO::PARAM_INT);
 		$stmt->bindParam(":id_proyecto", $datos["id_proyecto"] , PDO::PARAM_INT);
 		$stmt->bindParam(":rol", $datos["rol"] , PDO::PARAM_INT);
-		$stmt->bindParam(":id_usr_generado", $datos["id_usr_generado"] , PDO::PARAM_INT);
-		$stmt->bindParam(":id_licencia", $datos["id_licencia"] , PDO::PARAM_INT);
+		$stmt->bindParam(":id_usr_generado", $datos["id_usr_generado"] , PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos["estado"] , PDO::PARAM_INT);
 		$stmt->bindParam(":fotos", $datos["fotos"] , PDO::PARAM_STR);
+		$stmt->bindParam(":id_licencia", $datos["id_licencia"] , PDO::PARAM_INT);
+		$stmt->bindParam(":historial", $datos["historial"] , PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"] , PDO::PARAM_INT);
 
 		if ($stmt->execute()) 
@@ -623,7 +628,7 @@ class ModeloEquipos
 		}
 		else
 		{
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt -> close();
