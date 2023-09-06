@@ -22,6 +22,7 @@ $(".tablaLicencias").on("click", "button.btnEditarLicencia", function(){
 
 			$("#inputlicenciaUser").val(respuesta["usuario"]);
 			$("#inputlicenciaPass").val(respuesta["password"]);
+			$("#inputCantidad").val(respuesta["instalaciones"]);
 			$("#inputlicenciaPro").val(respuesta["productos"]);
 			$("#inputlicenciaid").val(respuesta["id"]);
 
@@ -35,6 +36,7 @@ $(".btn-nuevaLicencia").click( function(){
 	$(".btn-submitLicencia").html("Añadir");
 	$("#inputlicenciaTipo").val(0);
 	$("#inputlicenciaUser").val("");
+	$("#inputCantidad").val(1);
 	$("#inputlicenciaPass").val("");
 	$("#inputlicenciaPro").val("");
 	$("#inputlicenciaid").val("");
