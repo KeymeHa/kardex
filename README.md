@@ -22,7 +22,7 @@ Aplicativo web que cuenta con los siguientes módulos:
 	- Cortes y planillas.
 	- Asignación de correspondencia.
 
-# Plantilla
+# Template
 
 AdminLTE2 -> https://github.com/ColorlibHQ/AdminLTE
 
