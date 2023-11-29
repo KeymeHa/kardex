@@ -37,9 +37,9 @@ TCPDF -> https://github.com/tecnickcom/TCPDF
 
 Clona este repositorio https://github.com/KeymeHa/kardex.git 
 
-1 -  /modelos/conexion Modificar las credenciales de la base de datos.
-2 -  importa el archivo .sql en tu base de datos.
-3 -  /vistas/img/plantilla/ modifica el archivo logo.png
+1 -  En la ruta /modelos/conexion Modificar las credenciales de la base de datos.
+2 -  Importa el archivo migration.sql en tu base de datos.
+3 -  Dirigete a /vistas/img/plantilla/ modifica el archivo logo.png
 4 -  Usuario y contraseña por defecto:
 	Usuario: Admin
 	Contraseña: 1234567890
