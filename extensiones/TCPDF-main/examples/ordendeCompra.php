@@ -55,7 +55,7 @@ $bloque1 = <<<EOF
 
 	<table>
 			<tr>
-				<td style="width: 150px"><img src="images/logoEdubar.png"></td>
+				<td style="width: 150px"><img src="images/logo.PNG"></td>
 				<td style="text-align: center; width: 280px;"><br><br>ORDEN DE COMPRA</td>
 				<td style="width: 110px; font-size: 8px; border: 1px solid black">
 						<div style="width: 110px; text-align: center; border-bottom: 1px solid black">

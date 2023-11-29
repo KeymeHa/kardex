@@ -377,8 +377,8 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			var fechaFinal = urlParams.get('fechaFinal');
 			tablaElegida =  $('.tablaInsuRQReporte');
 			tablaAjax = 'reporteRqInsu';
-			columna = 4;
-			orden = "desc";
+			//columna = 4;
+			//orden = "desc";
 			
 			if(fechaInicial == null)
 			{
@@ -837,6 +837,34 @@ function paginaCargada(pagina, id, per, anioActual, dato, dato2){
 			tablaElegida =  $('.tablaEquipos');
 			variable = "?item=estado&valor=1&acc=1";
 			tablaAjax = 'equipos';
+		}
+		else if (pagina == 49)
+		{
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var idLicencia = urlParams.get('idLicencia');
+
+			if(idLicencia == null)
+			{
+			  variable = "?valor=null";
+			} else 
+			{
+			  variable = "?valor="+idLicencia+"&item=id_licencia";
+			}
+
+			tablaElegida =  $('.tablaEquipos');
+			tablaAjax = 'equipos';
+
+		}
+		else if(pagina == 50)
+		{
+			tablaElegida =  $('.tablaUsuarios');
+			tablaAjax = 'usuarios';
+		}
+		else if(pagina == 51)
+		{
+			tablaElegida =  $('.tablaDispositivos');
+			tablaAjax = 'dispositivos';
 		}
 		
 

@@ -26,7 +26,8 @@ class TablaEquipos
 			$clase = "";
 			$icono = "";
 			$titulo = "";
-
+			$acciones = "";
+			$nombre = "";
 
 			if ($equipos[$i]["estado"] == 0) 
 			{
@@ -41,16 +42,37 @@ class TablaEquipos
 				$titulo = "Devolver o marcar de baja";
 			}
 
+			$acciones = "";
+
 			$acciones = ($acc == null)? "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' nombre='".$equipos[$i]["nombre"]."' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn ".$clase." btn-bajaPC' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>": "<div class='btn-group'><div class='col-md-4'><button class='btn ".$clase." agregarPC RegresarBoton' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>" ;
+
 
 			$usuario = "No asignado";
 			$areaN = "No asignado";		
 
 			if ($equipos[$i]["id_responsable"] !=  0)
 			{
-				$usuario = ControladorUsuarios::ctrMostrarNombre("id", $equipos[$i]["id_usuario"]);
-				$area = ControladorAreas::ctrMostrarAreas("id", $equipos[$i]["id_area"]);
-				$areaN = $area["nombre"];
+				$usuario = ControladorUsuarios::ctrMostrarNombrea("id", $equipos[$i]["id_usuario"]);
+
+				if ($equipos[$i]["id_area"] != 0) 
+				{
+					$area = ControladorAreas::ctrMostrarAreas("id", $equipos[$i]["id_area"]);
+
+					$areaN = (isset($area["nombre"])) ? $area["nombre"] : "error";
+
+					
+				}
+
+				
+			}
+
+			if (!is_null($item) ) 
+			{
+				$nombre = ( $equipos[$i]["estado"] == 0 )? $equipos[$i]["nombre"]."<p class='text-red'> (No Activo)</p>":  $equipos[$i]["nombre"]."<p class='text-green'> (Activo)</p>" ;
+			}
+			else
+			{
+				$nombre = $equipos[$i]["nombre"];
 			}
 	    	
 	    	$arq = ControladorEquipos::ctrMostrarParametrosNombre("id", $equipos[$i]["id_arquitectura"], 1);
@@ -58,7 +80,7 @@ class TablaEquipos
 
 		    $dJson .='[
 	    		"'.($i+1).'",
-	    		"'.$equipos[$i]["nombre"].'",
+	    		"'.$nombre.'",
 	    		"'.$equipos[$i]["n_serie"].'",
 	    		"'.$arq.'",	
 	    		"'.$prop.'",	

@@ -49,7 +49,7 @@ class TablaPermisos
 		   {
 		   		$dJson .='[
 	    		"'.count($personas).'",
-	    		"'.$usuario.'",
+	    		"'.$usuario["nombre"].'",
 	    		"'.$areas["nombre"].'",
 	    		"'.$rq[0].'",
 	    		"'.$acciones.'"

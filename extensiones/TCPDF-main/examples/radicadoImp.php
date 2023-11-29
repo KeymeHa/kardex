@@ -63,9 +63,9 @@ class MYPDF extends TCPDF {
         
 
 
-       // $subtable = '<table border="1" ><tr align="center"><td><img src="images/logoEdubar.png" width="50"></td></tr><tr><td align="center"><img  src="images/FIRMA.jpg" width="60"></td></tr></table>';
+       // $subtable = '<table border="1" ><tr align="center"><td><img src="images/logo.PNG" width="50"></td></tr><tr><td align="center"><img  src="images/FIRMA.jpg" width="60"></td></tr></table>';
 
-        $subtable = '<table cellspacing="1" border="0" style="font-size:8px" ><tr><td><img src="images/logoEdubar.png"></td></tr><tr><td><img src="images/FIRMA.jpg"></td></tr></table>';
+        $subtable = '<table cellspacing="1" border="0" style="font-size:8px" ><tr><td><img src="images/logo.PNG"></td></tr><tr><td><img src="images/FIRMA.jpg"></td></tr></table>';
 
         $subtableU = '<table  align="center"><tr><td><span style="font-size:11px;">'.$corte.'</span> <span style="font-size:8px; color:rgb(37, 90, 142);">'.$radicado["radicado"].'</span> <span style="font-size:5px;">Fecha: '.$fecha.'</span></td></tr></table>';
 

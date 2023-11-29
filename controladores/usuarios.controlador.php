@@ -70,6 +70,7 @@ class ControladorUsuarios
 							$_SESSION["ultimoLogin"] = $respuesta["ultimo_login"];
 							//$_SESSION["idCategoria"] = 0;
 							$_SESSION["anioActual"] = date("Y");
+							$_SESSION["parametro"] = 0;
 							
 
 							$datos = array(	"ultimo_login" => $fechaActual,
@@ -199,7 +200,15 @@ class ControladorUsuarios
 	static public function ctrMostrarNombre($item, $valor)
 	{
 		$respuesta = ModeloUsuarios::MdlMostrarNombre($item, $valor);
-		return $respuesta["nombre"];
+		return $respuesta;
+	}
+
+	static public function ctrMostrarNombrea($item, $valor)
+	{
+		$respuesta = ModeloUsuarios::MdlMostrarNombre($item, $valor);
+
+
+		return (isset ($respuesta["nombre"])) ? $respuesta["nombre"]: "Usuario No Encontrado" ;
 	}
 
 	static public function ctrCrearUsuario()
@@ -272,7 +281,8 @@ class ControladorUsuarios
 								'usuario' => $_POST["nuevoUsuario"],
 								'password' => $encriptar,
 								'perfil' => $_POST["nuevoPerfil"],
-								'foto' => $ruta,
+								//'foto' => $ruta,
+								'dni' => $_POST["nuevoDNI"],
 								'correo' => $_POST["nuevoCorreo"]);
 
 
@@ -383,53 +393,13 @@ class ControladorUsuarios
 				$datos = array("nombre" => $_POST["editarNombre"],
 								"password" => $encriptar,
 								"perfil" => $_POST["editarPerfil"],
-								"foto" => $_POST["editarFoto"],
+								//"foto" => $_POST["editarFoto"],
 								"correo" => $_POST["editarCorreo"],
+								"dni" => $_POST["editarDNI"],
 								"usuario" => $_POST["editarUsuario"]
-
 								 );
-				try {
 
-					if ($_GET["ruta"] != "usuarios") 
-					{
-						if($usr == $_POST["editarUsuario"])
-						{
-							$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
-						}
-						else
-						{
-							$respuesta = "error";
-						}
-					}
-					else
-					{
-						$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
-					}
-
-					
-
-					
-					
-				} catch (Exception $e) {
-
-					echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "Error al Actualizar Usuario",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result) {
-									if (result.value) {
-
-									window.location = "'.$_GET["ruta"].'";
-
-									}
-								})
-
-					</script>';
-					
-				}
+				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
 
 
 				if($respuesta == "ok")

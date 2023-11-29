@@ -52,9 +52,9 @@ class AjaxParametros
 		echo json_encode($respuesta);
 	}
 
-	public function ajaxVerAcciones($idPerfil)
+	public function ajaxVerAcciones()
 	{
-		$respuesta = ControladorParametros::ctrMostrarAccionesPQR("accion_pqr", $idPerfil);
+		$respuesta = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
 		echo json_encode($respuesta);
 	}
 
@@ -112,10 +112,10 @@ if(isset($_POST["idPqr"]))
 	$add -> ajaxAddFiltroPQR($_POST["idPqr"], $_POST["idPer"], $_POST["sw"]);
 }
 
-if(isset($_POST["verAcciones"]) && isset($_POST["per"])  )
+if(isset($_POST["verAcciones"]))
 {
 	$accionespqr = new AjaxParametros();
-	$accionespqr -> ajaxVerAcciones($_POST["per"]);
+	$accionespqr -> ajaxVerAcciones();
 }
 
 if(isset($_POST["rutaApp"]))

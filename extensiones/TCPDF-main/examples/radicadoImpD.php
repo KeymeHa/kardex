@@ -68,7 +68,7 @@ $html = '
                          <li>El recibido de la correspondencia <b>NO significa la Aceptación,</b> sino para su revisión.</li>
                         </ul>
                     </p></td>
-        <td rowspan="1" align="center"><img width="80" style="display:inline-block;" src="images/logoEdubar.png"></td>
+        <td rowspan="1" align="center"><img width="80" style="display:inline-block;" src="images/logo.PNG"></td>
         <td align="center"><tcpdf method="write1DBarcode" params="'.$barcode.'" /><span style="font-size:12px; color:rgb(37, 90, 142);">'.$radicado["radicado"].'</span></td>
     </tr>
     <tr>

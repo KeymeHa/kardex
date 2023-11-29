@@ -27,7 +27,7 @@ class tablaStock
 		}
 		elseif($tipoS == "out")
 		{
-			$respuesta = ControladorRequisiciones::ctrMostrarRequisicionesRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
+			$respuesta = ControladorRequisiciones::ctrMostrarRequisicionesRango(null, null, $this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		}
 
 	    if ( count($respuesta) == 0) 
@@ -47,28 +47,31 @@ class tablaStock
     		$sw = 0;
     		$i = 0;
 
-    		for ( $j=0 ; $j < count($lista); $j++) 
-            { 
-              if ($lista[$j]["id"] == $valor && $sw == 0) 
-    			{
-    				if ($tipoS == "in") 
-    				{
-    					//cantidad ingresada
-    					array_push($array_can, $lista[$j]["can"]);
-    				}
-    				else
-    				{
-    					//entregado
-    					array_push($array_can, $lista[$j]["ent"]);
-    				}
+    		if(is_countable($lista) && count($lista) > 0 )
+    		{
+    			for ( $j=0 ; $j < count($lista); $j++) 
+	            { 
+	              if ($lista[$j]["id"] == $valor && $sw == 0) 
+	    			{
+	    				if ($tipoS == "in") 
+	    				{
+	    					//cantidad ingresada
+	    					array_push($array_can, $lista[$j]["can"]);
+	    				}
+	    				else
+	    				{
+	    					//entregado
+	    					array_push($array_can, $lista[$j]["ent"]);
+	    				}
 
-    				array_push($array_codigo, $value["codigoInt"]);
-	    			array_push($array_id, $value["id"]);
-	    			array_push($array_Fecha, $value["fecha"]);
-    				
-    				$sw == 1;
-    			}
-           } 
+	    				array_push($array_codigo, $value["codigoInt"]);
+		    			array_push($array_id, $value["id"]);
+		    			array_push($array_Fecha, $value["fecha"]);
+	    				
+	    				$sw == 1;
+	    			}
+	           } 
+    		}
 
 	    }
 
@@ -81,11 +84,11 @@ class tablaStock
 
 			if ($tipoS == "in") 
 			{
-				$acciones = "<div class='btn-group'><div class='col-md-4'><a href='index.php?ruta=verFactura&idFactura=".$array_id[$i]."'><button class='btn btn-success' title='Ver'><i class='fa fa-file-o'></i></button></a></div></div>";
+				$acciones = "<div class='btn-group'><div class='col-md-4'><a href='index.php?ruta=verFactura&idFactura=".$array_id[$i]."' target='_blank'><button class='btn btn-success' title='Ver'><i class='fa fa-file-o'></i></button></a></div></div>";
 			}
 			else
 			{
-				$acciones = "<div class='btn-group'><div class='col-md-4'><a href='index.php?ruta=verRequisicion&idRq=".$array_id[$i]."'><button class='btn btn-success' title='Ver'><i class='fa fa-file-o'></i></button></a></div></div>";
+				$acciones = "<div class='btn-group'><div class='col-md-4'><a href='index.php?ruta=verRequisicion&idRq=".$array_id[$i]."' target='_blank'><button class='btn btn-success' title='Ver'><i class='fa fa-file-o'></i></button></a></div></div>";
 			}
 
 			

@@ -253,73 +253,6 @@ class ControladorRadicados
 		//}//foreach ($radicados as $key => $value)
 	}
 
-
-	static public function ctrMostrarHistorialRegistros($id, $anioActual, $fechaInicial, $fechaFinal)
-	{
-		$mostrar = new ControladorRadicados;
-		$datos = $mostrar->ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, null, $anioActual, 0);
-
-         if (is_countable($datos) && count($datos) > 0 ) 
-         {
-         	$respuesta = [[]];
-
-         	foreach ($datos as $key => $value) 
-         	{
-         		$registrosPQR = ControladorRadicados::ctrAccesoRapidoRegistros($value["id_registro"], 0);
-				$radicado = ControladorRadicados::ctrMostrarRadicados("id", $registrosPQR["id_radicado"]);
-
-				if ($registrosPQR["dias_contados"] <= $registrosPQR["dias_habiles"]) 
-				{
-					$htmldias = $registrosPQR["dias_contados"]."/".$registrosPQR["dias_habiles"];
-				}
-				else
-				{
-					$htmldias = "<strong>".$registrosPQR["dias_contados"]."/".$registrosPQR["dias_habiles"]."</strong>";
-				}
-
-				$fecha_vencimiento  = ControladorParametros::ctrOrdenFecha($registrosPQR["fecha_vencimiento"], 0);
-
-				$estado = "";
-
-				$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $value["id_estado"]);
-
-				//si es por asignar
-				if ($value["id_estado"] == 5) 
-				{
-					$estado = "<button class='btn btn-".$estadoNombre["html"]." btn-agr' idReg='".$value["id"]."' nombre='".$usuarioNombre."' rad='".$radicado["radicado"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
-				}
-				else
-				{
-					$estado = "<button class='btn btn-".$estadoNombre["html"]."' title='".$estadoNombre["nombre"]."'>".$estadoNombre["nombre"]."</button>";
-				}
-
-				$acciones = "<div class='btn-group'><div class='col-lg-4 col-md-3'><button class='btn btn-success btnVerRegistro' idRegistro='".$registrosPQR["id"]."' title='Ver'><i class='fa fa-file-o'></i></button></div>";
-
-				if (!is_null($radicado["soporte"]) && $radicado["soporte"] != "") 
-				{
-					$acciones .= "<div class='col-lg-3 col-md-4 col-xs-2'><a href='".$radicado["soporte"]."'; target='_blank'><button class='btn btn-primary' title='Adjunto'><i class='fa fa-paperclip'></i></button></a></div>";
-				}
-
-				$acciones .= "</div>";
-
-				$respuesta[$key]["fecha"] = $radicado["fecha"];
-				$respuesta[$key]["radicado"] = $radicado["radicado"];
-				$respuesta[$key]["estado"] = $estado;
-				$respuesta[$key]["asunto"] = $radicado["asunto"];
-				$respuesta[$key]["id_remitente"] = $radicado["id_remitente"];
-				$respuesta[$key]["fecha_tramite"] = $value["fecha_tramite"];
-				$respuesta[$key]["fecha_vencimiento"] = $fecha_vencimiento;
-				$respuesta[$key]["htmldias"] = $htmldias;
-				$respuesta[$key]["acciones"] = $acciones;
-         	}
-         	return $respuesta;
-         }
-         else
-         {
-         	return null;
-         }
-	}//ctrMostrarHistorialRegistros($id, $anioActual, $fechaInicial, $fechaFinal)
-
 	static public function ctrRadicar()
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
@@ -1171,88 +1104,6 @@ class ControladorRadicados
 
 
 
-		//										   0,   0,        0,           null,      0,     0, "id",   $idRegistro
-	static public function ctrVerRegistrosPQREncargado($id, $fechaInicial, $fechaFinal, $es, $anio, $sw)
-	{
-		$query = "";
-		$tabla = "registropqrencargado";
-
-		if ($fechaInicial != null) 
-		{
-			$query.= ( !is_null($es) ) ? "AND " : "";
-
-			$validar = new ControladorRadicados;
-			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
-			{
-				return 0;
-			}
-		}
-		else
-		{
-			if ($anio != 0) 
-			{
-				$r = new ControladorRadicados;
-				$query = $r->anioActual($anio);
-				$query.= ( !is_null($es) ) ? " AND " : "";
-			}
-			else
-			{
-				if ( !is_null($es) ) 
-				{
-					$query .="WHERE ";
-				}
-				
-			}
-		}
-
-		if ( $es == "c1" ) 
-		{
-			$query.= "(id_estado = 1 or id_estado = 6)";
-
-		}elseif ( $es == "c2" ) {
-
-			$query.= "id_estado = 4";
-		}
-		elseif ( $es == "c3" ) {
-
-			$query.= "(id_estado = 2 or id_estado = 5)";
-		}
-		elseif ( $es == "c6" ) {//por asignar
-
-			$query.= "id_estado = 5";
-		}
-		elseif ( $es == "c4" ) 
-		{
-			$query.= "id_estado = 3";
-		}
-
-		if ($anio != 0) 
-		{
-			$query.= " AND id_usuario = ".$id;
-
-		}elseif ( $anio == 0 && is_null($es) ) {
-
-			
-			if (!is_null($fechaInicial)) 
-			{
-				$query.= " AND id_usuario = ".$id;
-			}
-			else{
-				$query.= "WHERE id_usuario = ".$id;
-			}
-
-		}
-		else{
-			$query.= " AND id_usuario = ".$id;
-		}
-
-		$query.= " AND sw = ".$sw;
-
-		return ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla, $query, $fechaInicial, $fechaFinal, null, null);
-	}//ctrVerRegistros($id, $per, $mod, $fI, $fF, $es)
-
-
-
 	static public function ctrVerRegistroPQR($id)
 	{
 		$query = "WHERE id = ".$id;
@@ -1490,8 +1341,6 @@ class ControladorRadicados
 				$idAccion = $_POST["accionReg"];
 				$observacion_usuario = ControladorParametros::ctrValidarCaracteres($_POST["observacionesReg"]);
 				$urlSW = "";
-				date_default_timezone_set('America/Bogota');
-				$fechaActual2 = date("Y-m-d H:i:s");
 
 				if (is_null($registro)) 
 				{
@@ -1505,7 +1354,7 @@ class ControladorRadicados
 					if( isset($_POST["fechaReg"]) && (!is_null($_POST["fechaReg"]) || !empty($_POST["fechaReg"])) )
 					{	$fechaActual = $_POST["fechaReg"];	}
 					else
-					{	$fechaActual = date('Y-m-d');	}
+					{	$fechaActual = date('d-m-Y');	}
 
 					if( isset($_POST["horaReg"]) && (!is_null($_POST["horaReg"]) || !empty($_POST["horaReg"])) )
 					{	$horaActual = $_POST["horaReg"];     }
@@ -1601,7 +1450,7 @@ class ControladorRadicados
 						if (count($encargados) > 0) 
 						{
 							$dJsonAccTemp = '"id":"'.$id_Encargado.'","nom":"'.$nombre_Encargado.'","idA":"'.$id_Area_Encargado.'"';
-							$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
+							$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual." ".$horaActual );
 						}//if (count($encargados) > 0) 
 						else
 						{
@@ -1641,91 +1490,10 @@ class ControladorRadicados
 
 					        break;
 					    case 3:
-
-					    	if (isset($_POST["devolId"]) && isset($_POST["devolNomEnc"]) && isset($_POST["devolIdArea"])) 
-					    	{
-					    		//id_Encargado para quien realiza la accion
-					    		//id_EncargadoD para quien se le devuelve el oficio
-
-					    		//buscar nombre
-					    		//buscar área
-
-					    		$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $idSESSION);
-
-					    		if (!isset($persona["id_usuario"])) 
-					    		{
-					    			$error = "No se encontro asociado a un área.";
-					    		}
-					    		else
-					    		{
-					    			$id_Area_EncargadoD = $persona["id_area"];
-									$nombre_EncargadoD = ControladorPersonas::ctrMostrarPersonas("id_usuario", $idSESSION);
-
-					    			$id_Encargado = $_POST["devolId"];
-									$nombre_Encargado = $_POST["devolNomEnc"];
-									$id_Area_Encargado = $_POST["devolIdArea"];
-
-							    	$dJsonAccTemp = '"id":"'.$idSESSION.'","nom":"'.$nombre_EncargadoD["nombre"].'","idA":"'.$id_Area_EncargadoD.'","idD":"'.$id_Encargado.'","nomD":"'.$nombre_Encargado.'","idAD":"'.$id_Area_Encargado.'"';
-									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
-
-									$dataRegE = array('sw' => 0, 
-													  'id_accion' => 3,
-													  'fecha_tramite' => date("Y-m-d H:i:s") );
-
-									$actualizarRegE = ModeloRadicados::mdlActualizarRegE("registropqrencargado", $_POST["idRegistro"] , $idSESSION, $dataRegE);
-					    		}
-					    	}
-					    	else
-					    	{
-					    		$error = 'se encontraron no se encontro al encargado para realizar esta acción.';
-					    	}
-
-						   
-						/*
-						devolId
-						devolIdArea
-						devolNomEnc
-						*/
 					    //Devuelto para Reasignación
 					        break;
 					    case 4:
 					    //Respondido por Evaluar
-					    	if (isset($_POST["devolId"]) && isset($_POST["devolNomEnc"]) && isset($_POST["devolIdArea"])) 
-					    	{
-					    		//id_Encargado para quien realiza la accion
-					    		//id_EncargadoD para quien se le devuelve el oficio
-
-					    		//buscar nombre
-					    		//buscar área
-
-					    		$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $idSESSION);
-
-					    		if (!isset($persona["id_usuario"])) 
-					    		{
-					    			$error = "No se encontro asociado a un área.";
-					    		}
-					    		else
-					    		{
-					    			$id_Area_EncargadoD = $persona["id_area"];
-									$nombre_EncargadoD = ControladorPersonas::ctrMostrarPersonas("id_usuario", $idSESSION);
-
-					    			$id_Encargado = $_POST["devolId"];
-									$nombre_Encargado = $_POST["devolNomEnc"];
-									$id_Area_Encargado = $_POST["devolIdArea"];
-
-							    	$dJsonAccTemp = '"id":"'.$idSESSION.'","nom":"'.$nombre_EncargadoD["nombre"].'","idA":"'.$id_Area_EncargadoD.'","idD":"'.$id_Encargado.'","nomD":"'.$nombre_Encargado.'","idAD":"'.$id_Area_Encargado.'"';
-									$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $_POST["idRegistro"], "fecha_asignacion", $fechaActual2 );
-									$dataRegE = array('sw' => 0, 
-													  'id_accion' => 4,
-													  'fecha_tramite' => date("Y-m-d H:i:s") );
-
-									$actualizarRegE = ModeloRadicados::mdlActualizarRegE("registropqrencargado", $_POST["idRegistro"] , $idSESSION, $dataRegE);
-					    		}
-					    	}
-					    	else
-					    	{
-					    		$error = 'se encontraron no se encontro al encargado para realizar esta acción.';
-					    	}
 					        break;
 					    case 5:
 					    //Respondido y Enviado
@@ -1830,28 +1598,7 @@ class ControladorRadicados
 					}
 						$dJsonAcc .= ',"fe":"'.$fechaActual.'","hr":"'.$horaActual.'","acc":"'.$idAccion.'","da":{'.$dJsonAccTemp.'},"obs":"'.$observacion_usuario.'","sop":"'.$soporte.'","idS":"'.$idSESSION.'","sw":"1"}]';
 
-					//si es asignación o reasignación que es el mismo id 1, insertará un registro para que el
-					//encargado de esa área pueda llevar su gestión al oficio
-					if ($idAccion == 1) 
-					{
-						$tabla2 = "registropqrencargado";
-               	 		$respuesta2 = ModeloRadicados::mdlmostrarRegistrosPQREncargado($tabla2, null, null, null, 8, $_SESSION["id"]);
-
-						if (!isset($respuesta2["id_usuario"]) ) 
-		                {
-		                  $datos2 = array( 
-		                  'id_registro' => $_POST["idRegistro"],
-		                  'id_usuario' => $id_Encargado,
-		                  'fecha' => $fechaActual2,
-		                  'sw' => 1,
-		                  'id_estado' => $estadoPQR);
-		                  $respuesta3 = ModeloRadicados::mdlInsertarRegistrosPQREncargado($tabla2, $datos2);
-		                }
-
-					}
-
 					$datos = array( 
-					'id_accion' => $idAccion,
 					'id_usuario' => $id_Encargado,
 					'id_area' => $id_Area_Encargado,
 					'id_estado' => $estadoPQR,
@@ -1860,7 +1607,6 @@ class ControladorRadicados
 
 					$respuesta = ModeloRadicados::mdlAcualizarTrazabilidad($tabla, $datos);
 
-					
 					if($respuesta == "ok")
 					{
 
@@ -1949,15 +1695,15 @@ class ControladorRadicados
 	}
 
 
-	static public function ctrCuadrantesRegistros($id, $perfil, $anio, $fechaInicial, $fechaFinal)
+	static public function ctrCuadrantesRegistros($perfil, $anio, $fechaInicial, $fechaFinal)
 	{
 		if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
 	    {
-	    	$estados_pqr = ControladorParametros::ctrContarEstados(null, 7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	    	$estados_pqr = ControladorParametros::ctrContarEstados(7, $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 	    }
 	    else
 	    {
-	      $estados_pqr = ControladorParametros::ctrContarEstados($id, $_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+	      $estados_pqr = ControladorParametros::ctrContarEstados($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
 	    }
 
 	    $porcentaje = [[]];
@@ -2084,7 +1830,7 @@ class ControladorRadicados
 
 					$resultado["estado"] = $estadoPQR;
 
-					$dJsonAccTemp = '"id":"'.$registro["id_usuario"].'","nom":"'.$usuarioNombre.'","idA":"'.$registro["id_area"].'"';
+					$dJsonAccTemp = '"id":"'.$registro["id_usuario"].'","nom":"'.$usuarioNombre["nombre"].'","idA":"'.$registro["id_area"].'"';
 
 					$actualizar = ModeloRadicados::mdlAcualizarItemTrazabilidad($tabla, $idRegistro, "fecha_asignacion", $fechacompleta );
 
@@ -2137,33 +1883,9 @@ class ControladorRadicados
 			$tabla = "registropqr";
 			$count  = 0;
 			//el limite es 4, haciendo referencia de los 4 cuadrantes
-
-			$estados = array(  1 => "(".$tabla.".id_estado = 1 or ".$tabla.".id_estado = 6)",
-							   2 => $tabla.".id_estado = 4",
-							   3 => $tabla.".id_estado = 2",
-							   4 => $tabla.".id_estado = 3" );
-
 			for ($i=1; $i <= 4; $i++) 
 			{ 
-
-				if (!is_null($fechaInicial)) 
-				{
-					$estados[$i] = "AND ".$estados[$i];
-				}
-				else
-				{
-					if ($anio != "") 
-					{
-						$estados[$i] = $anio." AND ".$estados[$i]; 
-					}
-					else
-					{
-						$estados[$i] = "WHERE ".$estados[$i];
-					}
-				}
-
-
-				$consulta = ModeloRadicados::mdlContarAreaRegistros($estados[$i], $tabla, $anio, $fechaInicial, $fechaFinal);
+				$consulta = ModeloRadicados::mdlContarAreaRegistros($i, $tabla, $anio, $fechaInicial, $fechaFinal);
 
 				if (is_countable($consulta) && count($consulta) > 0 ) 
 				{
@@ -2224,48 +1946,6 @@ class ControladorRadicados
 		}	
 
 	}//ctrContarAsignaciones
-
-	static public function ctrNotificacionesEncargado($idUsuario)
-	{
-
-		$tabla = "registropqrencargado";
-		$respuesta = ModeloRadicados::mdlNotificacionesEncargado($tabla, $idUsuario);
-
-		if (isset($respuesta["COUNT(id_usuario)"])) 
-		{
-			return $respuesta["COUNT(id_usuario)"];
-		}
-		else
-		{
-			return 0;
-		}
-
-	}
-
-	static public function ctrContarPorArea($id, $idPerfil, $anio, $fechaInicial, $fechaFinal)
-	{
-
-		$tabla = "registropqr";
-		$query = "";
-
-		if ($fechaInicial != null) 
-		{
-			$validar = new ControladorRadicados;
-			if ( !$validar->validateDate($fechaInicial , 'Y-m-d') && !$validar->validateDate($fechaFinal , 'Y-m-d') ) 
-			{
-				return 0;
-			}
-		}
-		else
-		{
-			$r = new ControladorRadicados;
-			$query = $r->anioActual($anio);
-		}
-
-		$respuesta = ModeloRadicados::mdlContarAreaRegistros($query, $tabla, $anio, $fechaInicial, $fechaFinal);
-
-		return $respuesta;
-	}
 	
 }
 

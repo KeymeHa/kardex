@@ -33,7 +33,7 @@ class ControladorPersonas
 	{
 		$tabla = "personas";
 		$res = ModeloPersonas::mdlMostrarPersonas($tabla, $item, $valor);
-		return $res["id_area"];
+		return ( isset($res["id_area"]) )?$res["id_area"]: 0;
 	}
 
 	static public function ctrPersonaPredeterminada($id_area)

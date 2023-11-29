@@ -820,10 +820,18 @@ class ControladorParametros
 
 	static public function ctrValidarCaracteres($cadenaIn)
 	{
-		$comillas = array('"', "'");
-		$cadenaOut = str_replace($comillas, "&quot", $cadenaIn);
-		$cadenaOut = trim($cadenaOut, " \t.");
-		return $cadenaOut;
+
+		if (empty($cadenaIn)) 
+		{
+			return $cadenaIn;
+		}
+		else
+		{
+			$comillas = array('"', "'");
+			$cadenaOut = str_replace($comillas, "&quot", $cadenaIn);
+			$cadenaOut = trim($cadenaOut, " \t.");
+			return $cadenaOut;
+		}
 	}
 
 	static public function ctrValidarCaracteresEspeciales($cadenaIn)
@@ -1214,71 +1222,6 @@ class ControladorParametros
 		return $respuesta;
 	}
 
-
-	static public function ctrMostrarAccionesPQR($tabla, $idPerfil)
-	{
-        $consulta = ModeloParametros::mdlmostrarRegistros($tabla, null, null);
-
-        $respuesta = [[]];
-
-        $sw = [];
-
-        if (is_countable($consulta) && count($consulta)) 
-        {
-          foreach ($consulta as $key => $value) 
-          {
-            if ( !is_null($value["sw"]) ) 
-            {
-              $sw2 = json_decode($value["sw"], true);
-
-              if (is_countable($sw2)) 
-              {
-                for ($i=0; $i < count($sw2); $i++) 
-                { 
-                  if ($sw2[$i]["id"] == $idPerfil) 
-                  {
-                    array_push($sw, $value["id"]);
-                  }
-                }
-              }
-
-              
-            }//if ( is_null($value["sw"]) ) 
-          }//foreach ($consulta as $key => $value) 347081
-        }//if (is_countable($consulta) && count($consulta)) 
-        else
-        {
-          return 0;
-        }
-
-        if (!is_null($sw)) 
-        {                 
-          for ($i=0; $i < count($sw); $i++) 
-          { 
-            $x = 0;
-            $sw3 = 0;
-            while ( $x < count($consulta) && $sw3 == 0 ) 
-            {
-              if ($sw[$i] == $consulta[$x]["id"]) 
-              {
-                $respuesta[$i]["id"] = $consulta[$x]["id"];
-                $respuesta[$i]["nombre"] = $consulta[$x]["nombre"];
-                $sw3 = 1;
-              }
-              else{
-                $x++;
-              }
-            }
-          }
-         return $respuesta;
-        }
-        else
-        {
-          return 0;
-        }
-
-	}//ctrMostrarAccionesPQR
-
 	static public function ctrVerRutaApp()
 	{
 		$respuesta = ModeloParametros::mdlVerRutaApp("parametros");
@@ -1346,7 +1289,7 @@ class ControladorParametros
 
 	static public function ctrmostrarRegistroEspecifico($tabla, $item1, $valor, $item2)
 	{
-		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor, $item2);
+		$respuesta = ModeloParametros::mdlmostrarRegistrosEspecifico($tabla, $item1, $valor);
 		return $respuesta[$item2];
 	}
 
@@ -1545,7 +1488,7 @@ class ControladorParametros
 
 	}
 
-	static public function ctrContarEstados($id, $id_perfil, $anio, $fechaInicial, $fechaFinal)
+	static public function ctrContarEstados($id_perfil, $anio, $fechaInicial, $fechaFinal)
 	{
 		$query = "";
 		$validar = new ControladorParametros;
@@ -1568,26 +1511,18 @@ class ControladorParametros
 			$query .= ($anio == 0) ? 'WHERE' : "WHERE YEAR(registropqr.fecha) = '".$anio."' AND";
 		}
 
-		if (is_null($id)) 
+		if ($traer_filtro["id_pqr"] != null) 
 		{
-			if ($traer_filtro["id_pqr"] != null) 
+			$id_pqr = json_decode($traer_filtro["id_pqr"], true);
+			foreach ($id_pqr as $key => $value) 
 			{
-				$id_pqr = json_decode($traer_filtro["id_pqr"], true);
-				foreach ($id_pqr as $key => $value) 
-				{
-					$query .= " registropqr.id_pqr = ".$value["id"]." or";
-				}
-
-				$query = substr($query, 0 ,-2);
-
+				$query .= " registropqr.id_pqr = ".$value["id"]." or";
 			}
-		}else
-		{
-			$query.= " id_usuario = ".$id;
-		}
 
-		$respuesta = ModeloParametros::mdlContarEstados($query, $fechaInicial, $fechaFinal);
-		
+			$query = substr($query, 0 ,-2);
+
+			$respuesta = ModeloParametros::mdlContarEstados($query, $fechaInicial, $fechaFinal);
+		}
 
 		return $respuesta;
 

@@ -20,9 +20,7 @@ class AjaxUsuarios
 	}
 
 	public $validarUsuario;
-	public function ajaxValidarUsuario(){
-		$item = "usuario";
-		$valor = $this->validarUsuario;
+	public function ajaxValidarUsuario($item, $valor){
 		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 		echo json_encode($respuesta);
 	}#validarUsuario
@@ -43,28 +41,28 @@ class AjaxUsuarios
 	
 }
 
-/*
-
-	OBJETOS EDITAR USUARIO
-
- */
+$usuarioVal = new AjaxUsuarios();
 
 if(isset($_POST["idUsuario"]))
 {
-	$editar = new AjaxUsuarios();
-	$editar -> idUsuario = $_POST["idUsuario"];
-	$editar -> ajaxEditarUsuario();
+	$usuarioVal -> idUsuario = $_POST["idUsuario"];
+	$usuarioVal -> ajaxEditarUsuario();
 }
 
 if(isset( $_POST["validarUsuario"]))
-{	$valUsuario = new AjaxUsuarios();
-	$valUsuario -> validarUsuario = $_POST["validarUsuario"];
-	$valUsuario -> ajaxValidarUsuario();}
+{
+	$usuarioVal -> ajaxValidarUsuario("usuario", $_POST["validarUsuario"]);
+}
 
-if(isset($_POST["activarUsuario"])){
-	$activarUsuario = new AjaxUsuarios();
-	$activarUsuario -> activarUsuario = $_POST["activarUsuario"];
-	$activarUsuario -> activarId = $_POST["activarId"];
-	$activarUsuario -> ajaxActivarUsuario();
 
+if(isset( $_POST["validarDNI"]))
+{	
+	$usuarioVal -> ajaxValidarUsuario("dni", $_POST["validarDNI"]);
+}
+
+if(isset($_POST["activarUsuario"]))
+{
+	$usuarioVal -> activarUsuario = $_POST["activarUsuario"];
+	$usuarioVal -> activarId = $_POST["activarId"];
+	$usuarioVal -> ajaxActivarUsuario();
 }

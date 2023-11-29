@@ -46,46 +46,48 @@ class TablaRequisiciones
 
            $insumo = json_decode($value["insumos"], true);
 
-
-           for ($j=0; $j < count($insumo); $j++) 
-           { 
-              if (isset($insumo[$j]["ent"]) && $insumo[$j]["ent"] != 0) 
-              {
-                if($array_id == null)
-                     {
-                      array_push($array_id, $insumo[$j]["id"]);
-                      array_push($array_des, $insumo[$j]["des"]);
-                      array_push($array_stock, $insumo[$j]["ent"]);
-                      $stock+= $insumo[$j]["ent"];
-                      array_push($array_can, 1);
-                     }
-                     else
-                     {
-
-
-                       $sw = 0;
-
-                        for ($i=0; $i < count($array_des); $i++) 
-                        { 
-                          if ($array_id[$i] == $insumo[$j]["id"]) 
-                          {
-                            $stock+= $insumo[$j]["ent"];
-                            $array_stock[$i]+=$insumo[$j]["ent"];
-                            $array_can[$i]+=1;
-                            $sw = 1;
-                          }
-                        }
-                       if ($sw != 1) 
+           if (is_countable($insumo)) 
+           {
+              for ($j=0; $j < count($insumo); $j++) 
+             { 
+                if (isset($insumo[$j]["ent"]) && $insumo[$j]["ent"] != 0) 
+                {
+                  if($array_id == null)
                        {
-                          $stock+= $insumo[$j]["ent"];
-                          array_push($array_id, $insumo[$j]["id"]);
-                          array_push($array_des, $insumo[$j]["des"]);
-                          array_push($array_stock, $insumo[$j]["ent"]);
-                          array_push($array_can, 1);
+                        array_push($array_id, $insumo[$j]["id"]);
+                        array_push($array_des, $insumo[$j]["des"]);
+                        array_push($array_stock, $insumo[$j]["ent"]);
+                        $stock+= $insumo[$j]["ent"];
+                        array_push($array_can, 1);
                        }
-                     }
-                 } //todos los insumos de una requisicion     
-              }              
+                       else
+                       {
+
+
+                         $sw = 0;
+
+                          for ($i=0; $i < count($array_des); $i++) 
+                          { 
+                            if ($array_id[$i] == $insumo[$j]["id"]) 
+                            {
+                              $stock+= $insumo[$j]["ent"];
+                              $array_stock[$i]+=$insumo[$j]["ent"];
+                              $array_can[$i]+=1;
+                              $sw = 1;
+                            }
+                          }
+                         if ($sw != 1) 
+                         {
+                            $stock+= $insumo[$j]["ent"];
+                            array_push($array_id, $insumo[$j]["id"]);
+                            array_push($array_des, ControladorParametros::ctrValidarCaracteres($insumo[$j]["des"]) );
+                            array_push($array_stock, $insumo[$j]["ent"]);
+                            array_push($array_can, 1);
+                         }
+                       }
+                   } //todos los insumos de una requisicion     
+                } 
+           }//countable
          }
 
           for ($i=0; $i < count($array_id); $i++)

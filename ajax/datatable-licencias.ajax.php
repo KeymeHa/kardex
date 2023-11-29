@@ -21,7 +21,7 @@ class TablaLicencias
 		
 			$contador = ControladorEquipos::ctrContarEnEquipos("id_licencia" ,$licencias[$i]["id"], 0);
 
-			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-warning btnEditarLicencia' idLicencia='".$licencias[$i]["id"]."' title='Editar Licencia' data-toggle='modal' data-target='#modalLicencia'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarLicencia' idLicencia='".$licencias[$i]["id"]."' nombre='".$licencias[$i]["usuario"]."' title='Eliminar Licencia'><i class='fa fa-close'></i></button></div></div>";
+			$acciones = "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btnVerLicencia' title='Ver equipos con licencia' idLicencia='".$licencias[$i]["id"]."' ><i class='fa fa-newspaper-o'></i></button></div><div class='col-md-4'><button class='btn btn-warning btnEditarLicencia' idLicencia='".$licencias[$i]["id"]."' title='Editar Licencia' data-toggle='modal' data-target='#modalLicencia'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn btn-danger btnEliminarLicencia' idLicencia='".$licencias[$i]["id"]."' nombre='".$licencias[$i]["usuario"]."' title='Eliminar Licencia'><i class='fa fa-close'></i></button></div></div>";
 
 			$fecha = new DateTime($licencias[$i]["fecha_creacion"]);
 

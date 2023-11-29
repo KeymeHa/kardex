@@ -61,6 +61,12 @@ class AjaxEquipos
 		echo json_encode($respuesta);
 	}
 
+	public static function actaOcultar($id)
+	{
+		$respuesta = ControladorEquipos::ctrOcultarActa($id);
+		echo json_encode($respuesta);
+	}
+
 }//AjaxEquipos
 
 if (isset($_POST["idLicencia"])) 
@@ -75,10 +81,17 @@ if (isset($_POST["valor"]) && !isset($_POST["addParam"]) && !isset($_POST["datos
 	$mostrar -> mostrarParametros($_POST["tipo"], $_POST["valor"]);
 }
 
+
 if (isset($_POST["idActa"])) 
 {
 	$mostrar = new AjaxEquipos();
 	$mostrar -> mostarActas($_POST["item"], $_POST["idActa"]);
+}
+
+if (isset($_POST["idActaVer"])) 
+{
+	$mostrar = new AjaxEquipos();
+	$mostrar -> actaOcultar($_POST["idActaVer"]);
 }
 
 if (isset($_POST["n_serie"])) 

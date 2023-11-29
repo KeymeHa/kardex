@@ -30,6 +30,11 @@ $(".tablaLicencias").on("click", "button.btnEditarLicencia", function(){
 	});
 });
 
+$(".tablaLicencias").on("click", "button.btnVerLicencia", function(){
+	var idLicencia = $(this).attr("idLicencia");
+	window.location = "index.php?ruta=verLicencia&idLicencia="+idLicencia;
+})
+
 $(".btn-nuevaLicencia").click( function(){
 
 	$("h4.modal-title").html("Añadir nueva licencia");
@@ -41,6 +46,43 @@ $(".btn-nuevaLicencia").click( function(){
 	$("#inputlicenciaPro").val("");
 	$("#inputlicenciaid").val("");
 });
+
+$("#inputlicenciaUser").change(function() {
+
+
+	var usrLicencia = $(this).val();
+
+	var datos = new FormData();
+	datos.append("idLicencia", usrLicencia);
+	datos.append("item", "usuario");
+
+	$(".alert").remove();
+
+	$.ajax({
+
+		url:"ajax/equipos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){	
+
+			if(respuesta["usuario"])
+			{
+				$("#inputlicenciaUser").parent().after('<div class="alert alert-warning alert-dismissible">'+
+				'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa  fa-info"></i> ¡Ya existe este usuario de licencia.!'+
+				'</div>');
+				$("#inputlicenciaUser").val("");
+	    		ocultarAlert();
+    		}	
+		}
+	});
+
+
+});
+
 
 $(".tablaLicencias").on("click", "button.btnEliminarLicencia", function(){
 

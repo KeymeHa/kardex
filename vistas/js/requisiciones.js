@@ -44,7 +44,7 @@ $(".tablaRqs").on("click", "button.btnEliminarRq", function(){
 	swal({
 		type: "warning",
 		title: "¡Estas Seguro de Eliminar Esta Requisición",
-		text: "Esta acción no podra revertirse.",
+		text: "Esta acción no podrá revertirse.",
 		showCancelButton: true,
 		showConfirmButton: true,
 		confirmButtonText: "Eliminar",

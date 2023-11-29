@@ -83,6 +83,13 @@ class ControladorProyectos
 		return $respuesta;
 	}
 
+	static public function ctrMostrarProyectosa($item, $valor)
+	{
+		$tabla = "proyectos";
+		$respuesta = ModeloProyectos::mdlMostrarProyectosa($tabla, $item, $valor);
+		return (isset ($respuesta["nombre"])) ? $respuesta["nombre"]: "Proyecto No Encontrado" ;
+	}
+
 	static public function ctrMostrarNombreProyectos($item, $valor)
 	{
 		$tabla = "proyectos";

@@ -37,7 +37,7 @@
         $fechaFinal = $_GET["fechaFinal"];
       }
 
-      $porcentaje = ControladorRadicados::ctrCuadrantesRegistros($_SESSION["id"], $_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
+      $porcentaje = ControladorRadicados::ctrCuadrantesRegistros($_SESSION["perfil"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
     /*
     echo ' 
         <?php 
@@ -78,7 +78,7 @@
 
 
     //Por Asignar
-    if ( isset($porcentaje[5]) && $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11 ) 
+    if ( isset($porcentaje[5]) ) 
     {
       echo '<div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -155,7 +155,9 @@
       </div><!--col-lg-6-->
 
     </div>
-        
+
+     
+
             <?php
 
             if ($_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 7) 
@@ -163,7 +165,6 @@
 
               $contarPorArea = ControladorRadicados::ctrContarAsignaciones($_SESSION["anioActual"], $fechaInicial, $fechaFinal); 
               $tcuadrante = [];
-              $tcuadrante[0] = 0;
               $tt = 0;
               if (!is_null($contarPorArea) && is_countable($contarPorArea) && count($contarPorArea) > 0 ) 
               {
@@ -188,12 +189,11 @@
                 }
 
                 
-           
+            
 
-              echo '
-        <div class="box box-success">
+              echo '<div class="box box-success">
       <div class="box-header">
-        <h3 class="box-title">Resumen Asignaciones por áreas</h3>
+        <h3 class="box-title">Resumen Asignaciones</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
@@ -211,9 +211,9 @@
               <th class="bg-gray" style="text-align: center;" title="Total">Total</th>
             </tr>
             <tr>
-              <th id="th-r" style="text-align: center" title="Vencidas">'.$tcuadrante[4].'</th>
-              <th id="th-y" style="text-align: center" title="Pendientes">'.$tcuadrante[3].'</th>
-              <th id="th-rd" style="text-align: center" title="Extemporaneas">'.$tcuadrante[2].'</th>
+              <th id="th-r" style="text-align: center" title="Vencidas">'.$tcuadrante[3].'</th>
+              <th id="th-y" style="text-align: center" title="Pendientes">'.$tcuadrante[2].'</th>
+              <th id="th-rd" style="text-align: center" title="Extemporaneas">'.$tcuadrante[4].'</th>
               <th id="th-g" style="text-align: center" title="Resueltas">'.$tcuadrante[1].'</th>
               <th id="th-gr" style="text-align: center" title="Total">'.$tt.'</th>
             </tr>
@@ -233,11 +233,11 @@
 
                  echo '<tr>
                     <td class="td_area" idA="'.$value["id"].'"><a href="#">'.$value["nombre"].'</a></td>
-                    <td class="td_areaCua" idA="'.$value["id"].'" es="c4" title="'.$value["4"].' Vencidas en '.$value["nombre"].'"><a href="#">'.$value["4"].'</a></td>
-                    <td class="td_areaCua" idA="'.$value["id"].'" es="c3" title="'.$value["3"].' Pendientes en '.$value["nombre"].'"><a href="#">'.$value["3"].'</a></td>
-                    <td class="td_areaCua" idA="'.$value["id"].'" es="c2" title="'.$value["2"].'  Extemporaneas en '.$value["nombre"].'"><a href="#">'.$value["2"].'</a></td>
-                    <td class="td_areaCua" idA="'.$value["id"].'" es="c1" title="'.$value["1"].'  Resueltas en '.$value["nombre"].'"><a href="#">'.$value["1"].'</a></td>
-                    <td class="td_areaCuaTotal" idA="'.$value["id"].'" title="Total '.$total.' en '.$value["nombre"].'">'.$total.'</td>
+                    <td title="'.$value["3"].' Vencidas en '.$value["nombre"].'">'.$value["3"].'</td>
+                    <td title="'.$value["2"].' Pendientes en '.$value["nombre"].'">'.$value["2"].'</td>
+                    <td title="'.$value["4"].'  Extemporaneas en '.$value["nombre"].'">'.$value["4"].'</td>
+                    <td title="'.$value["1"].'  Resueltas en '.$value["nombre"].'">'.$value["1"].'</td>
+                    <td title="Total '.$total.' en '.$value["nombre"].'">'.$total.'</td>
                  </tr>';
                 }
 
@@ -265,7 +265,7 @@
 
       <div class="box-header with-border">
         <h3 class="box-title">
-          Registros <?php if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';}else{ echo 'vigentes.';} ?>
+          Registros <?php if ( $_SESSION["perfil"] == 7 ) { echo ' de PQR'; }elseif( $_SESSION["perfil"] == 8 ){ echo ' de Remisiones';} ?>
         </h3>
       </div>
       <div class="box-body div-tablaRegistros">
@@ -278,11 +278,8 @@
            <th>Estado</th>
            <th>Asunto</th>
            <th>Remitente</th>
-           <?php if ( $_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11 || $_SESSION["perfil"] == 8) 
-           {
-            echo '<th>Área</th>
-                  <th>Encargado</th>';
-           } ?>
+           <th>Área</th>
+           <th>Encargado</th>
            <th>Fecha Respuesta</th>
            <th>Fecha Vencimiento</th>
            <th>días</th> 
@@ -293,74 +290,6 @@
 
       </div>
     </div><!--box box-success-->
-
-    <?php
-
-    if ($_SESSION["perfil"] == 7 || $_SESSION["perfil"] == 11) 
-    {
-     include("reportes/oficiosAreaspqr.php");
-     include("reportes/oficiospqr.php");
-    }
-    else
-    {
-
-
-      $hisRegistros = ControladorRadicados::ctrMostrarHistorialRegistros($_SESSION["id"], $_SESSION["anioActual"], $fechaInicial, $fechaFinal);
-
-      if (!is_null($hisRegistros)) 
-      {
-        echo '<div class="box box-success">
-                <div class="box-header">
-                  <h3 class="box-title">Historial</h3>
-                </div>
-                <div class="box-body">
-                  
-                <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-                <thead>
-                 <tr>
-                   <th>Fecha Radicado</th>
-                   <th># Radicado</th>
-                   <th>Estado</th>
-                   <th>Asunto</th>
-                   <th>Remitente</th>
-                   <th>Fecha Tramite</th>
-                   <th>Fecha Vencimiento</th>
-                   <th>días</th> 
-                   <th style="width: 120px">Acciones</th>
-                 </tr> 
-                </thead>
-                <tbody>';
-
-                foreach ($hisRegistros as $key => $value) 
-                {
-                  echo '<tr>
-                          <td>'.$value["fecha"].'</td>
-                          <td>'.$value["radicado"].'</td>
-                          <td>'.$value["estado"].'</td>
-                          <td>'.$value["asunto"].'</td>
-                          <td>'.$value["id_remitente"].'</td>
-                          <td>'.$value["fecha_tramite"].'</td>
-                          <td>'.$value["fecha_vencimiento"].'</td>
-                          <td>'.$value["htmldias"].'</td>
-                          <td>'.$value["acciones"].'</td>
-                        </tr>';
-                }//foreach
-
-                echo '
-                </tbody>
-                </table>
-
-                </div>
-              </div>';
-      }// if (!is_null($hisRegistros)) 
-
-    }//else ($_SESSION["perfil"] != 7 && $_SESSION["perfil"] != 11) 
-
-
-    ?>
-
-
-
 
   </section>
 </div>
@@ -403,22 +332,12 @@
                       <select class="form-control" id="select_accion" required name="accionReg">
                         <?php
 
-                        $accion_pqr = ControladorParametros::ctrMostrarAccionesPQR("accion_pqr", $_SESSION["perfil"]);
-
-                        if (!is_countable($accion_pqr)) 
+                        $accion_pqr = ControladorParametros::ctrmostrarRegistros("accion_pqr", null, null);
+                        echo '<option value="">Seleccione una Acción</option>';
+                        foreach ($accion_pqr as $key => $value) 
                         {
-                          echo '<option value="">No hay Acciones Disponibles</option>';
+                          echo '<option value="'.$value["id"].'">0'.$value["id"].' - '.$value["nombre"].'</option>';
                         }
-                        else
-                        {
-                          echo '<option value="">Seleccione una Acción</option>';
-                          foreach ($accion_pqr as $key => $value) 
-                          {
-                            echo '<option value="'.$value["id"].'">'.($key+1).'-'.$value["nombre"].'</option>';
-                          }
-                        }
-
-                        
 
                         ?>
                       </select>
@@ -438,10 +357,7 @@
                     <div class="row div-progress-bar"></div>
                   </div>
             </div><!--row-->
-
-            <?php if($_SESSION["perfil"] == 7)
-            {
-              echo ' <div class="row">
+            <div class="row">
               <div class="col-md-6">
                   <p>Fecha</p>
                   <input type="date" class="form-control" name="fechaReg" id="fechaReg" value="" />
@@ -450,17 +366,15 @@
                   <p>Hora</p>
                   <input type="time" id="horaReg" name="horaReg" class="form-control timepicker" value=""/>
               </div>
-            </div><div class="row">
+            </div>
+
+            <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                <div class="panel">Detalles</div>
               </div>
             </div>
-          </div>';
-            }
-
-            ?>
-            
+          </div>
 
             <div class="row">
                <div id="contenido-modal-accion" class="col-md-8"></div>
@@ -472,7 +386,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-               <div class="panel">Soporte o documento para adjuntar al avance del tramite.</div>
+               <div class="panel">Constancia</div>
                   <input type="file" name="editarArchivo">
               </div>
             </div>

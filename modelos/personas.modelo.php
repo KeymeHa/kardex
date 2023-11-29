@@ -27,9 +27,15 @@ class ModeloPersonas
 
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
-				$stmt -> execute();
+				if ($stmt -> execute()) 
+				{
+					return $stmt -> fetch();
+				}
+				else
+				{
+					return 0;
+				}
 
-				return $stmt -> fetch();
 			}
 
 		}

@@ -412,7 +412,7 @@ class ControladorFacturas
 				swal({
 
 					type: "success",
-					title: "¡Factura Agregada!",
+					title: "¡Remisión Agregada!",
 					showConfirmButton: true,
 					confirmButtonText: "Cerrar"
 

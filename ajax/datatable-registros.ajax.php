@@ -99,7 +99,7 @@ class TablaRegistros
 							$estadoNombre = ControladorParametros::ctrmostrarRegistros("estado_pqr", "id", $registrosPQR[$i]["id_estado"]);
 
 							$areaNombre = ControladorAreas::ctrMostrarNombreAreas("id", $registrosPQR[$i]["id_area"]);
-							$usuarioNombre = ControladorUsuarios::ctrMostrarNombre("id", $registrosPQR[$i]["id_usuario"]);
+							$usuarioNombre = ControladorUsuarios::ctrMostrarNombrea("id", $registrosPQR[$i]["id_usuario"]);
 
 							$estado = "";
 

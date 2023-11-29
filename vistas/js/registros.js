@@ -201,11 +201,6 @@ $("div.div-tablaRegistros").on('click', '.btnVerRegistro', function() {
 	window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
 });
 
-$("table.tablas").on('click', '.btnVerRegistro', function() {
-  var idRegistro = $(this).attr("idRegistro");
-  window.location = "index.php?ruta=verRegistro&idRegistro="+idRegistro;
-});
-
 $("div.div-tablaRegistros").on('click', '.btnFastRegistro', function() 
 {
 
@@ -291,7 +286,7 @@ $('#select_accion').change(function() {
 
     //devuelto para reasignación (El encargado de recibir el oficio, menciono que no es de su competencia, 
     //El encargado de jurídica recibe el oficio y lo remite a la nueva área encargada de responderlo
-    if (valor == 1) 
+    if (valor == 1 || valor == 3) 
     {
         $("#contenido-modal-detalles").append('<input type="hidden" name="listadoEngargadoReg" id="listadoEngargadoReg" value>'+
             '<div class="form-group nuevoencargadoAgregado"></div>');
@@ -319,61 +314,11 @@ $('#select_accion').change(function() {
         tablaRemitentesExternos();
         paginaCargada(37, 0, 0, 0, 1, 0);
     }
-    else if(valor == 3 || valor == 4)
+    
+    //Respondido por evaluar
+    else if(valor == 4)
     {
-        var datos = new FormData();
-        datos.append("devolucion", 7);
-
-          $.ajax({
-
-            url:"ajax/radicados.ajax.php",
-            method: "POST",
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function(respuesta){
-
-                var msnUno = "";
-                var msnDos = "";
-
-                if (valor == 3) 
-                {
-                    msnUno = "realizar la devolución";
-                    msnDos = "para su reasignación";
-                }
-                else
-                {
-                    msnUno = "enviar la posible respuesta";
-                    msnDos = "para la revisión de la posible respuesta";
-                }
-
-              if (respuesta["nombreArea"] != null) 
-              {
-                $("#contenido-modal-accion").append('<blockquote>'+
-                  '<p>Realizar devolución</p>'+
-                  '<small>Se regresará el oficio a <cite title="Source Title">'+respuesta["nombre"]+'</cite> del área '+respuesta["nombreArea"]+', '+msnDos+'.</small>'+
-                  '</blockquote><input type="hidden" name="devolId" value="'+respuesta["id"]+'">'+
-                  '<input type="hidden" name="devolIdArea" value="'+respuesta["idArea"]+'">'+
-                  '<input type="hidden" name="devolNomEnc" value="'+respuesta["nombre"]+'">');
-              }
-              else
-              {
-                $("#contenido-modal-accion").append('<div class="alert alert-danger alert-dismissible">'+
-                  '<h4><i class="icon fa fa-ban"></i> Alerta!</h4>'+
-                  'Ha Ocurrido un error al buscar un encargado para '+msnUno+', contacte al administrador.'+
-                  '</div>');
-                //devolId = devolución Id del encargado
-                //devolIdArea = devolución id del área a la que pertenece el encargado
-                //devolNomEnc = devolución nombre del encargado
-              }
-
-
-            }
-
-          });
-
+        
     }
     //Respondido y Enviado (Se genero respuesta por el encargado de 
     //gestionar la respuesta y fue enviado al supervisor para su aprobación)
@@ -900,42 +845,3 @@ $("table.tabla").on('click', 'td.td_area', function()
   paginaCargada(39, idUser, per, anio, null, idA);
 
 })
-
-//cuando se da clic en una area
-$("table.tabla").on('click', 'td.td_area', function() 
-{
-  var idA = $(this).attr("idA");
-  mostrarSoloArea(idA);
-})
-
-//cuando se da clic en el total
-$("table.tabla").on('click', 'td.td_areaCuaTotal', function() 
-{
-  var idA = $(this).attr("idA");
-  mostrarSoloArea(idA);
-})
-
-$("table.tabla").on('click', 'td.td_areaCua', function() 
-{
-  var idA = $(this).attr("idA");
-  var es = $(this).attr("es");
-  var idUser = $("#inputVar").attr("idUser");
-  var per = $("#inputVar").attr("per");
-  var anio = $("#inputVar").attr("anio");
-
-  validarTablaRegistro();
-  aparecerTablaRegistros();
-  paginaCargada(39, idUser, per, anio, es, idA);
-
-})
-
-function mostrarSoloArea (idA)
-{
-  var idUser = $("#inputVar").attr("idUser");
-  var per = $("#inputVar").attr("per");
-  var anio = $("#inputVar").attr("anio");
-
-  validarTablaRegistro();
-  aparecerTablaRegistros();
-  paginaCargada(39, idUser, per, anio, null, idA);
-}

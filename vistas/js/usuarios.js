@@ -29,7 +29,46 @@ $("#nuevoUsuario").change(function(){
 	});
 })
 
+$("#nuevoDNI").change(function(){
 
+	validarInfoUsr($(this));
+})
+
+$("#editarDNI").change(function(){
+
+	validarInfoUsr($(this));
+})
+
+function validarInfoUsr(elemento)
+{
+	var DNI = $(elemento).val();
+	var datos = new FormData();
+	datos.append("validarDNI", DNI);
+
+	$(".alert").remove();
+
+	console.log("datos ", datos);
+
+	$.ajax({
+
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta)
+		{
+			if(respuesta)
+			{
+				$("#nuevoDNI").parent().after('<div class="alert alert-warning"><i class="fa  fa-info"></i> Ya Existe el DNI.</div>');
+	    		$("#nuevoDNI").val("");
+	    		ocultarAlert();
+			}	
+		}
+	});
+}
 
 $("#nuevoPassword").change(function(){
 
@@ -57,7 +96,7 @@ function validarLargoPass(pass, id)
 /*=============================================
 ELIMINAR USUARIO
 =============================================*/
-$(".btnEliminarUsuario").click(function(){
+$(".tablaUsuarios").on("click", "button.btnEliminarUsuario", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
 	var nombreUsuario = $(this).attr("nombreUsuario");
@@ -127,7 +166,7 @@ $(".btnEliminarUsuario").click(function(){
 
 })
 
-$(".tablas").on("click", ".btnEditarUsuario", function(){
+$(".tablaUsuarios").on("click", "button.btnEditarUsuario", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
 	var datos = new FormData();
@@ -151,6 +190,7 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 			$("#actualPassword").val(respuesta["password"]);
 			$("#editarFoto").val(respuesta["foto"]);
 			$("#editarCorreo").val(respuesta["correo"]);
+			$("#editarDNI").val(respuesta["dni"]);
 			$("#editarPerfil").append(
 			'<option value="'+respuesta["perfil"]+'">'+respuesta["nomperfil"]+'</option>'
 			);
@@ -187,7 +227,7 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 
 })
 
-$(".tablas").on("click", ".btnActivarUsr", function(){
+$(".tablaUsuarios").on("click", "button.btnActivarUsr", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
 	var estadoUsuario = $(this).attr("estadoUsuario");

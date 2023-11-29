@@ -78,12 +78,12 @@
 
       if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo ) 
       {
-        $valoresPerfil = array( 0 => [ 'tit' => 'Pendientes',  
-                                        'col' => 'yellow' ]/*,
+        $valoresPerfil = array( 0 => [ 'tit' => 'Pendientes' , 
+                                        'col' => 'yellow' ],
                                 1 => [ 'tit' => 'Aprobadas' , 
                                         'col' => 'green' ]  ,
                                 2 => [ 'tit' => 'Rechazadas' , 
-                                        'col' => 'red' ]*/ );
+                                        'col' => 'red' ] );
 
         echo '<h3>Requisiciones</h3>';
 
@@ -107,7 +107,7 @@
          $swmod = 1;
       }
 
-      unset($verModulo);/*
+      unset($verModulo);
 
       $idmodulo = 7;
       $verModulo = ControladorAsignaciones::ctrVerAsignado($_SESSION["id"], $idmodulo);
@@ -146,8 +146,8 @@
         </div>
       </div>';
          $swmod = 1;
-      }*/
-/*
+      }
+
       if ( $swmod == 0 && $_SESSION["perfil"] == 4) 
       {
         echo '<br><div class="col-lg-6 col-sm-6 col-md-6">
@@ -161,7 +161,7 @@
               </div>
 
               </div>';
-      }*/
+      }
 
       ?>
         

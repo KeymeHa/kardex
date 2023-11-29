@@ -31,7 +31,7 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
        
       </div>
       <div class="box-body">  
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">        
+       <table class="table table-bordered table-striped dt-responsive tablaUsuarios" width="100%">        
         <thead>        
          <tr>          
            <th style="width:10px">#</th>
@@ -41,93 +41,9 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
            <th>Perfil</th>
            <th>Estado</th>
            <th>Último login</th>
-           <?php 
-             if($_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 1)
-              {
-                echo'<th>Acciones</th>';
-              }
-           ?>
-           
+           <th>Acciones</th>
          </tr> 
         </thead>
-        <tbody>
-          <?php
-          $item = null;
-          $valor = null;
-          $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
-         foreach ($usuarios as $key => $value){  
-
-            $perfil = ControladorParametros::ctrVerPerfil($value["perfil"]);
-
-            echo ' <tr>
-                <td>'.($key+1).'</td>
-                <td>'.$value["nombre"].'</td>
-                <td>'.$value["usuario"].'</td>
-                <td><img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail" width="40px"></td>
-                <td>'.$perfil["perfil"].'</td>';
-            if($value["estado"] != 0)
-            {echo '<td><button class="btn btn-success btn-xs btnActivarUsr" estadoUsuario="0" idUsuario="'.$value["id"].'">Activado</button></td>';}else{
-              echo '<td><button class="btn btn-danger btn-xs btnActivarUsr" estadoUsuario="1" idUsuario="'.$value["id"].'">Desactivado</button></td>';}
-
-              if($value["ultimo_login"] != "0000-00-00 00:00:00")
-              { 
-                echo '<td>'.$value["ultimo_login"].'</td>';
-              }else
-              {
-                 echo '<td>Sin Inicio de Sesión</td>';
-              }
-
-
-              if ($_SESSION["perfil"] == 1) 
-              {
-                echo ' 
-                    <td>
-                        <div class="btn-group">
-                          <div class="col-md-4">
-                            <button class="btn btn-warning btnEditarUsuario"  title="Editar Usuario" data-toggle="modal" data-target="#modalEditarUsuario" idUsuario="'.$value["id"].'">
-                              <i class="fa fa-pencil"></i>
-                            </button>
-                          </div>
-                          <div class="col-md-4">   
-                             <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" nombreUsuario="'.$value["nombre"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'" accionId="'.$_SESSION["id"].'"><i class="fa fa-user-times"></i></button>
-                          </div>
-                        </div>
-                    </td>';
-              }
-              else
-              {
-                if($value["id"] == 1)
-                {
-                  echo '<td></td>';
-                }
-                else
-                {
-
-                  if($_SESSION["perfil"] == 2 || $_SESSION["perfil"] == 1)
-                  {
-                    echo ' 
-                    <td>
-                        <div class="btn-group">
-                          <div class="col-md-4">
-                            <button class="btn btn-warning btnEditarUsuario"  title="Editar Usuario" data-toggle="modal" data-target="#modalEditarUsuario" idUsuario="'.$value["id"].'">
-                              <i class="fa fa-pencil"></i>
-                            </button>
-                          </div>
-                          <div class="col-md-4">   
-                             <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" nombreUsuario="'.$value["nombre"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'" accionId="'.$_SESSION["id"].'"><i class="fa fa-times"></i></button>
-                          </div>
-                        </div>
-                    </td>';
-                  }               
-                }
-              }
-              
-              
-
-            echo'</tr>';                
-          }
-          ?>
-        </tbody>
        </table>
       </div>
     </div>
@@ -162,6 +78,13 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                 <input type="text" class="form-control input-lg" name="nuevoNombre" placeholder="Ingresar nombre" required>
                 <input type="hidden" name="idUsr" value="<?php echo $_SESSION['id'];?>" required>
+              </div>
+            </div>
+
+            <div class="form-group">         
+              <div class="input-group">          
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <input type="text" class="form-control input-lg" id="nuevoDNI" name="nuevoDNI" placeholder="Ingresar Identificación" required>
               </div>
             </div>
 
@@ -281,6 +204,15 @@ if($_SESSION["perfil"] == "3" || $_SESSION["perfil"] == "4")
                 <input type="hidden" class="form-control input-lg" name="editarId" id="editarId" required readonly>
               </div>
             </div>
+
+            <div class="form-group">       
+              <div class="input-group">          
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" class="form-control input-lg" name="editarDNI" placeholder="Editar Identificación" id="editarDNI" required>
+              </div>
+            </div>
+
+            
 
             <!-- ENTRADA PARA EL USUARIO -->
              <div class="form-group">         

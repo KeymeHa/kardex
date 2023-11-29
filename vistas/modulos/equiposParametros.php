@@ -78,6 +78,12 @@
                   <button class="btn btn-warning btn-param" sw="8"><i class="fa fa-pencil"></i> Editar</button>
                 </td>
               </tr>
+              <tr>
+                <td>Dispositivos e Impresoras</td>
+                <td>
+                  <button class="btn btn-warning btn-param" sw="9"><i class="fa fa-pencil"></i> Editar</button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

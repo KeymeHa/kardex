@@ -222,7 +222,7 @@
                <div class="form-group">              
                 <div class="input-group">               
                   <span class="input-group-addon"><i class="fa fa-code"></i></span> 
-                  <input type="number" class="form-control input-lg" name="nuevoContenido" placeholder="Cantidad Individual" autocomplete="off" title="Ej: un paquete contiene 6 unidades de un articulo" required>
+                  <input type="number" class="form-control input-lg" name="nuevoContenido" placeholder="Cantidad Individual" autocomplete="off" title="Ej: un paquete contiene 6 unidades de un articulo" value="1" required>
                 </div>
               </div>
 

@@ -46,7 +46,7 @@ class TablaRequisiciones
 	    {
            	$item = "id";
             $valor =  $requisiciones[$i]["id_persona"];
-            //$usuario = ControladorUsuarios::ctrMostrarNombre($item, $valor);
+            $usuario = ControladorUsuarios::ctrMostrarNombre($item, $valor);
             $valor = $requisiciones[$i]["id_area"];
             $area = ControladorAreas::ctrMostrarAreas($item, $valor);
 

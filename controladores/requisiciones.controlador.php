@@ -42,7 +42,7 @@ class ControladorRequisiciones
 
 		return $respuesta;
 	
-	}//ctrMostrarFacturas   Mercado$456
+	}//ctrMostrarFacturas
 
 	static public function ctrMostrarRequisicionesId($item, $valor, $id, $anio)
 	{
@@ -53,7 +53,211 @@ class ControladorRequisiciones
 
 		return $respuesta;
 	
-	}//ctrMostrarRequisicionesId   Mercado$456
+	}//ctrMostrarRequisicionesId
+
+
+	static public function ctrContarInsumoAreaPersona( $sw0, $fechaInicial, $fechaFinal, $anio, $idInsumo )
+	{
+
+		$r = new ControladorRequisiciones;
+		$requisiciones = $r -> ctrMostrarRequisicionesRango(null, null, $fechaInicial, $fechaFinal, $anio);
+
+		$arrayInsumo = [[]];
+		$arrayId = [];
+		$count = 0;
+
+	    foreach ($requisiciones as $key => $value) 
+	    {
+    		$lista = json_decode($value["insumos"], true);
+
+    		$sw = 0;
+    		$j = 0;
+
+    		if(is_countable($lista) && count($lista) > 0 )
+    		{
+    			while ( $j < count($lista) && $sw == 0) 
+    			{
+    				if ($lista[$j]["id"] == $idInsumo) 
+	    			{
+
+	    				if ( $lista[$j]["ent"] > 0 ) 
+	    				{
+		    				if( empty($arrayId) )
+	    					{
+		    					if ($sw0 == 1) 
+		    					{
+		    						$area = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
+			    					$arrayId[$count] = $value["id_area"] ;
+			  						$arrayInsumo[$count]["nombre"] = $area["nombre"] ;
+		    					}
+		    					else
+		    					{
+		    						$usuario = ControladorUsuarios::ctrMostrarNombre("id", $value["id_persona"]);
+		    						$arrayId[$count] = $value["id_persona"] ;
+			  						$arrayInsumo[$count]["nombre"] = $usuario["nombre"] ;
+		    					}
+
+		    					
+		    					$arrayInsumo[$count]["ent"] = $lista[$j]["ent"] ;
+		    					$count++;
+		    				}
+		    				else
+		    				{
+
+		    					$clave = 0;
+		    					$sw2 = 0;
+		    					$i = 0;
+
+		    					do {
+
+		    						if ($sw0 == 1) 
+		    						{
+		    							if( $value["id_area"] === $arrayId[$i] ){
+			    							$clave = $i;
+			    							$sw2 = 1;
+			    						}
+		    						}
+		    						else
+		    						{
+		    							if( $value["id_persona"] === $arrayId[$i] ){
+			    							$clave = $i;
+			    							$sw2 = 1;
+			    						}
+		    						}
+
+		    						
+
+		    						$i++;
+
+		    					} while ( $i < count($arrayId) && $sw2 == 0 );
+
+	    						//echo in_array($idInsumo, $arrayId);
+		    					if ( $sw2 == 1 ) 
+		    					{
+		    						$arrayInsumo[$clave]["ent"] = $arrayInsumo[$clave]["ent"] + $lista[$j]["ent"] ;
+								}
+								else
+								{
+
+									if ($sw0 == 1) 
+		    						{
+		    							$area = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
+				    					$arrayId[$count] = $value["id_area"] ;
+				  						$arrayInsumo[$count]["nombre"] = $area["nombre"] ;	
+		    						}
+		    						else
+		    						{
+		    							$usuario = ControladorUsuarios::ctrMostrarNombre("id", $value["id_persona"]);
+		    							$arrayId[$count] = $value["id_persona"] ;
+				  						$arrayInsumo[$count]["nombre"] = $usuario["nombre"] ;
+		    						}
+									
+			    					$arrayInsumo[$count]["ent"] = $lista[$j]["ent"] ;
+			    					$count++;
+								}
+		    				}
+
+		    				$sw == 1;
+	    				}// > 0
+
+	    			}
+
+    				$j++;
+
+    			}//while
+
+    		}//is countable
+
+	    }//foreach
+
+	    if ( empty($arrayInsumo) )
+	    {
+	    	return 0;
+	    }
+	    else
+	    {
+	    	return $arrayInsumo;
+	    }
+
+	}//ctrContarInsumoArea
+
+	static public function ctrContarInsumoPersona( $idPersona, $fechaInicial, $fechaFinal, $anio )
+	{
+
+		$r = new ControladorRequisiciones;
+		$requisiciones = $r -> ctrMostrarRequisicionesRango("id_persona", $idPersona, $fechaInicial, $fechaFinal, $anio);
+
+		//tomar cada insumo
+
+		$arrayInsumo = [[]];
+		$arrayId = [];
+		$count = 0;
+
+	    foreach ($requisiciones as $key => $value) 
+	    {
+    		$lista = json_decode($value["insumos"], true);
+
+    		$sw = 0;
+    		$j = 0;
+
+    		if(is_countable($lista) && count($lista) > 0 )
+    		{
+    			while ( $j < count($lista) ) 
+    			{
+    				if ( $lista[$j]["ent"] > 0 ) 
+    				{
+    					if (empty($arrayId)) 
+    					{
+    						if (array_key_exists("ent", $lista[$j]) && array_key_exists("des", $lista[$j])) 
+    						{
+    							$arrayId[$count] = $lista[$j]["id"] ;
+		    					$arrayInsumo[$count]["ent"] = $lista[$j]["ent"];
+		    					$arrayInsumo[$count]["des"] = $lista[$j]["des"];
+		    					$count++;
+    						}
+    					}
+    					else{
+    						$clave = 0;
+	    					$sw2 = 0;
+	    					$i = 0;
+
+	    					while ( $i < count($arrayId) && $sw2 === 0 ) 
+	    					{
+	    						if ($arrayId[$i] === $lista[$j]["id"]) {
+	    							$arrayInsumo[$i]["ent"] += $lista[$j]["ent"];
+	    							$sw2 = 1;
+	    						}
+
+	    						$i++;
+	    					}
+
+	    					if ($sw2 === 0) 
+	    					{
+	    						if (array_key_exists("ent", $lista[$j]) && array_key_exists("des", $lista[$j])) 
+	    						{
+	    							$arrayId[$count] = $lista[$j]["id"] ;
+			    					$arrayInsumo[$count]["ent"] = $lista[$j]["ent"];
+			    					$arrayInsumo[$count]["des"] = $lista[$j]["des"];
+			    					$count++;
+	    						}
+	    					}
+    					}
+    				}
+    				$j++;
+    			}
+    		}//is countable
+
+	    }//foreach
+
+	    if ( empty($arrayInsumo) )
+	    {
+	    	return 0;
+	    }
+	    else
+	    {
+	    	return $arrayInsumo;
+	    }
+	}
 
 	static public function ctrContarRequisicionesAppr($anio)
 	{
@@ -87,12 +291,24 @@ class ControladorRequisiciones
 	
 	}//ctrMostrarRequisicionesRangoId
 
-	static public function ctrMostrarRequisicionesRango($fechaInicial, $fechaFinal, $anio)
+	static public function ctrMostrarRequisicionesRango($columna, $idFiltro, $fechaInicial, $fechaFinal, $anio)
 	{
 		$tabla = "requisiciones";
 		$r = new ControladorRequisiciones;
 		$anio = $r->anioActual($anio);
-		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio);
+
+		if (!is_null($columna) && is_null($fechaInicial)) 
+		{
+			$anio .= " AND ".$columna." = ".$idFiltro;
+		}
+		elseif (!is_null($columna) && !is_null($fechaInicial)) {
+			$idFiltro = " AND ".$columna." = ".$idFiltro;
+		}
+		else {
+			$idFiltro = "";
+		}
+
+		$respuesta = ModeloRequisiciones::mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio, $idFiltro);
 
 		return $respuesta;
 	
@@ -237,32 +453,37 @@ class ControladorRequisiciones
              {
                $insumo = json_decode($value["insumos"], true);
 
-               for ($j=0; $j < count($insumo); $j++) 
-               { 
-                  if($array_id == null)
-                   {
-                    array_push($array_id, $insumo[$j]["id"]);
-                    $stock+= $insumo[$j]["ent"];
-                   }
-                   else
-                   {
-                     $sw2 = 0;
+               if (is_countable($insumo)) 
+               {
+	               for ($j=0; $j < count($insumo); $j++) 
+	               { 
+	                  if($array_id == null)
+	                   {
+	                    array_push($array_id, $insumo[$j]["id"]);
+	                    $stock+= $insumo[$j]["ent"];
+	                   }
+	                   else
+	                   {
+	                     $sw2 = 0;
 
-                      for ($i=0; $i < count($array_id); $i++) 
-                      { 
-                        if ($array_id[$i] == $insumo[$j]["id"]) 
-                        {
-                          $stock+= $insumo[$j]["ent"];
-                          $sw2 = 1;
-                        }
-                      }
-                     if ($sw2 != 1) 
-                     {
-                     	$stock+= $insumo[$j]["ent"];
-                        array_push($array_id, $insumo[$j]["id"]);
-                     }
-                   }
-               }             
+	                      for ($i=0; $i < count($array_id); $i++) 
+	                      { 
+	                        if ($array_id[$i] == $insumo[$j]["id"]) 
+	                        {
+	                          $stock+= $insumo[$j]["ent"];
+	                          $sw2 = 1;
+	                        }
+	                      }
+	                     if ($sw2 != 1) 
+	                     {
+	                     	$stock+= $insumo[$j]["ent"];
+	                        array_push($array_id, $insumo[$j]["id"]);
+	                     }
+	                   }
+	               }
+               }//countable
+
+             
              }
 
          	if($sw == 3 || $sw == 4)
@@ -317,7 +538,7 @@ class ControladorRequisiciones
 			$persona = ControladorPersonas::ctrMostrarIdPersona("id_usuario", $_POST["id_persona"]);
 			$fechaSol = "";
 
-			$fechaAp = "";
+			$fechaAp = null;
 			
 			if ($perfil == 3) 
 			{
@@ -329,7 +550,7 @@ class ControladorRequisiciones
 			}
 			else
 			{
-				$fechaAp = "0000-00-00 00:00:00";
+				$fechaAp = null;
 				$fechaSol = date("Y-m-d H:i:s");
 				$aprobado = 0;
 				$tipoob = "observacionE";
@@ -352,7 +573,7 @@ class ControladorRequisiciones
 							'aprobado' => $aprobado,
 							'gen' => $gen);
 
-			$respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos, $tipoob);
+            $respuesta = ModeloRequisiciones::mdlRegistrarRequisicion($tabla, $datos, $tipoob);
 
 			if( $respuesta == "ok")
 			{
@@ -371,7 +592,10 @@ class ControladorRequisiciones
 
 						$res = ControladorInsumos::ctrMostrarInsumos($item, $valor);
 
-						$nuevoStock = intval($res["stock"]) - intval($value["ent"]);
+						$ent = (isset($value["ent"]))? intval($value["ent"]) : 0 ;
+
+
+						$nuevoStock = intval($res["stock"]) - $ent;
 						$precioCompra = intval($res["precio_compra"]);
 
 						$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
@@ -777,7 +1001,7 @@ class ControladorRequisiciones
 									"valorNew" => "",
 									"id_usr" => $id_usr
 									 );
-					$respuesta = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
+					//$respuesta = ModeloHistorial::mdlInsertarHistorial("historial", $datos);
 
 					$respuesta = ModeloRequisiciones::mdlBorrarRq("requisiciones", $idRq);
 

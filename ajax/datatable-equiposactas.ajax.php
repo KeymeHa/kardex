@@ -33,7 +33,7 @@ class TablaActasEquipos
 		    $dJson .='[
 	    		"'.($i+1).'",
 	    		"'.$actas[$i]["codigo"].'",
-	    		"'.$fecha->format('m-d-Y').'",
+	    		"'.$fecha->format('d-m-Y').'",
 	    		"'.$contar."/".$actas[$i]["cantidad"].'",
 	    		"'.$tipo.'",
 	    		"'.$acciones.'"

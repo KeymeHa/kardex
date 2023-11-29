@@ -85,6 +85,19 @@ class ModeloProyectos
 		$stmt = null;
 	}
 
+	static public function mdlMostrarProyectosa($tabla, $item, $valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE $item = :$item");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+	}
+
 	static public function mdleditarProyecto($tabla, $datos){
 	
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, descripcion = :descripcion, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin WHERE id = :id");

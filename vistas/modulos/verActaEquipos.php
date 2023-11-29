@@ -26,9 +26,7 @@
 ?>
 
 <div class="content-wrapper">
-   <?php
-    include "bannerConstruccion.php";
-  ?>
+
   <section class="content-header">
     <h1>    
       <?php echo $acta["codigo"]; ?> 
@@ -45,7 +43,31 @@
       <div class="box-header"><button class="btn btn-success" onclick="history.back()">
           <i class="fa fa-arrow-left"></i>
           Regresar
-        </button></div>
+        </button>
+
+        <button class="btn btn-success btn-exportPC" data-toggle="modal" data-target="#modalExportPC"><i class="fa fa-share-square-o"></i>
+          Exportar Equipos
+        </button>
+
+        <?php
+
+        if ($acta["ver"] == 1) 
+        {
+          echo '<button class="btn btn-success btn-verActaE" ver="'.$acta["ver"].'" idActa="'.$acta["id"].'">
+          <i class="fa fa-square-o"></i>
+          Mostrar en Equipo
+        </button>';# code...
+        }else
+        {
+          echo '<button class="btn btn-default btn-verActaE" ver="'.$acta["ver"].'" idActa="'.$acta["id"].'">
+          <i class="fa fa-square"></i>
+          No Mostrar en Equipo
+        </button>';# code...
+        }
+
+        ?>
+
+      </div>
       <div class="box-body">
 
         <div class="col-sm-4 col-xs-4">
@@ -96,9 +118,16 @@
 
     <div class="box box-success">
     	<div class="box-body">
-    		<embed src="vistas/actas<?php echo $acta['file']; ?>" width="100%" height="700px"  type="application/pdf">
+        <?php
+
+        echo( file_exists($acta['file']))? '<embed src="'.$acta['file'].'" width="100%" height="700px"  type="application/pdf">' : "Archivo no encontrado." ;
+
+        ?>
+    		
     	</div>
     </div>
 
   </section>
 </div>
+
+<?php include("modal/equipo.php");  include("modal/modalExportPC.php");?>

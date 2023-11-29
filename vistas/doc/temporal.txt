@@ -1,0 +1,1 @@
+[{"selectIdProE":"4","selectIdArqE":"3","selectIdMarcaE":"9","selectIdModeloE":"39","selectIdCPUE":"10","selectIdCPUModE":"37","selectIdCPUGenE":"0","inputCPUFreE":"2","inputRamE":"4","inputSSDE":"255","inputHDDE":"0","inputGPUE":"0","inputGPUModE":"0","inputGPUCapE":"0","selectSOE":"15","selectSOVerE":"17","textObservacionesE":""}]

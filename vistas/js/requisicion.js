@@ -158,7 +158,7 @@ $(".formularioNuevaRq").on("change", "input.nuevaCantidadPedida", function(){
 
 })
 
-$(".formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
+$("form.formularioNuevaRq").on("change", "input.nuevaCantidadEntregada", function(){
 
 	if(Number($(this).val()) > Number($(this).attr("stock")))
 	{
@@ -263,22 +263,21 @@ function listarProductosRq(){
 	var listaInsumosRq = [];
 	var descripcionRq = $(".nuevaDescripcionInsumo");
 	var pedidaRq = $(".nuevaCantidadPedida");
-
-	if( $(".nuevaCantidadEntregada").length > 0 )
-	{
-		var entregadaRq = $(".nuevaCantidadEntregada").val();
-	}
-	else
-	{
-		var entregadaRq = 0;
-	}
-
+	var entregadaRq = $(".nuevaCantidadEntregada");
 
 	for(var i = 0; i < descripcionRq.length; i++){
+
+		var ent = 0
+
+		if ( $(entregadaRq[i]).val() !== undefined ) 
+		{
+			ent = $(entregadaRq[i]).val();
+		}
+
 		listaInsumosRq.push({ "id" : $(descripcionRq[i]).attr("idInsumo"), 
 							  "des" : $(descripcionRq[i]).val(),
 							  "ped" : $(pedidaRq[i]).val(),
-							  "ent" : entregadaRq})
+							  "ent" : ent})
 	}
 
 	console.log(listaInsumosRq);

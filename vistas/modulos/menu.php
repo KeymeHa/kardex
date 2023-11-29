@@ -101,7 +101,7 @@
 				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'inventario' || $_GET['ruta'] == 'insumos' || $_GET['ruta'] == 'categorias' || $_GET['ruta'] == 'verCategoria' ){ echo 'active';} }
 
 				echo '"><a href="inventario">
-						<i class="fa fa-shopping-cart"></i>
+						<i class="fa fa-archive"></i>
 						<span>Inventario</span>
 						<span class="pull-right-container">
 							<i class="fa fa-angle-left pull-tight"></i>
@@ -112,11 +112,9 @@
 						<li><a href="insumos"><i class="fa fa-briefcase"></i>Insumos</a></li>
 					</ul>
 
-				</li>
+				</li>';
 
-				<li class="treeview ';
-
-				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'generaciones' || $_GET['ruta'] == 'pedidos' || $_GET['ruta'] == 'cotizaciones' || $_GET['ruta'] == 'ordendecompras' || $_GET['ruta'] == 'facturas'){ echo 'active';} }
+				/*if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'generaciones' || $_GET['ruta'] == 'pedidos' || $_GET['ruta'] == 'cotizaciones' || $_GET['ruta'] == 'ordendecompras'){ echo 'active';} }
 
 				echo '"><a href="#">
 						<i class="fa fa-file-text-o"></i>
@@ -129,47 +127,78 @@
 						<!--<li><a href="pedidos"><i class="fa fa-file-text"></i>Pedidos</a></li>-->
 						<li><a href="cotizaciones"><i class="fa fa-file-text"></i>Cotizaciones</a></li>
 						<li><a href="ordendecompras"><i class="fa fa-file-text"></i>Ordenes de Compra</a></li>
-						<li><a href="facturas"><i class="fa fa-file-text"></i>Remisiones</a></li>
 					</ul>
-				</li>
+				</li>';*/
 
-				<li class="treeview ';
 
-				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'requisiciones' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea' || $_GET['ruta'] == 'proyectos'){ echo 'active';} }
+				if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 ) 
+				{
+					echo '<li class="treeview ';
+
+				if( isset($_GET['ruta']) ){ if($_GET['ruta'] == 'areas' || $_GET['ruta'] == 'personas' || $_GET['ruta'] == 'areas' || $_GET['ruta'] == 'verArea' || $_GET['ruta'] == 'proyectos'){ echo 'active';} }
 
 				echo '"><a href="#">
-						<i class="fa fa-file-text-o"></i>
-						<span>Requisiciones</span>
-
+						<i class="fa fa-child"></i>
+						<span>Dependencias</span>
 						<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-tight"></i>';
-
-						$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr($_SESSION["anioActual"]);
-
-						if($solicitud != 0)
-				        {
-				        	echo '<span class="label label-warning pull-right">'.$solicitud.'</span>';
-						}
-
-						
-
-				echo '	</span>
-
+						<i class="fa fa-angle-left pull-tight"></i>
 					</a>
 					<ul class="treeview-menu">';
 
-						if ($_SESSION["perfil"] == 1 ||  $_SESSION["perfil"] == 2 ) 
-						{
+						
 							echo '<li><a href="areas"><i class="fa fa-users"></i>Areas</a></li>';
-						}
-
+						
 						
 						echo '<li><a href="proyectos"><i class="fa fa-user"></i>Proyectos</a></li>
 						<li><a href="personas"><i class="fa fa-user"></i>Personas</a></li>
-						<li><a href="requisiciones"><i class="fa fa-file-text"></i>Requisiciones</a>
 						</li>
 					</ul>
 
+				</li>
+
+				<li ';
+
+				}
+				else
+				{
+					echo '<li ';
+				}
+
+				if(isset($_GET["ruta"])){ if($_GET["ruta"] == "facturas" || $_GET["ruta"] == "facturas" ){ echo'class="active"'; } }
+
+				echo '><a href="facturas">
+						<i class="fa fa-cart-plus"></i>
+						<span>Remisiones</span>
+					</a>
+				</li>
+
+				<li ';
+
+				if(isset($_GET["ruta"])){ if($_GET["ruta"] == "dispositivosEImpresoras" || $_GET["ruta"] == "dispositivosEImpresoras" ){ echo'class="active"'; } }
+
+				echo '><a href="dispositivosEImpresoras">
+						<i class="fa fa-opencart"></i>
+						<span>Electrodomesticos e Impresoras</span>
+					</a>
+				</li>
+
+				<li ';
+
+				if(isset($_GET["ruta"])){ if($_GET["ruta"] == "requisiciones" || $_GET["ruta"] == "requisiciones" ){ echo'class="active"'; } }
+
+				echo '><a href="requisiciones">
+						<i class="fa fa-file-text"></i>
+						<span>Requisiciones</span>';
+
+				$solicitud = ControladorRequisiciones::ctrContarRequisicionesAppr($_SESSION["anioActual"]);
+
+				if($solicitud != 0)
+		        {
+		        	echo '<span class="label label-warning pull-right">'.$solicitud.'</span>';
+				}
+
+				echo '
+					</a>
 				</li>
 
 				<li ';
@@ -301,7 +330,7 @@
 
 						if ($_SESSION["perfil"] == '7' || $_SESSION["perfil"] == '3') {
 
-			echo '<li class="header">Asignaciones de Correspondencia</li>
+			echo '<li class="header">Asignaciones</li>
 
 				<li ';
 
@@ -388,21 +417,24 @@
 
 			if ( isset($verModulo["modulo"]) &&  $verModulo["modulo"] == $idmodulo) 
 			{
-			echo '<li';
 
-			if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
+				if (isset($asignados)) 
+				{
+						echo '<li';
 
-				echo'><a href="registros">
-						<i class="fa fa-balance-scale"></i>
-						<span>Registros de PQR';
-						if($asignados != 0)
-                    	{
-                    		echo'<small class="label pull-right bg-yellow">'.$asignados.'</small>';
-                    	}
-						echo '</span>
-					</a>
-				</li>';
+				if ( isset($_GET["ruta"]) ) { if($_GET["ruta"] == "correspondencia"){ echo'class="active"'; }	}
 
+					echo'><a href="registros">
+							<i class="fa fa-balance-scale"></i>
+							<span>Registros de PQR';
+							if($asignados != 0)
+	                    	{
+	                    		echo'<small class="label pull-right bg-yellow">'.$asignados.'</small>';
+	                    	}
+							echo '</span>
+						</a>
+					</li>';
+				}
 			}
 
 

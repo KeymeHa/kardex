@@ -28,8 +28,8 @@ class DocumentResponsability
       	if (isset($equipo["id"]) && $equipo["estado"] == 1 ) 
       	{
 
-      		$usuario = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_usuario"]);
-      		$supervisor = ControladorUsuarios::ctrMostrarNombre($item, $equipo["id_responsable"]);
+      		$usuario = ControladorUsuarios::ctrMostrarUsuarios($item, $equipo["id_usuario"]);
+      		$supervisor = ControladorUsuarios::ctrMostrarNombrea($item, $equipo["id_responsable"]);
  			$area = ControladorAreas::ctrMostrarNombreAreas($item, $equipo["id_area"]);
 
  			$arq = ControladorEquipos::ctrMostrarParametrosNombre($item, $equipo["id_arquitectura"], 1);
@@ -37,6 +37,21 @@ class DocumentResponsability
  			$mod = ControladorEquipos::ctrMostrarParametrosNombre($item, $equipo["modelo"], 1);
  			$cpu = ControladorEquipos::ctrMostrarParametrosNombre($item, $equipo["cpu"], 1);
  			$cpu_mod = ControladorEquipos::ctrMostrarParametrosNombre($item, $equipo["cpu_modelo"], 1);
+
+ 			$fecha = new DateTime();
+    		$fecha_F = $fecha->format('d/m/Y');
+
+
+    		//SeMeOlvidoLaContraseña2023
+
+
+ 			$accesorios ="KEYW:";
+
+ 			$accesorios.=($equipo["teclado"] == 1)? "S" : "N" ;
+
+ 			$accesorios.=($equipo["teclado"] == 1)? "| MOUSE: S" : "| MOUSE: N" ;
+
+ 			$accesorios.=($equipo["id_arquitectura"] == 1)? "| MONT: N | BAT: S | ACC: S | CARG:N" : "| MONT: S | BAT: N | ACC:N | CARG:N" ;
 
       		require_once('tcpdf_include.php');
 			$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
@@ -60,7 +75,7 @@ class DocumentResponsability
 					<tr>
 
 					    <td>FECHA:</td>
-					    <td>23/05/2023</td>
+					    <td>$fecha_F</td>
 					    <td></td>
 					    <td></td>
 					    <td></td>
@@ -132,8 +147,8 @@ class DocumentResponsability
 				</tr>
 
 				<tr>
-				    <td style="text-align:right">ACESSORIOS -></td>
-				    <td colspan="3" style="background-color:#A9E6E8;"></td>
+				    <td style="text-align:right">ACCESORIOS -></td>
+				    <td colspan="3" style="background-color:#A9E6E8;">$accesorios</td>
 				</tr>
 			</table>
 
@@ -146,7 +161,7 @@ class DocumentResponsability
 
 			$cuerpo = <<<EOF
 			<br>
-			<p style="text-align:justify;">A $usuario, quien se identifica con la cédula N°  en calidad de prestamo del área $area y lo usará en la ubicación asignada a partir del día 23 de agosto del año 2023.</p>
+			<p style="text-align:justify;">A $usuario[nombre], quien se identifica con la cédula N° $usuario[dni] en calidad de prestamo del área $area y lo usará en la ubicación asignada a partir del día 23 de agosto del año 2023.</p>
 			<br>
 			<p style="text-align:justify;">
 			El receptor, asume la responsabilidad y el cuidado de dicho equipo y se compromete a utilizarlo con un propósito estrictamente  a sus funciones laborales o contractuales.  No se podrá retirar de las instalaciones de la Empresa sin previa autorización del área de Sistemas, ni se podrá instalar programas ajenos a los que vienen preinstalados por defecto o autorizados por el área de Sistemas. 						
@@ -208,8 +223,6 @@ class DocumentResponsability
 
 
 			$footer = <<<EOF
-			<br>
-			<br>
 			<img src="images/pie.jpg">
 
 			EOF;
@@ -234,6 +247,7 @@ if ( isset($_GET["idPC"]) )
 {
 	$imp = new DocumentResponsability();
 	$imp -> idPC = $_GET["idPC"];
+	$imp -> fecha = $_GET["fe"];
 	$imp -> imprimir();
 }
 else

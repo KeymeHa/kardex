@@ -104,6 +104,7 @@
     }
 
     include "reportes/rqCantidad.php";
+    include "reportes/insumosCantidad.php";
 
     ?>
 

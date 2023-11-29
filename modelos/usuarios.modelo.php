@@ -10,7 +10,7 @@ class ModeloUsuarios
 		{
 			if ($item == "id_area" || $item == "perfil") 
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0 ORDER BY nombre ASC");
+				$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE $item = :$item AND elim = 0");
 				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 				$stmt -> execute();
 				return $stmt -> fetchAll();
@@ -25,7 +25,7 @@ class ModeloUsuarios
 		}
 		else
 		{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 ORDER BY nombre ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE elim = 0 ORDER BY (nombre) ASC");
 
 			$stmt -> execute();
 
@@ -70,12 +70,13 @@ class ModeloUsuarios
 
 	static public function mdlRegistrarUsuario($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, perfil, foto, correo) VALUES (:nombre, :usuario, :password, :perfil, :foto, :correo)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, perfil, dni, correo) VALUES (:nombre, :usuario, :password, :perfil, :dni, :correo)");
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_INT);
-		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+		//$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+		$stmt->bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
 		$stmt->bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) 
@@ -120,12 +121,13 @@ class ModeloUsuarios
 
 	static public function mdlEditarUsuario($tabla, $datos)
 	{
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, password = :password, perfil = :perfil, foto = :foto, correo = :correo WHERE usuario = :usuario");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, password = :password, perfil = :perfil, correo = :correo, dni = :dni WHERE usuario = :usuario");
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt -> bindParam(":perfil", $datos["perfil"], PDO::PARAM_INT);
-		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+		//$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 		$stmt -> bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
 		$stmt -> bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
 		if($stmt -> execute())

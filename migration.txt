@@ -1,0 +1,47 @@
+ALTER TABLE `usuarios`
+	ADD COLUMN `dni` VARCHAR(50) NULL DEFAULT NULL AFTER `id_area`;
+
+ALTER TABLE `equipos`
+	CHANGE COLUMN `serialD` `serialD` VARCHAR(50) NULL COLLATE 'utf8mb4_unicode_ci' AFTER `n_serie`,
+	CHANGE COLUMN `nombre` `nombre` CHAR(50) NULL COLLATE 'utf8mb4_unicode_ci' AFTER `serialD`,
+	CHANGE COLUMN `cpu_generacion` `cpu_generacion` INT(10) NULL AFTER `cpu_modelo`,
+	CHANGE COLUMN `cpu_frecuencia` `cpu_frecuencia` FLOAT NULL AFTER `cpu_generacion`,
+	CHANGE COLUMN `ssd` `ssd` INT(10) NULL AFTER `ram`,
+	CHANGE COLUMN `hdd` `hdd` INT(10) NULL AFTER `ssd`,
+	CHANGE COLUMN `gpu` `gpu` VARCHAR(50) NULL COLLATE 'utf8mb4_unicode_ci' AFTER `hdd`,
+	CHANGE COLUMN `gpu_modelo` `gpu_modelo` VARCHAR(50) NULL COLLATE 'utf8mb4_unicode_ci' AFTER `gpu`,
+	CHANGE COLUMN `gpu_capacidad` `gpu_capacidad` INT(10) NULL AFTER `gpu_modelo`;
+
+ALTER TABLE `equipos`
+	CHANGE COLUMN `cpu_generacion` `cpu_generacion` CHAR(5) NULL DEFAULT NULL AFTER `cpu_modelo`;
+
+UPDATE `kardex`.`js_data` SET `file`='1' WHERE  `id`=74;
+
+INSERT INTO `kardex`.`js_data` (`page`, `title`, `num`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pDiez`) VALUES ('VerLicencia', 'Licencia', '49', '0', '0', '0', '0', '10');
+
+UPDATE `kardex`.`js_data` SET `num`='50' WHERE  `id`=23;
+
+ALTER TABLE `equiposactas`
+	ADD COLUMN `id_equipos` TEXT NULL DEFAULT NULL AFTER `file`;
+ALTER TABLE `equiposactas`
+	ADD COLUMN `ver` TINYINT(1) NOT NULL DEFAULT '1' AFTER `id_equipos`;
+
+INSERT INTO `kardex`.`js_data` (`page`, `title`, `num`, `pDos`, `pCuatro`, `pCinco`, `pDiez`) VALUES ('dispositivosEImpresoras', 'Dispositivos e Impresoras', '50', '0', '0', '0', '10');
+
+CREATE TABLE `dispositivos` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(100) NULL DEFAULT NULL,
+	`ubicación` VARCHAR(100) NULL DEFAULT NULL,
+	`modelo` VARCHAR(100) NULL DEFAULT NULL,
+	`n_serie` VARCHAR(50) NULL,
+	`caracteristicas` VARCHAR(250) NULL DEFAULT NULL,
+	`observaciones` VARCHAR(250) NULL DEFAULT NULL,
+	`historial` TEXT NULL,
+	`tipo_dispositivo` INT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8mb4_0900_ai_ci'
+;
+
+ALTER TABLE `dispositivos`
+	ADD COLUMN `fecha_ingreso` DATE NULL AFTER `tipo_dispositivo`;

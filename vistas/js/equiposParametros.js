@@ -37,6 +37,10 @@ $("button.btn-param").click(function() {
 	{
 		titulo = "Listado Versiones Sistemas Operativos";
 	}
+	else if (opcion == 9) 
+	{
+		titulo = "Dispositivos e Impresoras";
+	}
 
 	$("div.box-contenido").children().remove();
 

@@ -71,14 +71,25 @@ class ControladorInsumos
 
 				$desValidada = ControladorParametros::ctrValidarCaracteres($_POST["nuevaDescripcion"]);
 
-				if($_POST["nuevaObserInsu"] != null || $_POST["nuevaObserInsu"] != "")
-				{
-					$obsValidada = ControladorParametros::ctrValidarCaracteres($_POST["nuevaObserInsu"]);
-				}
-				else
-				{
-					$obsValidada = "";
-				}
+                $obsValidada = "";
+
+                if(isset($_POST["nuevaObserInsu"]) )
+                {
+                    if($_POST["nuevaObserInsu"] != null || $_POST["nuevaObserInsu"] != "")
+    				{
+    					$obsValidada = ControladorParametros::ctrValidarCaracteres($_POST["nuevaObserInsu"]);
+    				}
+    				else
+    				{
+    					$obsValidada = "";
+    				}
+                }
+                else
+                {
+                    $obsValidada = "";
+                }
+
+
 
 				
 
@@ -111,7 +122,7 @@ class ControladorInsumos
 
 				if($respuesta == "ok")
 				{
-					$tabla = "historial";
+					/*$tabla = "historial";
 
 					$datos = array( "accion" => 1,
 									"numTabla" => 2,
@@ -120,7 +131,7 @@ class ControladorInsumos
 									"id_usr" => $_POST["idUsr"]
 									 );
 
-					$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);
+					$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);*/
 
 					echo'<script>
 
@@ -673,14 +684,18 @@ class ControladorInsumos
 
 	         $sw = 0;
 
-	          for ($i=0; $i < count($insumo); $i++) 
-	          { 
-	            if ($id == $insumo[$i]["id"]) 
-	            {
-	            	$arrayInfo["rq"]+=1;
-	            	$arrayInfo["ing_e"]+=$insumo[$i]["ent"];
-	            }
-	          }   
+	         if(is_countable($insumo) && count($insumo) > 0 )
+	         {
+	         	 for ($i=0; $i < count($insumo); $i++) 
+		          { 
+		            if ($id == $insumo[$i]["id"]) 
+		            {
+		            	$arrayInfo["rq"]+=1;
+		            	$arrayInfo["ing_e"]+=$insumo[$i]["ent"];
+		            }
+		          }   
+	         }//if(is_countable($insumos) && count($insumos) > 0 )
+ 
 		 }
 		     
 		}

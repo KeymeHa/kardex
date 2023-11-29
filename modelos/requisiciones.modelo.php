@@ -28,7 +28,7 @@ class ModeloRequisiciones
 		}
 		else
 		{
-			return "error";
+			return $stmt->errorInfo();
 		}
 		$stmt->close();
 		$stmt = null;
@@ -84,7 +84,7 @@ class ModeloRequisiciones
 
 	}
 
-	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio)
+	static public function mdlMostrarRequisicionesRango($tabla, $fechaInicial, $fechaFinal, $anio, $idFiltro)
 	{
 		if($fechaInicial == null){
 
@@ -98,9 +98,9 @@ class ModeloRequisiciones
 		}else if($fechaInicial == $fechaFinal){
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2 AND DATE_FORMAT(fecha_sol, '%Y %m %d') = DATE_FORMAT(:fecha_sol, '%Y %m %d') ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') AND (aprobado = 1 or aprobado = 2) $idFiltro ORDER BY id DESC");
 
-			$stmt -> bindParam(":fecha_sol", $fechaInicial, PDO::PARAM_STR);
+			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -118,12 +118,12 @@ class ModeloRequisiciones
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2 AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND (aprobado = 1 or aprobado = 2) $idFiltro ORDER BY id DESC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE aprobado = 1 or aprobado = 2  AND fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND (aprobado = 1 or aprobado = 2) $idFiltro ORDER BY id DESC");
 
 			}
 		
@@ -512,7 +512,7 @@ class ModeloRequisiciones
 	{
 		if ($sw == 1) 
 		{
-			$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio GROUP BY MONTH(fecha_sol)  LIMIT 5 ORDER BY COUNT(MONTH(fecha_sol)) DESC");
+			$stmt = Conexion::conectar() -> prepare("SELECT MONTH(fecha), COUNT(MONTH(fecha)) FROM requisiciones $anio GROUP BY MONTH(fecha)  LIMIT 5 ORDER BY COUNT(MONTH(fecha)) DESC");
 			$stmt -> execute();
 			return $stmt -> fetchAll();
 			
@@ -523,14 +523,14 @@ class ModeloRequisiciones
 
 			if($fechaInicial == null){
 
-				$stmt = Conexion::conectar() -> prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio GROUP BY MONTH(fecha_sol) ORDER BY COUNT(MONTH(fecha_sol)) DESC");
+				$stmt = Conexion::conectar() -> prepare("SELECT MONTH(fecha), COUNT(MONTH(fecha)) FROM requisiciones $anio GROUP BY (MONTH(fecha)) ;");
 				$stmt -> execute();
 				return $stmt -> fetchAll();
 
 
 			}else if($fechaInicial == $fechaFinal){
 
-				$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY MONTH(fecha_sol)");
+				$stmt = Conexion::conectar()->prepare("SELECT MONTH(fecha), COUNT(MONTH(fecha)) FROM requisiciones $anio DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY MONTH(fecha)");
 
 				$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -550,12 +550,12 @@ class ModeloRequisiciones
 
 				if($fechaFinalMasUno == $fechaActualMasUno){
 
-					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY MONTH(fecha_sol)");
+					$stmt = Conexion::conectar()->prepare("SELECT MONTH(fecha), COUNT(MONTH(fecha)) FROM requisiciones $anio fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' GROUP BY MONTH(fecha)");
 
 				}else{
 
 
-					$stmt = Conexion::conectar()->prepare("SELECT YEAR(fecha_sol), MONTH(fecha_sol), COUNT(MONTH(fecha_sol)) FROM requisiciones $anio fecha_sol BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY MONTH(fecha_sol)");
+					$stmt = Conexion::conectar()->prepare("SELECT MONTH(fecha), COUNT(MONTH(fecha)) FROM requisiciones $anio fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY MONTH(fecha)");
 
 					// ENCARGADO
 

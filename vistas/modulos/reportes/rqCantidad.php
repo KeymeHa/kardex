@@ -44,21 +44,27 @@
               echo '<table class="table table-condensed">
                   <tbody><tr>
                     <th style="width: 10px">#</th>
-                    <th>Año</th>
                     <th>mes</th>
                     <th>Cantidad</th>
                   </tr>';
 
+              $contar = 0;    
+
               foreach ($countAreas as $key => $value) 
               {
+
+                $contar+= $value["COUNT(MONTH(fecha))"];
+
                 echo'<tr>
                       <td>'.($key+1).'</td>
-                      <td>'.$value["YEAR(fecha_sol)"].'</td>
-                      <td>'.ControladorParametros::nombreMes($value["MONTH(fecha_sol)"]).'</td>
-                      <td>'.$value["COUNT(MONTH(fecha_sol))"].'</td>
+                      <td>'.ControladorParametros::nombreMes($value["MONTH(fecha)"]).'</td>
+                      <td>'.$value["COUNT(MONTH(fecha))"].'</td>
                     </tr>';
               }
-                  echo ' </tbody>
+                  echo '<tr>
+                    <td colspan="2" ><b>Total</b></td>
+                    <td><b>'.$contar.'</b></td>
+                  </tr> </tbody>
               </table>';
             }
 
@@ -88,7 +94,7 @@
 
         foreach ($countAreas as $key => $value) {
 
-         $ykeys.= "{ y: '".$value[0]."-".$value[1]."', Requisiciones: ".$value[2]." },";
+         $ykeys.= "{ y: '".ControladorParametros::nombreMes($value["MONTH(fecha)"])."', Requisiciones: ".$value["COUNT(MONTH(fecha))"]." },";
 
         }
 

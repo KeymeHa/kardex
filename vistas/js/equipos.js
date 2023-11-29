@@ -1,13 +1,14 @@
 $("button.btn-newEquipo").click(function(){
 	$("#inputEquipoAccion").val(0);
-	var elemento = $("#dateIngresoE");
-	hoy(elemento);
+	//var elemento = $("#dateIngresoE");
+	//hoy(elemento);
 	$(".btn-modal").html("Agregar");
 	$(".titulo-modal").html("Nuevo Equipo");
 
 	//limpiar formulario
 
 	$("#pc_serial").val("");
+	$("#pc_serial").prop('readonly', false);
 	$("input.inputEquipoAccion").val("");
 	$("input.inputSerialDE").val("");
 	$("#pc_nombreE").val("");
@@ -404,7 +405,7 @@ $("#div-tablePC").on('click', 'button.btn-editarPC', function()
 	$(".btn-modal").html("Editar");
 	$(".titulo-modal").html("Editar equipo: "+nombre);
 
-	$("input.inputEquipoAccion").val(idPC);
+	$("#inputEquipoAccion").val(idPC);
 
 	$.ajax({
 
@@ -417,10 +418,10 @@ $("#div-tablePC").on('click', 'button.btn-editarPC', function()
 		dataType: "json",
 		success: function(response1)
 		{	
-
+			$("#pc_serial").prop('readonly', true);
 			$("#pc_serial").val(response1["n_serie"]);
 			$("input.inputEquipoAccion").val(idPC);
-			$("input.inputSerialDE").val(response1["serialD"]);
+			$("#pc_serialD").val(response1["serialD"]);
 			$("#pc_nombreE").val(response1["nombre"]);
 			$("input.inputCPUFreE").val(response1["cpu_frecuencia"]);
 			$("input.inputRamE").val(response1["ram"]);
@@ -432,13 +433,17 @@ $("#div-tablePC").on('click', 'button.btn-editarPC', function()
 
 			if (response1["mouse"] == 1) 
 			{$('.checkMouseE').prop('checked', true);}
+			else{$('.checkTecladoE').prop('checked', false);}
 
 			if (response1["teclado"] == 1) 
 			{$('.checkTecladoE').prop('checked', true);}
+			else{$('.checkTecladoE').prop('checked', false);}
 
-			$("#dateIngresoE").val(response1["fecha_ingreso"]);
+			//$("#dateIngresoE").val(response1["fecha_ingreso"]);
 
 			$(".textObservacionesE").html(response1["observaciones"]);
+
+			$(".selectRolE").children().remove();
 
 			if (response1["rol"] == 1) 
 			{
@@ -452,6 +457,7 @@ $("#div-tablePC").on('click', 'button.btn-editarPC', function()
 				$(".selectRolE").append('<option value="1">Empleado</option>');				
 			}
 
+			$(".selectIdCPUGenE").children().remove();
 
 			$(".selectIdCPUGenE").append('<option value="'+response1["cpu_generacion"]+'">'+response1["cpu_generacion"]+'</option>');
 			
@@ -496,7 +502,7 @@ $("#div-tablePC").on('click', 'button.btn-editarPC', function()
 					dataType: "json",
 					success: function(response2)
 					{
-						console.log(" en #"+response2.length);
+						//console.log(" en #"+response2.length);
 						
 						$("#"+response2[response2.length-1]).children().remove();
 

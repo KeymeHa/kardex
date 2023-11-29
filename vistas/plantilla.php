@@ -1,13 +1,15 @@
 <?php
     session_start();
 
-    $js_data = ( isset($_GET["ruta"]) ) ? ControladorParametros::ctrJs_data($_GET["ruta"]) : '';
-    $modoManto = ControladorParametros::ctrModoMantenimiento();
-    /*
-    $area = ControladorParametros::ctrValidarCaracteres($_POST["editarArea"]);
-  .replace(/&quot/gi,'"')     convertir de quot a comillas
-  .replace(/"/gi,'&quot')   convertir comillas a quot
-    */
+    try {
+
+      $js_data = ( isset($_GET["ruta"]) ) ? ControladorParametros::ctrJs_data($_GET["ruta"]) : '';
+      $modoManto = ControladorParametros::ctrModoMantenimiento();
+      
+    } catch (Exception $errorDB) {
+
+      
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,7 +60,10 @@
 </head>
 <body class="skin-green sidebar-mini login-page" id="body-Gnral">
    <?php
-    if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
+
+   if (!isset($errorDB)) 
+   {
+      if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "p3ddmfgqi4j0410jfqukfvv82j" ) 
     {
       if (isset($modoManto["modomanto"]) && $modoManto["modomanto"] == 1) 
       {
@@ -158,6 +163,12 @@
       
       include "modulos/login.php";
     }  
+   }
+   else
+   {
+      include "modulos/error.php";
+   }
+   
   ?>
 </body>
 </html>

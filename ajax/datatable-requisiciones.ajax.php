@@ -24,7 +24,7 @@ class TablaRequisiciones
 		if ($sw == 1) 
 		{
 
-			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango($this->fechaInicial, $this->fechaFinal, $this->anioActual);
+			$requisiciones = ControladorRequisiciones::ctrMostrarRequisicionesRango(null,null,$this->fechaInicial, $this->fechaFinal, $this->anioActual);
 		}
 		else
 		{
@@ -53,7 +53,7 @@ class TablaRequisiciones
 	    {
            	$item = "id";
             $valor =  $requisiciones[$i]["id_persona"];
-            $usuario = ControladorUsuarios::ctrMostrarNombre($item, $valor);
+            $usuario = ControladorUsuarios::ctrMostrarNombrea($item, $valor);
             $valor = $requisiciones[$i]["id_area"];
             $area = ControladorAreas::ctrMostrarAreas($item, $valor);
 

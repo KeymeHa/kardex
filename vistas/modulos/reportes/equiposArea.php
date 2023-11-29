@@ -14,18 +14,15 @@
    </div>
 
    <div class="box-body border-radius-none">
-
       <div class="row">
         <div class="col-lg-12">
           <div class="chart" id="bar-chart-EArea" style="height: 250px;"></div>
         </div>
       </div>
-
-      
-
   </div>
 
 </div>
+
 
 <script>
 
@@ -72,4 +69,3 @@
 
 
 </script>
-

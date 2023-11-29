@@ -314,7 +314,7 @@
                                   }
                                   else
                                   {
-                                     $valorStock = $value["ped"];
+                                   //  $valorStock = $value["ped"];
                                   }
                                }
                             }

@@ -44,7 +44,7 @@ $bloque1 = <<<EOF
 
 <table>
 <tr style="border: 1px black solid; margin: 0px">
-<td style="width:150px; border: 1px black solid;"><img src="images/logoEdubar.png" style="height: auto; margin-left: 10%;"></td>
+<td style="width:150px; border: 1px black solid;"><img src="images/logo.PNG" style="height: auto; margin-left: 10%;"></td>
 <td style="background-color:white; width:280px; border: 1px black solid;">
 <div style="font-size:8.5px; text-align:center; line-height:15px;">
 <br>
