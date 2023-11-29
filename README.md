@@ -33,7 +33,7 @@ Sweet Alert 2 -> https://github.com/sweetalert2/sweetalert2
 TCPDF -> https://github.com/tecnickcom/TCPDF
 
 
-## Installing DataTables
+## Installing
 
 Clona este repositorio https://github.com/KeymeHa/kardex.git 
 
