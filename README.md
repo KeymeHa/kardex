@@ -1,9 +1,59 @@
-# KARDEX
-Aplicativo para manejar inventario
+# [SICOR] - Kardex
 
-Esta aplicación la aprendi a programar basandome en un curso multimedia que se trataba de un sistema POS, en mi caso decidi personalizarlo y diseñar un sistema de inventario y manejo de bodega.
-Utilice la plantilla de Admin LTE 2014, tambien se manejo HTML, CSS, Jquery, Ajax, PHP, y consultas en MySQL.
+Aplicativo web que cuenta con los siguientes módulos:
 
-Cualquier duda estoy presto para atenderla.
+- Módulo Usuarios.
+- Módulo Dependencias
+	- Áreas.
+	- Personas.
+- Módulo Inventario
+	- Categorias.
+	- Insumos.
+	- Remisiones / Facturas (Ingreso de Stock) .
+	- Requisiciones (Pedidos de los usuarios).
+	- Proveedores
+- Módulo Equipos de Cómputo
+	- Base de datos Computadores.
+	- Licencias.
+	- Parametros.
+	- Actas de ingreso.
+- Módulo de Correspondencia
+	- Radicados.
+	- Cortes y planillas.
+	- Asignación de correspondencia.
 
-Atentamente Kevin Bolaño
+# Plantilla
+
+AdminLTE2 -> https://github.com/ColorlibHQ/AdminLTE
+
+# plug-in
+
+DataTables -> https://github.com/DataTables/DataTables
+Sweet Alert 2 -> https://github.com/sweetalert2/sweetalert2
+TCPDF -> https://github.com/tecnickcom/TCPDF
+
+
+## Installing DataTables
+
+Clona este repositorio https://github.com/KeymeHa/kardex.git 
+
+1 -  /modelos/conexion Modificar las credenciales de la base de datos.
+2 -  importa el archivo .sql en tu base de datos.
+3 -  /vistas/img/plantilla/ modifica el archivo logo.png
+4 -  Usuario y contraseña por defecto:
+	Usuario: Admin
+	Contraseña: 1234567890
+
+## Documentation
+
+Para conocer de manera detallada el funcionamiento dirigirse a https://github.com/KeymeHa/kardex/blob/main/vistas/doc/Manual_Usuario_Kardex.pdf
+
+
+## Support
+
+Para obtener soporte o notificar algun error https://github.com/KeymeHa
+
+
+## License
+
+Este aplicativo es de uso libre.
