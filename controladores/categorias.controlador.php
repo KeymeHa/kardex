@@ -528,12 +528,12 @@ class ControladorCategorias
 		return $res;
 	}
 
-	static public function ctrContarAreas($item, $valor)
+		static public function ctrContarAreas($item, $valor)
 	{
 		$tabla = "categoriaarea";
 		$consulta = ModeloCategorias::mdlMostrarAsignacionArea($tabla, $item, $valor);
 		$res = 0;
-		if (!is_null($consulta["id_areas"])) {
+		if ( isset($consulta["id_areas"]) && !is_null($consulta["id_areas"])) {
 			if (!empty($consulta["id_areas"])) 
 			{
 				$lista = json_decode($consulta["id_areas"], true);
@@ -542,7 +542,7 @@ class ControladorCategorias
 		}
 		else
 		{
-			if (is_string($consulta["id_areas"])) 
+			if ( isset($consulta["id_areas"]) && is_string($consulta["id_areas"])) 
 			{
 				if (!empty($consulta["id_areas"])) 
 				{
