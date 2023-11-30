@@ -1,5 +1,6 @@
 # [SICOR] - Kardex
 
+Este aplicativo permite gestionar un inventario interno donde los usuarios pueden realizar pedidos y aisgnar perfiles para tener acceso a ciertos módulos y acciones, permite ademas manejar un sistema de correspondencia permitiendo radicar documentos para darle manejo interno de estos, incluye un módulo que maneja inventario de computadores llevando la trazabilidad de cada uno de ellos con manejo de linea de tiempo que alamacena toda las acciones realizada a cada uno de ellos.
 Aplicativo web que cuenta con los siguientes módulos:
 
 - Módulo Usuarios.
@@ -51,7 +52,12 @@ Para conocer de manera detallada el funcionamiento dirigirse a https://github.co
 
 ## Support
 
-Para obtener soporte o notificar algun error https://github.com/KeymeHa
+Para obtener soporte o notificar algún error https://github.com/KeymeHa
+
+## Future
+
+- Mejorar el sistema de historial de cada una de las acciones realizadas en cada módulo.
+- Implmenetar un módulo que registre los manejo a otros dispositivos o electrodomesticos que registre los mantenimientos, mejoras entre otras funciones.
 
 
 ## License
