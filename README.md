@@ -57,7 +57,7 @@ Para obtener soporte o notificar algún error https://github.com/KeymeHa
 ## Future
 - Importar Bases de datos por medio de archivo plano u hoja de cálculo para insumos, Computadores. 
 - Mejorar el sistema de historial de cada una de las acciones realizadas en cada módulo.
-- Implmenetar un módulo que registre los manejo a otros dispositivos o electrodomesticos que registre los mantenimientos, mejoras entre otras funciones.
+- Implmentar un módulo que registre los manejo a otros dispositivos o electrodomesticos que registre los mantenimientos, mejoras entre otras funciones.
 
 
 ## License
