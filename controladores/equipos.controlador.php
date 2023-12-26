@@ -1734,9 +1734,9 @@ class ControladorEquipos
 
 	static public function ctrMostrarItem($dato, $sw, $titulo, $tam)
 	{
-		if ($dato != 0 && $dato != "" ) 
+		if ($dato !== 0 && $dato !== "" ) 
 		{
-			$dato = ($sw == 1) ? '<dt>'.$titulo.'</dt><dd>'.ControladorEquipos::ctrMostrarParametrosNombre("id", $dato, 1).'</dd>' : '<dt>'.$titulo.'</dt><dd>'.$dato.' '.$tam.'</dd>' ;
+			$dato = ($sw === 1) ? '<dt>'.$titulo.'</dt><dd>'.ControladorEquipos::ctrMostrarParametrosNombre("id", $dato, 1).'</dd>' : '<dt>'.$titulo.'</dt><dd>'.$dato.' '.$tam.'</dd>' ;
 		}//
 		else
 		{

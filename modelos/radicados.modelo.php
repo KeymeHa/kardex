@@ -61,6 +61,26 @@ class ModeloRadicados
 		$stmt = null;
 	}
 
+	static public function mdlNombreParametro($tabla, $id){
+
+		$stmt = Conexion::conectar()->prepare("SELECT nombre FROM $tabla WHERE id = :id");
+
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return $stmt->fetch();
+
+		}else{
+
+			return null;
+		
+		}#$stmt->execute()
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 
 	static public function mdlRegistrarRemitente($tabla,$remitente)
 	{
@@ -596,31 +616,27 @@ class ModeloRadicados
 		}
 	}
 
-	static public function mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio)
+	static public function mdlContarRad($tabla, $corte, $indice, $fechaInicial, $fechaFinal, $anio)
 	{
 		if($fechaInicial == null){
 
-			#"pqr", "id", "nombre", "id_pqr", null, $fechaInicial, $fechaFinal, WHERE YEAR(fecha) = fecha
-			if ($tablaD != null ) 
+
+			if(!is_null($corte))
 			{
-				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $anio $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
-				$stmt -> execute();
+				$stmt = Conexion::conectar()->prepare("SELECT $indice, COUNT(*) FROM $tabla WHERE id_corte = $corte GROUP BY $indice;");
+
+			}else{
+				$stmt = Conexion::conectar()->prepare("SELECT $indice, COUNT(*) FROM $tabla $anio GROUP BY $indice ORDER BY COUNT(*) ASC ");
 			}
-			else
-			{
-				if ($valor == null) 
-				{
-					$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD $otro GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC ");
-					$stmt -> execute();
-				}
-			}
+
+			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
 
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT $indice, COUNT(*) FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT(:fecha, '%Y %m %d') GROUP BY $indice ORDER BY COUNT(*) ASC");
 
 			$stmt -> bindParam(":fecha", $fechaInicial, PDO::PARAM_STR);
 
@@ -640,12 +656,12 @@ class ModeloRadicados
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT($fechaFinalMasUno, '%Y %m %d') GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+				$stmt = Conexion::conectar()->prepare("SELECT $indice, COUNT(*) FROM $tabla WHERE DATE_FORMAT(fecha, '%Y %m %d') = DATE_FORMAT($fechaFinalMasUno, '%Y %m %d') GROUP BY $indice ORDER BY COUNT(*) ASC");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT $tablaD.$campoD, $tablaD.$itemD, COUNT($tablaD.$itemD) FROM $tabla INNER JOIN $tablaD ON $tabla.$item = $tablaD.$itemD WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY ($tablaD.$campoD) ORDER BY COUNT($tablaD.$itemD) ASC");
+				$stmt = Conexion::conectar()->prepare("SELECT $indice, COUNT(*) FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' GROUP BY $indice ORDER BY COUNT(*) ASC");
 
 			}
 

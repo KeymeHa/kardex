@@ -528,7 +528,7 @@ class ControladorCategorias
 		return $res;
 	}
 
-		static public function ctrContarAreas($item, $valor)
+	static public function ctrContarAreas($item, $valor)
 	{
 		$tabla = "categoriaarea";
 		$consulta = ModeloCategorias::mdlMostrarAsignacionArea($tabla, $item, $valor);

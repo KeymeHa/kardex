@@ -159,7 +159,7 @@
                 <button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarFac">Guardar</button>
                 <?php
                   $anexarFac = new ControladorFacturas();
-                  $anexarFac -> ctrCrearFactura();
+                  $anexarFac -> ctrCrearFactura($_SESSION["id"]);
                 ?>
             </form>
           </div>

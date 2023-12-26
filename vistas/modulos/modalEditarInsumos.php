@@ -153,7 +153,7 @@
         </div>
         <?php
           $editarInsumo = new ControladorInsumos();
-          $editarInsumo -> ctrEditarInsumo();
+          $editarInsumo -> ctrEditarInsumo($_SESSION["id"]);
         ?>  
       </form>
     </div><!--modal-content-->

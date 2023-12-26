@@ -306,7 +306,7 @@
                 <button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarFac">Guardar</button>
                 <?php
                   $editarFac = new ControladorFacturas();
-                  $editarFac -> ctrEditarFactura($_SESSION["anioActual"]);
+                  $editarFac -> ctrEditarFactura($_SESSION["anioActual"], $_SESSION["id"]);
                 ?>
             </form>
           </div>

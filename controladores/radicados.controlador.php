@@ -1176,25 +1176,25 @@ class ControladorRadicados
 
 	}
 
-	static public function ctrContarRad($tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio)
+	//static public function ctrContarRad($tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio)
+						 //$_GET["idCorte"], $TbsRad[$y]["fk"] null, null, $_SESSION["anioActual"]
+	static public function ctrContarRad($corte, $indice, $fechaInicial, $fechaFinal, $anio)
 	{
-
-
 		if ($anio != 0) 
 		{
 			$r = new ControladorRadicados;
 			$anio = $r->anioActual($anio);
 
-			if ($valor != null) 
+			if ($corte != null) 
 			{
-				$anio.= " AND '".$item."' = '".$valor."' ".$otro;		
+				$anio.= " AND id_corte = '".$corte;		
 			}			
 		}
 		else
 		{
-			if ($valor != null) 
+			if ($corte != null) 
 			{
-				$anio = " WHERE '".$item."' = '".$valor."' ".$otro;		
+				$anio = " WHERE id_corte = '".$corte;		
 			}
 			else
 			{
@@ -1204,7 +1204,34 @@ class ControladorRadicados
 
 		$tabla = "radicados";
 
-		$respuesta = ModeloRadicados::mdlContarRad($tabla, $tablaD,  $itemD, $campoD, $item, $valor, $otro, $fechaInicial, $fechaFinal, $anio);
+		$respuesta = ModeloRadicados::mdlContarRad($tabla, $corte, $indice, $fechaInicial, $fechaFinal, $anio);
+
+
+		if (is_countable($respuesta) && count($respuesta) > 0) 
+		{
+			$keyArray = 0;
+
+			while ( array_key_exists($keyArray, $respuesta) ) {
+
+				if ($indice == "id_pqr") {
+					$nombre = ModeloRadicados::mdlNombreParametro("pqr", $respuesta[$keyArray][$indice]) ;
+
+				} elseif($indice == "id_area") {
+					$nombre = ModeloRadicados::mdlNombreParametro("areas", $respuesta[$keyArray][$indice]) ;
+				}
+				elseif($indice == "id_articulo") {
+					$nombre = ModeloRadicados::mdlNombreParametro("articulo", $respuesta[$keyArray][$indice]) ;
+				}
+
+				$respuesta[$keyArray]["nombre"] = $nombre["nombre"];
+
+				$keyArray++;
+				# code...
+			}
+
+		}
+
+
 
 		return $respuesta;
 	}

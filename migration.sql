@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `js_data` (
 
 -- Volcando datos para la tabla kardex.js_data: ~75 rows (aproximadamente)
 INSERT IGNORE INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `pOcho`, `pNueve`, `pDiez`, `pOnce`, `sw`, `ver`, `file`, `habilitado`, `descripcion`) VALUES
+INSERT IGNORE INTO `js_data` (`id`, `page`, `title`, `num`, `pUno`, `pDos`, `pTres`, `pCuatro`, `pCinco`, `pSeis`, `pSiete`, `pOcho`, `pNueve`, `pDiez`, `pOnce`, `sw`, `ver`, `file`, `habilitado`, `descripcion`) VALUES
 	(1, 'categorias', 'Categorias', 1, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Muestra las categorias de las que seran asociados '),
 	(2, 'verCategoria', 'Ver Categoria', 2, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Permite Ver los insumos pertenecientes a una categ'),
 	(3, 'insumos', 'Insumos', 3, 1, 2, 3, 0, 5, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 'Mustras todos los insumos ingresados en el sistema'),
@@ -560,6 +561,18 @@ CREATE TABLE IF NOT EXISTS `insumos` (
   CONSTRAINT `FK_insumos_insumosunidad` FOREIGN KEY (`unidadSal`) REFERENCES `insumosunidad` (`id`),
   CONSTRAINT `FK_insumos_insumosunidad_2` FOREIGN KEY (`unidad`) REFERENCES `insumosunidad` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+
+CREATE TABLE IF NOT EXISTS `historial_insumos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_insumo` int NOT NULL DEFAULT (0),
+  `anio` year NOT NULL,
+  `mes` char(2) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `historia` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK__insumos` (`id_insumo`),
+  CONSTRAINT `FK__insumos` FOREIGN KEY (`id_insumo`) REFERENCES `insumos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Volcando datos para la tabla edubarco_kardex.insumos: ~134 rows (aproximadamente)
 

@@ -62,7 +62,7 @@ class ControladorFacturas
 		return $respuesta;
 	}
 
-	static public function ctrCrearFactura()
+	static public function ctrCrearFactura($idSession)
 	{
 		if ( isset($_POST["codigoInterno"]) ) 
 		{
@@ -201,9 +201,12 @@ class ControladorFacturas
 			$tabla = "facturas";
 
 			$codigoFac = ControladorParametros::ctrValidarCaracteres($_POST["codigoFactura"]);
+
+
+			$parametro = ControladorParametros::ctrMostrarParametros(5);
 			$observacion = ControladorParametros::ctrValidarCaracteres($_POST["observacionNF"]);
 
-			$datos = array( 'codigoInt' => $_POST["codigoInterno"],
+			$datos = array( 'codigoInt' => $parametro["codigo"],
 							'codigo' => $codigoFac,
 							'id_usr' => $_POST["idUsuario"],
 							'id_proveedor' => $_POST["selecProveedor"],
@@ -314,70 +317,15 @@ class ControladorFacturas
 
 						$respuesta = ControladorInsumos::ctrActualizarStock($datos);
 
-						if ( !$respuesta == "ok" ) 
+						if($respuesta == "ok" && isset($value["can"]) && $value["can"] > 0 )
 						{
-							echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡Error al Actualizar stock!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-
-							}).then(function(result){
-
-								if(result.value){
-								
-									window.location = "facturas";
-
-								}
-
-							});
-						
-
-							</script>';
-
-							return ;	
-
-							$valores = ControladorInsumos::ctrTratarValores($valor, $precioCompra);
+							$temp = (intval($value["can"]) * intval($value["con"]));
+							$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $value["id"], 4, $res["stock"], $temp, $nuevoStock, $parametro["codigo"]);
+							echo ( $historial == "ok" )? '' :'<script>console.log("error create rm/fac");</script>';
 						}
+
 					}//foreach
 
-
-				/*
-
-					$entrada = 0;
-					$respuesta = ControladorMovimientos::ctrVerificarMovimiento($_POST["listaInsumos"], $actualY, $actualM, $entrada);
-
-					if ( !$respuesta == "ok" ) 
-						{
-							
-								echo '<script>
-
-								swal({
-
-									type: "error",
-									title: "¡Error al Actualizar Movimiento!",
-									showConfirmButton: true,
-									confirmButtonText: "Cerrar"
-
-								}).then(function(result){
-
-									if(result.value){
-									
-										window.location = "facturas";
-
-									}
-
-								});
-							
-
-								</script>';
-
-								return ;	
-
-						}	*/			
 					
 				} catch (Exception $e) {
 					echo '<script>
@@ -463,7 +411,7 @@ class ControladorFacturas
 
 	}//ctrCrearFactura
 
-	static public function ctrEditarFactura($anio)
+	static public function ctrEditarFactura($anio, $idSession)
 	{
 		if ( isset($_POST["idFactura"]) ) 
 		{
@@ -627,6 +575,12 @@ class ControladorFacturas
 									$datos = array( 'stock' => $nuevoStock, 'contenido' => $edit["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 									$valores = ControladorInsumos::ctrTratarValores($valor, $precioCompra);
 									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+
+									if($respuesta == "ok")
+									{
+										$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 5, ($ant["can"] * $ant["con"]), $temp, $nuevoStock, $factura["codigoInt"]);
+										echo ( $historial == "ok" )? '' :'<script>console.log("error edit rm/fac");</script>';
+									}
 								}
 								$sw = true;							
 							}
@@ -637,6 +591,11 @@ class ControladorFacturas
 							$nuevoStock = $insumo["stock"] + $edit["can"];
 							$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 							$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+							if($respuesta == "ok")
+							{
+								$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 5, $insumo["stock"], $edit["can"], $nuevoStock, $factura["codigoInt"]);
+								echo ( $historial == "ok" )? '' :'<script>console.log("error edit rm/fac");</script>';
+							}
 						}
 					}//foreach
 
@@ -660,6 +619,11 @@ class ControladorFacturas
 										$precioCompra = $insumo["precio_compra"];
 										$datos = array( 'stock' => $nuevoStock, 'contenido' => $value["con"], 'precio_compra' => $precioCompra, 'id' => $valor);
 										$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+										if($respuesta == "ok")
+										{
+											$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 6, $insumo["stock"], ($value["can"] * $value["con"]), $nuevoStock, $factura["codigoInt"]);
+											echo ( $historial == "ok" )? '' :'<script>console.log("error delete rm/fac");</script>';
+										}
 									}
 								}
 							}

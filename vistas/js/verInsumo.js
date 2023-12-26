@@ -56,6 +56,12 @@ $('#btn-RangoVerInsumo').daterangepicker(
 
 )
 
+$("#btn-HisInsumo").on("click", function(){
+	var idInsumo = $(this).attr("idInsumo");
+	window.location = "index.php?ruta=historialInsumos&idInsumo="+idInsumo;
+})
+
+
 $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 
 	localStorage.removeItem("capturarRango");

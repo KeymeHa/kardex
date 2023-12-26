@@ -373,7 +373,7 @@
                   }
 
                   $editarRq = new ControladorRequisiciones();
-                  $editarRq -> ctrEditarRequisicion($_SESSION["anioActual"]);
+                  $editarRq -> ctrEditarRequisicion($_SESSION["anioActual"], $_SESSION["id"]);
                 ?>
             </form>
           </div>

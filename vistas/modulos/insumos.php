@@ -275,7 +275,7 @@
       </form>
         <?php
           $crearInsumo = new ControladorInsumos();
-          $crearInsumo -> ctrCrearInsumo();
+          $crearInsumo -> ctrCrearInsumo($_SESSION["id"]);
         ?>  
     </div><!--modal-content-->
   </div><!--modal-dialog-->

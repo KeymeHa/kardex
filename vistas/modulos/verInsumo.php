@@ -75,11 +75,16 @@
             include "anios.php";
           ?>
 
+
           <button type="button" class="btn btn-success pull-right" id="btn-RangoVerInsumo">    
-            <span>
-              <i class="fa fa-calendar"></i> Rango de fecha
-            </span>
-            <i class="fa fa-caret-down"></i>
+              <span>
+                <i class="fa fa-calendar"></i> Rango de fecha
+              </span>
+              <i class="fa fa-caret-down"></i>
+          </button>
+
+          <button type="button" class="btn btn-success" idInsumo="<?php echo $_GET['idInsumo']; ?>" id="btn-HisInsumo">   
+              <i class="fa fa-bars"></i> Historial movimientos
         </button>
       </div>
     </div>

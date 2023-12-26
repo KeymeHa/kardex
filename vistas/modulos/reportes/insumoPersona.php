@@ -26,7 +26,7 @@
 				<tbody>
 					<?php
 
-						if ( $insumoPersona != 0) 
+						if ( is_countable($insumoPersona) &&   count($insumoPersona[0]) > 0) 
 						{
 							$contarInsumo = 0;
 
@@ -43,6 +43,11 @@
 							echo "<tr>
 									<td colspan='2'><b>Total</b></td>
 									<td>".$contarInsumo."</td>
+								</tr>";
+						}
+						else {
+							echo "<tr>
+									<td colspan='3'>Sin datos</td>
 								</tr>";
 						}
 
@@ -66,7 +71,7 @@
 
  var data = [
      <?php
-   if($insumoPersona != 0)
+   if ( is_countable($insumoPersona) &&   count($insumoPersona[0]) > 0) 
     {
         $ykeys = "";
 

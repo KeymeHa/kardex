@@ -1,7 +1,7 @@
 <?php
 class ControladorInsumos
 {
-	static public function ctrCrearInsumo(){
+	static public function ctrCrearInsumo($idSession){
 
 		if(isset($_POST["nuevaDescripcion"]))
 		{
@@ -120,18 +120,25 @@ class ControladorInsumos
 
 				$respuesta = ModeloInsumos::mdlIngresarInsumo($tabla, $datos);
 
+
+
+
 				if($respuesta == "ok")
 				{
-					/*$tabla = "historial";
+					$ejecutar = new ControladorInsumos();
+					$res = $ejecutar -> ctrMostrarInsumos("descripcion", $desValidada);
+					if(isset($res["id"]) && !is_null($res["id"]) )
+					{
+						$historial = $ejecutar -> ctrHistoriaInsumo($idSession, $res["id"], 0, 0, 0, 0, 0);
 
-					$datos = array( "accion" => 1,
-									"numTabla" => 2,
-									"valorAnt" => $_POST["nuevaDescripcion"],
-									"valorNew" => "",
-									"id_usr" => $_POST["idUsr"]
-									 );
+						echo ( $historial == "ok" )? '' :'<script>console.log("error updating 1");</script>';
 
-					$respuesta = ModeloHistorial::mdlInsertarHistorial($tabla, $datos);*/
+					}else{
+
+						echo'<script>console.log("error updating 2");</script>';
+					}
+
+
 
 					echo'<script>
 
@@ -149,10 +156,6 @@ class ControladorInsumos
 									})
 
 						</script>';
-
-
-
-
 				}else{
 
 				echo'<script>
@@ -199,7 +202,7 @@ class ControladorInsumos
 	/*=============================================
 				EDITAR INSUMO
 	=============================================*/
-	static public function ctrEditarInsumo()
+	static public function ctrEditarInsumo($idSession)
 	{
 		if ( isset($_POST["eIdP"]) ) 
 		{
@@ -249,6 +252,7 @@ class ControladorInsumos
 
 			$ejecutar = new ControladorInsumos(); 
 			$valores = $ejecutar->ctrTratarValores($_POST["eIdP"], $ePrecioCompra);
+			$traer = $ejecutar->ctrMostrarInsumos("id", $_POST["eIdP"]);
 
 			if ($_POST["eStock"] >= 0) 
 			{
@@ -256,9 +260,7 @@ class ControladorInsumos
 			}
 			else
 			{
-				$traer = $ejecutar->ctrMostrarInsumos("id", $_POST["eIdP"]);
 				$stock = $traer["stock"];
-				unset($traer);
 			}
 
 			if( preg_match('/^[0-9]+$/', $_POST["eIdP"]) && preg_match('/^[0-9]+$/', $_POST["EsCategoria"]) )
@@ -305,7 +307,12 @@ class ControladorInsumos
 				if($respuesta == "ok")
 				{
 
-					//unset($_POST);
+					if($traer["stock"] !== $_POST["eStock"] )
+					{
+						//$idUsr, $id_insumo, $accion, $edicionStock, $anteriorStock, $newStock, $llave
+						$historial = $ejecutar -> ctrHistoriaInsumo($idSession, $_POST["eIdP"], 7, 0, $traer["stock"], $_POST["eStock"], 0);
+						echo ( $historial == "ok" )? '' :'<script>console.log("error updating 1");</script>';
+					}
 
 					if( isset($_GET["idCategoria"]) )
 					{
@@ -730,4 +737,80 @@ class ControladorInsumos
 		//recorrer facturas
 		return $arrayInfo;
 	}
+
+
+	static public function ctrVerHistoriaInsumo($id_insumo, $anio, $mes){
+
+		$tabla = "historial_insumos";
+		$result = ModeloInsumos::mdlVerHistoriaInsumo($tabla, $id_insumo, $anio, $mes);
+
+		if(isset($result["id"]) && !is_null($result["id"])){
+		
+			if(!empty($result["historia"]))
+			{
+
+				$historia = json_decode($result["historia"], true);
+
+				if (is_countable($historia) && count($historia) > 0) 
+				{
+					return $historia;
+				}
+
+			}
+		}
+
+		return null;
+	}//ctrVerHistoriaInsumo
+
+	static public function ctrHistoriaInsumo($idUsr, $id_insumo, $accion, $edicionStock, $anteriorStock, $newStock, $llave){
+
+		/*
+		
+			Tipo accion
+			0 = Creacion Insumo
+			1 = requisicion
+			2 = edicion requicision
+			3 = eliminacion de requisicion
+			4 = remision
+			5 = edicion remision
+			6 = eliminacion de remision
+			7 = edicion de stock
+		
+		*/
+
+		date_default_timezone_set('America/Bogota');
+		$fecha = date('d-m-Y H:i:s');
+		$anio = date('Y');
+		$mes = date('m');
+		var_dump($mes);
+		$tabla = "historial_insumos";
+		$result = ModeloInsumos::mdlVerHistoriaInsumo($tabla, $id_insumo, $anio, $mes);
+
+		if(isset($result["id"]) && !is_null($result["id"])){
+
+
+			$historia = substr($result["historia"], 0 ,-1).',{"idu":"'.$idUsr.'","tip":"'.$accion.'","fe":"'.$fecha.'","e_st":"'.$edicionStock.'","a_st":"'.$anteriorStock.'","n_st":"'.$newStock.'","llave":"'.$llave.'"}]';
+
+			$actualizar = ModeloInsumos::mdlActualizarHistorialInsumo($tabla, $result["id"], $historia);
+
+			
+
+		}else{
+
+			$historia = '[{"idu":"'.$idUsr.'","tip":"'.$accion.'","fe":"'.$fecha.'","e_st":"'.$edicionStock.'","a_st":"'.$anteriorStock.'","n_st":"'.$newStock.'","llave":"'.$llave.'"}]' ;
+
+			$data = array('id_insumo' => $id_insumo,
+						  'anio' => $anio,
+						  'mes' => $mes,
+						  'historia' => $historia );
+
+			$actualizar = ModeloInsumos::mdlCrearHistorialInsumo($tabla, $data);
+
+		}
+
+		return $actualizar;
+
+
+	}//ctrHistoriaInsumo
+
 }#ControladorInsumos

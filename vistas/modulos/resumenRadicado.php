@@ -1,6 +1,6 @@
 <div class="content-wrapper">
      <?php
-    include "bannerConstruccion.php";
+    //include "bannerConstruccion.php";
 
     if (isset($_GET["fechaInicial"])) 
     {
@@ -13,9 +13,9 @@
       $fechaFinal = null;
     }
 
-    $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia",  "tab" => "pqr", "indice" => "id", "foranea" => "id_pqr", "campo" => "nombre"],
-                    1 => [ "tit" => "Dirigida a las áreas",  "tab" => "areas", "indice" => "id", "foranea" => "id_area", "campo" => "nombre"],
-                    2 => [ "tit" => "Tipo de Documento",  "tab" => "articulo", "indice" => "id", "foranea" => "id_articulo", "campo" => "nombre"]);
+    $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia", "fk" => "id_pqr", "tab" => "tip_corres"],
+                  1 => [ "tit" => "Dirigida a las áreas", "fk" => "id_area", "tab" => "areas"],
+                  2 => [ "tit" => "Tipo de Documento", "fk" => "id_articulo", "tab" => "tip_doc"]);
     $contarRadicados = [[]];
 
   ?>
@@ -53,7 +53,7 @@
 
               for ($y=0; $y < count($TbsRad) ; $y++) 
               { 
-                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, "" ,$fechaInicial, $fechaFinal, $_SESSION["anioActual"]);
+                  $contarRadicados = ControladorRadicados::ctrContarRad(null, $TbsRad[$y]["fk"], null, null, $_SESSION["anioActual"]);
 
                   if (count($contarRadicados) != 0 && $contarRadicados != false) 
                   {
@@ -67,8 +67,8 @@
                           for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
                           { 
                             echo ' <tr>
-                                    <th><a href="index.php?ruta=resumenRadicadoD&tab='.$TbsRad[$y]["tab"].'&indice='.$TbsRad[$y]["indice"].'&val='.$contarRadicados[$x][$TbsRad[$y]["indice"]].'">'.$contarRadicados[$x][$TbsRad[$y]["campo"]].'</a></th>
-                                    <td>'.$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"].'</td>
+                                    <th><a href="#">'.$contarRadicados[$x]["nombre"].'</a></th>
+                                    <td>'.$contarRadicados[$x]["COUNT(*)"].'</td>
                                   </tr>';
                           }
 
@@ -96,7 +96,7 @@
             for ($y=0; $y < count($TbsRad) ; $y++) 
             { 
 
-            $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, "", $fechaInicial, $fechaFinal, $_SESSION["anioActual"]); 
+            $contarRadicados = ControladorRadicados::ctrContarRad(null, $TbsRad[$y]["fk"], null, null, $_SESSION["anioActual"]);
 
             $data = "";
 
@@ -119,7 +119,7 @@
 
                       for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
                       { 
-                         $data.= "{ y: '".$contarRadicados[$x][$TbsRad[$y]["campo"]]."', Cantidad: ".$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"]." },";
+                         $data.= "{ y: '".$contarRadicados[$x]["nombre"]."', Cantidad: '".$contarRadicados[$x]["COUNT(*)"]."' },";
                       }
 
                        $data = substr($data,0,-1);

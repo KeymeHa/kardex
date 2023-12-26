@@ -335,6 +335,142 @@
     </div>';
       }
     ?>
+
+
+    <?php
+
+    $mis_equipos = ControladorEquipos::ctrMostrarEquipos("id_usuario" , $_SESSION["id"]);
+
+    if (!is_null($mis_equipos) && is_countable($mis_equipos) && count($mis_equipos) > 0 ) 
+    {
+        echo '<div class="box">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa fa-television"></i> Computadores asignados</h3>
+          </div>
+        </div>';
+
+        for ($i=0; $i < count($mis_equipos); $i++) 
+        { 
+                  echo '<div class="box">
+          <div class="box-header">
+            <h3 class="box-title">PC Serial: <b>'.$mis_equipos[$i]["n_serie"].'</b></h3>
+          </div>
+          <div class="box-body">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <dl class="dl-horizontal">
+                
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["n_serie"], 0, "Serial", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["nombre"], 0, "Nombre PC", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["serialD"], 0, "2do Serial", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["id_propietario"], 1, "Propietario", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["id_arquitectura"], 1, "Arquitectura", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["marca"], 1, "Marca", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["modelo"], 1, "Modelo", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["cpu"], 1, "CPU", "").'
+                  '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["cpu_modelo"], 1, "Modelo CPU", "").'
+
+              </dl>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <dl class="dl-horizontal">
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["ram"], 0, "Memoria RAM", "").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["ssd"], 0, "Disco SSD", "GB").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["hdd"], 0, "HDD", "GB").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["gpu"], 0, "GPU", "").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["gpu_modelo"], 0, "Modelo GPU", "").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["so"], 1, "Sistema Operativo", "").'
+                    '.ControladorEquipos::ctrMostrarItem($mis_equipos[$i]["so_version"], 1, "Versión SO", "").'
+                </dl>
+              </div><!--col-lg-6 col-md-6 col-sm-12-->';
+
+              if (!empty($mis_equipos[$i]["fotos"])) 
+              {
+                $fotosEquipo = json_decode($mis_equipos[$i]["fotos"], true);
+
+                if (!is_null($fotosEquipo) && is_countable($fotosEquipo[0]) && count($fotosEquipo[0]) > 0) 
+                {
+
+                  echo '
+                    <div class="col-sm-4">';
+
+                  echo '<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">';
+
+                  for ($j = 0; $j < count($fotosEquipo[0]); $j++) 
+                  { 
+                    if (isset($fotosEquipo[0][($j+1)]) ) 
+                    {
+                      $rutaImg = 'vistas/img/equipos/'.$mis_equipos[$i]["n_serie"].'/'.$fotosEquipo[0][($j+1)];
+                      if( file_exists($rutaImg) )
+                      {
+                         echo ($j == 0)?'<li data-target="#carousel-example-generic" data-slide-to="'.$j.'" class="active"></li>':'<li data-target="#carousel-example-generic" data-slide-to="'.$j.'" class=""></li>';
+                      }
+                    }
+                  }
+
+                  echo '</ol>
+                        <div class="carousel-inner" style="height: 450px;">';
+
+                  for ($j = 0; $j < count($fotosEquipo[0]); $j++) 
+                  { 
+                      if (isset($fotosEquipo[0][($j+1)]) ) 
+                      {
+                        $rutaImg = 'vistas/img/equipos/'.$mis_equipos[$i]["n_serie"].'/'.$fotosEquipo[0][($j+1)];
+                        if (file_exists($rutaImg)) 
+                        {
+                          echo ($j == 0)?'<div class="item active">
+                          <img height="100%" src="'.$rutaImg.'" alt="Imagen '.($j+1).'">
+                          <div class="carousel-caption">
+                          <a style="text-decoration:none; color:white; text-shadow: 1px 1px 2px black;" href="'.$rutaImg.'" target="_blank"><i class="fa fa-expand"></i> Imagen '.($j+1).'</a>
+                          </div>
+                          </div>':'<div class="item">
+                          <img height="100%" src="'.$rutaImg.'" alt="Imagen '.($j+1).'">
+                            <div class="carousel-caption">
+                              <a style="text-decoration:none; color:white; text-shadow: 2px 2px 2px black;" href="'.$rutaImg.'" target="_blank"><i class="fa fa-expand"></i> Imagen '.($j+1).'</a>
+                            </div>
+                          </div>';
+                        }
+                      }
+
+                      
+                  }
+
+                  echo '<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="fa fa-angle-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="fa fa-angle-right"></span>
+                        </a>
+                        </div></div>';
+
+
+                  echo '</div>';
+                }
+
+              }
+              else{
+                echo '<div class="col-sm-4"><p class="lead">sin imagen para mostrar.</p></div>';
+              }
+
+              echo '
+          </div>
+        </div>';
+
+
+
+
+
+        }
+
+    }
+
+
+    ?>
+
+
+
+
+
   </section>
   <!-- /.content -->
 

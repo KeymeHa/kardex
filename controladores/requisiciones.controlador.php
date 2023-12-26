@@ -518,7 +518,7 @@ class ControladorRequisiciones
 	}
 
 
-	static public function ctrCrearRequisicion($perfil)
+	static public function ctrCrearRequisicion($perfil, $idSession)
 	{
 		if ( isset($_POST["listadoInsumosRq"]) ) 
 		{
@@ -600,6 +600,12 @@ class ControladorRequisiciones
 
 						$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 						$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+
+						if($respuesta == "ok" && isset($value["ent"]) && $value["ent"] > 0 )
+						{
+							$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $value["id"], 1, $res["stock"], $ent, $nuevoStock, $parametro["codigo"]);
+							echo ( $historial == "ok" )? '' :'<script>console.log("error create rq");</script>';
+						}
 
 					}//foreach
 				}
@@ -723,7 +729,7 @@ class ControladorRequisiciones
 		return $respuesta;
 	}//ctrMostrartempRq
 
-	static public function ctrEditarRequisicion($anio)
+	static public function ctrEditarRequisicion($anio, $idSession)
 	{
 		if ( isset($_POST["editarRq"]) ) 
 		{
@@ -790,6 +796,12 @@ class ControladorRequisiciones
 
 											$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 											$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+
+											if($respuesta == "ok")
+											{
+												$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 2, $ant["ent"], $edit["ent"], $nuevoStock, $requisicion["codigoInt"]);
+												echo ( $historial == "ok" )? '' :'<script>console.log("error create rq");</script>';
+											}
 										}
 
 										$sw = true;							
@@ -801,6 +813,12 @@ class ControladorRequisiciones
 									$nuevoStock = $insumo["stock"] - $edit["ent"];
 									$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 									$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+
+									if($respuesta == "ok")
+									{
+										$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 2, $insumo["stock"], $edit["ent"], $nuevoStock, $requisicion["codigoInt"]);
+										echo ( $historial == "ok" )? '' :'<script>console.log("error create rq");</script>';
+									}
 								}
 							}//foreach
 
@@ -824,6 +842,11 @@ class ControladorRequisiciones
 												$precioCompra = $insumo["precio_compra"];
 												$datos = array( 'stock' => $nuevoStock, 'precio_compra' => $precioCompra, 'id' => $valor);
 												$respuesta = ControladorInsumos::ctrActualizarStock($datos);
+												if($respuesta == "ok")
+												{
+													$historial = ControladorInsumos::ctrHistoriaInsumo($idSession, $valor, 3, $insumo["stock"], $value["ent"], $nuevoStock, $requisicion["codigoInt"]);
+													echo ( $historial == "ok" )? '' :'<script>console.log("error create rq");</script>';
+												}
 											}
 										}
 									}
@@ -1073,5 +1096,8 @@ class ControladorRequisiciones
 		}
 
 	}
+
+
+	
 
 }

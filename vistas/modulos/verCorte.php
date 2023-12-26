@@ -20,9 +20,10 @@
   }
 
 
-  $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia",  "tab" => "pqr", "indice" => "id", "foranea" => "id_pqr", "campo" => "nombre"],
-                    1 => [ "tit" => "Dirigida a las áreas",  "tab" => "areas", "indice" => "id", "foranea" => "id_area", "campo" => "nombre"],
-                    2 => [ "tit" => "Tipo de Documento",  "tab" => "articulo", "indice" => "id", "foranea" => "id_articulo", "campo" => "nombre"]);
+
+  $TbsRad = array(0 => [ "tit" => "Tipos de Correspondencia", "fk" => "id_pqr"],
+                  1 => [ "tit" => "Dirigida a las áreas", "fk" => "id_area"],
+                  2 => [ "tit" => "Tipo de Documento", "fk" => "id_articulo"]);
   $contarRadicados = [[]];
 
 ?>
@@ -63,9 +64,10 @@
 
               for ($y=0; $y < count($TbsRad) ; $y++) 
               { 
-                  $contarRadicados = ControladorRadicados::ctrContarRad($TbsRad[$y]["tab"], $TbsRad[$y]["indice"], $TbsRad[$y]["campo"], $TbsRad[$y]["foranea"], null, $indiceD , null, null, $_SESSION["anioActual"]);
+                                                                      //($tablaD,           $itemD,                $campoD,              $item, $valor,          $otro, $fechaInicial, $fechaFinal, $anio)
+                  $contarRadicados = ControladorRadicados::ctrContarRad($_GET["idCorte"], $TbsRad[$y]["fk"], null, null, $_SESSION["anioActual"]);
 
-                  if (count($contarRadicados) != 0 && $contarRadicados != false) 
+                 if (count($contarRadicados) != 0 && $contarRadicados != false) 
                   {
 
                     echo ' <div class="col-xs-4">
@@ -77,8 +79,8 @@
                           for ( $x=0 ; $x < count($contarRadicados) ; $x++) 
                           { 
                             echo ' <tr>
-                                    <th><a href="index.php?ruta=resumenRadicadoD&tab='.$TbsRad[$y]["tab"].'&indice='.$TbsRad[$y]["indice"].'&val='.$contarRadicados[$x][$TbsRad[$y]["indice"]].'">'.$contarRadicados[$x][$TbsRad[$y]["campo"]].'</a></th>
-                                    <td>'.$contarRadicados[$x]["COUNT(".$TbsRad[$y]["tab"].".".$TbsRad[$y]["indice"].")"].'</td>
+                                    <th><a href="#">'.$contarRadicados[$x]["nombre"].'</a></th>
+                                    <td>'.$contarRadicados[$x]["COUNT(*)"].'</td>
                                   </tr>';
                           }
 

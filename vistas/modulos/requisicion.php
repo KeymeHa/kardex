@@ -291,7 +291,7 @@
                   echo ( isset($requisicion["insumos"]) && !is_null($requisicion["insumos"]) ) ? '<button type="submit" style="color: white;" class="btn btn-success pull-right btnGuardarRq">Guardar</button>' : '<button type="submit" disabled style="color: white;" class="btn btn-default pull-right btnGuardarRq">Guardar</button>';
 
                   $anexarRq = new ControladorRequisiciones();
-                  $anexarRq -> ctrCrearRequisicion($_SESSION["perfil"]);
+                  $anexarRq -> ctrCrearRequisicion($_SESSION["perfil"], $_SESSION["id"]);
                 ?>
 
             </form>

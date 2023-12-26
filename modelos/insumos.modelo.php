@@ -72,6 +72,16 @@ class ModeloInsumos
 
 				return $stmt -> fetchAll();
 			}
+			elseif($item == "descripcion")
+			{
+				$stmt = Conexion::conectar()->prepare("SELECT id FROM $tabla WHERE $item = :$item AND elim = 0");
+
+				$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+				$stmt -> execute();
+
+				return $stmt -> fetch();
+			}
 			else
 			{
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND elim = 0");
@@ -621,6 +631,47 @@ class ModeloInsumos
 		$stmt = null;
 	}
 
-	
+
+	static public function mdlVerHistoriaInsumo($tabla, $id, $anio, $mes){
+
+		if($anio != 0)
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_insumo = :id_insumo AND anio = :anio AND mes = :mes");
+			$stmt -> bindParam(":id_insumo", $id, PDO::PARAM_INT);
+			$stmt -> bindParam(":anio", $anio, PDO::PARAM_STR);
+			$stmt -> bindParam(":mes", $mes, PDO::PARAM_STR);
+			return ( $stmt -> execute() )? $stmt -> fetch() : "error" ;
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_insumo = :id_insumo");
+			$stmt -> bindParam(":id_insumo", $id, PDO::PARAM_INT);
+			return ( $stmt -> execute() )? $stmt -> fetch() : "error" ;
+		}
+		$stmt -> close();
+		$stmt = null;
+	}//mdlVerHistoriaInsumo
+
+	static public function mdlCrearHistorialInsumo($tabla, $data){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_insumo, anio, historia, mes) VALUES (:id_insumo, :anio, :historia, :mes)");
+		$stmt -> bindParam(":id_insumo", $data["id_insumo"], PDO::PARAM_INT);
+		$stmt -> bindParam(":anio", $data["anio"], PDO::PARAM_STR);
+		$stmt -> bindParam(":historia", $data["historia"], PDO::PARAM_STR);
+		$stmt -> bindParam(":mes", $data["mes"], PDO::PARAM_STR);
+		return ($stmt -> execute())? "ok" : "error" ;
+		$stmt -> close();
+		$stmt = null;
+	}//mdlActualizarHistorialInsumo
+
+	static public function mdlActualizarHistorialInsumo($tabla, $id, $data){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET historia = :historia WHERE id = :id");
+		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+		$stmt -> bindParam(":historia", $data, PDO::PARAM_STR);
+		return ($stmt -> execute())? "ok" : "error" ;
+		$stmt -> close();
+		$stmt = null;
+	}//mdlActualizarHistorialInsumo
 
 }#ModeloInsumos
