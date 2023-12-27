@@ -329,8 +329,10 @@
               <div class="form-group">
                 <label>*CPU: Generación</label>
                 <select class="form-control selectIdCPUGenE" id="selectIdCPUGenE" required name="selectIdCPUGenE">
+
+                  <option value="0">No definido</option>
                   <?php
-                    for($i = 11 ; $i >= 4 ; $i--)
+                    for($i = 15 ; $i >= 4 ; $i--)
                     {
                       echo '<option value="'.$i.'">'.$i.'</option>';
                     }

@@ -1295,8 +1295,8 @@ class ControladorEquipos
 				if (is_null($equipo["historial"]) && isset($actaEquipo["fecha"])) 
 				{
 					$dJsonAcc = '{"fe":"'.$actaEquipo["fecha"].'","hr":"'.date('h:i a').'","acc":"1","gen":"'.$idSesion.'","da":{"file":"'.$_POST["selectIdActaE"].'","obs":"'.$obs.'"}}';
-				}
 
+				}
 
 			}
 			else
@@ -1403,8 +1403,6 @@ class ControladorEquipos
 						$usuarios["are"] = $equipo["id_area"];
 						$usuarios["gen"] = $idSesion;
 					}
-
-
 					
 				}
 			}
@@ -1507,22 +1505,28 @@ class ControladorEquipos
 										$data .=( isset($_POST[ $llaves_post[$i] ]))?" incluye mouse,": " ya no incluye mouse, ";
 									}
 									elseif ($llaves_post[$i] == "selectLicenciaE") 
-									{
+									{										
+										$lincNew = $accion->ctrMostrarLicencias("id", $new);
 
-										$lincAnt = $accion->ctrMostrarLicencias("id", $equipo[$llaves[$i]]);
 
-										$lincNew = $accion->ctrMostrarLicencias("id", $_POST[ $llaves_post[$i] ]);
-
-										if ( isset($lincAnt["id"]) ) 
-										{
-											$data .= ( isset($lincNew["id"]) )? " cambio de licencia de ".$lincAnt["usuario"]." a ".$lincNew["usuario"].",": "" ;
-										}
-										else
+										if ($ant == 0) 
 										{
 											$data .= ( isset($lincNew["id"]) )? " asignación de licencia ".$lincNew["usuario"].",": "" ;
 										}
+										else{
 
-										$data .= "" ;
+											$lincAnt = $accion->ctrMostrarLicencias("id", $ant);
+
+											if ($new == 0) 
+											{
+												echo '<script> console.log("$new === 0") </script>';
+												$data .= ( isset($lincAnt["id"]) )? " se removio la licencia ".$lincAnt["usuario"].",": "" ;
+											}
+											else{
+												$data .= ( isset($lincNew["id"]) )? " cambio de licencia de ".$lincAnt["usuario"]." a ".$lincNew["usuario"].",": "" ;
+												echo '<script> console.log("$new === 0 else") </script>';
+											}
+										}
 									}
 									elseif ($llaves_post[$i] == "selectRolE") {
 
@@ -1623,7 +1627,6 @@ class ControladorEquipos
 				fclose($file_temporal);
 			}
 
-			echo "response";
 			var_dump($respuesta);
 
 			if ($respuesta == "ok") 

@@ -44,7 +44,9 @@ class TablaEquipos
 
 			$acciones = "";
 
-			$acciones = ($acc == null)? "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' nombre='".$equipos[$i]["nombre"]."' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn ".$clase." btn-bajaPC' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>": "<div class='btn-group'><div class='col-md-4'><button class='btn ".$clase." agregarPC RegresarBoton' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>" ;
+			
+
+			$acciones = ($acc == null)? "<div class='btn-group'><div class='col-md-4'><button class='btn btn-success btn-verPC' title='Visualizar Equipo' idPC='".$equipos[$i]["id"]."'><i class='fa fa-laptop'></i></button></div><div class='col-md-4'><button class='btn btn-warning btn-editarPC' title='Editar Equipo' data-toggle='modal' data-target='#modalEquipo' nombre='".$equipos[$i]["nombre"]."' tipoAcc='1' idPC='".$equipos[$i]["id"]."'><i class='fa fa-pencil'></i></button></div><div class='col-md-4'><button class='btn ".$clase." btn-bajaPC' est='".$equipos[$i]["estado"]."' nombre='".$equipos[$i]["nombre"]."' serie='".$equipos[$i]["n_serie"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."' data-toggle='modal' data-target='#modalEstadoPC'><i class='fa ".$icono."'></i></button></div></div>": "<div class='btn-group'><div class='col-md-4'><button class='btn ".$clase." agregarPC RegresarBoton' est='".$equipos[$i]["estado"]."' title='".$titulo."' idPC='".$equipos[$i]["id"]."'><i class='fa ".$icono."'></i></button></div></div>" ;
 
 
 			$usuario = "No asignado";

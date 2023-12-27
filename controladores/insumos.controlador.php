@@ -722,15 +722,19 @@ class ControladorInsumos
 
 	         $sw = 0;
 
-	          for ($i=0; $i < count($insumo); $i++) 
-	          { 
-	            if ($id == $insumo[$i]["id"]) 
-	            {
-	            	$arrayInfo["ing"]+=1;
-	            	$arrayInfo["ing_t"]+=$insumo[$i]["can"];
-	            	$arrayInfo["inv"]+=$insumo[$i]["sub"];
-	            }
-	          }   
+	         if (is_countable($insumo)) {
+	         	for ($i=0; $i < count($insumo); $i++) 
+		          { 
+		            if ($id == $insumo[$i]["id"]) 
+		            {
+		            	$arrayInfo["ing"]+=1;
+		            	$arrayInfo["ing_t"]+=$insumo[$i]["can"];
+		            	$arrayInfo["inv"]+=$insumo[$i]["sub"];
+		            }
+		          }   
+	         }
+
+	          
 		 }
 		     
 		}

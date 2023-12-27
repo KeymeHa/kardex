@@ -211,7 +211,7 @@ $("button.btn-editarPC").click(function() {
 
 			$(".selectIdCPUGenE").append('<option value="'+response1["cpu_generacion"]+'">'+response1["cpu_generacion"]+'</option>');
 			
-			for (var i = 12; i >= 4; i--) {
+			for (var i = 15; i >= 4; i--) {
 				if (response1["cpu_generacion"] != i) 
 				{
 					$(".selectIdCPUGenE").append('<option value="'+i+'">'+i+'</option>');

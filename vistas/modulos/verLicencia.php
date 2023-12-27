@@ -72,4 +72,4 @@
   </section>
 </div>
 
-<?php include("modal/equipo.php");  include("modal/modalExportPC.php");?>
+<?php include("modal/equipo.php");  include("modal/modalExportPC.php"); include("modal/modalEstadoPC.php");?>
