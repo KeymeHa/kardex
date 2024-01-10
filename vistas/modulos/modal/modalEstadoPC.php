@@ -38,8 +38,8 @@
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObsEE"></textarea>
+                <label for="textObsEE">Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." id="textObsEE" name="textObsEE"></textarea>
               </div>
             </div>
 

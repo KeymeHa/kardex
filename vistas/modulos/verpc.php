@@ -217,9 +217,6 @@
                         }
 
                       echo '</div>
-                          <div class="box-footer">
-                               <button class="btn btn-success btn-reasignar" id="btn-reasignar" data-toggle="modal" data-target="#modalReasignarPC"><i class="fa fa-user-plus"></i> Reasignar</button>
-                            </div>
                       </div>';
 
             
@@ -517,8 +514,7 @@
                           break;
                         case 3:
 
-
-                          if (!file_exists("vistas/doc/equipos/".$equipo["nombre"]."/".$trazabilidad[$x]["da"]["file"].".pdf")) {
+                          if (!file_exists("vistas/doc/equipos/".$equipo["n_serie"]."/".$trazabilidad[$x]["da"]["file"].".pdf")) {
                              echo'<li>
                           <!-- timeline icon -->
                           <i class="fa fa-close bg-red"></i>
@@ -541,7 +537,7 @@
                           <div class="timeline-item">
                               <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
 
-                              <h3 class="timeline-header"><a href="vistas/doc/equipos/'.$equipo["nombre"].'/'.$trazabilidad[$x]["da"]["file"].'.pdf"><i class="fa fa-book"></i> Soporte</a></h3>
+                              <h3 class="timeline-header"><a href="vistas/doc/equipos/'.$equipo["n_serie"].'/'.$trazabilidad[$x]["da"]["file"].'.pdf"><i class="fa fa-book"></i> Soporte</a></h3>
 
                               <div class="timeline-body">
                                   <strong>'.ControladorUsuarios::ctrMostrarNombrea($item, $trazabilidad[$x]["gen"]).'</strong>: Adjunto un ';
@@ -684,6 +680,28 @@
 
 
                         break;
+
+                        case 6:
+
+
+                        $usuario_tr = ControladorUsuarios::ctrMostrarNombrea($item, $trazabilidad[$x]["da"]["idAsg"]);
+
+                        echo'<li>
+                            <!-- timeline icon -->
+                            <i class="fa fa-user-times bg-yellow"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> '.$trazabilidad[$x]["hr"].'</span>
+
+                                <h3 class="timeline-header"><a href="#">Desvinculación</a></h3>
+
+                                <div class="timeline-body">
+                                    <strong>'.ControladorUsuarios::ctrMostrarNombrea($item, $trazabilidad[$x]["gen"]).'</strong>: Se desvinculo el equipo a <b>'.$usuario_tr.'</b>.
+                                </div>
+                            </div>
+                        </li>';
+
+
+                          break;
                         
                         default:
                            echo'<li>
@@ -788,55 +806,12 @@ No se encontraron datos.
                 <h4>Responsabilidad</h4>
               </div>
 
-              <div class="col-md-6 col-lg-6 col-sm-12">
-             
-             
-                <div class="form-group">
-                  <label>Responsable</label>
-                  <input type="hidden" name="idEReasignar" value="<?php echo $_GET['idpc']?>" required readonly>
-                  <select class="form-control" name="selectResponsableE" required>
-                    <?php
-                      $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
-
-                      $contar = 0;
-                      $gatillo = 0;
-
-                      if ($equipo["id_responsable"] != 0) 
-                      {
-                         while ( $contar < count($responsable) && $gatillo == 0 ) 
-                        {
-                          if ( $responsable[$contar]["id"] == $equipo["id_responsable"] ) 
-                          {
-                            $areaR = ControladorAreas::ctrMostrarAreas("id", $responsable[$contar]["id_area"]);
-                            echo '<option value="'.$responsable[$contar]["id"].'">'.$responsable[$contar]["nombre"].' - '.$areaR["nombre"].'</option>';
-                            $gatillo = 1;
-                          }
-                          $contar++;
-                        }
-                      }
-                      else
-                      {
-                        echo '<option value="0">Seleccione un Responsable</option>';
-                      }
-
-                      foreach ($responsable as $key => $value) :
-                        $areaR = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
-
-                        if ($equipo["id_responsable"] != $value["id"]) 
-                        {
-                           echo '<option value="'.$value["id"].'">'.$value["nombre"].' - '.$areaR["nombre"].'</option>';
-                        }
-                      endforeach;
-                    ?>
-                  </select>
-                </div>
-              </div>
-
+              <input type="hidden" name="idEReasignarRe" value="<?php echo $equipo['id'];?>" readonly required>
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Asignado a:</label>
-                  <select class="form-control" name="selectAsignadoE" required>
+                  <label for="selectAsignadoRe">Asignado a:</label>
+                  <select class="form-control" id="selectAsignadoRe" name="selectAsignadoRe" required>
                     <?php
 
                     $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
@@ -876,8 +851,8 @@ No se encontraron datos.
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Rol</label>
-                  <select class="form-control" name="selectRolE" required>
+                  <label for="selectRolRe">Rol</label>
+                  <select class="form-control" id="selectRolRe" name="selectRolRe" required>
 
                     <?php echo ( $equipo["rol"] == 0 ) ? '<option value="0">Contratista</option><option value="1">Empleado</option>' : '<option value="1">Empleado</option><option value="0">Contratista</option>' ; ?>
 
@@ -888,8 +863,8 @@ No se encontraron datos.
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Proyecto:</label>
-                  <select class="form-control" name="selectProyectoE" required>
+                  <label for="selectProyectoRe">Proyecto:</label>
+                  <select class="form-control" id="selectProyectoRe" name="selectProyectoRe" required>
                     <?php
 
                     $proyectos = ControladorProyectos::ctrMostrarProyectos(null, null);
@@ -906,24 +881,10 @@ No se encontraron datos.
 
             </div><!--row-->
 
-            <div class="col-md-6 col-lg-6 col-sm-12">
-                <div class="form-group">
-                  <label>*Fecha asignación:</label>
-                  <div class="input-group date">
-                    <div class="input-group-addon">
-                      <i class="fa fa-calendar"></i>
-                    </div>
-                    <input type="date" class="form-control" name="dateReasignar" id="dateReasignar" value="" />
-                  </div>
-                </div>
-              </div><!--col-md-6 col-lg-6 col-sm-12-->
-
-
-
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObservacionesE"></textarea>
+                <label for="textObservacionesRe">Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." id="textObservacionesRe" name="textObservacionesRe"></textarea>
               </div>
             </div>
 
@@ -977,35 +938,35 @@ No se encontraron datos.
             </div>
 
             <div class="form-group">
-              <label for="soportePC">Soporte</label>
-              <input type="file" id="soportePC" name="soportePC">
+              <p>Soporte</p>
+              <input type="file" name="soportePC">
               <p class="help-block">Acepta solo Archivo PDF.</p>
             </div>
 
             <div class="form-group">
               <div class="radio">
-              <label>
+              <label for="opTipoS1">
               <input type="radio" name="optionTipoSp" id="opTipoS1" value="1" checked="">
               Doc. de Responsabilidad Firmado
               </label>
               </div>
 
               <div class="radio">
-              <label>
+              <label for="opTipoS2">
               <input type="radio" name="optionTipoSp" id="opTipoS2" value="2">
               Doc. Devolución Firmado
               </label>
               </div>
 
               <div class="radio">
-              <label>
+              <label for="opTipoS3">
               <input type="radio" name="optionTipoSp" id="opTipoS3" value="3">
               Solicitud de Soporte
               </label>
               </div>
 
               <div class="radio">
-              <label>
+              <label for="opTipoS4">
               <input type="radio" name="optionTipoSp" id="opTipoS4" value="4">
               Otro
               </label>
@@ -1014,7 +975,7 @@ No se encontraron datos.
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>*Fecha Soporte:</label>
+                  <label for="dateSoporte">*Fecha Soporte:</label>
                   <div class="input-group date">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
@@ -1028,8 +989,8 @@ No se encontraron datos.
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." name="textObsSE"></textarea>
+                <label for="textObsSE">Observaciones</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." id="textObsSE" name="textObsSE"></textarea>
               </div>
             </div>
 
@@ -1089,9 +1050,9 @@ No se encontraron datos.
             <input type="hidden" class="inputIdImagenesPC" required readonly name="inputIdImagenesPC" id="inputIdImagenesPC" value="<?php echo $equipo['id'];?>">
 
             <div class="form-group">
-              <label>Fotos equipo:</label>
+              <label for="fotosE">Fotos equipo:</label>
               <div class="input-group date">
-                <input name="fotosE[]" type="file" multiple />
+                <input name="fotosE[]" id="fotosE" type="file" multiple />
               </div>
             </div>
           </div><!--box-body-->

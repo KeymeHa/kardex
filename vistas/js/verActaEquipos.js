@@ -262,17 +262,16 @@ $("button.btn-editarPC").click(function() {
 			}
 
 			var elementos = [ "selectIdProE", "selectIdArqE", "selectIdMarcaE", "selectIdModeloE",
-			 "selectIdCPUE", "selectIdCPUModE", "selectSOE", "selectSOVerE", "selectIdActaE", "selectResponsableE", "selectAsignadoE",
+			 "selectIdCPUE", "selectIdCPUModE", "selectSOE", "selectSOVerE", "selectIdActaE", "selectAsignadoE",
 			 "selectProyectoE", "selectLicenciaE"];
 
 			var llaves = [ 'id_propietario', 'id_arquitectura', 'marca', 'modelo',
-			 'cpu', 'cpu_modelo', 'so', 'so_version', 'id_acta', 'id_responsable',
-			  'id_usuario', 'id_proyecto', 'id_licencia' ];
+			 'cpu', 'cpu_modelo', 'so', 'so_version', 'id_acta', 'id_usuario', 'id_proyecto', 'id_licencia' ];
 
 			var valores = [ response1['id_propietario'], response1['id_arquitectura'], response1['marca'], 
 			response1['modelo'], response1['cpu'], response1['cpu_modelo'], 
-			response1['so'], response1['so_version'], response1['id_acta'], 
-			response1['id_responsable'], response1['id_usuario'], response1['id_proyecto'], response1['id_licencia'] ];
+			response1['so'], response1['so_version'], response1['id_acta'], response1['id_usuario'], response1['id_proyecto'], response1['id_licencia'] ];
+
 
 			for (var i = 0; i < elementos.length; i++) 
 			{

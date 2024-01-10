@@ -46,7 +46,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Propietario</label>
+                  <label for="selectIdProE">*Propietario</label>
 
                   <div class="input-group">
                     <div class="input-group-btn">
@@ -94,7 +94,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Arquitectura</label>
+                  <label for="selectIdArqE">*Arquitectura</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -140,7 +140,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Marca Equipo</label>
+                  <label for="selectIdMarcaE">*Marca Equipo</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -185,7 +185,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Modelo</label>
+                  <label for="selectIdModeloE">*Modelo</label>
 
                   <div class="input-group">
                     <div class="input-group-btn">
@@ -239,7 +239,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*CPU: Marca</label>
+                  <label for="selectIdCPUE">*CPU: Marca</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -284,7 +284,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*CPU: Modelo</label>
+                  <label for="selectIdCPUModE">*CPU: Modelo</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -327,7 +327,7 @@
               </div><!--form-group--><!--btn-addParam-->
 
               <div class="form-group">
-                <label>*CPU: Generación</label>
+                <label for="selectIdCPUGenE">*CPU: Generación</label>
                 <select class="form-control selectIdCPUGenE" id="selectIdCPUGenE" required name="selectIdCPUGenE">
 
                   <option value="0">No definido</option>
@@ -342,17 +342,46 @@
 
               <div class="form-group">
                 <label for="pc_cpufre">*CPU: Frecuencia (Ghz)</label>
-                <input type="text" class="form-control pc_cpufre" id="pc_cpufre" placeholder="2.5" value="0" name="inputCPUFreE">
+                <?php
+
+                if (isset($temporalData[0]["inputCPUFreE"]) && intval($temporalData[0]["inputCPUFreE"]) ) 
+                {
+                 echo '<input type="text" class="form-control pc_cpufre" id="pc_cpufre" placeholder="2.5" value="'.$temporalData[0]["inputCPUFreE"].'" name="inputCPUFreE">';
+                }
+                else{
+                  echo '<input type="text" class="form-control pc_cpufre" id="pc_cpufre" placeholder="2.5" value="0" name="inputCPUFreE">';
+                }
+                ?>
+
+                
               </div>
 
               <div class="form-group">
                 <label for="pc_ram">*Capacidad RAM (Gb)</label>
-                <input type="number" class="form-control inputRamE" id="pc_ram" min="4" value="8" placeholder="8" required name="inputRamE">
+                <?php
+
+                if (isset($temporalData[0]["inputRamE"]) && intval($temporalData[0]["inputRamE"]) ) 
+                {
+                 echo '<input type="number" class="form-control inputRamE" id="pc_ram" min="4" value="'.$temporalData[0]["inputRamE"].'" placeholder="8" required name="inputRamE">';
+                }
+                else{
+                  echo '<input type="number" class="form-control inputRamE" id="pc_ram" min="4" value="8" placeholder="8" required name="inputRamE">';
+                }
+                ?>
               </div>
 
               <div class="form-group">
                 <label for="pc_ssd">*SSD (Gb)</label>
-                <input type="number" class="form-control inputSSDE" id="pc_ssd" min="0" value="250" placeholder="250" required name="inputSSDE">
+                <?php
+
+                if (isset($temporalData[0]["inputSSDE"]) && intval($temporalData[0]["inputSSDE"]) ) 
+                {
+                 echo '<input type="number" class="form-control inputSSDE" id="pc_ssd" min="0" value="'.$temporalData[0]["inputSSDE"].'" placeholder="250" required name="inputSSDE">';
+                }
+                else{
+                  echo '<input type="number" class="form-control inputSSDE" id="pc_ssd" min="0" value="250" placeholder="250" required name="inputSSDE">';
+                }
+                ?>
               </div>
 
 
@@ -364,29 +393,69 @@
               
               <div class="form-group">
                 <label for="pc_hdd">HDD (Gb)</label>
-                <input type="number" class="form-control inputHDDE" id="pc_hdd" min="0" value="" placeholder="1000" name="inputHDDE">
+                
+                <?php
+
+                if (isset($temporalData[0]["inputHDDE"]) && intval($temporalData[0]["inputHDDE"]) ) 
+                {
+                 echo '<input type="number" class="form-control inputHDDE" id="pc_hdd" min="0" value="'.$temporalData[0]["inputHDDE"].'" placeholder="1000" name="inputHDDE">';
+                }
+                else{
+                  echo '<input type="number" class="form-control inputHDDE" id="pc_hdd" min="0" value="" placeholder="1000" name="inputHDDE">';
+                }
+                ?>
               </div>
 
               <div class="form-group">
                 <label for="pc_gpumarca">GPU: Marca</label>
-                <input type="text" class="form-control inputGPUE" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">
+                <?php
+
+                if (isset($temporalData[0]["inputGPUE"]) ) 
+                {
+                 echo '<input type="text" class="form-control inputGPUE" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE" value="'.$temporalData[0]["inputGPUE"].'">';
+                }
+                else{
+                  echo '<input type="text" class="form-control inputGPUE" id="pc_gpumarca" placeholder="NVIDIA, AMD" name="inputGPUE">';
+                }
+                ?>
+                
               </div>
 
               <div class="form-group">
                 <label for="pc_gpumodelo">GPU: Modelo</label>
-                <input type="text" class="form-control inputGPUModE" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE">
+                
+                <?php
+
+                if (isset($temporalData[0]["inputGPUModE"]) ) 
+                {
+                 echo '<input type="text" class="form-control inputGPUModE" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE" value="'.$temporalData[0]["inputGPUModE"].'">';
+                }
+                else{
+                  echo '<input type="text" class="form-control inputGPUModE" id="pc_gpumodelo" placeholder="Gforce, Radeon" name="inputGPUModE">';
+                }
+                ?>
               </div>
 
               <div class="form-group">
                 <label for="pc_gpucap">GPU: Capacidad (Gb)</label>
-                <input type="number" class="form-control inputGPUCapE" id="pc_gpucap" placeholder="2" name="inputGPUCapE">
+                <?php
+
+                if (isset($temporalData[0]["inputGPUCapE"]) && intval($temporalData[0]["inputGPUCapE"]) ) 
+                {
+                 echo '<input type="number" class="form-control inputGPUCapE" id="pc_gpucap" placeholder="2" name="inputGPUCapE" value="'.$temporalData[0]["inputGPUCapE"].'">';
+                }
+                else{
+                  echo '<input type="number" class="form-control inputGPUCapE" id="pc_gpucap" placeholder="2" name="inputGPUCapE">';
+                }
+                ?>
+                
               </div>
 
 <!------------------------------------------------------------------------------------------------->
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Sistema Operativo</label>
+                  <label for="selectSOE">*Sistema Operativo</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -431,7 +500,7 @@
 
               <div class="form-group"><!--btn-addParam-->
 
-                  <label for="exampleInputEmail1">*Versión SO</label>
+                  <label for="selectSOVerE">*Versión SO</label>
 
                   <div class="input-group">
                   <div class="input-group-btn">
@@ -478,8 +547,8 @@
 
                 <div class="col-md-3 col-lg-2 col-sm-6">
                   <div class="checkbox">
-                    <label>
-                    <input type="checkbox" class="checkTecladoE" name="checkTecladoE">
+                    <label for="checkTecladoE">
+                    <input type="checkbox" id="checkTecladoE" class="checkTecladoE" name="checkTecladoE">
                     Teclado
                     </label>
                   </div>
@@ -487,8 +556,8 @@
 
                 <div class="col-md-3 col-lg-2 col-sm-6">
                   <div class="checkbox">
-                    <label>
-                    <input type="checkbox" class="checkMouseE" name="checkMouseE">
+                    <label for="checkMouseE">
+                    <input type="checkbox" id="checkMouseE" class="checkMouseE" name="checkMouseE">
                     Mouse
                     </label>
                   </div>
@@ -497,64 +566,13 @@
 
             <div class="row">
 
-                 <div class="col-md-6 col-lg-6 col-sm-12">
-                <div class="form-group">
-                  <label>*Acta de Ingreso</label>
-                  <select class="form-control selectIdActaE" id="selectIdActaE" required name="selectIdActaE">
-                    <?php
-
-                     $actasIngreso = ControladorEquipos::ctrMostrarActasDis();
-
-                    if (count($actasIngreso) > 0 && isset($actasIngreso[0]["codigo"])) 
-                    {
-
-                      echo '<option value="0">Seleccione una opción</option>';
-
-                       foreach ($actasIngreso as $key => $value) 
-                      {
-                        echo '<option value="'.$value["id"].'">'.$value["codigo"].' / '.$value["fecha"].' PC '.$value["cantidadUso"].'/'.$value["cantidad"].' </option>';
-                      }
-                    }
-                    else
-                    {
-                      echo '<option value="0">No hay actas disponibles</option>';
-                    }
-
-                   
-                    ?>
-                  </select>
-                </div>
-              </div><!--col-md-6 col-lg-6 col-sm-12-->
-
-
-
               <div class="col-md-12 col-lg-12 col-sm-12">
                 <h4>Responsabilidad</h4>
               </div>
 
               <div class="col-md-6 col-lg-6 col-sm-12">
-             
-             
                 <div class="form-group">
-                  <label>Responsable</label>
-                  <select class="form-control selectResponsableE" id="selectResponsableE" name="selectResponsableE">
-                    <option value="0">Seleccione Responsable</option>
-                    <?php
-                    echo '<option value="0">Seleccione una opción</option>';
-                    $responsable = ControladorPersonas::ctrMostrarPersonas("sw", 1);
-                    foreach ($responsable as $key => $value) :
-                      $areaR = ControladorAreas::ctrMostrarAreas("id", $value["id_area"]);
-                      echo '<option value="'.$value["id"].'">'.$value["nombre"].' - '.$areaR["nombre"].'</option>';
-                    endforeach;
-                    ?>
-                  </select>
-                </div>
-              </div>
-
-
-              <div class="col-md-6 col-lg-6 col-sm-12">
-                <div class="form-group">
-                  <label>Asignado a:</label>
+                  <label for="selectAsignadoE">Asignado a:</label>
                   <select class="form-control selectAsignadoE" id="selectAsignadoE" name="selectAsignadoE">
                     <option value="0">Seleccione Asignado</option>
                     <?php
@@ -575,7 +593,7 @@
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Rol</label>
+                  <label for="selectRolE">Rol</label>
                   <select class="form-control selectRolE" id="selectRolE" name="selectRolE">
                     <option value="0">Contratista</option>
                     <option value="1">Empleado</option>
@@ -585,7 +603,7 @@
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Proyecto:</label>
+                  <label for="selectProyectoE">Proyecto:</label>
                   <select class="form-control selectProyectoE" id="selectProyectoE" name="selectProyectoE">
                     <?php
 
@@ -603,7 +621,7 @@
 
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <div class="form-group">
-                  <label>Licencia</label>
+                  <label for="selectLicenciaE">Licencia</label>
                   <select class="form-control selectLicenciaE" id="selectLicenciaE" name="selectLicenciaE">
                     <option value="">Sin Asignar o Propia</option>
                     <?php
@@ -620,16 +638,45 @@
 
             </div><!--row-->
 
+            <div class="col-md-6 col-lg-6 col-sm-12">
+              <div class="form-group">
+                <label for="selectIdActaE">*Acta de Ingreso</label>
+                <select class="form-control selectIdActaE" id="selectIdActaE" required name="selectIdActaE">
+                  <?php
+
+                   $actasIngreso = ControladorEquipos::ctrMostrarActasDis();
+
+                  if (count($actasIngreso) > 0 && isset($actasIngreso[0]["codigo"])) 
+                  {
+
+                    echo '<option value="0">Seleccione una opción</option>';
+
+                     foreach ($actasIngreso as $key => $value) 
+                    {
+                      echo '<option value="'.$value["id"].'">'.$value["codigo"].' / '.$value["fecha"].' PC '.$value["cantidadUso"].'/'.$value["cantidad"].' </option>';
+                    }
+                  }
+                  else
+                  {
+                    echo '<option value="0">No hay actas disponibles</option>';
+                  }
+
+                 
+                  ?>
+                </select>
+              </div>
+            </div><!--col-md-6 col-lg-6 col-sm-12-->
+
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control textObservacionesE" rows="3" placeholder="Enter ..." name="textObservacionesE"></textarea>
+                <label for="textObservacionesE">Observaciones</label>
+                <textarea class="form-control textObservacionesE" id="textObservacionesE" rows="3" placeholder="Enter ..." name="textObservacionesE"></textarea>
               </div>
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
-                <label>Nota: los campos con el simbolo * son campos requeridos</label>
+                <p>Nota: los campos con el simbolo * son campos requeridos</p>
               </div>
             </div>            
 
