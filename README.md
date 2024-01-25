@@ -25,7 +25,7 @@ Aplicativo web que cuenta con los siguientes módulos:
 
 # Template
 
-AdminLTE2 -> https://github.com/ColorlibHQ/AdminLTE
+AdminLTE2 -> https://github.com/ColorlibHQ/AdminLTE.git
 
 # plug-in
 
