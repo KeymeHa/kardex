@@ -1,4 +1,4 @@
-# [SICOR] - Kardex
+# [SICOR] - Kardex Version deprecated
 
 Este aplicativo permite gestionar un inventario interno donde los usuarios pueden realizar pedidos y aisgnar perfiles para tener acceso a ciertos módulos y acciones, permite ademas manejar un sistema de correspondencia permitiendo radicar documentos para darle manejo interno de estos que dependiendo al área y su encargado pueden realizar tramites o reasignar algún documento, incluye un módulo que maneja inventario de computadores llevando la trazabilidad de cada uno de ellos con manejo de linea de tiempo que alamacena toda las acciones realizada a cada uno de ellos.
 Aplicativo web que cuenta con los siguientes módulos:
